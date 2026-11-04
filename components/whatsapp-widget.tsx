@@ -25,7 +25,7 @@ export function WhatsAppWidget() {
       const right = document.documentElement.clientWidth - parseFloat(style.right);
       const left = right - parseFloat(style.width);
       let lift = 0;
-      const obstacles = document.querySelectorAll<HTMLElement>('[data-home-hero] button[aria-label$="automatic slides"], [data-film-controls], .footer-bottom > a');
+      const obstacles = document.querySelectorAll<HTMLElement>('[data-home-hero] button[aria-label$="automatic slides"], [data-film-controls], [data-widget-obstacle]');
       for (const obstacle of obstacles) {
         const rect = obstacle.getBoundingClientRect();
         if (rect.width && rect.height && left < rect.right + 12 && right > rect.left - 12 && top < rect.bottom + 12 && bottom > rect.top - 12) {
