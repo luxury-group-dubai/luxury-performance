@@ -9,9 +9,9 @@
 .heading p { margin-top: 13px; color: #6a6d69; font-size: 12px; }
 .follow { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; min-height: 44px; }
 .follow:hover, .more:hover { text-decoration: underline; text-underline-offset: 4px; }
-.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; margin: 0; padding: 0; list-style: none; }
 .grid > li { min-width: 0; }
-.card { position: relative; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; border: 0; padding: 0; background: #242424; color: white; text-align: left; cursor: pointer; }
+.card { position: relative; display: block; width: 100%; aspect-ratio: 3 / 4; overflow: hidden; border: 0; padding: 0; background: #242424; color: white; text-align: left; cursor: pointer; }
 .card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 35%, #000b); opacity: 0; transition: opacity .25s ease; }
 .card img { object-fit: cover; transition: transform .5s cubic-bezier(.2, .6, .2, 1); }
 .shopIcon { position: absolute; z-index: 1; top: 16px; right: 16px; display: grid; place-items: center; width: 30px; height: 30px; color: #fff; filter: drop-shadow(0 1px 4px #000b); }
@@ -27,15 +27,31 @@
   .card:hover .cardText { transform: none; }
 }
 
-.dialog { position: fixed; inset: 0; margin: auto; border: 0; padding: 0; background: #f5f4ef; color: #171819; width: min(1120px, calc(100% - 64px)); max-width: none; max-height: calc(100dvh - 64px); overflow: hidden; box-shadow: 0 20px 80px #0005; }
+.dialog {
+  --look-panel-width: clamp(320px, 38vw, 480px);
+  --look-height: min(680px, calc(100dvh - 64px), calc((100vw - 64px - var(--look-panel-width)) / var(--look-ratio)));
+  position: fixed; inset: 0; margin: auto; border: 0; padding: 0; background: #f5f4ef; color: #171819;
+  width: calc(var(--look-height) * var(--look-ratio) + var(--look-panel-width));
+  max-width: calc(100vw - 64px); max-height: calc(100dvh - 64px); overflow: hidden; box-shadow: 0 20px 80px #0005;
+}
 .dialog::backdrop { background: #000b; }
-.dialogContent { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); height: min(680px, calc(100dvh - 64px)); }
+.dialog[open] { animation: look-open .2s cubic-bezier(.2, .65, .25, 1); }
+.dialog[open]::backdrop { animation: look-backdrop-open .2s ease-out; }
+@keyframes look-open {
+  from { opacity: 0; transform: scale(.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes look-backdrop-open {
+  from { background-color: transparent; }
+  to { background-color: #000b; }
+}
+.dialogContent { display: grid; grid-template-columns: calc(var(--look-height) * var(--look-ratio)) minmax(0, 1fr); height: var(--look-height); }
 .gallery { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: #171819; color: #fff; }
 .photos { display: flex; height: 100%; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .photos::-webkit-scrollbar { display: none; }
 .photos:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
-.slide { position: relative; flex: 0 0 100%; height: 100%; scroll-snap-align: start; scroll-snap-stop: always; }
-.slide img { object-fit: contain; }
+.slide { position: relative; flex: 0 0 var(--photo-slide-width, 100%); height: 100%; scroll-snap-align: start; scroll-snap-stop: always; }
+.slide img { object-fit: cover; }
 .photoArrow { position: absolute; z-index: 2; top: calc(50% - 22px); display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff38; border-radius: 50%; background: #17181966; backdrop-filter: blur(12px); color: inherit; cursor: pointer; }
 .photoArrow:disabled { opacity: .3; cursor: default; }
 .previous { left: 16px; }
@@ -67,14 +83,14 @@
   .section { padding-block: 55px; }
   .heading { align-items: start; flex-direction: column; gap: 12px; margin-bottom: 28px; }
   .heading h2 { font-size: 36px; }
-  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .shopIcon { top: 5px; right: 5px; width: 26px; height: 26px; }
   .shopIcon svg { width: 16px; height: 16px; }
   .cardText { padding: 10px; gap: 6px; font-size: 12px; }
   .cardText > span:last-child { font-size: 9px; }
-  .dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
+  .dialog { width: calc(100% - 24px); max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
   .dialogContent { display: block; height: auto; max-height: calc(100dvh - 24px); overflow-y: auto; overscroll-behavior-y: contain; }
-  .gallery { height: auto; aspect-ratio: 1; }
+  .gallery { height: auto; aspect-ratio: var(--look-ratio); }
   .details { padding: 28px 20px; overflow: visible; }
   .dialogHead { padding-right: 0; }
   .dialogHead h3 { font-size: 27px; }
@@ -82,6 +98,7 @@
   .next { right: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .dialog[open], .dialog[open]::backdrop { animation: none; }
   .card img, .card::after, .cardText, .photoDots span { transition: none; }
   .card:hover img, .cardText { transform: none; }
 }

@@ -1,6 +1,6 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ArrowUpRight, ShoppingBag, X } from 'lucide-react';
@@ -9,14 +9,16 @@ import type { CatalogProduct } from '@/lib/shop/types';
 import { money } from '@/lib/shop/types';
 import styles from './novitec-feed.module.css';
 
-type FeedLook = { name: string; image: string; gallery?: string[]; products: CatalogProduct[]; fallback: string };
+type FeedLook = { name: string; image: string; gallery?: string[]; imageRatios?: number[]; products: CatalogProduct[]; fallback: string };
 export function NovitecFeed({ looks }: { looks: FeedLook[] }) {
   const [selected, setSelected] = useState<FeedLook | null>(null);
   const [photoIndex, setPhotoIndex] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   const photos = useRef<HTMLDivElement>(null);
+  const photoWidth = useRef(0);
   const closeButton = useRef<HTMLButtonElement>(null);
   const images = selected ? [...new Set([selected.image, ...(selected.gallery || [])])] : [];
+  const imageRatio = selected?.imageRatios?.[photoIndex] ?? 3 / 4;
 
   useEffect(() => {
     if (!selected) return;
@@ -24,18 +26,29 @@ export function NovitecFeed({ looks }: { looks: FeedLook[] }) {
     const previous = root.style.overflow;
     root.style.overflow = 'hidden';
     closeButton.current?.focus({ preventScroll: true });
-    return () => { root.style.overflow = previous; };
+    const track = photos.current;
+    // Align every slide with physical pixels so fractional widths cannot reveal an edge.
+    const resize = new ResizeObserver(([entry]) => {
+      const pixels = window.devicePixelRatio || 1;
+      const width = Math.ceil(entry.contentRect.width * pixels) / pixels;
+      if (!track || width <= 0 || width === photoWidth.current) return;
+      photoWidth.current = width;
+      track.style.setProperty('--photo-slide-width', `${width}px`);
+    });
+    if (track) resize.observe(track);
+    return () => { resize.disconnect(); root.style.overflow = previous; };
   }, [selected]);
 
   function open(look: FeedLook) {
     setPhotoIndex(0);
+    photoWidth.current = 0;
     setSelected(look);
     dialog.current?.showModal();
   }
   function showPhoto(index: number) {
     const track = photos.current;
     if (!track) return;
-    track.scrollTo({ left: index * track.clientWidth, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    track.scrollTo({ left: index * (photoWidth.current || track.clientWidth), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   }
 
   return <section id="novitec-feed" className={styles.section} aria-labelledby="feed-title">
@@ -45,12 +58,12 @@ export function NovitecFeed({ looks }: { looks: FeedLook[] }) {
       <span className={styles.shopIcon} aria-hidden="true"><ShoppingBag size={18} strokeWidth={1.5} /></span>
       <span className={styles.cardText}><span>{look.name}</span><span>Shop the look <ArrowUpRight size={15} aria-hidden="true" /></span></span>
     </button></li>)}</ul>
-    <dialog id="novitec-look-dialog" ref={dialog} className={styles.dialog} onClose={() => setSelected(null)} aria-labelledby="look-title" onClick={event => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
+    <dialog id="novitec-look-dialog" ref={dialog} className={styles.dialog} style={{ '--look-ratio': imageRatio } as CSSProperties} onClose={() => setSelected(null)} aria-labelledby="look-title" onClick={event => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       {selected && <>
         <button ref={closeButton} type="button" className={styles.close} onClick={() => dialog.current?.close()} aria-label="Close"><X size={20} /></button>
         <div className={styles.dialogContent}>
           <div className={styles.gallery} role="region" aria-roledescription="carousel" aria-label={`${selected.name} photos`}>
-            <div ref={photos} className={styles.photos} data-lenis-prevent tabIndex={0} aria-label="Photos. Swipe or use the left and right arrow keys." onScroll={event => { const track = event.currentTarget; if (track.clientWidth) setPhotoIndex(Math.round(track.scrollLeft / track.clientWidth)); }} onKeyDown={event => {
+            <div ref={photos} className={styles.photos} data-lenis-prevent tabIndex={0} aria-label="Photos. Swipe or use the left and right arrow keys." onScroll={event => { const track = event.currentTarget; const width = photoWidth.current || track.clientWidth; if (width) setPhotoIndex(Math.max(0, Math.min(images.length - 1, Math.round(track.scrollLeft / width)))); }} onKeyDown={event => {
               if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
               event.preventDefault();
               showPhoto(Math.max(0, Math.min(images.length - 1, photoIndex + (event.key === 'ArrowRight' ? 1 : -1))));

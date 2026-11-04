@@ -102,7 +102,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
         const product = products.find(item => item.title.toUpperCase().replace(/\s+/g, ' ').includes(code));
         return product ? [product] : [];
       }) : products.filter(item => tagsFor(item, 'model').includes(model)).slice(0, 4);
-      return { ...look, image: album.images[0], gallery: album.images.slice(1), products: lookProducts };
+      return { ...look, image: album.images[0], gallery: album.images.slice(1), imageRatios: album.ratios, products: lookProducts };
     })} />}
     {p.slug === 'novitec' && <NovitecStories />}
     {p.slug === 'novitec' && collectionSection}

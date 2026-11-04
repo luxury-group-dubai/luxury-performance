@@ -1,5 +1,5 @@
 // Original Instagram post order; the first image is the feed cover.
-export const novitecFeedAlbums: Record<string, { source: string; images: string[] }> = {
+export const novitecFeedAlbums: Record<string, { source: string; images: string[]; ratios: number[] }> = {
   "812": {
     "source": "https://www.instagram.com/p/DewsCMOjPsW/",
     "images": [
@@ -18,6 +18,23 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/812/13.webp",
       "/images/novitec-feed/instagram/812/14.webp",
       "/images/novitec-feed/instagram/812/15.webp"
+    ],
+    "ratios": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
     ]
   },
   "purosangue": {
@@ -42,6 +59,27 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/purosangue/17.webp",
       "/images/novitec-feed/instagram/purosangue/18.webp",
       "/images/novitec-feed/instagram/purosangue/19.webp"
+    ],
+    "ratios": [
+      0.75,
+      0.753515625,
+      0.753515625,
+      0.753515625,
+      0.753515625,
+      0.75,
+      0.753515625,
+      0.75,
+      0.753515625,
+      0.753515625,
+      0.753515625,
+      0.753515625,
+      0.75,
+      0.753515625,
+      0.753515625,
+      0.753515625,
+      0.75,
+      0.753515625,
+      0.75
     ]
   },
   "revuelto": {
@@ -64,6 +102,25 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/revuelto/15.webp",
       "/images/novitec-feed/instagram/revuelto/16.webp",
       "/images/novitec-feed/instagram/revuelto/17.webp"
+    ],
+    "ratios": [
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872,
+      0.8031232571109872
     ]
   },
   "sf90": {
@@ -79,6 +136,18 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/sf90/08.webp",
       "/images/novitec-feed/instagram/sf90/09.webp",
       "/images/novitec-feed/instagram/sf90/10.webp"
+    ],
+    "ratios": [
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674
     ]
   },
   "12cilindri": {
@@ -101,6 +170,25 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/12cilindri/15.webp",
       "/images/novitec-feed/instagram/12cilindri/16.webp",
       "/images/novitec-feed/instagram/12cilindri/17.webp"
+    ],
+    "ratios": [
+      0.75,
+      0.753515625,
+      0.75,
+      0.753515625,
+      0.753515625,
+      0.75,
+      0.75,
+      0.753515625,
+      0.753515625,
+      0.75,
+      0.753515625,
+      0.753515625,
+      0.75,
+      0.753515625,
+      0.753515625,
+      0.75,
+      0.75
     ]
   },
   "urus": {
@@ -116,6 +204,18 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/urus/08.webp",
       "/images/novitec-feed/instagram/urus/09.webp",
       "/images/novitec-feed/instagram/urus/10.webp"
+    ],
+    "ratios": [
+      0.8,
+      0.8,
+      0.8004446914952752,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
     ]
   },
   "f8": {
@@ -129,6 +229,16 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/f8/06.webp",
       "/images/novitec-feed/instagram/f8/07.webp",
       "/images/novitec-feed/instagram/f8/08.webp"
+    ],
+    "ratios": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8004446914952752
     ]
   },
   "750s": {
@@ -144,6 +254,18 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/750s/08.webp",
       "/images/novitec-feed/instagram/750s/09.webp",
       "/images/novitec-feed/instagram/750s/10.webp"
+    ],
+    "ratios": [
+      0.8004446914952752,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.7995558023320377,
+      0.8
     ]
   },
   "cullinan": {
@@ -159,6 +281,18 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/cullinan/08.webp",
       "/images/novitec-feed/instagram/cullinan/09.webp",
       "/images/novitec-feed/instagram/cullinan/10.webp"
+    ],
+    "ratios": [
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674,
+      0.8022284122562674
     ]
   },
   "spectre": {
@@ -183,6 +317,27 @@ export const novitecFeedAlbums: Record<string, { source: string; images: string[
       "/images/novitec-feed/instagram/spectre/17.webp",
       "/images/novitec-feed/instagram/spectre/18.webp",
       "/images/novitec-feed/instagram/spectre/19.webp"
+    ],
+    "ratios": [
+      0.75,
+      0.7535321821036107,
+      0.75,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.75,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.7535321821036107,
+      0.75,
+      0.75,
+      0.7535321821036107
     ]
   }
 };
