@@ -5,6 +5,8 @@ import localFont from 'next/font/local';
 import { BrandIntro } from '@/components/brand-intro';
 import { introBootstrap } from '@/lib/intro-bootstrap';
 import { SiteMotion } from '@/components/site-motion';
+import { SmoothScroll } from '@/components/smooth-scroll';
+import 'lenis/dist/lenis.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { WhatsAppWidget } from '@/components/whatsapp-widget';
@@ -22,5 +24,5 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#101010' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable}`}><body id="top"><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
+  return <html lang="en" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable}`}><body id="top"><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
 }

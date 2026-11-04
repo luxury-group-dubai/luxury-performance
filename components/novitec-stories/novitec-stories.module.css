@@ -1,0 +1,12 @@
+.section{padding:90px var(--gutter) 100px;background:var(--paper) url('/images/concrete-grain.svg') repeat;background-size:320px;color:#181818}
+.sectionHeading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:38px}.eyebrow{display:block;color:#77776f;font-size:9px;text-transform:uppercase;letter-spacing:.16em;margin-bottom:18px}.sectionHeading h2{font-size:clamp(34px,4vw,58px);font-weight:400;letter-spacing:-.045em;line-height:1.1}.sectionHeading p{font-size:12px;color:#6a6d69;max-width:240px;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.card{display:block;color:inherit}.cardImage{position:relative;display:block;aspect-ratio:1.55;overflow:hidden;background:#1c1c1c}.cardImage img{object-fit:cover;transition:transform .6s cubic-bezier(.2,.6,.2,1)}.cardMeta{display:block;margin-top:22px;font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:#777}.cardTitle{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:clamp(19px,1.65vw,25px);letter-spacing:-.035em;line-height:1.2}.cardTitle svg{flex:none}.cardSummary{display:block;color:#6a6d69;font-size:12px;line-height:1.7;margin-top:13px;max-width:40ch}.read{display:inline-flex;align-items:center;gap:9px;margin-top:20px;font-size:11px}.card:focus-visible{outline:2px solid #887652;outline-offset:4px}@media(hover:hover){.card:hover .cardImage img{transform:scale(1.035)}.card:hover .read{text-decoration:underline;text-underline-offset:4px}}
+@media(max-width:700px){.section{padding:55px var(--gutter) 65px}.sectionHeading{display:block;margin-bottom:28px}.sectionHeading h2{font-size:36px}.sectionHeading p{margin-top:14px}.grid{grid-template-columns:1fr;gap:36px}.cardImage{aspect-ratio:1.65}.cardMeta{margin-top:16px}.cardTitle{font-size:22px}.read{margin-top:14px}}
+@media(prefers-reduced-motion:reduce){.cardImage img{transition:none}.card:hover .cardImage img{transform:none}}
+/* Shared spacing and image motion across the NOVITEC sections. */
+.section { padding-block: 80px; }
+.sectionHeading { margin-bottom: 40px; }
+.sectionHeading h2 { font-size: clamp(32px, 3.6vw, 56px); }
+.cardTitle { margin-top: 18px; }
+.cardImage img { transition: transform .5s cubic-bezier(.2,.6,.2,1); }
+@media (max-width: 700px) { .section { padding-block: 55px; } .sectionHeading { margin-bottom: 28px; } .sectionHeading h2 { font-size: 36px; } }

@@ -83,3 +83,9 @@
 
 /* A quiet concrete grain on the NOVITEC page's light surfaces. */
 .page[data-partner="novitec"] { background-color: var(--paper); background-image: url('/images/concrete-grain.svg'); background-size: 320px 320px; }
+/* Keep the NOVITEC shopping and editorial sections visually aligned. */
+.page[data-partner="novitec"] .departments { padding-block: 80px; }
+.page[data-partner="novitec"] .sectionHeading h2 { font-size: clamp(32px, 3.6vw, 56px); font-weight: 400; letter-spacing: -.045em; line-height: 1.1; }
+.page[data-partner="novitec"] .categoryImage img { transition: transform .5s cubic-bezier(.2,.6,.2,1); }
+@media (max-width: 700px) { .page[data-partner="novitec"] .departments { padding-block: 55px; } .page[data-partner="novitec"] .sectionHeading h2 { font-size: 36px; } }
+@media (prefers-reduced-motion: reduce) { .page[data-partner="novitec"] .categoryImage img { transition: none; } .page[data-partner="novitec"] .categoryCard:hover img { transform: none; } }

@@ -97,11 +97,11 @@ export function BrandIntro() {
       if (!emblem || !mark.current) { finish(); return; }
       const destination = emblem.getBoundingClientRect();
       const source = mark.current.getBoundingClientRect();
-      // Measured lettering bounds in the original 2172 × 724 PNG: (933, 421)–(1235, 499).
-      // Align the lettering itself, including its off-centre position inside the wings.
-      const dx = destination.left + destination.width * (1084 / 2172) - (source.left + source.width / 2);
-      const dy = destination.top + destination.height * (460 / 724) - (source.top + source.height / 2);
-      const scale = destination.width * (302 / 2172) / source.width;
+      // The approved winged SVG places the lettering at (527, 529), scaled from
+      // the same 1088 × 280 intro viewBox within its 60 310 934 364 viewBox.
+      const dx = destination.left + destination.width * ((527 - 60) / 934) - (source.left + source.width / 2);
+      const dy = destination.top + destination.height * ((529 - 310) / 364) - (source.top + source.height / 2);
+      const scale = destination.width * (1088 * 0.13647058823529412 / 934) / source.width;
       root.dataset.lxpIntro = 'travelling';
       const flight = mark.current.animate([
         { transform: 'translate3d(0,0,0) scale(1)', opacity: 1 },

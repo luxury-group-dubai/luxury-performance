@@ -1,0 +1,50 @@
+NOVITEC official car stories and news-card imagery, retrieved 2026-10-31.
+12cilindri: https://www.novitecgroup.com/en/news/novitec-ferrari-12cilindri/
+revuelto: https://www.novitecgroup.com/en/news/novitec-lamborghini-revuelto/
+urus-se: https://www.novitecgroup.com/en/news/n/
+News-card photographs: https://www.novitecgroup.com/en/news/
+
+Urus SE alternate card image:
+https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/3__FitMaxWzEyODAsMTAyNF0.jpg
+
+Story galleries: NOVITEC original photographs, retrieved 2026-11-02.
+12cilindri-gallery-1.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/1__FitMaxWzEyODAsMTAyNF0.jpg
+12cilindri-gallery-3.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/3__FitMaxWzEyODAsMTAyNF0.jpg
+12cilindri-gallery-4.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/4__FitMaxWzEyODAsMTAyNF0.jpg
+revuelto-gallery-1.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/1__FitMaxWzEyODAsMTAyNF0.jpg
+revuelto-gallery-3.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/3__FitMaxWzEyODAsMTAyNF0.jpg
+revuelto-gallery-4.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/4__FitMaxWzEyODAsMTAyNF0.jpg
+urus-se-gallery-1.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/1__FitMaxWzEyODAsMTAyNF0.jpg
+urus-se-gallery-3.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/3__FitMaxWzEyODAsMTAyNF0.jpg
+urus-se-gallery-4.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/4__FitMaxWzEyODAsMTAyNF0.jpg
+
+Original-resolution gallery photos (2560px wide), retrieved 2026-11-02:
+12cilindri-original-1.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/1.jpg
+12cilindri-original-2.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/2.jpg
+12cilindri-original-3.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/3.jpg
+12cilindri-original-4.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/4.jpg
+12cilindri-original-5.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/5.jpg
+12cilindri-original-6.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/6.jpg
+12cilindri-original-7.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/7.jpg
+12cilindri-original-8.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/8.jpg
+revuelto-original-1.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/1.jpg
+revuelto-original-2.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/2.jpg
+revuelto-original-3.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/3.jpg
+revuelto-original-4.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/4.jpg
+revuelto-original-5.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/5.jpg
+revuelto-original-6.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/6.jpg
+revuelto-original-7.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/7.jpg
+revuelto-original-8.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/8.jpg
+urus-se-original-1.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/1.jpg
+urus-se-original-2.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/2.jpg
+urus-se-original-3.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/3.jpg
+urus-se-original-4.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/4.jpg
+urus-se-original-5.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/5.jpg
+urus-se-original-6.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/6.jpg
+urus-se-original-7.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/7.jpg
+urus-se-original-8.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/8.jpg
+
+Original story banners (2560 × 800), retrieved 2026-11-02:
+12cilindri-hero-original.jpg: https://www.novitecgroup.com/assets/images/news/ferrari/12Cilindri-new/12cheadernew.jpg
+revuelto-hero-original.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/Revuelto-Viola/headerrevuelto.jpg
+urus-se-hero-original.jpg: https://www.novitecgroup.com/assets/images/news/lamborghini/urusse/headerurusse.jpg
