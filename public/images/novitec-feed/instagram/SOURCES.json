@@ -1,0 +1,1281 @@
+{
+  "retrieved": "2026-11-04",
+  "description": "Complete original NOVITEC Instagram photo albums in post order. First photograph is the feed cover. Originals resized within 2560px without enlargement and encoded to WebP quality 90 for delivery.",
+  "albums": [
+    {
+      "model": "purosangue",
+      "source": "https://www.instagram.com/p/DdRUQmJCP3N/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/purosangue/01.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 585796
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/purosangue/02.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 411636
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/purosangue/03.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 486510
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/purosangue/04.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 173970
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/purosangue/05.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 381010
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/purosangue/06.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 343472
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/purosangue/07.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 245162
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/purosangue/08.webp",
+          "sourceWidth": 2999,
+          "sourceHeight": 3998,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 630948
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/purosangue/09.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 443650
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/purosangue/10.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 115236
+        },
+        {
+          "index": 11,
+          "image": "/images/novitec-feed/instagram/purosangue/11.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 145622
+        },
+        {
+          "index": 12,
+          "image": "/images/novitec-feed/instagram/purosangue/12.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 141340
+        },
+        {
+          "index": 13,
+          "image": "/images/novitec-feed/instagram/purosangue/13.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 330116
+        },
+        {
+          "index": 14,
+          "image": "/images/novitec-feed/instagram/purosangue/14.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 460240
+        },
+        {
+          "index": 15,
+          "image": "/images/novitec-feed/instagram/purosangue/15.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 518886
+        },
+        {
+          "index": 16,
+          "image": "/images/novitec-feed/instagram/purosangue/16.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 637812
+        },
+        {
+          "index": 17,
+          "image": "/images/novitec-feed/instagram/purosangue/17.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 526944
+        },
+        {
+          "index": 18,
+          "image": "/images/novitec-feed/instagram/purosangue/18.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 249800
+        },
+        {
+          "index": 19,
+          "image": "/images/novitec-feed/instagram/purosangue/19.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 644258
+        }
+      ]
+    },
+    {
+      "model": "revuelto",
+      "source": "https://www.instagram.com/p/DMdGXh-o7Od/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/revuelto/01.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 471302
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/revuelto/02.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 404154
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/revuelto/03.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 277010
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/revuelto/04.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 458268
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/revuelto/05.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 322072
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/revuelto/06.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 457130
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/revuelto/07.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 109962
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/revuelto/08.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 403250
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/revuelto/09.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 279436
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/revuelto/10.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 356286
+        },
+        {
+          "index": 11,
+          "image": "/images/novitec-feed/instagram/revuelto/11.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 349192
+        },
+        {
+          "index": 12,
+          "image": "/images/novitec-feed/instagram/revuelto/12.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 196554
+        },
+        {
+          "index": 13,
+          "image": "/images/novitec-feed/instagram/revuelto/13.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 358422
+        },
+        {
+          "index": 14,
+          "image": "/images/novitec-feed/instagram/revuelto/14.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 412236
+        },
+        {
+          "index": 15,
+          "image": "/images/novitec-feed/instagram/revuelto/15.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 526498
+        },
+        {
+          "index": 16,
+          "image": "/images/novitec-feed/instagram/revuelto/16.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 142304
+        },
+        {
+          "index": 17,
+          "image": "/images/novitec-feed/instagram/revuelto/17.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1793,
+          "width": 1440,
+          "height": 1793,
+          "bytes": 535926
+        }
+      ]
+    },
+    {
+      "model": "sf90",
+      "source": "https://www.instagram.com/p/DB9HsZ1oCg8/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/sf90/01.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 280026
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/sf90/02.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 109986
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/sf90/03.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 294386
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/sf90/04.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 141862
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/sf90/05.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 411058
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/sf90/06.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 248618
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/sf90/07.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 278204
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/sf90/08.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 184820
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/sf90/09.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 276518
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/sf90/10.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 326570
+        }
+      ]
+    },
+    {
+      "model": "12cilindri",
+      "source": "https://www.instagram.com/p/DcTQuAGiDzi/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/12cilindri/01.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 516054
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/12cilindri/02.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 206968
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/12cilindri/03.webp",
+          "sourceWidth": 3035,
+          "sourceHeight": 4046,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 392998
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/12cilindri/04.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 177962
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/12cilindri/05.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 169664
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/12cilindri/06.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 216420
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/12cilindri/07.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 376778
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/12cilindri/08.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 104466
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/12cilindri/09.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 162456
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/12cilindri/10.webp",
+          "sourceWidth": 2681,
+          "sourceHeight": 3574,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 368508
+        },
+        {
+          "index": 11,
+          "image": "/images/novitec-feed/instagram/12cilindri/11.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 150324
+        },
+        {
+          "index": 12,
+          "image": "/images/novitec-feed/instagram/12cilindri/12.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 258754
+        },
+        {
+          "index": 13,
+          "image": "/images/novitec-feed/instagram/12cilindri/13.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 295872
+        },
+        {
+          "index": 14,
+          "image": "/images/novitec-feed/instagram/12cilindri/14.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 89386
+        },
+        {
+          "index": 15,
+          "image": "/images/novitec-feed/instagram/12cilindri/15.webp",
+          "sourceWidth": 3086,
+          "sourceHeight": 4096,
+          "width": 1929,
+          "height": 2560,
+          "bytes": 187550
+        },
+        {
+          "index": 16,
+          "image": "/images/novitec-feed/instagram/12cilindri/16.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 516716
+        },
+        {
+          "index": 17,
+          "image": "/images/novitec-feed/instagram/12cilindri/17.webp",
+          "sourceWidth": 3072,
+          "sourceHeight": 4096,
+          "width": 1920,
+          "height": 2560,
+          "bytes": 575226
+        }
+      ]
+    },
+    {
+      "model": "urus",
+      "source": "https://www.instagram.com/p/DDcVkCCoO4Y/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/urus/01.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 530632
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/urus/02.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 85882
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/urus/03.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1799,
+          "width": 1440,
+          "height": 1799,
+          "bytes": 300402
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/urus/04.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 148128
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/urus/05.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 291906
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/urus/06.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 98688
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/urus/07.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 419856
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/urus/08.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 312160
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/urus/09.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 93758
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/urus/10.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 355772
+        }
+      ]
+    },
+    {
+      "model": "812",
+      "source": "https://www.instagram.com/p/DewsCMOjPsW/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/812/01.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 603058
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/812/02.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 528652
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/812/03.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 181724
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/812/04.webp",
+          "sourceWidth": 3108,
+          "sourceHeight": 3885,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 1073804
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/812/05.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 735276
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/812/06.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 365086
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/812/07.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 317414
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/812/08.webp",
+          "sourceWidth": 3251,
+          "sourceHeight": 4063,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 784314
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/812/09.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 746938
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/812/10.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 284458
+        },
+        {
+          "index": 11,
+          "image": "/images/novitec-feed/instagram/812/11.webp",
+          "sourceWidth": 2971,
+          "sourceHeight": 3713,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 577262
+        },
+        {
+          "index": 12,
+          "image": "/images/novitec-feed/instagram/812/12.webp",
+          "sourceWidth": 3233,
+          "sourceHeight": 4041,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 566696
+        },
+        {
+          "index": 13,
+          "image": "/images/novitec-feed/instagram/812/13.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 287438
+        },
+        {
+          "index": 14,
+          "image": "/images/novitec-feed/instagram/812/14.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4096,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 785974
+        },
+        {
+          "index": 15,
+          "image": "/images/novitec-feed/instagram/812/15.webp",
+          "sourceWidth": 3276,
+          "sourceHeight": 4095,
+          "width": 2048,
+          "height": 2560,
+          "bytes": 760586
+        }
+      ]
+    },
+    {
+      "model": "f8",
+      "source": "https://www.instagram.com/p/DHvvcOqIUAL/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/f8/01.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 403280
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/f8/02.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 204016
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/f8/03.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 409752
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/f8/04.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 392166
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/f8/05.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 254060
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/f8/06.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 475222
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/f8/07.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 498502
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/f8/08.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1799,
+          "width": 1440,
+          "height": 1799,
+          "bytes": 577882
+        }
+      ]
+    },
+    {
+      "model": "750s",
+      "source": "https://www.instagram.com/p/C7jiruSoSM2/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/750s/01.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1799,
+          "width": 1440,
+          "height": 1799,
+          "bytes": 437018
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/750s/02.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 347196
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/750s/03.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 245056
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/750s/04.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 494318
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/750s/05.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 144192
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/750s/06.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 461120
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/750s/07.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 328088
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/750s/08.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 453616
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/750s/09.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1801,
+          "width": 1440,
+          "height": 1801,
+          "bytes": 296730
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/750s/10.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1800,
+          "width": 1440,
+          "height": 1800,
+          "bytes": 353956
+        }
+      ]
+    },
+    {
+      "model": "cullinan",
+      "source": "https://www.instagram.com/p/C6ONfk2rOg1/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/cullinan/01.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 331752
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/cullinan/02.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 379772
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/cullinan/03.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 369380
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/cullinan/04.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 161418
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/cullinan/05.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 98886
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/cullinan/06.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 314192
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/cullinan/07.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 142410
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/cullinan/08.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 132374
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/cullinan/09.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 324532
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/cullinan/10.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1795,
+          "width": 1440,
+          "height": 1795,
+          "bytes": 263758
+        }
+      ]
+    },
+    {
+      "model": "spectre",
+      "source": "https://www.instagram.com/p/DTx0TKgjJV8/",
+      "photos": [
+        {
+          "index": 1,
+          "image": "/images/novitec-feed/instagram/spectre/01.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1920,
+          "width": 1440,
+          "height": 1920,
+          "bytes": 434736
+        },
+        {
+          "index": 2,
+          "image": "/images/novitec-feed/instagram/spectre/02.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 313914
+        },
+        {
+          "index": 3,
+          "image": "/images/novitec-feed/instagram/spectre/03.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1920,
+          "width": 1440,
+          "height": 1920,
+          "bytes": 462212
+        },
+        {
+          "index": 4,
+          "image": "/images/novitec-feed/instagram/spectre/04.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 390026
+        },
+        {
+          "index": 5,
+          "image": "/images/novitec-feed/instagram/spectre/05.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 250446
+        },
+        {
+          "index": 6,
+          "image": "/images/novitec-feed/instagram/spectre/06.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 526202
+        },
+        {
+          "index": 7,
+          "image": "/images/novitec-feed/instagram/spectre/07.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 343316
+        },
+        {
+          "index": 8,
+          "image": "/images/novitec-feed/instagram/spectre/08.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 578180
+        },
+        {
+          "index": 9,
+          "image": "/images/novitec-feed/instagram/spectre/09.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 134892
+        },
+        {
+          "index": 10,
+          "image": "/images/novitec-feed/instagram/spectre/10.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 155470
+        },
+        {
+          "index": 11,
+          "image": "/images/novitec-feed/instagram/spectre/11.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 385020
+        },
+        {
+          "index": 12,
+          "image": "/images/novitec-feed/instagram/spectre/12.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1920,
+          "width": 1440,
+          "height": 1920,
+          "bytes": 248564
+        },
+        {
+          "index": 13,
+          "image": "/images/novitec-feed/instagram/spectre/13.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 475666
+        },
+        {
+          "index": 14,
+          "image": "/images/novitec-feed/instagram/spectre/14.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 675322
+        },
+        {
+          "index": 15,
+          "image": "/images/novitec-feed/instagram/spectre/15.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 396218
+        },
+        {
+          "index": 16,
+          "image": "/images/novitec-feed/instagram/spectre/16.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 88434
+        },
+        {
+          "index": 17,
+          "image": "/images/novitec-feed/instagram/spectre/17.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1920,
+          "width": 1440,
+          "height": 1920,
+          "bytes": 272040
+        },
+        {
+          "index": 18,
+          "image": "/images/novitec-feed/instagram/spectre/18.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1920,
+          "width": 1440,
+          "height": 1920,
+          "bytes": 370948
+        },
+        {
+          "index": 19,
+          "image": "/images/novitec-feed/instagram/spectre/19.webp",
+          "sourceWidth": 1440,
+          "sourceHeight": 1911,
+          "width": 1440,
+          "height": 1911,
+          "bytes": 457580
+        }
+      ]
+    }
+  ]
+}
