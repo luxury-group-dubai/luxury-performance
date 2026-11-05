@@ -1,4 +1,4 @@
-.hero { position: relative; isolation: isolate; height: 100svh; min-height: 740px; max-height: 1100px; overflow: clip; background: #151617; color: #fff; }
+.hero { --hero-title-size: clamp(40px,4vw,64px); --hero-title-line: calc(var(--hero-title-size) * 1.25); position: relative; isolation: isolate; height: 100svh; min-height: 740px; max-height: 1100px; overflow: clip; background: #151617; color: #fff; }
 .context { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: 145px; font-size: 11px; line-height: 1.7; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
 .context span { margin-inline: 10px; color: #ffffff80; }
 /* Keep the photograph painted while the copy waits for the full intro to finish. */
@@ -25,11 +25,17 @@
 .slide[data-brand="techart"] .picture > img { object-position: 65% 55%; }
 .slide[data-brand="techart"] .shade { background: linear-gradient(90deg,#080a0cb8,transparent 75%),linear-gradient(0deg,#080a0ca6,transparent 45%); }
 .shade { position: absolute; inset: 0; background: linear-gradient(90deg,#080a0ccb,transparent 80%),linear-gradient(0deg,#080a0cf2,transparent 70%); }
-.copy { position: absolute; bottom: 160px; left: var(--gutter); right: var(--gutter); max-width: 630px; }
-.logo { width: 190px; height: 42px; object-fit: contain; object-position: left center; margin-bottom: 28px; }
-.slide[data-brand="valvetronic"] .logo { width: 210px; height: 54px; }
+.copy {
+  --hero-title-row: calc(var(--hero-title-line) * 2);
+  --hero-description-row: 81px;
+  position: absolute; bottom: 160px; left: var(--gutter); right: var(--gutter); max-width: 630px;
+  display: grid;
+  grid-template-rows: 54px 28px var(--hero-title-row) 24px var(--hero-description-row) 28px 50px;
+}
+.logo { grid-row: 1; width: 190px; height: 54px; object-fit: contain; object-position: left center; margin: 0; }
+.slide[data-brand="valvetronic"] .logo { width: 210px; }
 .slide[data-brand="techart"] .logo { width: 225px; }
-.copy h2 { font-size: clamp(44px,4.6vw,74px); line-height: 1.06; font-weight: 400; letter-spacing: -.045em; text-wrap: balance; }
+.copy h2 { grid-row: 3; min-block-size: 0; margin: 0; font-size: var(--hero-title-size); line-height: 1.25; font-weight: 400; letter-spacing: -.02em; text-wrap: balance; }
 .glitchPhrase { display: inline-grid; vertical-align: top; }
 .glitchWord { grid-area: 1 / 1; position: relative; white-space: nowrap; }
 .glitchAlternate { opacity: 0; }
@@ -59,8 +65,8 @@
   1.5%, 48%, 51.5%, 98% { opacity: 0; }
   49.25%, 99.25% { opacity: .35; }
 }
-.copy p { max-width: 47ch; margin-top: 24px; color: #e0e0dc; font-size: 15px; line-height: 1.8; text-wrap: pretty; }
-.cta { display: inline-flex; align-items: center; justify-content: space-between; gap: 35px; min-height: 50px; padding: 12px 21px; margin-top: 28px; background: #f1f3f5; color: #151515; font-size: 13px; font-weight: 600; transition: background 180ms; }
+.copy p { grid-row: 5; max-width: 47ch; min-block-size: 0; margin: 0; color: #e0e0dc; font-size: 15px; line-height: 1.8; text-wrap: pretty; }
+.cta { grid-row: 7; justify-self: start; display: inline-flex; align-items: center; justify-content: space-between; gap: 35px; min-height: 50px; padding: 12px 21px; margin: 0; background: #f1f3f5; color: #151515; font-size: 13px; font-weight: 600; transition: background 180ms; }
 .cta:hover { background: #deddd7; }
 .cta svg { flex-shrink: 0; }
 .controls { position: absolute; z-index: 3; bottom: 28px; left: var(--gutter); right: var(--gutter); display: flex; align-items: center; gap: 32px; }
@@ -76,14 +82,13 @@
 .hero :is(a,button):focus-visible { outline: 2px solid #e2c68d; outline-offset: 6px; }
 @media (min-width: 1800px) { .copy { max-width: 680px; } }
 @media (max-width: 1000px) {
-  .hero { min-height: 740px; }
+  .hero { --hero-title-size: 44px; min-height: 740px; }
   .context { top: 125px; }
   .copy { max-width: 550px; bottom: 150px; }
-  .copy h2 { font-size: 55px; }
   .brandNav { gap: 22px; }
 }
 @media (max-width: 700px) {
-  .hero { min-height: 800px; max-height: 980px; }
+  .hero { --hero-title-size: clamp(26px,7.1vw,40px); min-height: 800px; max-height: 980px; }
   .context { top: 115px; font-size: 9px; letter-spacing: .08em; }
   .context span { margin-inline: 5px; }
   .picture { top: 140px; bottom: auto; height: 350px; }
@@ -96,14 +101,13 @@
   .slide[data-brand="novitec"] .picture::after { background: linear-gradient(180deg,#151617,transparent 15%,transparent 80%,#151617); }
   .slide[data-brand="techart"] .picture::after { background: linear-gradient(180deg,#151617,transparent 15%,transparent 75%,#151617); }
   .shade { background: linear-gradient(0deg,#151617 35%,#15161700 68%),linear-gradient(180deg,#151617 15%,#15161700 35%); }
-  .copy { bottom: 118px; max-width: none; }
-  .logo { width: 145px; height: 30px; margin-bottom: 20px; }
-  .slide[data-brand="valvetronic"] .logo { width: 160px; height: 40px; }
-  .slide[data-brand="techart"] .logo { width: 170px; height: 30px; }
-  .copy h2 { font-size: clamp(36px,10vw,49px); line-height: 1.08; letter-spacing: -.045em; }
-  .slide[data-brand="techart"] .copy h2 { font-size: clamp(32px,8.8vw,42px); }
-  .copy p { font-size: 13px; line-height: 1.7; max-width: 40ch; margin-top: 16px; }
-  .cta { min-height: 48px; margin-top: 20px; padding-inline: 18px; font-size: 12px; gap: 27px; }
+  .copy { --hero-title-row: calc(var(--hero-title-line) + max(44px, var(--hero-title-line))); --hero-description-row: 88.4px; bottom: 118px; max-width: none; grid-template-rows: 40px 20px var(--hero-title-row) 16px var(--hero-description-row) 20px 48px; }
+  .logo { width: 145px; height: 40px; }
+  .slide[data-brand="valvetronic"] .logo { width: 160px; }
+  .slide[data-brand="techart"] .logo { width: 170px; }
+  .slide[data-brand="techart"] .copy h2 { font-size: clamp(25px,6.9vw,38px); }
+  .copy p { font-size: 13px; line-height: 1.7; max-width: 40ch; }
+  .cta { min-height: 48px; padding-inline: 18px; font-size: 12px; gap: 27px; }
   .controls { bottom: 18px; gap: 14px; align-items: start; }
   .brandNav { gap: 12px; }
   .brandNav button { min-height: 65px; padding-block: 14px; font-size: 10px; line-height: 1.6; gap: 0; align-items: start; }
@@ -111,8 +115,9 @@
   .playback { width: 44px; height: 44px; margin-top: 9px; }
 }
 @media (max-width: 360px) {
+  .copy { --hero-description-row: 110.5px; }
   .context { font-size: 8px; }
-  .copy h2 { font-size: 34px; }
+  .hero { --hero-title-size: 25px; }
   .brandNav { gap: 8px; }
   .controls { gap: 10px; }
 }

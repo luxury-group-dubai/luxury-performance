@@ -16,7 +16,7 @@ import { brandHeroImages } from '@/lib/brand-hero-images';
 
 type ShopMenu = 'brands' | 'vehicles';
 const menus = [{ key: 'brands' as const, label: 'By brand' }, { key: 'vehicles' as const, label: 'By vehicle' }];
-const links = [{ name: 'Home', href: '/' }, { name: 'Expertise', href: '/#expertise' }, { name: 'Our partners', href: '/partners' }, { name: 'Our world', href: '/about' }, { name: 'Let’s talk', href: '/contact' }];
+const links = [{ name: 'Home', href: '/' }, { name: 'Our partners', href: '/partners' }, { name: 'Our world', href: '/about' }, { name: 'Let’s talk', href: '/contact' }];
 function BrandMenu({ close }: { close: () => void }) {
   return <>
     <MenuCards items={brandMenu} close={close} logoOnly />

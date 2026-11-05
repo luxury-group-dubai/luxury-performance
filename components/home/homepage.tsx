@@ -35,7 +35,7 @@ const heroSlides = [
     slug: 'techart', name: 'TECHART', logo: '/brand/techart.svg', logoWidth: 487, logoHeight: 35,
     ...brandHeroImages.techart!,
     title: <TechartPersonalHeadline />,
-    description: 'TECHART aerodynamics, wheels, interior and performance upgrades. Start with your Porsche to find the parts that fit.',
+    description: 'TECHART aerodynamics, wheels, interior and performance upgrades for your Porsche, with guidance on the right parts, vehicle fitment and installation.',
     href: '/partners/techart', cta: 'Explore TECHART',
   },
 ];

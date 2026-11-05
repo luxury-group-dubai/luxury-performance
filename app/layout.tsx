@@ -12,9 +12,11 @@ import { Footer } from '@/components/footer';
 import { WhatsAppWidget } from '@/components/whatsapp-widget';
 import './globals.css';
 import './shop.css';
+import './display-type.css';
 import { CartProvider } from '@/components/shop/cart-provider';
 const montserratUi = localFont({ src: './Montserrat-Variable-ui.woff2', variable: '--font-montserrat-ui', display: 'swap', preload: true, adjustFontFallback: false, fallback: [] });
 const montserratFull = localFont({ src: './Montserrat-Variable.woff2', variable: '--font-montserrat-full', display: 'swap', preload: false });
+const michroma = localFont({ src: './Michroma-Regular.ttf', weight: '400', style: 'normal', variable: '--font-michroma', display: 'swap', preload: true });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'),
   title: { default: 'Luxury Performance — Beyond Ordinary', template: '%s | Luxury Performance' },
@@ -24,5 +26,5 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#101010' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable}`}><body id="top"><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
+  return <html lang="en" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable} ${michroma.variable}`}><body id="top"><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
 }

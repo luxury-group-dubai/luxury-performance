@@ -73,6 +73,10 @@
 }
 @media (prefers-reduced-motion: reduce) { .novitecWordmarks img { transition: none; } .novitecWordmarks a:hover img { transform: none; } }
 
+@media (max-width: 700px) {
+ .directoryIntro h1 { font-size: clamp(32px, 8.8vw, 45px); }
+}
+
 /* Four categories share a single row on wider screens. */
 @media (min-width: 901px) {
  .categoryGrid:has(> :nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); }

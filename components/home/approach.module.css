@@ -1,0 +1,25 @@
+.section {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  min-height: clamp(440px, 38vw, 620px);
+  background: #1a1a19;
+  color: #eee;
+  scroll-margin-top: 112px;
+}
+.image { position: relative; min-width: 0; overflow: hidden; }
+.image img { object-fit: cover; object-position: center; }
+.copy { display: flex; align-items: center; padding: 56px clamp(32px, 5vw, 88px); }
+.copy :global(.eyebrow) { margin-bottom: 30px; font-size: 8px; }
+.copy h2 { font-size: clamp(28px, 2.7vw, 44px); line-height: 1.35; letter-spacing: -.02em; }
+.copy p { max-width: 38ch; margin: 24px 0 28px; color: #b5b5ad; font-size: 13px; line-height: 1.85; }
+@media (min-width: 1800px) {
+  .copy { padding-right: max(88px, calc((100vw - 1620px) / 2)); }
+}
+@media (max-width: 850px) {
+  .section { grid-template-columns: 1fr; min-height: 0; }
+  .image { aspect-ratio: 4 / 3; }
+  .copy { padding: 44px var(--gutter) 50px; }
+  .copy h2 { font-size: clamp(24px, 6vw, 34px); }
+  .copy p { max-width: 45ch; margin-block: 22px 26px; font-size: 12px; }
+  .copy :global(.eyebrow) { margin-bottom: 25px; }
+}
