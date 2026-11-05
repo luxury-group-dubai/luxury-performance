@@ -1,0 +1,8 @@
+.stage { --exhaust-overlap: 360px; position: relative; z-index: 2; width: calc(100% + 2 * var(--gutter)); height: clamp(360px, 36vw, 520px); margin: -96px calc(-1 * var(--gutter)) -64px; pointer-events: none; }
+.canvas { position: absolute; inset: calc(-1 * var(--exhaust-overlap)) 0 0; opacity: 0; transition: opacity .2s ease; pointer-events: none; }
+.canvas.ready { opacity: 1; }
+.canvas canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
+.loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #77766f; font-size: 10px; letter-spacing: .05em; }
+.fallback { object-fit: contain; }
+@media (max-width: 700px) { .stage { --exhaust-overlap: 420px; height: 340px; margin-top: -104px; margin-bottom: -60px; } }
+@media (prefers-reduced-motion: reduce) { .canvas { transition: none; } }

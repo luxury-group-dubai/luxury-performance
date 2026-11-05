@@ -18,3 +18,13 @@ export const brandHeroImages: Partial<Record<string, HeroImage>> = {
     alt: 'Blue TECHART GTstreet R Touring Porsche 911 on an Alpine road, with carbon aerodynamics and custom wheels',
   },
 };
+
+/** Partner cards and landing pages share each brand's selected artwork. */
+export const partnerHeroImages: Partial<Record<string, HeroImage>> = {
+  ...brandHeroImages,
+  novitec: {
+    image: '/images/novitec-models/novitec-partner-hero-wide.jpg',
+    mobile: { src: '/images/novitec-models/novitec-partner-hero-mobile.jpg', width: 687, height: 1024 },
+    alt: 'NOVITEC Ferrari Purosangue lineup in a dark studio',
+  },
+};

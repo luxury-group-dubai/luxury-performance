@@ -50,3 +50,5 @@ export function exhaustScrollPose(progress:number) {
     floatAmount:smooth((p-.985)/.015),
   };
 }
+
+export type ExhaustScrollPose = ReturnType<typeof exhaustScrollPose> & { modelOffset?: [number, number, number]; zoom?: number; framingY?: number };

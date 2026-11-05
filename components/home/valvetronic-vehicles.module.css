@@ -28,7 +28,7 @@
 .brand[data-mark="subaru"] .mark { width: 88px; height: 74px; }
 .brand[data-mark="volkswagen"] .mark { width: 56px; height: 56px; }
 /* Preserve the original transparent PNG; enlarge its artwork past the clear margins. */
-.brand[data-mark="chevrolet-corvette"] .mark { position: absolute; top: calc(50% + 15px); left: 50%; translate: -50% -50%; clip-path: inset(20% 0 40%); width: 196px; max-width: none; height: 158px; }
+.brand[data-mark="chevrolet-corvette"] .mark { position: absolute; top: calc(50% + 15px); left: 50%; translate: -50% -50%; clip-path: inset(20% 0 42%); width: 196px; max-width: none; height: 158px; }
 @media (hover: hover) and (pointer: fine) {
  .brand .mark { opacity: .9; }
  .brand:hover .mark, .brand:focus-visible .mark { opacity: 1; transform: scale(1.035); }
