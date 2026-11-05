@@ -1,0 +1,100 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: start;
+  gap: 2px 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grid li { min-width: 0; }
+
+.brand {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 86px;
+  min-height: 86px;
+  padding: 10px 6px;
+}
+
+.mark {
+  display: block;
+  width: 160px;
+  max-width: 100%;
+  height: 54px;
+  object-fit: contain;
+  transition: transform 180ms ease;
+}
+
+/* Recolour only artwork whose entire source is white. */
+.monochrome { filter: brightness(0); }
+
+.brand[data-mark="ferrari"] .mark { width: 142px; }
+.brand[data-mark="lamborghini"] .mark { width: 178px; }
+.brand[data-mark="porsche"] .mark { width: 194px; height: 36px; }
+.brand[data-mark="bmw"] .mark { width: 58px; height: 58px; border-radius: 50%; background: #171819; }
+.brand[data-mark="mercedes-amg"] .mark,
+.brand[data-mark="mclaren"] .mark,
+.brand[data-mark="dodge"] .mark { width: 182px; }
+.brand[data-mark="audi"] .mark { width: 106px; }
+.brand[data-mark="maserati"] .mark { width: 166px; height: 66px; }
+.brand[data-mark="aston-martin"] .mark { width: 180px; height: 58px; }
+.brand[data-mark="lotus"] .mark { width: 64px; height: 64px; }
+.brand[data-mark="nissan"] .mark { width: 76px; height: 64px; }
+/* Match the homepage's flag crop without letting the PNG's clear margins grow a row. */
+.brand[data-mark="chevrolet-corvette"] .mark {
+  position: absolute;
+  top: calc(50% + 12px);
+  left: 50%;
+  translate: -50% -50%;
+  clip-path: inset(20% 0 42%);
+  width: min(180px, calc(100% + 28px));
+  max-width: none;
+  height: auto;
+  aspect-ratio: 2761 / 2219;
+}
+.brand[data-mark="toyota"] .mark { width: 82px; height: 56px; }
+.brand[data-mark="ford"] .mark { width: 126px; height: 52px; }
+.brand[data-mark="range-rover"] .mark { width: 184px; height: 34px; }
+.brand[data-mark="lexus"] .mark { width: 160px; height: 48px; }
+.brand[data-mark="honda"] .mark { width: 60px; height: 58px; }
+.brand[data-mark="subaru"] .mark { width: 80px; height: 64px; }
+.brand[data-mark="volkswagen"] .mark { width: 58px; height: 58px; }
+
+.brand:focus-visible { outline: 2px solid #887652; outline-offset: 3px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .brand:hover .mark,
+  .brand:focus-visible .mark { transform: scale(1.035); }
+}
+
+@media (min-width: 1180px) {
+  .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+  .grid { gap: 0 14px; }
+  .brand { height: 78px; min-height: 78px; padding: 10px; }
+  .brand .mark { width: 100%; max-width: min(96px, 100%); height: 40px; }
+  .brand[data-mark="porsche"] .mark { height: 32px; }
+  .brand[data-mark="bmw"] .mark,
+  .brand[data-mark="volkswagen"] .mark { width: 48px; height: 48px; }
+  .brand[data-mark="lotus"] .mark { width: 50px; height: 50px; }
+  .brand[data-mark="maserati"] .mark { width: 104px; height: 50px; }
+  .brand[data-mark="nissan"] .mark { width: 56px; height: 48px; }
+  .brand[data-mark="toyota"] .mark { width: 62px; height: 44px; }
+  .brand[data-mark="ford"] .mark { width: 92px; height: 42px; }
+  .brand[data-mark="honda"] .mark { width: 48px; height: 44px; }
+  .brand[data-mark="subaru"] .mark { width: 62px; height: 54px; }
+  .brand[data-mark="chevrolet-corvette"] .mark { top: calc(50% + 10px); width: min(128px, calc(100% + 14px)); max-width: none; height: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark { transition: none; }
+  .brand:hover .mark,
+  .brand:focus-visible .mark { transform: none; }
+}

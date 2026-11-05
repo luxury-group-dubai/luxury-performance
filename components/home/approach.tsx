@@ -6,7 +6,7 @@ import styles from './approach.module.css';
 export function HomeApproach() {
   return <section id="approach" className={styles.section} aria-labelledby="home-approach-title">
     <div className={styles.image}>
-      <Image src="/images/home/ferrari-sf90-workshop.webp" alt="Technician working on a red Ferrari SF90 in the workshop" fill sizes="(max-width: 850px) 100vw, 55vw" quality={90} />
+      <Image src="/images/home/ferrari-sf90-workshop-aligned-v1.webp" alt="Technician working on a red Ferrari SF90 in the workshop" fill sizes="(max-width: 1100px) 100vw, 55vw" quality={90} />
     </div>
     <div className={styles.copy}>
       <Reveal>

@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { HomeHero } from '@/components/home/homepage';
 import { PartnerMarquee } from '@/components/home/partner-marquee';
 import './home-tokens.css';
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import { Eyebrow, ArrowLink } from '@/components/ui';
 import { PurosangueFilm } from '@/components/purosangue/film';
 import { NovitecModels } from '@/components/home/novitec-models';
@@ -52,7 +49,6 @@ export default function Home() {
     <NovitecFeatureFilm />
     <ValvetronicVehicles />
     <HomeApproach />
-    <section className="location-section section-pad"><Reveal><div className="location-heading"><Eyebrow>Rooted in Dubai. Connected worldwide.</Eyebrow><p>Part of The Luxury Group.<br />One shared passion for exceptional automobiles.</p></div><Link href="/about#dubai" className="location-banner"><Image src="/images/headquarters.webp" fill sizes="90vw" alt="The Luxury Group headquarters with a lineup of supercars in Dubai" /><div className="location-overlay" /><div className="location-caption"><span>Our home.<br /><strong>Your next chapter.</strong></span><span className="location-arrow"><ArrowUpRight size={35} strokeWidth={1} /></span></div><span className="location-address">AL QUOZ, DUBAI / THE LUXURY GROUP</span></Link></Reveal></section>
     <Closing />
   </>;
 }

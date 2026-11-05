@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { exhaustScrollPose } from './valvetronic-exhaust-motion';
+import { exhaustScrollPose, type ExhaustScrollPose } from './valvetronic-exhaust-motion';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -28,10 +28,11 @@ export type ExhaustScene = {
   zoom(direction: number): void;
   dispose(): void;
 };
-type Options = { cinematic?: boolean; initialIsolated?: boolean; initialRouteColors?: boolean; reducedMotion: boolean; onInteract(): void; onError(): void };
+type Options = { cinematic?: boolean; floor?: boolean; directProgress?: boolean; initialIsolated?: boolean; initialRouteColors?: boolean; reducedMotion: boolean; canvasLabel?: string; topOverflow?(): number; scrollPose?(progress: number): ExhaustScrollPose; onInteract(): void; onError(): void };
 
 /** Photo-based display reconstruction; not engineering or fitment geometry. */
 export function createExhaustScene(host: HTMLDivElement, options: Options): ExhaustScene {
+  const scrollPose: (progress: number) => ExhaustScrollPose = options.scrollPose ?? exhaustScrollPose;
   const mobile=matchMedia('(max-width: 1024px), (pointer: coarse)').matches;
   const renderer = new THREE.WebGLRenderer({ antialias:!mobile,alpha:true,powerPreference:options.cinematic && !mobile ? 'high-performance' : 'low-power' });
   // Supersample phone edges without allocating multisampled color/depth buffers.
@@ -43,7 +44,7 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
   renderer.toneMappingExposure = .9;
   const canvas = renderer.domElement;
   canvas.dataset.exhaustQuality=mobile?'mobile':'desktop';
-  canvas.setAttribute('aria-label', options.cinematic ? 'Valvetronic Designs Huracán exhaust in titanium or stainless steel. Scroll to reveal the complete system.' : 'Interactive exhaust model. Drag in any direction to rotate freely. Pinch to zoom; twist with two fingers to roll. Arrow keys rotate; Home restores the photo angle.');
+  canvas.setAttribute('aria-label', options.canvasLabel ?? (options.cinematic ? 'Valvetronic Designs Huracán exhaust in titanium or stainless steel. Scroll to reveal the complete system.' : 'Interactive exhaust model. Drag in any direction to rotate freely. Pinch to zoom; twist with two fingers to roll. Arrow keys rotate; Home restores the photo angle.'));
   canvas.setAttribute('role', 'img');
   canvas.tabIndex = options.cinematic ? -1 : 0;
   canvas.style.touchAction = options.cinematic ? 'pan-y' : 'none';
@@ -250,7 +251,39 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
     }
   }
 
-  if(!options.cinematic) {
+  let floorShadow: THREE.ShadowMaterial | null = null;
+  if(options.floor) {
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
+    key.castShadow = true;
+    key.shadow.mapSize.set(mobile ? 512 : 1024, mobile ? 512 : 1024);
+    key.shadow.camera.left = key.shadow.camera.bottom = -7;
+    key.shadow.camera.right = key.shadow.camera.top = 7;
+    key.shadow.camera.near = .1;
+    key.shadow.camera.far = 40;
+    key.shadow.camera.updateProjectionMatrix();
+    key.shadow.bias = -.00015;
+    key.shadow.normalBias = .003;
+    key.shadow.radius = 3;
+    model.updateWorldMatrix(true, true);
+    const bounds = new THREE.Box3().setFromObject(model), center = bounds.getCenter(new THREE.Vector3());
+    const floorZ = bounds.min.z - .002;
+    key.target.position.set(center.x, center.y, floorZ + .7);
+    scene.add(key.target);
+    model.traverse(object => { if(object instanceof THREE.Mesh) object.castShadow = true; });
+    // The page's matte paper continues through this transparent receiver;
+    // only the physical contact shadow is composited, without a canvas edge.
+    floorShadow = ownMaterial(new THREE.ShadowMaterial({ color: 0x625e58, opacity: .3, toneMapped: false }));
+    const floor = new THREE.Mesh(
+      ownGeometry(new THREE.PlaneGeometry(80, 80)),
+      floorShadow,
+    );
+    floor.position.set(center.x, center.y, floorZ);
+    floor.receiveShadow = true;
+    scene.add(floor);
+  }
+
+  if(!options.cinematic && !options.floor) {
     // A broad, soft contact shadow anchors the product without an expensive live shadow pass.
     const shadowCanvas = document.createElement('canvas'); shadowCanvas.width = shadowCanvas.height = 128;
     const shadowContext = shadowCanvas.getContext('2d')!;
@@ -300,6 +333,14 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
   let preparation:Promise<void>|null=null, cancelPreparation:((error:Error)=>void)|null=null;
   let isolated = options.initialIsolated ?? false, fit = 1, lastRenderTime = 0;
   let sizedWidth=0,sizedHeight=0,sizedRatio=0;
+  let viewOverflow=0,framingY=0;
+  function frameCamera() {
+    if(!sizedWidth || !sizedHeight) return;
+    const normalHeight=sizedHeight-viewOverflow;
+    // An off-axis frame moves the image without changing the product's perspective.
+    if(viewOverflow || framingY) camera.setViewOffset(sizedWidth,normalHeight,0,-viewOverflow+framingY*normalHeight,sizedWidth,sizedHeight);
+    else { camera.clearViewOffset(); camera.updateProjectionMatrix(); }
+  }
   rightBank.visible = !isolated; centre.visible = !isolated;
   const referenceOrbit: [number, number, number] = options.cinematic ? [Math.PI+.20,1.47,8.6] : [.65,1.00,11.2];
   const referenceRoll = options.cinematic ? .12 : 1.97;
@@ -349,17 +390,27 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
   }
   const cinemaEye=new THREE.Vector3(),cinemaUp=new THREE.Vector3(0,0,1),cinemaScreenUp=new THREE.Vector3();
   function applyScrollPose() {
-    const pose = exhaustScrollPose(options.reducedMotion ? 1 : scrollProgress);
+    const pose = scrollPose(options.reducedMotion ? 1 : scrollProgress);
     target.set(pose.target[0],pose.target[1],pose.target[2]); controls.target.copy(target);
     // The exhaust roof is +Z. Orbiting about it reveals the left/right sides
     // without turning the front-facing product like a flat image.
     cinemaEye.set(Math.sin(pose.azimuth)*Math.cos(pose.elevation),Math.cos(pose.azimuth)*Math.cos(pose.elevation),Math.sin(pose.elevation));
     camera.position.copy(target).addScaledVector(cinemaEye,pose.radius*fit);
     camera.up.copy(cinemaUp).applyAxisAngle(cinemaEye,pose.roll);camera.lookAt(target);
+    const nextZoom=pose.zoom ?? 1,nextFraming=pose.framingY ?? 0;
+    if(camera.zoom!==nextZoom || framingY!==nextFraming) {
+      camera.zoom=nextZoom;framingY=nextFraming;frameCamera();
+    }
     model.visible=pose.visible;
     model.rotation.x=pose.bodyPitch;
     cinemaScreenUp.set(0,1,0).applyQuaternion(camera.quaternion);
     model.position.copy(cinemaScreenUp).multiplyScalar(pose.lift);
+    if(pose.modelOffset) {
+      model.position.x += pose.modelOffset[0];
+      model.position.y += pose.modelOffset[1];
+      model.position.z += pose.modelOffset[2];
+    }
+    if(floorShadow) floorShadow.opacity = .3 / (1 + Math.max(0, pose.modelOffset?.[2] ?? 0) * .9);
     renderer.toneMappingExposure=pose.exposure;
     scene.environmentIntensity=pose.environment;
     scene.environmentRotation.set(0,pose.reflectionYaw,pose.reflectionRoll);
@@ -372,7 +423,7 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
     frame = 0;
     if (disposed || !prepared || preparing || failed || !visible || document.hidden) return;
     const tracking=options.cinematic && (scrollArrival!==null || Math.abs(requestedProgress-scrollProgress)>.00005);
-    const floating=options.cinematic && !options.reducedMotion && !tracking && scrollProgress>.985;
+    const floating=options.cinematic && !options.reducedMotion && !tracking && scrollProgress>.985 && scrollPose(scrollProgress).floatAmount>0;
     if(mobile) {
       const interval=1000/60;
       // Keep a 60 Hz phase so fractional RAF times do not halve the frame rate.
@@ -385,7 +436,7 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
     if(options.cinematic) {
       applyScrollPose();
       if(floating) {
-        model.position.addScaledVector(cinemaScreenUp,Math.sin(now*.00125)*.045*exhaustScrollPose(scrollProgress).floatAmount);
+        model.position.addScaledVector(cinemaScreenUp,Math.sin(now*.00125)*.045*scrollPose(scrollProgress).floatAmount);
         scene.environmentRotation.y+=Math.sin(now*.00045)*.025;
       }
     }
@@ -442,7 +493,12 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
       else renderer.setSize(width,height,false);
       sizedWidth=width;sizedHeight=height;sizedRatio=ratio;
     }
-    camera.aspect = width / height; camera.updateProjectionMatrix();
+    const requestedOverflow = options.topOverflow?.() ?? 0;
+    viewOverflow = Number.isFinite(requestedOverflow) ? Math.max(0, Math.min(height - 1, requestedOverflow)) : 0;
+    const normalHeight = height - viewOverflow;
+    camera.aspect = width / normalHeight;
+    // Extend only the upper frustum; the resting frame below keeps its scale.
+    frameCamera();
     const nextFit = Math.max(1, (options.cinematic ? 1.5 : 1.25) / camera.aspect);
     camera.position.sub(controls.target).multiplyScalar(nextFit / fit).add(controls.target);
     fit = nextFit; controls.minDistance = 2.8 * fit; controls.maxDistance = 18 * fit;
@@ -526,6 +582,7 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
     controls.removeEventListener('start', beginInteraction); controls.removeEventListener('end', endInteraction); controls.removeEventListener('change', invalidate); controls.dispose();
     canvas.removeEventListener('keydown', keyboard); canvas.removeEventListener('webglcontextlost', contextLost);
     geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); textures.forEach(t => t.dispose());
+    key.shadow.dispose();
     environment.dispose(); renderer.dispose(); renderer.forceContextLoss(); canvas.remove();
   }
 
@@ -534,7 +591,7 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
     progress(value) {
       const next=THREE.MathUtils.clamp(value,0,1),changed=next!==requestedProgress;
       requestedProgress=next;
-      if(firstProgress || options.reducedMotion) {
+      if(firstProgress || options.reducedMotion || options.directProgress) {
         scrollProgress=next;scrollVelocity=0;scrollArrival=null;firstProgress=false;
       } else if(next!==0 && next!==1) {
         scrollArrival=null;if(scrollProgress===next) scrollVelocity=0;

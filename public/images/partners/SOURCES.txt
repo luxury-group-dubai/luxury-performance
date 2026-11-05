@@ -1,0 +1,3 @@
+FI Exhaust M-Performance image: https://www.fi-exhaust.com/uploads/image_block/en/m3-p-banner.jpg
+Source: official FI Exhaust homepage, https://www.fi-exhaust.com/home.jsp?lang=en
+Original 5334 x 3000 JPEG resized to 2560 x 1440 WebP. Framing is handled in CSS.
