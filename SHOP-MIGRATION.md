@@ -6,7 +6,7 @@ Cart IDs, including their secret key, stay in an HttpOnly cookie. Prices and sto
 
 ## Required before the domain cutover
 
-- Exact inventory currently comes from the stock metadata already published by the live LXP theme. Set up Storefront API access with `unauthenticated_read_product_inventory` and replace this bridge with authenticated inventory reads **before redirecting lxpforged.com**. Preserve policy/used-stock restrictions in a supported product data contract. A failed stock read currently blocks add-to-cart safely.
+- Install a Shopify Dev Dashboard app from the store’s organization with `read_products` and `read_inventory`. Set `SHOPIFY_CLIENT_ID` and `SHOPIFY_CLIENT_SECRET` on the website server. The server requests and renews its Admin API token automatically. An existing non-expiring token can instead be configured as `SHOPIFY_ADMIN_ACCESS_TOKEN`. The Admin API supplies fresh variant inventory, inventory tracking and backorder policy. A failed stock read blocks the affected add-to-cart action. Verify stock-only and special-order products before switching domains.
 - The 11 Urban draft products are used and stock-only. They must remain draft until separately approved, and must retain tracked inventory and DENY. Do not bulk-enable CONTINUE for used stock.
 - Review inventory policies on other used OEM listings. Existing Shopify policies are not changed by this preview.
 - Production cart changes need a shared lock/idempotency strategy across application instances; the preview serializes requests within one process. Shopify remains authoritative for stock-only inventory at checkout.
@@ -17,7 +17,7 @@ Cart IDs, including their secret key, stay in an HttpOnly cookie. Prices and sto
 
 ## Environment
 
-See `.env.example`. The Storefront API supports tokenless catalog/cart requests on this store. A Storefront token is optional for the current fields; never supply an Admin token. Catalog responses revalidate every five minutes; cart and stock checks use no-store.
+See `.env.example`. The Storefront API supports tokenless catalog/cart requests on this store. A Storefront token is optional for the current Storefront fields. Use a separate read-only Admin API credential for stock and product videos. Never put it in `SHOPIFY_STOREFRONT_TOKEN` or a `NEXT_PUBLIC_` variable. Catalog responses revalidate every five minutes; cart and stock checks use no-store.
 
 ## Valvetronic installation and product media
 
@@ -31,7 +31,7 @@ Descriptions retain sanitized HTML formatting. Galleries load up to 250 product 
 
 Valvetronic product pages show the existing `custom.valvetronic_youtube_videos` links in a click-to-play section. Two clips show initially, with expansion for longer lists; only one player is mounted at a time. Collapsing the list stops any hidden video. Products without assigned clips omit the section. URLs are restricted to valid YouTube IDs and duplicates are removed.
 
-The preview’s tokenless Shopify connection cannot read metafields. `videos-server.ts` therefore reads only the matching video poster links from the published product page, cached for five minutes. Before moving the old domain, configure a Storefront token with `unauthenticated_read_metafields` and public read access for the existing definition, verify direct reads, then remove this fallback. This shares the existing inventory bridge’s origin setting. See [Storefront Metafield access](https://shopify.dev/docs/api/storefront/2026-07/objects/Metafield). No metafield definitions or product values were changed.
+The server reads the existing product metafield through the Shopify Admin API and caches the result for five minutes. Missing or unreadable video data omits the video section.
 
 ## Partner homepages
 
