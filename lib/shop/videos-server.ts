@@ -1,21 +1,21 @@
 import 'server-only';
 import { cache } from 'react';
-import { storefront } from './storefront';
-import { PRODUCT_VIDEOS_QUERY } from './queries';
-import { publishedVideoIds, videoIds } from './videos';
+import { shopifyAdmin } from './admin';
+import { videoIds } from './videos';
 
-export const getProductVideos = cache(async (handle: string): Promise<string[]> => {
-  if (process.env.SHOPIFY_STOREFRONT_TOKEN) {
-    try {
-      const data = await storefront<{ product: { videos: { value: string } | null } | null }>(PRODUCT_VIDEOS_QUERY, { handle });
-      if (data.product?.videos) return videoIds(data.product.videos.value);
-    } catch { /* Preview fallback until the connection has metafield access. */ }
+const PRODUCT_VIDEOS_QUERY = `query ReadProductVideos($id: ID!) {
+  product(id: $id) {
+    videos: metafield(namespace: "custom", key: "valvetronic_youtube_videos") { value }
   }
-  // Temporary public-theme bridge, like inventory.ts. Replace before domain cutover.
-  const origin = process.env.SHOPIFY_INVENTORY_ORIGIN || 'https://lxpforged.com';
+}`;
+
+export const getProductVideos = cache(async (productId: string): Promise<string[]> => {
   try {
-    const response = await fetch(`${origin}/products/${encodeURIComponent(handle)}`, { next: { revalidate: 300 }, signal: AbortSignal.timeout(10000) });
-    if (!response.ok) return [];
-    return publishedVideoIds(await response.text());
-  } catch { return []; }
+    const { product } = await shopifyAdmin<{ product: { videos: { value: string } | null } | null }>(
+      PRODUCT_VIDEOS_QUERY, { id: productId }, { next: { revalidate: 300 } },
+    );
+    return videoIds(product?.videos?.value);
+  } catch {
+    return [];
+  }
 });

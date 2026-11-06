@@ -9,5 +9,3 @@ export const CART_QUERY = `query Cart($id: ID!) { cart(id: $id) { ${CART_FIELDS}
 export const CART_CREATE = `mutation CreateCart($input: CartInput!) { cartCreate(input: $input) { cart { ${CART_FIELDS} } userErrors { message } warnings { message } } }`;
 export const CART_ADD = `mutation AddLines($cartId: ID!, $lines: [CartLineInput!]!) { cartLinesAdd(cartId: $cartId, lines: $lines) { cart { ${CART_FIELDS} } userErrors { message } warnings { message } } }`;
 export const CART_UPDATE = `mutation UpdateLines($cartId: ID!, $lines: [CartLineUpdateInput!]!) { cartLinesUpdate(cartId: $cartId, lines: $lines) { cart { ${CART_FIELDS} } userErrors { message } warnings { message } } }`;
-
-export const PRODUCT_VIDEOS_QUERY = `query ProductVideos($handle: String!) { product(handle: $handle) { videos: metafield(namespace: "custom", key: "valvetronic_youtube_videos") { value } } }`;

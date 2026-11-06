@@ -18,13 +18,3 @@ export function videoIds(value: unknown): string[] {
   if (!Array.isArray(urls)) return [];
   return [...new Set(urls.map(youtubeId).filter((id): id is string => !!id))];
 }
-// Read only the product-specific video posters, excluding site-wide/social links.
-export function publishedVideoIds(html: string): string[] {
-  const urls = [...html.matchAll(/<a\b[^>]*>/gi)].flatMap(([tag]) => {
-    const classes = tag.match(/\bclass\s*=\s*(["'])(.*?)\1/i)?.[2].split(/\s+/) || [];
-    if (!classes.includes('valvetronic-videos__poster')) return [];
-    const href = tag.match(/\bhref\s*=\s*(["'])(.*?)\1/i)?.[2];
-    return href ? [href.replaceAll('&amp;', '&')] : [];
-  });
-  return videoIds(urls);
-}
