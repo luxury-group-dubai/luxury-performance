@@ -4,45 +4,60 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import type { VehicleBody, VehicleGeneration } from '@/lib/shop/techart-fitment';
+import type { CayenneBody } from '@/lib/shop/techart-cayenne-body-fitment';
+import type { BodyStyle, VehicleGeneration } from '@/lib/shop/techart-fitment';
 import styles from './vehicle-selector.module.css';
 
-function BodyCard({ body, generation, initialFit, shopPath }: { body: VehicleBody; generation: string; initialFit?: string; shopPath: string }) {
-  const [fit, setFit] = useState(body.choices.some(choice => choice.fit === initialFit) ? initialFit! : body.choices[0].fit);
-  const selected = body.choices.find(choice => choice.fit === fit)!;
-  const trim = fit.slice(6);
-  const family = /^turbo/.test(trim) ? 'turbo' : /^gt3/.test(trim) ? 'gt3' : /gts/.test(trim) ? 'gts' : 'carrera';
-  const image = body.key === 'coupe' ? family : `${family === 'turbo' ? 'turbo' : family === 'gts' ? 'gts' : 'carrera'}-${body.key}`;
-  const query = new URLSearchParams({ brand: 'techart', make: 'porsche', model: '911', fit, body: body.key });
-  return <article className={styles.card}>
-    <div className={styles.image}><img src={`/vehicle-selector/vehicle-selector-${image}.png`} alt="" width={500} height={180} loading="lazy" /></div>
-    <div className={styles.cardBody}>
-      <div className={styles.cardHeading}><h3>{body.name}</h3><p role="status" aria-live="polite">{selected.count} {selected.count === 1 ? 'part' : 'parts'}</p></div>
-      <div className={styles.pills} role="group" aria-label={`${generation} ${body.name} trim`}>
-        {body.choices.map(choice => <button key={choice.fit} type="button" aria-pressed={choice.fit === fit} onClick={() => setFit(choice.fit)}>{choice.name}</button>)}
-      </div>
-      <Link className={styles.shop} href={`${shopPath}?${query}`} aria-label={`Shop parts: 911 ${generation} ${selected.name} ${body.name}`}>Shop parts <ArrowUpRight size={17} aria-hidden="true" /></Link>
-    </div>
-  </article>;
-}
+type PickerProps = {
+  model: '911' | 'cayenne';
+  options: VehicleGeneration[];
+  shopPath: string;
+  initialFit?: string;
+  initialBody?: BodyStyle | CayenneBody;
+};
 
-export function VehiclePicker({ options, initialFit, shopPath }: { options: VehicleGeneration[]; initialFit?: string; shopPath: string }) {
-  const initialGeneration = initialFit?.slice(0, 5).replace('_', '.') || '992.1';
-  const [generationName, setGeneration] = useState(initialGeneration);
-  const [familyKey, setFamily] = useState(() => options.find(item => item.name === initialGeneration)?.families.find(family => family.bodies.some(body => body.choices.some(choice => choice.fit === initialFit)))?.key || 'carrera');
-  const generation = options.find(item => item.name === generationName) || options[0];
-  const family = generation.families.find(item => item.key === familyKey) || generation.families[0];
+export function VehiclePicker({ model, options, shopPath, initialFit, initialBody }: PickerProps) {
+  const cayenne = model === 'cayenne';
+  const modelName = cayenne ? 'Cayenne' : '911';
+  const initialGeneration = options.find(item => initialFit?.startsWith(`${item.key}_`));
+  const [generationKey, setGeneration] = useState(initialGeneration?.key || (cayenne ? 'e3_2' : '992_1'));
+  const [bodyName, setBody] = useState(() => initialGeneration?.bodies.find(body => (
+    (!initialBody || body.key === initialBody) && body.choices.some(choice => choice.fit === initialFit)
+  ))?.name ?? initialGeneration?.bodies.find(body => body.key === initialBody)?.name);
+  const generation = options.find(item => item.key === generationKey) || options[0];
+  const body = generation.bodies.find(item => item.name === bodyName) || generation.bodies[0];
+  const shopQuery = new URLSearchParams({ brand: 'techart', make: 'porsche', model });
+  const modelShop = `${shopPath}?${shopQuery}`;
+  const factoryGallery = generation.key === 'e3_2' ? 'cayenne' : generation.key === '992_2' ? '911' : undefined;
+
   return <div className={styles.selector}>
-    <div className={styles.control}><span className={styles.label}>Generation</span><div className={styles.pills} role="group" aria-label="Porsche 911 generation">
-      {options.map(item => <button key={item.name} type="button" aria-pressed={generation.name === item.name} onClick={() => setGeneration(item.name)}>{item.name}</button>)}
+    <div className={styles.control}><span className={styles.label}>Generation</span><div className={styles.pills} role="group" aria-label={`Porsche ${modelName} generation`}>
+      {options.map(item => <button key={item.key} type="button" aria-pressed={generation.key === item.key} onClick={() => setGeneration(item.key)}>{item.name}</button>)}
     </div></div>
-    {!!generation.families.length && <div className={styles.control}><span className={styles.label}>Model family</span><div className={styles.pills} role="group" aria-label="Porsche 911 model family">
-      {generation.families.map(item => <button key={item.key} type="button" aria-pressed={family.key === item.key} onClick={() => setFamily(item.key)}>{item.name}</button>)}
-    </div></div>}
-    {family ? <>
-      <div className={styles.familyHeading}><h3>911 {generation.name} {family.name}</h3><p>Choose your body style and trim.</p></div>
-      <div className={styles.grid}>{family.bodies.map(body => <BodyCard key={`${generation.name}:${family.key}:${body.key}`} body={body} generation={generation.name} initialFit={initialFit} shopPath={shopPath} />)}</div>
-      <p className={styles.note}>Model images are illustrative; 991 selections use 992 imagery. Counts reflect recorded body-style fitment. Parts needing confirmation are listed separately.</p>
+    {body ? <>
+      <div className={styles.control}><span className={styles.label}>Body style</span><div className={styles.pills} role="group" aria-label={`${modelName} body style`}>
+        {generation.bodies.map(item => <button key={item.name} type="button" aria-pressed={body.name === item.name} onClick={() => setBody(item.name)}>{item.name}</button>)}
+      </div></div>
+      <div className={styles.familyHeading}><h3>{`${modelName} ${generation.name} · ${body.name}`}</h3><p>Choose your trim to shop parts.</p></div>
+      <div className={styles.grid}>
+        {body.choices.map(choice => {
+          const title = choice.name === modelName ? modelName : `${modelName} ${choice.name}`;
+          const count = `${choice.count} ${choice.count === 1 ? 'part' : 'parts'}`;
+          const bodyLabel = body.key === 'targa' || body.name === choice.name ? '' : ` ${body.name}`;
+          return <Link className={`${styles.card} ${styles.trimCard}`} key={choice.fit} href={`${modelShop}&fit=${choice.fit}&body=${body.key}`} aria-label={`Shop ${count} for ${title} ${generation.name}${bodyLabel}`}>
+            <div className={styles.image}><img {...choice.image} alt="" loading="lazy" /></div>
+            <div className={styles.trimCaption}><div><span>{title}</span><small>{count}</small></div><ArrowUpRight size={18} aria-hidden="true" /></div>
+          </Link>;
+        })}
+      </div>
+      <p className={styles.note}>{factoryGallery
+        ? <>Factory side profiles from <a href={`https://www.porsche.com/usa/models/${factoryGallery}/configure/`}>Porsche</a> where available. </>
+        : <>Representative profiles from <a href="https://configurator.techart.de/">TECHART’s model selection</a>. {generation.key === '992_1' && <>GT3 RS profile from <a href="https://www.porsche.com/international/models/911/configure/">Porsche</a>. </>}</>}
+        Counts reflect recorded body-style fitment. Parts needing confirmation are listed separately.</p>
     </> : <p className={styles.note}>No parts are currently listed for this generation. <Link href="/contact">Ask us about your Porsche.</Link></p>}
+    {cayenne && <nav className={styles.cayenneLinks} aria-label="Browse Cayenne parts">
+      {body && <Link className={styles.change} href={`${modelShop}&fit=${generation.key}`}>Shop all {generation.name} parts</Link>}
+      <Link className={styles.change} href={modelShop}>All Cayenne parts</Link>
+    </nav>}
   </div>;
 }

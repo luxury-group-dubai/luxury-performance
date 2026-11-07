@@ -11,12 +11,15 @@ import { categoryOf, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/
 import { money } from '@/lib/shop/types';
 import { ArrowLink, Eyebrow } from '@/components/ui';
 import { BrandArtwork } from '@/components/brand-artwork';
-import { VehicleSelector } from '@/components/shop/vehicle-selector';
+import { CayenneSelector, VehicleSelector } from '@/components/shop/vehicle-selector';
 import { is911Fit } from '@/lib/shop/techart-fitment';
 import { NovitecStories } from '@/components/novitec-stories/novitec-stories';
 import { NovitecFeed } from '@/components/novitec-feed/novitec-feed';
 import { novitecFeedAlbums } from '@/lib/novitec-feed-albums';
+import { PartnerFaq } from '@/components/partners/partner-faq';
+import { ValvetronicExhaustComparison } from '@/components/partners/valvetronic-exhaust-comparison';
 import { ValvetronicIntroExhaust } from '@/components/partners/valvetronic-intro-exhaust';
+import { ValvetronicSoundGallery } from '@/components/partners/valvetronic-sound-gallery';
 import { ValvetronicVehicleLogos } from '@/components/partners/valvetronic-vehicle-logos';
 import styles from '../partners.module.css';
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
@@ -64,17 +67,29 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   const featured = [...new Map(selections.map(item => [item.id, item])).values()].slice(0, 4);
   const heroAsset = partnerHeroImages[p.slug];
   const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 95 }).props : null;
-  const vehicleFirst = p.slug === 'techart' && vehicles.includes('911');
+  const vehicleFirst = p.slug === 'techart' && (vehicles.includes('911') || vehicles.includes('cayenne'));
+  const techartModel = vehicles.includes('cayenne') && (query.model === 'cayenne' || !vehicles.includes('911')) ? 'cayenne' : '911';
   const compactNovitec = p.slug === 'novitec' && vehicles.length > 0;
   const centeredIntro = p.slug === 'valvetronic';
   const initialFit = typeof query.fit === 'string' && is911Fit(query.fit) ? query.fit : undefined;
+  const initialBody = typeof query.body === 'string' ? query.body : undefined;
   const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
-  const vehicleHeading = <><h2>{p.vehicleHeading}</h2><p>{compactNovitec ? 'NOVITEC aerodynamics, exhausts, wheels and suspension, with fitment and installation support in Dubai.' : vehicleFirst ? 'Choose your generation, body style and trim. Then explore the TECHART parts for your Porsche.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
+  const vehicleHeading = <><h2>{p.vehicleHeading}</h2><p>{compactNovitec ? 'NOVITEC aerodynamics, exhausts, wheels and suspension, with fitment and installation support in Dubai.' : vehicleFirst ? 'Choose your model and generation to explore TECHART parts for your Porsche.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
   const vehicleSection = vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
     <header id={compactNovitec ? 'discover' : undefined}>{!compactNovitec && !centeredIntro && <Eyebrow number={vehicleFirst ? '01' : '02'}>Your starting point</Eyebrow>}{vehicleHeading}</header>
     {vehicleFirst ? <>
-      <nav className={styles.modelChoices} aria-label="Porsche models"><span aria-current="true">911</span>{vehicles.filter(vehicle => vehicle !== '911').map(vehicle => <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>)}</nav>
-      <VehicleSelector products={products.filter(product => tagsFor(product, 'model').includes('911'))} fit={initialFit} />
+      <nav className={styles.modelChoices} aria-label="Porsche models">
+        {vehicles.map(vehicle => {
+          if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
+          if (vehicle === '911' || vehicle === 'cayenne') {
+            return <Link key={vehicle} href={vehicle === '911' ? '/partners/techart#vehicles' : '/partners/techart?model=cayenne#vehicles'}>{label(vehicle)}</Link>;
+          }
+          return <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>;
+        })}
+      </nav>
+      {techartModel === 'cayenne'
+        ? <CayenneSelector products={products} fit={typeof query.fit === 'string' ? query.fit : undefined} body={initialBody} />
+        : <VehicleSelector products={products.filter(product => tagsFor(product, 'model').includes('911'))} fit={initialFit} body={initialBody} />}
     </> : compactNovitec ? <div className={styles.novitecWordmarks} aria-label="Explore NOVITEC by vehicle brand">{vehicles.map(vehicle => <Link key={vehicle} href={novitecWordmarks[vehicle] ? `/partners/novitec/${vehicle.replace(/_/g, '-')}` : filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })} aria-label={`Explore NOVITEC for ${label(vehicle)}`} data-make={vehicle}>{novitecWordmarks[vehicle] ? <Image src={novitecWordmarks[vehicle]} alt="" width={240} height={70} /> : <span>{label(vehicle)}</span>}</Link>)}</div> : vehicleLinks}
   </section>;
 
@@ -111,7 +126,10 @@ export default async function PartnerPage({ params, searchParams }: Props) {
       return { ...look, image: album.images[0], gallery: album.images.slice(1), imageRatios: album.ratios, products: lookProducts };
     })} />}
     {p.slug === 'novitec' && <NovitecStories />}
+    {p.slug === 'valvetronic' && <ValvetronicExhaustComparison />}
     {p.slug !== 'novitec' && featured.length > 0 && <section id="selected" className={styles.selected}><div className={styles.sectionHeading}><div><Eyebrow>A closer look</Eyebrow><h2>Explore the range.</h2></div><ArrowLink href={shop}>{p.slug === 'valvetronic' ? 'View all exhausts' : 'Shop the collection'}</ArrowLink></div><div className={styles.productGrid}>{featured.map(item => <Link className="shop-product-card" key={item.id} href={`/products/${item.handle}`}><div className="shop-product-image">{item.featuredImage && <img src={`${item.featuredImage.url}${item.featuredImage.url.includes('?') ? '&' : '?'}width=700`} alt={item.featuredImage.altText || item.title} loading="lazy"/>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{item.tags.includes('condition_used') && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.name}</span><span>{categoryOf(item)}</span></div><h3>{item.title.replace(/^(TECHART|Valvetronic Designs)\s*[-–]\s*/i, '')}</h3><p className="shop-price">From {money(item.priceRange.minVariantPrice)}</p></Link>)}</div></section>}
+    {p.slug === 'valvetronic' && <ValvetronicSoundGallery />}
+    {(p.slug === 'novitec' || p.slug === 'valvetronic') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
     <section className={styles.support}><div><Eyebrow dark>Luxury Performance / Dubai</Eyebrow><h2>Your car.<br/>Your next chapter.</h2></div><div><p>{p.stockOnly ? 'Need a closer look at one of the kits? Ask us about its condition, included parts and fitment.' : 'From the first component to a complete specification, our team can help with compatibility, product choices and installation.'}</p><ArrowLink href={enquiry} light>Discuss your {p.slug === 'fi-exhaust' ? 'exhaust' : 'specification'}</ArrowLink></div></section>
   </div>;
 }

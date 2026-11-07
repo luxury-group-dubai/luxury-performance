@@ -1,11 +1,22 @@
 import { readFileSync } from 'node:fs';
+import { resolve, dirname, extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import ts from 'typescript';
 
-const source = readFileSync(new URL('../lib/shop/taxonomy.ts', import.meta.url), 'utf8');
-const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2020 } });
-const { updateFilters, filterUrl, fitOptions, filterProducts } = await import(`data:text/javascript;base64,${Buffer.from(outputText).toString('base64')}`);
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const modules = new Map();
+function load(path) {
+  if (extname(path) === '.json') return JSON.parse(readFileSync(path, 'utf8'));
+  if (!extname(path)) path += '.ts';
+  if (modules.has(path)) return modules.get(path).exports;
+  const compiled = { exports: {} }; modules.set(path, compiled);
+  const { outputText } = ts.transpileModule(readFileSync(path, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true } });
+  new Function('require', 'module', 'exports', outputText)(specifier => load(resolve(dirname(path), specifier)), compiled, compiled.exports);
+  return compiled.exports;
+}
+const { updateFilters, filterUrl, fitOptions, filterProducts } = load(resolve(root, 'lib/shop/taxonomy.ts'));
 const products = [
   { title: 'Shared wheels', vendor: 'TECHART', productType: 'Wheels', tags: ['make_porsche', 'model_911', 'model_cayenne', 'fit_992_1', 'fit_e3_2'], priceRange: { minVariantPrice: { amount: '2000' } } },
   { title: 'Cayenne spoiler', vendor: 'TECHART', productType: 'Spoiler', tags: ['make_porsche', 'model_cayenne', 'fit_e3_2'], priceRange: { minVariantPrice: { amount: '1000' } } },

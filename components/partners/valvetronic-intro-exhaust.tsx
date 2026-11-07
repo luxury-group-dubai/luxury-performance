@@ -1,16 +1,46 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { ExhaustScene } from '@/components/home/valvetronic-exhaust-scene';
 import { valvetronicIntroPose } from './valvetronic-intro-motion';
 import styles from './valvetronic-intro-exhaust.module.css';
+
+type SceneDisplay =
+  | { status: 'loading' | 'unavailable'; progress: number }
+  | { status: 'ready'; generation: number };
+
+const openingPoster = '/images/partners/valvetronic-exhaust-opening';
+const settledPoster = '/images/partners/valvetronic-exhaust-settled';
+const exhaustLabel = 'Valvetronic Designs Huracán titanium exhaust system';
+
+function ExhaustPoster({ progress }: { progress: number }) {
+  const referenceProgress = progress === 1 ? 1 : 0;
+  const source = referenceProgress ? settledPoster : openingPoster;
+  const pose = valvetronicIntroPose(progress);
+  const reference = valvetronicIntroPose(referenceProgress);
+  const framing = {
+    '--poster-motion-zoom': (pose.zoom ?? 1) / (reference.zoom ?? 1),
+    '--poster-wide-y': pose.framingY ?? 0,
+    '--poster-wide-reference-y': reference.framingY ?? 0,
+    '--poster-compact-y': valvetronicIntroPose(progress, true).framingY ?? 0,
+    '--poster-compact-reference-y': valvetronicIntroPose(referenceProgress, true).framingY ?? 0,
+  } as CSSProperties;
+
+  return <picture className={styles.poster} style={framing}>
+    <source media="(prefers-reduced-motion: reduce) and (max-width: 700px), (scripting: none) and (max-width: 700px)" srcSet={`${settledPoster}-mobile.webp`} />
+    <source media="(prefers-reduced-motion: reduce), (scripting: none)" srcSet={`${settledPoster}.webp`} />
+    <source media="(max-width: 700px)" srcSet={`${source}-mobile.webp`} />
+    <Image src={`${source}.webp`} alt={exhaustLabel} width={1600} height={880} unoptimized loading="eager" />
+  </picture>;
+}
 
 export function ValvetronicIntroExhaust() {
   const stage = useRef<HTMLElement>(null);
   const mount = useRef<HTMLDivElement>(null);
   const scene = useRef<ExhaustScene | null>(null);
-  const [status, setStatus] = useState<'loading' | 'ready' | 'unavailable'>('loading');
+  const present = useRef<((generation: number) => void) | null>(null);
+  const [display, setDisplay] = useState<SceneDisplay>({ status: 'loading', progress: 0 });
   const [introRevealed, setIntroRevealed] = useState(false);
 
   useEffect(() => {
@@ -73,13 +103,23 @@ export function ValvetronicIntroExhaust() {
       pause();
       scene.current?.dispose();
       scene.current = null;
-      setStatus('loading');
+      setDisplay({ status: 'loading', progress });
+    }
+    function unavailable(run: number) {
+      if (disposed || run !== generation) return;
+      failed = true;
+      ready = false;
+      pause();
+      scene.current?.dispose();
+      scene.current = null;
+      setDisplay({ status: 'unavailable', progress: 1 });
+      showIntro();
     }
     function start() {
       if (disposed || started || document.hidden || !mount.current || !approaching()) return;
       const run = ++generation;
       started = true;
-      setStatus('loading');
+      setDisplay({ status: 'loading', progress });
       sceneModule ??= import('@/components/home/valvetronic-exhaust-scene');
       sceneModule.then(async ({ createExhaustScene }) => {
         if (disposed || run !== generation || !mount.current) return;
@@ -87,38 +127,21 @@ export function ValvetronicIntroExhaust() {
           cinematic: true,
           floor: true,
           directProgress: true,
+          fitWithZoom: true,
           topOverflow: () => stage.current ? parseFloat(getComputedStyle(stage.current).getPropertyValue('--exhaust-overlap')) || 0 : 0,
           reducedMotion: reducedMotion.matches,
-          canvasLabel: 'Valvetronic Designs Huracán titanium exhaust system resting on a studio floor.',
+          canvasLabel: exhaustLabel,
           scrollPose: value => valvetronicIntroPose(value, compact.matches),
           onInteract: () => {},
-          onError: () => {
-            if (disposed || run !== generation) return;
-            failed = true;
-            ready = false;
-            pause();
-            scene.current?.dispose();
-            scene.current = null;
-            setStatus('unavailable');
-            showIntro();
-          },
+          onError: () => unavailable(run),
         });
         scene.current = next;
         next.finish('titanium');
         next.progress(reducedMotion.matches ? 1 : progress);
         await next.prepare();
         if (disposed || run !== generation || failed || scene.current !== next) return;
-        ready = true;
-        setStatus('ready');
-        reveal();
-      }).catch(() => {
-        if (disposed || run !== generation) return;
-        ready = false;
-        scene.current?.dispose();
-        scene.current = null;
-        setStatus('unavailable');
-        showIntro();
-      });
+        setDisplay({ status: 'ready', generation: run });
+      }).catch(() => unavailable(run));
     }
     const preload = new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting)) start();
@@ -137,10 +160,16 @@ export function ValvetronicIntroExhaust() {
     };
     reducedMotion.addEventListener('change', motionChange);
     document.addEventListener('visibilitychange', pageVisibility);
+    present.current = run => {
+      if (disposed || run !== generation || failed) return;
+      ready = true;
+      reveal();
+    };
     start();
     return () => {
       disposed = true;
       generation++;
+      present.current = null;
       preload.disconnect();
       visibility.disconnect();
       pause();
@@ -151,9 +180,14 @@ export function ValvetronicIntroExhaust() {
     };
   }, []);
 
-  return <figure ref={stage} className={styles.stage} data-valvetronic-intro-exhaust data-scene-status={status} data-intro-revealed={introRevealed}>
-    <div ref={mount} className={`${styles.canvas} ${status === 'ready' ? styles.ready : ''}`} aria-hidden={status !== 'ready'} />
-    {status === 'loading' && <span className={styles.loading} role="status">Loading the details</span>}
-    {status === 'unavailable' && <Image className={styles.fallback} src="/images/home/valvetronic-huracan-exhaust-reference.webp" alt="Valvetronic Designs Huracán titanium exhaust system" fill sizes="100vw" />}
+  useEffect(() => {
+    // Begin moving after React has presented the prepared frame in place of the still.
+    if (display.status === 'ready') present.current?.(display.generation);
+  }, [display]);
+
+  const isReady = display.status === 'ready';
+  return <figure ref={stage} className={styles.stage} data-valvetronic-intro-exhaust data-scene-status={display.status} data-intro-revealed={introRevealed}>
+    <div ref={mount} className={`${styles.canvas} ${isReady ? styles.ready : ''}`} aria-hidden={!isReady} />
+    {display.status !== 'ready' && <ExhaustPoster progress={display.progress} />}
   </figure>;
 }

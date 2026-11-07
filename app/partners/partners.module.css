@@ -85,7 +85,7 @@
 .centeredIntroduction:has([data-intro-revealed="false"]) > div { opacity: 0; transform: translateY(10px); }
 .centeredIntroduction h2 { font-size: clamp(28px, 3.4vw, 50px); line-height: 1.3; text-wrap: balance; }
 .centeredIntroduction p { max-width: 580px; margin: 24px auto 0; }
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (scripting: none) {
  .centeredIntroduction:has([data-valvetronic-intro-exhaust]) > div { opacity: 1; transform: none; transition: none; }
 }
 @media (max-width: 700px) {

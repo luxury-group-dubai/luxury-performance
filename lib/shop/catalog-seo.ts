@@ -1,6 +1,6 @@
 import type { CatalogProduct } from './types';
 import { filterProducts, filterUrl, type Filters } from './taxonomy';
-import { filterBodyProducts, is911Fit, isBodyStyle } from './techart-fitment';
+import { filterBodyProducts, techartSelection } from './techart-fitment';
 
 export type CatalogSearchParams = Record<string, string | string[] | undefined>;
 const facetKeys = ['brand', 'make', 'model', 'fit', 'body', 'category', 'q', 'sort'] as const;
@@ -9,9 +9,7 @@ const first = (value: string | string[] | undefined) => Array.isArray(value) ? v
 export function catalogSeo(basePath: string, query: CatalogSearchParams, products: CatalogProduct[], live: boolean) {
   const filters = Object.fromEntries(facetKeys.map(key => [key, first(query[key])])) as Filters;
   // Match the catalogue's fitment filtering and 24-card pagination, including its clamped aliases.
-  const fit = filters.brand === 'techart' && filters.model === '911' && is911Fit(filters.fit) ? filters.fit : undefined;
-  const body = fit && isBodyStyle(filters.body) ? filters.body : undefined;
-  const matches = filterBodyProducts(filterProducts(products, filters), fit, body);
+  const matches = filterBodyProducts(filterProducts(products, filters), techartSelection(filters));
   const maxPage = Math.max(1, Math.ceil(matches.length / 24));
   const rawPage = first(query.page);
   const number = Number(rawPage);

@@ -1,8 +1,60 @@
-.stage { --exhaust-overlap: 360px; position: relative; z-index: 2; width: calc(100% + 2 * var(--gutter)); height: clamp(360px, 36vw, 520px); margin: -96px calc(-1 * var(--gutter)) -64px; pointer-events: none; }
-.canvas { position: absolute; inset: calc(-1 * var(--exhaust-overlap)) 0 0; opacity: 0; transition: opacity .2s ease; pointer-events: none; }
-.canvas.ready { opacity: 1; }
-.canvas canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
-.loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #77766f; font-size: 10px; letter-spacing: .05em; }
-.fallback { object-fit: contain; }
-@media (max-width: 700px) { .stage { --exhaust-overlap: 420px; height: 340px; margin-top: -104px; margin-bottom: -60px; } }
-@media (prefers-reduced-motion: reduce) { .canvas { transition: none; } }
+.stage {
+  --exhaust-overlap: 360px;
+  --exhaust-stage-height: clamp(360px, 36vw, 520px);
+  position: relative;
+  z-index: 2;
+  container-type: inline-size;
+  width: calc(100% + 2 * var(--gutter));
+  height: var(--exhaust-stage-height);
+  margin: -96px calc(-1 * var(--gutter)) -64px;
+  pointer-events: none;
+}
+
+.canvas, .poster {
+  position: absolute;
+  inset: calc(-1 * var(--exhaust-overlap)) 0 0;
+}
+.canvas { visibility: hidden; }
+.canvas.ready { visibility: visible; }
+.canvas canvas { display: block; width: 100%; height: 100%; }
+
+.poster {
+  --poster-reference-width: 1600;
+  --poster-reference-height: 520;
+  --poster-reference-overlap: 360;
+  --poster-fit-unit: calc(var(--exhaust-stage-height) / var(--poster-reference-height));
+  --poster-zoom: var(--poster-motion-zoom);
+  --poster-y: var(--poster-wide-y);
+  --poster-reference-y: var(--poster-wide-reference-y);
+  overflow: hidden;
+}
+.poster img {
+  /* Place the still around the same projection center as the live camera. */
+  --poster-unit: calc(var(--poster-fit-unit) * var(--poster-zoom));
+  --poster-anchor: calc((.5 - var(--poster-y)) * var(--exhaust-stage-height));
+  --poster-image-anchor: calc(var(--poster-reference-overlap) + (.5 - var(--poster-reference-y)) * var(--poster-reference-height));
+  position: absolute;
+  top: calc(var(--exhaust-overlap) + var(--poster-anchor) - var(--poster-image-anchor) * var(--poster-unit));
+  left: 50%;
+  width: calc(var(--poster-reference-width) * var(--poster-unit));
+  max-width: none;
+  height: auto;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 700px) {
+  .stage { --exhaust-overlap: 420px; --exhaust-stage-height: 340px; margin-top: -104px; margin-bottom: -60px; }
+  .poster {
+    --poster-reference-width: 700;
+    --poster-reference-height: 340;
+    --poster-reference-overlap: 420;
+    /* The scene starts fitting by zoom below 1.5 × its 340px stage height. */
+    --poster-fit-unit: min(1px, calc(100cqw / 510));
+    --poster-y: var(--poster-compact-y);
+    --poster-reference-y: var(--poster-compact-reference-y);
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (scripting: none) {
+  .poster { --poster-zoom: 1; --poster-y: 0; --poster-reference-y: 0; }
+}

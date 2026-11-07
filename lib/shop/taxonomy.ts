@@ -17,14 +17,14 @@ export function supplierOf(p: CatalogProduct) {
   if (v.includes('collectible')) return 'collectibles'; return 'oem';
 }
 const exact: Record<string, string> = { bmw: 'BMW', amg: 'AMG', mclaren: 'McLaren', rolls_royce: 'Rolls-Royce', mercedes: 'Mercedes-Benz', mercedes_benz: 'Mercedes-Benz', porsche: 'Porsche', audi: 'Audi', f12: 'F12', f8: 'F8', sf90: 'SF90', '812_gts': '812 GTS', '812_superfast': '812 Superfast', '12cilindri': '12Cilindri', '911': '911', gt3: 'GT3', g63: 'G63', m3: 'M3', m4: 'M4', m5: 'M5', x5: 'X5', x6: 'X6' };
-export function label(value: string) { return exact[value] || value.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); }
+export function label(value: string) { return value === 'suv' ? 'SUV' : exact[value] || value.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); }
 export function tagsFor(p: CatalogProduct, type: 'make' | 'model' | 'fit') {
   const prefixes = type === 'make' ? ['car_make_', 'make_', 'car_'] : type === 'model' ? ['car_model_', 'model_'] : ['fit_'];
   const result = p.tags.flatMap(t => { const prefix = prefixes.find(pre => t.startsWith(pre)); return prefix ? [t.slice(prefix.length)] : []; });
   const junk = /^(model_|make_|sports$|waitlist$|exclusivecarbon$|muffler$|nsactive$|standar$|tecnic$|technica$|sports$|truck$|v8$|vtec$|n55$|fa20$|lp$|vw$)/;
   return [...new Set(result.filter(v => !junk.test(v)))];
 }
-export function fitLabel(v: string) { return label(v.replace(/^(99[12]|e3)_([12])(?=_|$)/, '$1.$2')).replace(/Turbo S/gi, 'Turbo S').replace(/Gt3/gi, 'GT3').replace(/Gts/gi, 'GTS'); }
+export function fitLabel(v: string) { return label(v.replace(/^(99[12]|e3)_([12])(?=_|$)/, '$1.$2')).replace(/Turbo S/gi, 'Turbo S').replace(/Gt3/gi, 'GT3').replace(/Gts/gi, 'GTS').replace(/\bE Hybrid\b/g, 'E-Hybrid').replace(/\bTurbo Gt\b/g, 'Turbo GT'); }
 export function categoryOf(p: CatalogProduct) {
   const type = p.productType.toLowerCase(), tags = p.tags.join(' '), title = p.title.toLowerCase();
   if (supplierOf(p) === 'collectibles') return 'Collectibles';
@@ -47,11 +47,17 @@ export function categoryOf(p: CatalogProduct) {
   return /accessor/.test(type) ? 'Accessories' : 'Other parts';
 }
 export type Filters = { brand?: string; make?: string; model?: string; fit?: string; body?: string; category?: string; q?: string; sort?: string; page?: string };
+export function targaFitKeys(fit: string, body?: string) {
+  // TECHART uses two catalogue columns for the same Targa 4 GTS when body is Targa.
+  const generation = body === 'targa' && /^(99[12]_[12])_carrera_(?:4_gts|targa_gts)$/.exec(fit)?.[1];
+  return generation ? [`${generation}_carrera_4_gts`, `${generation}_carrera_targa_gts`] : [fit];
+}
 export function filterProducts(products: CatalogProduct[], f: Filters) {
   const f8Body = isF8Selection(f) && isF8Body(f.body) ? f.body : undefined;
   const sf90Body = isSF90Selection(f) && isSF90Body(f.body) ? f.body : undefined;
   const version812 = is812Selection(f) ? (f.model === '812_gts' ? 'gts' : 'superfast') : undefined;
-  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!f.fit || tagsFor(p, 'fit').includes(f.fit)) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
+  const fits = f.fit ? targaFitKeys(f.fit, f.brand === 'techart' && f.model === '911' ? f.body : undefined) : [];
+  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
   if (f.sort === 'price-up') result.sort((a,b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
   if (f.sort === 'price-down') result.sort((a,b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
   if (f.sort === 'name') result.sort((a,b) => a.title.localeCompare(b.title));

@@ -28,7 +28,7 @@ export type ExhaustScene = {
   zoom(direction: number): void;
   dispose(): void;
 };
-type Options = { cinematic?: boolean; floor?: boolean; directProgress?: boolean; initialIsolated?: boolean; initialRouteColors?: boolean; reducedMotion: boolean; canvasLabel?: string; topOverflow?(): number; scrollPose?(progress: number): ExhaustScrollPose; onInteract(): void; onError(): void };
+type Options = { cinematic?: boolean; floor?: boolean; directProgress?: boolean; fitWithZoom?: boolean; initialIsolated?: boolean; initialRouteColors?: boolean; reducedMotion: boolean; canvasLabel?: string; topOverflow?(): number; scrollPose?(progress: number): ExhaustScrollPose; onInteract(): void; onError(): void };
 
 /** Photo-based display reconstruction; not engineering or fitment geometry. */
 export function createExhaustScene(host: HTMLDivElement, options: Options): ExhaustScene {
@@ -395,9 +395,11 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
     // The exhaust roof is +Z. Orbiting about it reveals the left/right sides
     // without turning the front-facing product like a flat image.
     cinemaEye.set(Math.sin(pose.azimuth)*Math.cos(pose.elevation),Math.cos(pose.azimuth)*Math.cos(pose.elevation),Math.sin(pose.elevation));
-    camera.position.copy(target).addScaledVector(cinemaEye,pose.radius*fit);
+    // Zoom fitting preserves the perspective baked into the opening still.
+    const cameraFit = options.fitWithZoom ? 1 : fit;
+    camera.position.copy(target).addScaledVector(cinemaEye,pose.radius*cameraFit);
     camera.up.copy(cinemaUp).applyAxisAngle(cinemaEye,pose.roll);camera.lookAt(target);
-    const nextZoom=pose.zoom ?? 1,nextFraming=pose.framingY ?? 0;
+    const nextZoom=(pose.zoom ?? 1)/(options.fitWithZoom ? fit : 1),nextFraming=pose.framingY ?? 0;
     if(camera.zoom!==nextZoom || framingY!==nextFraming) {
       camera.zoom=nextZoom;framingY=nextFraming;frameCamera();
     }
@@ -500,7 +502,7 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
     // Extend only the upper frustum; the resting frame below keeps its scale.
     frameCamera();
     const nextFit = Math.max(1, (options.cinematic ? 1.5 : 1.25) / camera.aspect);
-    camera.position.sub(controls.target).multiplyScalar(nextFit / fit).add(controls.target);
+    if(!options.fitWithZoom) camera.position.sub(controls.target).multiplyScalar(nextFit / fit).add(controls.target);
     fit = nextFit; controls.minDistance = 2.8 * fit; controls.maxDistance = 18 * fit;
     controls.handleResize(); invalidate(); return true;
   }

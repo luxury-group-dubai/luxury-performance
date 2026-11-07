@@ -1,20 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import type { CatalogProduct } from '@/lib/shop/types';
-import { isBodyStyle, vehicleImage, vehicleName, vehicleOptions } from '@/lib/shop/techart-fitment';
+import { cayenneImage, cayenneName, cayenneOptions, isCayenneBody, isCayenneFit } from '@/lib/shop/techart-cayenne';
+import { isBodyStyle, vehicleImage, vehicleName, vehicleOptions, type TechartSelection } from '@/lib/shop/techart-fitment';
+import { filterProducts } from '@/lib/shop/taxonomy';
 import { VehiclePicker } from './vehicle-picker';
 import styles from './vehicle-selector.module.css';
 
-export function VehicleSelector({ products, fit, shopPath = '/shop' }: { products: CatalogProduct[]; fit?: string; shopPath?: string }) {
-  return <VehiclePicker options={vehicleOptions(products)} initialFit={fit} shopPath={shopPath} />;
+export function VehicleSelector({ products, fit, body, shopPath = '/shop' }: { products: CatalogProduct[]; fit?: string; body?: string; shopPath?: string }) {
+  const legacyTarga = fit?.endsWith('_carrera_targa_gts');
+  const initialBody = legacyTarga ? 'targa' : isBodyStyle(body) ? body : undefined;
+  const initialFit = legacyTarga ? fit?.replace(/_carrera_targa_gts$/, '_carrera_4_gts') : fit;
+  return <VehiclePicker key={`${initialFit}:${initialBody}`} model="911" options={vehicleOptions(products)} initialFit={initialFit} initialBody={initialBody} shopPath={shopPath} />;
 }
 
-export function SelectedVehicle({ fit, body }: { fit: string; body?: string }) {
-  const style = isBodyStyle(body) ? body : undefined;
-  const query = new URLSearchParams({ fit, ...(style ? { body: style } : {}) });
+export function CayenneSelector({ products, fit, body }: { products: CatalogProduct[]; fit?: string; body?: string }) {
+  const initialFit = isCayenneFit(fit) ? fit : undefined;
+  const initialBody = isCayenneBody(body) ? body : undefined;
+  const cayennes = filterProducts(products, { brand: 'techart', make: 'porsche', model: 'cayenne' });
+  return <VehiclePicker key={`${initialFit}:${initialBody}`} model="cayenne" options={cayenneOptions(cayennes)} initialFit={initialFit} initialBody={initialBody} shopPath="/shop" />;
+}
+
+export function SelectedVehicle({ selection }: { selection: TechartSelection }) {
+  const { model, fit, body } = selection;
+  const cayenne = model === 'cayenne';
+  const query = new URLSearchParams({ ...(cayenne ? { model } : {}), fit, ...(body ? { body } : {}) });
+  const image = cayenne ? cayenneImage(fit, selection.body) : vehicleImage(fit, selection.body);
+  const name = cayenne ? cayenneName(fit, selection.body) : vehicleName(fit, selection.body);
   return <div className={styles.selected}>
-    <img src={vehicleImage(fit, style)} alt="" width={500} height={180} />
-    <p>{vehicleName(fit, style)}</p>
+    <img {...image} alt="" />
+    <p>{name}</p>
     <Link className={styles.change} href={`/partners/techart?${query}#vehicles`}>Change car</Link>
   </div>;
 }
