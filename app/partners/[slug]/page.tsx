@@ -75,6 +75,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   return <div className={styles.page} data-partner={p.slug}>
     <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
       {heroAsset ? <picture className={styles.heroPicture}>
+        {p.slug === 'valvetronic' && <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/hero.avif"/>}
         {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
         <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={95} sizes="100vw" loading="eager" fetchPriority="high"/>
       </picture> : <img className={styles.heroImage} src={p.image} alt={p.imageAlt} fetchPriority="high"/>}

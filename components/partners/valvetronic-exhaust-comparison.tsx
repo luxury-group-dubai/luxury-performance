@@ -20,6 +20,8 @@ export function ValvetronicExhaustComparison() {
       </div>
       <figure className={styles.figure}>
         <div className={styles.stage} style={{ '--split': split / 100 } as CSSProperties}>
+          <picture>
+            <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/g80.avif" />
           <Image
             className={styles.image}
             src="/images/partners/valvetronic-g80-cutout.webp"
@@ -29,6 +31,9 @@ export function ValvetronicExhaustComparison() {
             quality={60}
             draggable={false}
           />
+          </picture>
+          <picture>
+            <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/g80-stock.avif" />
           <Image
             className={`${styles.image} ${styles.stock}`}
             src="/images/partners/valvetronic-g80-stock-patch.webp"
@@ -38,6 +43,7 @@ export function ValvetronicExhaustComparison() {
             quality={60}
             draggable={false}
           />
+          </picture>
           <input
             className={styles.range}
             type="range"
