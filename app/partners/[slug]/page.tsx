@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import Image, { getImageProps } from 'next/image';
 import { partnerHeroImages } from '@/lib/brand-hero-images';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
-import { partners } from '@/lib/partners';
+import { partners, type Partner } from '@/lib/partners';
 import { getCatalog } from '@/lib/shop/storefront';
 import { categoryOf, filterProducts, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
-import { money } from '@/lib/shop/types';
+import { money, type CatalogProduct } from '@/lib/shop/types';
 import { ArrowLink, Eyebrow } from '@/components/ui';
 import { BrandArtwork } from '@/components/brand-artwork';
 import { CayenneSelector, VehicleSelector } from '@/components/shop/vehicle-selector';
@@ -52,10 +53,51 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: `${p.name} in Dubai`, description: p.intro + ' ' + p.detail, alternates: { canonical: `/partners/${p.slug}` }, robots: { index: process.env.SHOP_SEO_LIVE === 'true', follow: true }, openGraph: { title: `${p.name} | Luxury Performance`, description: p.intro, images: [{ url: heroAsset?.image || p.image, alt: heroAsset?.alt || p.imageAlt }] } };
 }
 export default async function PartnerPage({ params, searchParams }: Props) {
-  const [{ slug }, query] = await Promise.all([params, searchParams]);
-  const p = partners.find(p => p.slug === slug);
+  const { slug } = await params;
+  const p = partners.find(partner => partner.slug === slug);
   if (!p) notFound();
-  const products = p.supplier ? (await getCatalog()).filter(item => supplierOf(item) === p.supplier) : [];
+
+  const productsPromise = p.supplier
+    ? getCatalog().then(products => products.filter(item => supplierOf(item) === p.supplier))
+    : Promise.resolve([]);
+  const shop = p.supplier ? filterUrl('/shop', { brand: p.supplier }) : `/contact?programme=${encodeURIComponent(p.name)}`;
+  const heroAsset = partnerHeroImages[p.slug];
+  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 95 }).props : null;
+
+  return <div className={styles.page} data-partner={p.slug}>
+    <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
+      {heroAsset ? <picture className={styles.heroPicture}>
+        {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
+        <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={95} sizes="100vw" loading="eager" fetchPriority="high"/>
+      </picture> : <img className={styles.heroImage} src={p.image} alt={p.imageAlt} fetchPriority="high"/>}
+      <div className={styles.heroShade}/>
+      <div className={styles.heroContent}>
+        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} /></h1></div>
+        <div className={styles.heroFoot}><Suspense fallback={<ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>}>
+          <PartnerHeroAction partner={p} productsPromise={productsPromise} />
+        </Suspense></div>
+      </div>
+    </section>
+    <Suspense fallback={<div style={{ minHeight: '100svh' }} aria-busy="true" aria-label="Loading partner collection" />}>
+      <PartnerContent partner={p} productsPromise={productsPromise} searchParams={searchParams} />
+    </Suspense>
+  </div>;
+}
+
+type PartnerDataProps = { partner: Partner; productsPromise: Promise<CatalogProduct[]> };
+
+async function PartnerHeroAction({ partner: p, productsPromise }: PartnerDataProps) {
+  const products = await productsPromise;
+  const vehicles = [...new Set(products.flatMap(item => tagsFor(item, p.slug === 'techart' ? 'model' : 'make')))];
+  const vehicleFirst = p.slug === 'techart' && (vehicles.includes('911') || vehicles.includes('cayenne'));
+  const compactNovitec = p.slug === 'novitec' && vehicles.length > 0;
+  const shop = filterUrl('/shop', { brand: p.supplier });
+  const enquiry = `/contact?programme=${encodeURIComponent(p.name)}`;
+  return <ArrowLink href={vehicleFirst || compactNovitec ? "#vehicles" : products.length ? shop : enquiry} light>{vehicleFirst ? 'Choose your Porsche' : compactNovitec ? 'Choose your vehicle' : products.length ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : p.slug === 'fi-exhaust' ? 'Discuss your exhaust' : 'Ask about availability'}</ArrowLink>;
+}
+
+async function PartnerContent({ partner: p, productsPromise, searchParams }: PartnerDataProps & Pick<Props, 'searchParams'>) {
+  const [products, query] = await Promise.all([productsPromise, searchParams]);
   const shop = filterUrl('/shop', { brand: p.supplier });
   const enquiry = `/contact?programme=${encodeURIComponent(p.name)}`;
   const vehicleType = p.slug === 'techart' ? 'model' : 'make';
@@ -67,8 +109,6 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   const showCategories = p.slug !== 'valvetronic' && categories.length > 0;
   const selections = [...categories.flatMap(c => products.find(item => categoryOf(item) === c) || []), ...products];
   const featured = [...new Map(selections.map(item => [item.id, item])).values()].slice(0, 4);
-  const heroAsset = partnerHeroImages[p.slug];
-  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 95 }).props : null;
   const vehicleFirst = p.slug === 'techart' && (vehicles.includes('911') || vehicles.includes('cayenne'));
   const techartModel = vehicles.includes('cayenne') && (query.model === 'cayenne' || !vehicles.includes('911')) ? 'cayenne' : '911';
   const compactNovitec = p.slug === 'novitec' && vehicles.length > 0;
@@ -103,19 +143,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
     {centeredIntro && vehicles.length > 0 && <ValvetronicIntroExhaust />}
   </section>;
 
-  return <div className={styles.page} data-partner={p.slug}>
-    <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
-      {heroAsset ? <picture className={styles.heroPicture}>
-        {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
-        <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={95} sizes="100vw" loading="eager" fetchPriority="high"/>
-      </picture> : <img className={styles.heroImage} src={p.image} alt={p.imageAlt} fetchPriority="high"/>}
-      <div className={styles.heroShade}/>
-      <div className={styles.heroContent}>
-        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} /></h1></div>
-        <div className={styles.heroFoot}><ArrowLink href={vehicleFirst || compactNovitec ? "#vehicles" : products.length ? shop : enquiry} light>{vehicleFirst ? 'Choose your Porsche' : compactNovitec ? 'Choose your vehicle' : products.length ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : p.slug === 'fi-exhaust' ? 'Discuss your exhaust' : 'Ask about availability'}</ArrowLink></div>
-      </div>
-    </section>
-
+  return <>
     {vehicleFirst && vehicleSection}
     {introduction}
     {!vehicleFirst && vehicleSection}
@@ -138,5 +166,5 @@ export default async function PartnerPage({ params, searchParams }: Props) {
     {p.slug === 'valvetronic' && <ValvetronicSoundGallery />}
     {(p.slug === 'novitec' || p.slug === 'valvetronic' || p.slug === 'techart') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
     <section className={styles.support}><div><Eyebrow dark>Luxury Performance / Dubai</Eyebrow><h2>Your car.<br/>Your next chapter.</h2></div><div><p>{p.stockOnly ? 'Need a closer look at one of the kits? Ask us about its condition, included parts and fitment.' : 'From the first component to a complete specification, our team can help with compatibility, product choices and installation.'}</p><ArrowLink href={enquiry} light>Discuss your {p.slug === 'fi-exhaust' ? 'exhaust' : 'specification'}</ArrowLink></div></section>
-  </div>;
+  </>;
 }
