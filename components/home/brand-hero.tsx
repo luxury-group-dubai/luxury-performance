@@ -53,8 +53,12 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     };
     const schedule = () => {
       if (!imageReady || document.documentElement.dataset.lxpIntro || idle !== undefined || timer !== undefined) return;
-      if ('requestIdleCallback' in window) idle = window.requestIdleCallback(mount, { timeout: 1500 });
-      else timer = setTimeout(mount, 150);
+      // Keep hidden slide downloads out of the opening hero's render window.
+      timer = setTimeout(() => {
+        timer = undefined;
+        if ('requestIdleCallback' in window) idle = window.requestIdleCallback(mount, { timeout: 1500 });
+        else mount();
+      }, 2000);
     };
     const cancel = afterImageReady(first, () => { imageReady = true; schedule(); });
     const intro = new MutationObserver(schedule);
