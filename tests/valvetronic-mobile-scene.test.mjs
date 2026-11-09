@@ -52,7 +52,7 @@ for (const mode of ['phone', 'tablet', 'coarse-pointer', 'reduced-motion', 'desk
     });
     const figure = component.ValvetronicIntroExhaust();
     if (mode === 'desktop') {
-      assert.equal(observers, 2);
+      assert.equal(observers, 1);
       assert.deepEqual(updates, []);
     } else {
       assert.equal(observers, 0);
