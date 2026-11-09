@@ -1,3 +1,4 @@
+import './home-sections.css';
 import type { Metadata } from 'next';
 import { HomeHero } from '@/components/home/homepage';
 import { PartnerMarquee } from '@/components/home/partner-marquee';

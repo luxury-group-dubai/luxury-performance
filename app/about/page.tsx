@@ -1,3 +1,4 @@
+import './interior.css';
 import './about.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';

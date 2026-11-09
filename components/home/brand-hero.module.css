@@ -88,7 +88,7 @@
   .brandNav { gap: 22px; }
 }
 @media (max-width: 700px) {
-  .hero { --hero-title-size: clamp(26px,7.1vw,40px); min-height: 800px; max-height: 980px; }
+  .hero { --hero-title-size: clamp(26px,7.1vw,40px); height: 100vh; height: 100svh; min-height: 0; max-height: none; }
   .context { top: 115px; font-size: 9px; letter-spacing: .08em; }
   .context span { margin-inline: 5px; }
   .picture { top: 140px; bottom: auto; height: 350px; }
@@ -101,14 +101,14 @@
   .slide[data-brand="novitec"] .picture::after { background: linear-gradient(180deg,#151617,transparent 15%,transparent 80%,#151617); }
   .slide[data-brand="techart"] .picture::after { background: linear-gradient(180deg,#151617,transparent 15%,transparent 75%,#151617); }
   .shade { background: linear-gradient(0deg,#151617 35%,#15161700 68%),linear-gradient(180deg,#151617 15%,#15161700 35%); }
-  .copy { --hero-title-row: calc(var(--hero-title-line) + max(44px, var(--hero-title-line))); --hero-description-row: 88.4px; bottom: 118px; max-width: none; grid-template-rows: 40px 20px var(--hero-title-row) 16px var(--hero-description-row) 20px 48px; }
+  .copy { --hero-title-row: calc(var(--hero-title-line) + max(44px, var(--hero-title-line))); --hero-description-row: 88.4px; bottom: calc(118px + env(safe-area-inset-bottom, 0px)); max-width: none; grid-template-rows: 40px 20px var(--hero-title-row) 16px var(--hero-description-row) 20px 48px; }
   .logo { width: 145px; height: 40px; }
   .slide[data-brand="valvetronic"] .logo { width: 160px; }
   .slide[data-brand="techart"] .logo { width: 170px; }
   .slide[data-brand="techart"] .copy h2 { font-size: clamp(25px,6.9vw,38px); }
   .copy p { font-size: 13px; line-height: 1.7; max-width: 40ch; }
   .cta { min-height: 48px; padding-inline: 18px; font-size: 12px; gap: 27px; }
-  .controls { bottom: 18px; gap: 14px; align-items: start; }
+  .controls { bottom: max(18px, env(safe-area-inset-bottom, 0px)); gap: 14px; align-items: start; }
   .brandNav { gap: 12px; }
   .brandNav button { min-height: 65px; padding-block: 14px; font-size: 10px; line-height: 1.6; gap: 0; align-items: start; }
   .number { display: none; }
@@ -125,4 +125,13 @@
   .layer, .brandNav button::before, .cta { transition: none; }
   .layer[data-active="true"] .glitchWord, .layer[data-active="true"] .glitchWord::before, .layer[data-active="true"] .glitchWord::after { animation: none; }
   .playback { display: none; }
+}
+
+/* Keep the controls inside the opening screen when browser toolbars are expanded. */
+@media (max-width: 700px) and (max-height: 740px) {
+  .copy { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); grid-template-rows: 32px 12px var(--hero-title-row) 12px var(--hero-description-row) 12px 44px; }
+  .logo { height: 32px; }
+  .cta { min-height: 44px; }
+  .picture, .slide[data-brand="techart"] .picture { top: 125px; height: 260px; }
+  .slide[data-brand="novitec"] .picture { top: 125px; }
 }

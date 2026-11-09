@@ -1,4 +1,5 @@
 'use client';
+import '@/app/home-sections.css';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
