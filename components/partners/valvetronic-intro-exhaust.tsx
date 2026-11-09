@@ -58,6 +58,7 @@ export function ValvetronicIntroExhaust() {
   useEffect(() => {
     let disposed = false, started = false, ready = false, failed = false, completed = false, inView = false, introShown = false;
     let frame = 0, generation = 0, progress = 0, lastTick = 0;
+    let preparationTimer: ReturnType<typeof setTimeout> | undefined;
     const duration = 1750;
     const mobile = matchMedia('(max-width: 1024px), (pointer: coarse)').matches;
     const compact = matchMedia('(max-width: 700px)');
@@ -65,17 +66,12 @@ export function ValvetronicIntroExhaust() {
     // The mobile still preserves the final composition without constructing the
     // procedural meshes, textures and shaders on the page's main thread.
     if (staticScene || mobile || reducedMotion.matches) return;
-    const preloadDistance = mobile ? 900 : 1200;
     let sceneModule: Promise<typeof import('@/components/home/valvetronic-exhaust-scene')> | undefined;
 
     function showIntro() {
       if (introShown) return;
       introShown = true;
       setIntroRevealed(true);
-    }
-    function approaching() {
-      const bounds = stage.current?.getBoundingClientRect();
-      return bounds && bounds.top < innerHeight + preloadDistance && bounds.bottom > -preloadDistance;
     }
     function pause() {
       cancelAnimationFrame(frame);
@@ -110,6 +106,7 @@ export function ValvetronicIntroExhaust() {
       frame = requestAnimationFrame(animate);
     }
     function release() {
+      clearTimeout(preparationTimer);
       if (!started) return;
       generation++;
       started = false;
@@ -123,6 +120,7 @@ export function ValvetronicIntroExhaust() {
     function unavailable(run: number) {
       if (disposed || run !== generation) return;
       failed = true;
+      clearTimeout(preparationTimer);
       ready = false;
       pause();
       scene.current?.dispose();
@@ -131,7 +129,7 @@ export function ValvetronicIntroExhaust() {
       showIntro();
     }
     function start() {
-      if (disposed || started || document.hidden || !mount.current || !approaching()) return;
+      if (disposed || started || document.hidden || !mount.current || !inView) return;
       const run = ++generation;
       started = true;
       setDisplay({ status: 'loading', progress });
@@ -139,6 +137,7 @@ export function ValvetronicIntroExhaust() {
       sceneModule.then(async ({ createExhaustScene }) => {
         if (disposed || run !== generation || !mount.current) return;
         const next = createExhaustScene(mount.current, {
+          quality: 'balanced',
           cinematic: true,
           floor: true,
           directProgress: true,
@@ -151,23 +150,21 @@ export function ValvetronicIntroExhaust() {
           onError: () => unavailable(run),
         });
         scene.current = next;
+        preparationTimer = setTimeout(() => unavailable(run), 8000);
         next.finish('titanium');
         next.progress(reducedMotion.matches ? 1 : progress);
         await next.prepare();
         if (disposed || run !== generation || failed || scene.current !== next) return;
+        clearTimeout(preparationTimer);
         setDisplay({ status: 'ready', generation: run });
       }).catch(() => unavailable(run));
     }
-    const preload = new IntersectionObserver(entries => {
-      if (entries.some(entry => entry.isIntersecting)) start();
-      else if (mobile) release();
-    }, { rootMargin: `${preloadDistance}px 0px` });
     const visibility = new IntersectionObserver(entries => {
       inView = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .2);
-      if (inView) reveal();
+      if (inView) { start(); reveal(); }
       else pause();
     }, { threshold: [0, .2] });
-    if (stage.current) { preload.observe(stage.current); visibility.observe(stage.current); }
+    if (stage.current) visibility.observe(stage.current);
     const motionChange = () => { release(); start(); };
     const pageVisibility = () => {
       if (document.hidden) { pause(); if (mobile) release(); }
@@ -180,12 +177,11 @@ export function ValvetronicIntroExhaust() {
       ready = true;
       reveal();
     };
-    start();
     return () => {
       disposed = true;
+      clearTimeout(preparationTimer);
       generation++;
       present.current = null;
-      preload.disconnect();
       visibility.disconnect();
       pause();
       reducedMotion.removeEventListener('change', motionChange);
