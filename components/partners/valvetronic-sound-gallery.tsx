@@ -92,7 +92,8 @@ export function ValvetronicSoundGallery() {
                   <button type="button" className={styles.poster} onClick={() => playClip(clip.id)} aria-label={`Play ${clip.name} exhaust video`}>
                     <picture>
                       <source media="(max-width: 760px)" type="image/avif" srcSet={`/images/partners/valvetronic-mobile/${clip.id}.avif`} />
-                      <Image src={poster} alt="" fill quality={60} sizes="(max-width: 760px) 260px, (max-width: 1200px) 22vw, 275px" />
+                      <source type="image/avif" srcSet={`/images/partners/valvetronic-mobile/${clip.id}.avif 320w, /images/partners/valvetronic-desktop/${clip.id}-640.avif 640w`} sizes="calc((min(100vw, 1360px) - 2 * clamp(24px, 5vw, 88px) - 3 * clamp(16px, 2vw, 24px)) / 4)" />
+                      <Image src={poster} alt="" fill quality={60} sizes="(max-width: 760px) min(72vw, 260px), calc((min(100vw, 1360px) - 2 * clamp(24px, 5vw, 88px) - 3 * clamp(16px, 2vw, 24px)) / 4)" />
                     </picture>
                     <span className={styles.play} aria-hidden="true"><Play size={18} fill="currentColor" /></span>
                   </button>
