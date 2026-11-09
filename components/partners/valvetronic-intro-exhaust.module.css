@@ -55,6 +55,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce), (scripting: none) {
+@media (max-width: 1024px), (pointer: coarse), (prefers-reduced-motion: reduce), (scripting: none) {
   .poster { --poster-zoom: 1; --poster-y: 0; --poster-reference-y: 0; }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react';
 import type { ExhaustScene } from '@/components/home/valvetronic-exhaust-scene';
 import { valvetronicIntroPose } from './valvetronic-intro-motion';
 import styles from './valvetronic-intro-exhaust.module.css';
@@ -13,6 +13,16 @@ type SceneDisplay =
 const openingPoster = '/images/partners/valvetronic-exhaust-opening';
 const settledPoster = '/images/partners/valvetronic-exhaust-settled';
 const exhaustLabel = 'Valvetronic Designs Huracán titanium exhaust system';
+
+const staticSceneQuery = '(max-width: 1024px), (pointer: coarse), (prefers-reduced-motion: reduce)';
+function subscribeToScenePreference(onChange: () => void) {
+  const preference = matchMedia(staticSceneQuery);
+  preference.addEventListener('change', onChange);
+  return () => preference.removeEventListener('change', onChange);
+}
+const prefersStaticScene = () => matchMedia(staticSceneQuery).matches;
+const serverScenePreference = () => false;
+
 
 function ExhaustPoster({ progress }: { progress: number }) {
   const referenceProgress = progress === 1 ? 1 : 0;
@@ -28,14 +38,16 @@ function ExhaustPoster({ progress }: { progress: number }) {
   } as CSSProperties;
 
   return <picture className={styles.poster} style={framing}>
+    <source media="(max-width: 700px)" srcSet={`${settledPoster}-mobile.webp`} />
+    <source media="(max-width: 1024px), (pointer: coarse)" srcSet={`${settledPoster}.webp`} />
     <source media="(prefers-reduced-motion: reduce) and (max-width: 700px), (scripting: none) and (max-width: 700px)" srcSet={`${settledPoster}-mobile.webp`} />
     <source media="(prefers-reduced-motion: reduce), (scripting: none)" srcSet={`${settledPoster}.webp`} />
-    <source media="(max-width: 700px)" srcSet={`${source}-mobile.webp`} />
     <Image src={`${source}.webp`} alt={exhaustLabel} width={1600} height={880} unoptimized loading="eager" />
   </picture>;
 }
 
 export function ValvetronicIntroExhaust() {
+  const staticScene = useSyncExternalStore(subscribeToScenePreference, prefersStaticScene, serverScenePreference);
   const stage = useRef<HTMLElement>(null);
   const mount = useRef<HTMLDivElement>(null);
   const scene = useRef<ExhaustScene | null>(null);
@@ -50,6 +62,9 @@ export function ValvetronicIntroExhaust() {
     const mobile = matchMedia('(max-width: 1024px), (pointer: coarse)').matches;
     const compact = matchMedia('(max-width: 700px)');
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    // The mobile still preserves the final composition without constructing the
+    // procedural meshes, textures and shaders on the page's main thread.
+    if (staticScene || mobile || reducedMotion.matches) return;
     const preloadDistance = mobile ? 900 : 1200;
     let sceneModule: Promise<typeof import('@/components/home/valvetronic-exhaust-scene')> | undefined;
 
@@ -178,16 +193,16 @@ export function ValvetronicIntroExhaust() {
       scene.current?.dispose();
       scene.current = null;
     };
-  }, []);
+  }, [staticScene]);
 
   useEffect(() => {
     // Begin moving after React has presented the prepared frame in place of the still.
     if (display.status === 'ready') present.current?.(display.generation);
   }, [display]);
 
-  const isReady = display.status === 'ready';
-  return <figure ref={stage} className={styles.stage} data-valvetronic-intro-exhaust data-scene-status={display.status} data-intro-revealed={introRevealed}>
+  const isReady = !staticScene && display.status === 'ready';
+  return <figure ref={stage} className={styles.stage} data-valvetronic-intro-exhaust data-scene-status={staticScene ? 'static' : display.status} data-intro-revealed={staticScene || introRevealed}>
     <div ref={mount} className={`${styles.canvas} ${isReady ? styles.ready : ''}`} aria-hidden={!isReady} />
-    {display.status !== 'ready' && <ExhaustPoster progress={display.progress} />}
+    {!isReady && <ExhaustPoster progress={staticScene ? 1 : display.status === 'ready' ? 1 : display.progress} />}
   </figure>;
 }
