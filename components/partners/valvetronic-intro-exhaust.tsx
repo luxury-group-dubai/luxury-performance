@@ -12,6 +12,9 @@ type SceneDisplay =
 
 const openingPoster = '/images/partners/valvetronic-exhaust-opening';
 const settledPoster = '/images/partners/valvetronic-exhaust-settled';
+const desktopPosterSizes = 'clamp(1108px, 110.77vw, 1600px)';
+const desktopPosterSrcSet = (pose: 'opening' | 'settled') => [960, 1280, 1480, 1600]
+  .map(width => `/images/partners/valvetronic-desktop/exhaust-${pose}-${width}.avif ${width}w`).join(', ');
 const exhaustLabel = 'Valvetronic Designs Huracán titanium exhaust system';
 
 const staticSceneQuery = '(max-width: 1024px), (pointer: coarse), (prefers-reduced-motion: reduce)';
@@ -41,7 +44,9 @@ function ExhaustPoster({ progress }: { progress: number }) {
     <source media="(max-width: 700px)" srcSet={`${settledPoster}-mobile.webp`} />
     <source media="(max-width: 1024px), (pointer: coarse)" srcSet={`${settledPoster}.webp`} />
     <source media="(prefers-reduced-motion: reduce) and (max-width: 700px), (scripting: none) and (max-width: 700px)" srcSet={`${settledPoster}-mobile.webp`} />
+    <source media="(prefers-reduced-motion: reduce), (scripting: none)" type="image/avif" srcSet={desktopPosterSrcSet('settled')} sizes={desktopPosterSizes} />
     <source media="(prefers-reduced-motion: reduce), (scripting: none)" srcSet={`${settledPoster}.webp`} />
+    <source type="image/avif" srcSet={desktopPosterSrcSet(referenceProgress ? 'settled' : 'opening')} sizes={desktopPosterSizes} />
     <Image src={`${source}.webp`} alt={exhaustLabel} width={1600} height={880} unoptimized loading="eager" />
   </picture>;
 }
