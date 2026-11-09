@@ -1,4 +1,5 @@
 'use client';
+import '@/app/home-sections.css';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, Pause, Play } from 'lucide-react';
 import { Reveal } from './reveal';

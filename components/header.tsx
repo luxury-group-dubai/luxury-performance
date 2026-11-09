@@ -9,10 +9,12 @@ import { ArrowUpRight, ChevronDown, X } from 'lucide-react';
 import { brandMenu, limitedStock, usedParts } from '@/lib/shop-navigation';
 import styles from './header-menus.module.css';
 import { MenuCards, MenuLogo } from './shop-menu-cards';
-import { VehicleMenu } from './vehicle-menu';
+import dynamic from 'next/dynamic';
 import { SocialLinks } from './social-links';
 import { contact } from '@/lib/content';
 import { brandHeroImages } from '@/lib/brand-hero-images';
+
+const VehicleMenu = dynamic(() => import('./vehicle-menu').then(module => module.VehicleMenu), { loading: () => <p role="status">Loading vehicles…</p> });
 
 type ShopMenu = 'brands' | 'vehicles';
 const menus = [{ key: 'brands' as const, label: 'By brand' }, { key: 'vehicles' as const, label: 'By vehicle' }];

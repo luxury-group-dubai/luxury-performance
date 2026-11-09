@@ -1,4 +1,5 @@
 'use client';
+import './programme.css';
 import { useState } from 'react';
 import { programmes } from '@/lib/content';
 import { ProgrammeCard } from './programme-card';
