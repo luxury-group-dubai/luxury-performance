@@ -131,3 +131,19 @@ test('direct partner visits paint immediately and preserve anchors without consu
   }
   assert.equal(page({ storage }).dataset.lxpIntro, 'tracing');
 });
+
+test('direct shop visits and reloads open the catalogue immediately and preserve the homepage entrance', () => {
+  const storage = new Map();
+  for (const pathname of ['/shop', '/shop/']) {
+    for (const reload of [false, true]) {
+      const result = page({ pathname, storage, reload, hash: '#catalogue' });
+      assert.deepEqual(result.dataset, {});
+      assert.equal(result.history.scrollRestoration, 'auto');
+      assert.equal(result.scrolls.length, 0);
+      assert.equal(result.replacements.length, 0);
+      assert.equal(result.timers.length, 0);
+      assert.equal(storage.size, 0);
+    }
+  }
+  assert.equal(page({ storage }).dataset.lxpIntro, 'tracing');
+});
