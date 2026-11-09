@@ -31,7 +31,7 @@
 .brand-intro{display:none;position:fixed;inset:0;z-index:200;color:#fff;isolation:isolate;touch-action:none;overscroll-behavior:contain}
 html[data-lxp-intro] .brand-intro{display:block}
 html[data-lxp-intro] body{background:#101010}
-.intro-backdrop{position:absolute;inset:0;background:#101010;transition:opacity .72s cubic-bezier(.2,.6,.2,1)}
+.intro-backdrop{position:absolute;inset:0;background:#101010;transition:opacity .36s cubic-bezier(.2,.6,.2,1)}
 .intro-topline,.intro-bottomline{position:absolute;left:var(--gutter);right:var(--gutter);display:flex;align-items:center;justify-content:space-between;font-size:8px;font-weight:500;letter-spacing:.18em}
 .intro-topline{top:40px;color:#777}
 .intro-bottomline{bottom:32px;color:#777}
@@ -48,12 +48,12 @@ html[data-lxp-intro] body{background:#101010}
 .intro-caption-rule{width:35px;height:1px;background:#444}
 .intro-topline,.intro-bottomline,.intro-caption{transition:opacity .28s}
 html[data-lxp-intro="tracing"] #site-shell,html[data-lxp-intro="formed"] #site-shell{opacity:0}
-#site-shell{transition:opacity .8s cubic-bezier(.2,.6,.2,1)}
+#site-shell{transition:opacity .4s cubic-bezier(.2,.6,.2,1)}
 html[data-lxp-intro="travelling"] .intro-backdrop,html[data-lxp-intro="wings"] .intro-backdrop{opacity:0}
 html[data-lxp-intro="travelling"] .intro-topline,html[data-lxp-intro="travelling"] .intro-caption,html[data-lxp-intro="wings"] .intro-topline,html[data-lxp-intro="wings"] .intro-caption{opacity:0}
 html[data-lxp-intro="wings"] .intro-bottomline{opacity:0}
 html[data-lxp-intro="travelling"] .site-header .company-emblem{clip-path:inset(0 50%)}
-html[data-lxp-intro="wings"] .site-header .company-emblem{animation:intro-wings .45s cubic-bezier(.2,.65,.2,1) both}
+html[data-lxp-intro="wings"] .site-header .company-emblem{animation:intro-wings .22s cubic-bezier(.2,.65,.2,1) both}
 @keyframes intro-wings{from{clip-path:inset(0 50%)}to{clip-path:inset(0 0)}}
 @media(max-width:700px){.intro-mark-position{width:76vw}.intro-caption{top:calc(46% + 9.8vw + 32px);font-size:6px;gap:12px;letter-spacing:.16em}.intro-caption-rule{width:20px}.intro-topline{top:30px;font-size:6px}.intro-bottomline{bottom:22px;font-size:6px;letter-spacing:.12em}.intro-bottomline button{font-size:10px;gap:16px}}
 @media(prefers-reduced-motion:reduce){html[data-lxp-intro] .brand-intro{display:none}html[data-lxp-intro] #site-shell{opacity:1;animation:none;transition:none}html[data-lxp-intro] .site-header .company-emblem{clip-path:none;animation:none}}
