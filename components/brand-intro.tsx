@@ -74,7 +74,7 @@ export function BrandIntro() {
     document.addEventListener('keydown', onKeyDown);
     motion.addEventListener('change', reduceMotion);
     // Always release the interface if an image or animation fails.
-    timers.push(setTimeout(() => finish(), 2600));
+    timers.push(setTimeout(() => finish(), 3200));
 
     async function play() {
       const strokes = overlay.current?.querySelectorAll<SVGPathElement>('[data-trace]');
@@ -82,7 +82,7 @@ export function BrandIntro() {
       // L, descending X arm, ascending X arm, then P. The masks reveal exact silhouettes.
       for (const [index, stroke] of Array.from(strokes).entries()) {
         if (finished || cancelled) return;
-        const duration = [200, 110, 110, 215][index];
+        const duration = [300, 170, 170, 320][index];
         const animation = stroke.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], {
           duration, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards',
         });
@@ -91,7 +91,7 @@ export function BrandIntro() {
       }
       if (finished || cancelled) return;
       root.dataset.lxpIntro = 'formed';
-      await delay(70);
+      await delay(100);
       if (finished || cancelled) return;
       const emblem = document.querySelector<HTMLImageElement>('.site-header .company-emblem');
       if (!emblem || !mark.current) { finish(); return; }
@@ -106,14 +106,14 @@ export function BrandIntro() {
       const flight = mark.current.animate([
         { transform: 'translate3d(0,0,0) scale(1)', opacity: 1 },
         { transform: `translate3d(${dx}px,${dy}px,0) scale(${scale})`, opacity: 1 },
-      ], { duration: 400, easing: 'cubic-bezier(.76,0,.2,1)', fill: 'forwards' });
+      ], { duration: 520, easing: 'cubic-bezier(.76,0,.2,1)', fill: 'forwards' });
       animations.push(flight);
       await flight.finished.catch(() => {});
       if (finished || cancelled) return;
       root.dataset.lxpIntro = 'wings';
-      const fade = mark.current.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 120, fill: 'forwards' });
+      const fade = mark.current.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' });
       animations.push(fade);
-      await delay(220);
+      await delay(330);
       if (!cancelled) finish();
     }
     void play().catch(() => finish());
