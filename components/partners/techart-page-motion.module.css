@@ -1,0 +1,22 @@
+.motionRoot :global(#vehicles > header),
+.motionRoot :global(#vehicles aside),
+.motionRoot :global(#vehicles h3),
+.motionRoot :global(#vehicles a[aria-label^="Shop"]),
+.motionRoot :global(#departments > header),
+.motionRoot :global(#departments [aria-label="TECHART product swatches"]),
+.motionRoot :global(#selected h2),
+.motionRoot :global(#selected .shop-product-card),
+.motionRoot :global(#faq h2),
+.motionRoot :global(#faq details) {
+  transition: opacity 480ms ease var(--reveal-delay, 0ms), translate 550ms cubic-bezier(.22, 1, .36, 1) var(--reveal-delay, 0ms);
+}
+.motionRoot :global([data-reveal-pending]) { opacity: 0; translate: 0 14px; }
+.motionRoot :global([data-reveal-pending]:focus-within) { opacity: 1; translate: none; }
+.motionRoot :global(img[data-image-pending]) { opacity: 0; }
+.motionRoot :global(#vehicles img),
+.motionRoot :global(#departments img[data-range-photo]),
+.motionRoot :global(#selected .shop-product-image img) { transition: opacity 350ms ease; }
+@media (prefers-reduced-motion: reduce) {
+  .motionRoot :global(*) { transition: none !important; }
+  .motionRoot :global([data-reveal-pending]) { opacity: 1; translate: none; }
+}

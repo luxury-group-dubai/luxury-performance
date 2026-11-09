@@ -22,6 +22,7 @@ import { ValvetronicExhaustComparison } from '@/components/partners/valvetronic-
 import { ValvetronicIntroExhaust } from '@/components/partners/valvetronic-intro-exhaust';
 import { ValvetronicSoundGallery } from '@/components/partners/valvetronic-sound-gallery';
 import { ValvetronicVehicleLogos } from '@/components/partners/valvetronic-vehicle-logos';
+import { TechartPageMotion } from '@/components/partners/techart-page-motion';
 import { TechartRangePicker } from '@/components/partners/techart-range-picker';
 import { techartRange } from '@/lib/techart-range';
 import styles from '../partners.module.css';
@@ -144,6 +145,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   </section>;
 
   return <>
+    {p.slug === 'techart' && <TechartPageMotion />}
     {vehicleFirst && vehicleSection}
     {introduction}
     {!vehicleFirst && vehicleSection}
