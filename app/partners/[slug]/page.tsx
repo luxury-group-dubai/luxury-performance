@@ -70,7 +70,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
     : Promise.resolve([]);
   const shop = p.supplier ? filterUrl('/shop', { brand: p.supplier }) : `/contact?programme=${encodeURIComponent(p.name)}`;
   const heroAsset = partnerHeroImages[p.slug];
-  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
+  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 60 }).props : null;
 
   return <div className={styles.page} data-partner={p.slug}>
     <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
@@ -180,12 +180,13 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
         const image = item.featuredImage;
         return <Link className="shop-product-card" key={item.id} href={`/products/${item.handle}`}>
           <div className="shop-product-image">
-            {image && <img
-              src={productImageUrl(image.url, 480)}
-              srcSet={[180, 320, 480, 640, 960].map(width => `${productImageUrl(image.url, width)} ${width}w`).join(', ')}
+            {image && <Image
+              src={productImageUrl(image.url, 960)}
+              fill
+              style={{ padding: '5%' }}
               sizes="(max-width: 1000px) 42vw, 22vw"
+              quality={60}
               alt={image.altText || item.title}
-              loading="lazy"
             />}
             <span className="shop-product-arrow"><ArrowUpRight size={18}/></span>
             {item.tags.includes('condition_used') && <span className="shop-used">Used</span>}

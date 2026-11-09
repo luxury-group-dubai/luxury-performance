@@ -26,7 +26,7 @@ export function ValvetronicExhaustComparison() {
             alt="BMW M3 underside with the Valvetronic exhaust, bronze pipework and four carbon-sleeved tips"
             fill
             sizes={imageSizes}
-            quality={75}
+            quality={60}
             draggable={false}
           />
           <Image
@@ -35,7 +35,7 @@ export function ValvetronicExhaustComparison() {
             alt="Factory BMW M3 exhaust with a wide silver rear muffler"
             fill
             sizes={imageSizes}
-            quality={75}
+            quality={60}
             draggable={false}
           />
           <input
