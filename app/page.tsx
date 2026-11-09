@@ -1,6 +1,6 @@
 import './home-sections.css';
 import type { Metadata } from 'next';
-import { HomeHero } from '@/components/home/homepage';
+import { HomeHero } from '@/components/home/home-hero';
 import { PartnerMarquee } from '@/components/home/partner-marquee';
 import './home-tokens.css';
 import { Eyebrow, ArrowLink } from '@/components/ui';
