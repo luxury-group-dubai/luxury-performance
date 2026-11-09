@@ -45,6 +45,13 @@ const feedLooks: { name: string; model: string; codes: string[]; fallback: strin
   { name: 'Rolls-Royce Cullinan', model: 'cullinan', codes: [], fallback: '/collections/rolls-royce-cullinan?brand=novitec' },
   { name: 'Rolls-Royce Spectre', model: 'spectre', codes: [], fallback: '/collections/rolls-royce-spectre?brand=novitec' },
 ];
+function productImageUrl(source: string, width: number) {
+  const image = new URL(source);
+  image.searchParams.set('width', String(width));
+  image.searchParams.set('format', 'webp');
+  return image.toString();
+}
+
 export function generateStaticParams() { return partners.map(p => ({ slug: p.slug })); }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -63,7 +70,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
     : Promise.resolve([]);
   const shop = p.supplier ? filterUrl('/shop', { brand: p.supplier }) : `/contact?programme=${encodeURIComponent(p.name)}`;
   const heroAsset = partnerHeroImages[p.slug];
-  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 95 }).props : null;
+  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
 
   return <div className={styles.page} data-partner={p.slug}>
     <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
@@ -73,7 +80,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
       </picture> : <img className={styles.heroImage} src={p.image} alt={p.imageAlt} fetchPriority="high"/>}
       <div className={styles.heroShade}/>
       <div className={styles.heroContent}>
-        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} /></h1></div>
+        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" /></h1></div>
         <div className={styles.heroFoot}><Suspense fallback={<ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>}>
           <PartnerHeroAction partner={p} productsPromise={productsPromise} />
         </Suspense></div>
@@ -164,7 +171,31 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     })} />}
     {p.slug === 'novitec' && <NovitecStories />}
     {p.slug === 'valvetronic' && <ValvetronicExhaustComparison />}
-    {p.slug !== 'novitec' && featured.length > 0 && <section id="selected" className={styles.selected}><div className={styles.sectionHeading}><div>{p.slug !== 'techart' && <Eyebrow>A closer look</Eyebrow>}<h2>Explore the range.</h2></div><ArrowLink href={shop}>{p.slug === 'valvetronic' ? 'View all exhausts' : 'Shop the collection'}</ArrowLink></div><div className={styles.productGrid}>{featured.map(item => <Link className="shop-product-card" key={item.id} href={`/products/${item.handle}`}><div className="shop-product-image">{item.featuredImage && <img src={`${item.featuredImage.url}${item.featuredImage.url.includes('?') ? '&' : '?'}width=700`} alt={item.featuredImage.altText || item.title} loading="lazy"/>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{item.tags.includes('condition_used') && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.name}</span><span>{categoryOf(item)}</span></div><h3>{item.title.replace(/^(TECHART|Valvetronic Designs)\s*[-–]\s*/i, '')}</h3><p className="shop-price">From {money(item.priceRange.minVariantPrice)}</p></Link>)}</div></section>}
+    {p.slug !== 'novitec' && featured.length > 0 && <section id="selected" className={styles.selected}>
+      <div className={styles.sectionHeading}>
+        <div>{p.slug !== 'techart' && <Eyebrow>A closer look</Eyebrow>}<h2>Explore the range.</h2></div>
+        <ArrowLink href={shop}>{p.slug === 'valvetronic' ? 'View all exhausts' : 'Shop the collection'}</ArrowLink>
+      </div>
+      <div className={styles.productGrid}>{featured.map(item => {
+        const image = item.featuredImage;
+        return <Link className="shop-product-card" key={item.id} href={`/products/${item.handle}`}>
+          <div className="shop-product-image">
+            {image && <img
+              src={productImageUrl(image.url, 480)}
+              srcSet={[180, 320, 480, 640, 960].map(width => `${productImageUrl(image.url, width)} ${width}w`).join(', ')}
+              sizes="(max-width: 1000px) 42vw, 22vw"
+              alt={image.altText || item.title}
+              loading="lazy"
+            />}
+            <span className="shop-product-arrow"><ArrowUpRight size={18}/></span>
+            {item.tags.includes('condition_used') && <span className="shop-used">Used</span>}
+          </div>
+          <div className="shop-card-meta"><span>{p.name}</span><span>{categoryOf(item)}</span></div>
+          <h3>{item.title.replace(/^(TECHART|Valvetronic Designs)\s*[-–]\s*/i, '')}</h3>
+          <p className="shop-price">From {money(item.priceRange.minVariantPrice)}</p>
+        </Link>;
+      })}</div>
+    </section>}
     {p.slug === 'valvetronic' && <ValvetronicSoundGallery />}
     {(p.slug === 'novitec' || p.slug === 'valvetronic' || p.slug === 'techart') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
     <section className={styles.support}><div><Eyebrow dark>Luxury Performance / Dubai</Eyebrow><h2>Your car.<br/>Your next chapter.</h2></div><div><p>{p.stockOnly ? 'Need a closer look at one of the kits? Ask us about its condition, included parts and fitment.' : 'From the first component to a complete specification, our team can help with compatibility, product choices and installation.'}</p><ArrowLink href={enquiry} light>Discuss your {p.slug === 'fi-exhaust' ? 'exhaust' : 'specification'}</ArrowLink></div></section>

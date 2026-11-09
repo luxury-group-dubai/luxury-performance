@@ -13,7 +13,7 @@ const compiled = ts.transpileModule(readFileSync(resolve(root, 'lib/intro-bootst
 const exported = {};
 runInNewContext(compiled, { exports: exported });
 
-function page({ storage = new Map(), reduced = false, reload = false, storageError, scrollError = false, hash = '#novitec', history: sharedHistory } = {}) {
+function page({ storage = new Map(), reduced = false, reload = false, storageError, scrollError = false, hash = '#novitec', pathname = '/', history: sharedHistory } = {}) {
   const dataset = {};
   const timers = [];
   const scrolls = [];
@@ -28,7 +28,7 @@ function page({ storage = new Map(), reduced = false, reload = false, storageErr
       setItem: (key, value) => { if (storageError === 'write') throw Error('Storage full'); storage.set(key, value); },
     },
     performance: { getEntriesByType: () => [{ type: reload ? 'reload' : 'navigate' }] },
-    location: { hash, pathname: '/', search: '?ref=test' },
+    location: { hash, pathname, search: '?ref=test' },
     history,
     scrollTo: options => { if (scrollError) throw Error('Scroll unavailable'); scrolls.push(options); },
     addEventListener: (...args) => listeners.push(args),
@@ -118,4 +118,16 @@ test('bootstrap releases the page if hydration never arrives', () => {
   assert.equal(result.dataset.lxpIntro, undefined);
   assert.equal(result.dataset.lxpReload, undefined);
   assert.equal(result.history.scrollRestoration, 'auto');
+});
+
+test('direct partner visits paint immediately and preserve anchors without consuming the homepage intro', () => {
+  const storage = new Map();
+  for (const pathname of ['/partners/valvetronic', '/partners/techart', '/partners/novitec/ferrari']) {
+    const result = page({ pathname, storage, reload: true, hash: '#vehicles' });
+    assert.equal(result.dataset.lxpIntro, undefined);
+    assert.equal(result.scrolls.length, 0);
+    assert.equal(result.replacements.length, 0);
+    assert.equal(result.storage.size, 0);
+  }
+  assert.equal(page({ storage }).dataset.lxpIntro, 'tracing');
 });
