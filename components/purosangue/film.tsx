@@ -25,7 +25,8 @@ export function PurosangueFilm() {
   const [mediaNear, setMediaNear] = useState(false);
   const titleId = useId();
   const imageReady = loaded.stock && loaded.novitec && loaded.spoilers && loaded.roof;
-  const carImageSizes = playing || chapter > 0 ? '(max-width: 700px) 260vw, 180vw' : '(max-width: 700px) calc((100vw - 48px) * 1.13), (max-width: 900px) calc((100vw - 50px) * 1.13), (min-width: 1600px) 87vw, 94vw';
+  const carDetailed = playing || chapter > 0;
+  const carImageSizes = carDetailed ? '(max-width: 700px) 260vw, 180vw' : '(max-width: 700px) calc((100vw - 48px) * 1.13), (max-width: 900px) calc((100vw - 50px) * 1.13), (min-width: 1600px) 87vw, 94vw';
   const carImageQuality = playing || chapter > 0 ? 90 : 75;
   const current = filmChapters[chapter];
   const complete = chapter === filmChapters.length - 1;
@@ -320,9 +321,9 @@ export function PurosangueFilm() {
         <div ref={rig} className={styles.carRig}>
           <div className={styles.camera}>
             <div className={styles.carShadow} aria-hidden="true" />
-            <Image className={`${styles.carImage} ${styles.original}`} style={comparing ? { clipPath: `inset(0 0 0 ${split}%)` } : undefined} src="/images/purosangue-film/stock.png" alt="Original red Ferrari Purosangue, shown from the rear left" width={1672} height={941} sizes={carImageSizes} quality={carImageQuality} loading={mediaNear ? 'eager' : 'lazy'} draggable={false} onLoad={() => setLoaded(s => ({ ...s, stock: true }))} />
+            <picture>{!carDetailed && <source media="(max-width: 700px)" type="image/avif" srcSet="/images/purosangue-film/stock-overview.avif" />}<Image className={`${styles.carImage} ${styles.original}`} style={comparing ? { clipPath: `inset(0 0 0 ${split}%)` } : undefined} src="/images/purosangue-film/stock.png" alt="Original red Ferrari Purosangue, shown from the rear left" width={1672} height={941} sizes={carImageSizes} quality={carImageQuality} loading={mediaNear ? 'eager' : 'lazy'} draggable={false} onLoad={() => setLoaded(s => ({ ...s, stock: true }))} /></picture>
             <div className={styles.upgraded} style={comparing ? { clipPath: `inset(0 ${100 - split}% 0 0)` } : undefined}>
-              <Image className={`${styles.carImage} ${styles.retainedBody}`} src="/images/purosangue-film/stock.png" alt="" aria-hidden="true" width={1672} height={941} sizes={carImageSizes} quality={carImageQuality} loading={mediaNear ? 'eager' : 'lazy'} draggable={false} />
+              <picture>{!carDetailed && <source media="(max-width: 700px)" type="image/avif" srcSet="/images/purosangue-film/stock-overview.avif" />}<Image className={`${styles.carImage} ${styles.retainedBody}`} src="/images/purosangue-film/stock.png" alt="" aria-hidden="true" width={1672} height={941} sizes={carImageSizes} quality={carImageQuality} loading={mediaNear ? 'eager' : 'lazy'} draggable={false} /></picture>
               <Image className={`${styles.carImage} ${styles.upgradeParts}`} src="/images/purosangue-film/novitec.png" alt="Illustrative NOVITEC ESTESO build with painted widebody arches, NF10 wheels, carbon details and black tailpipes" width={1672} height={941} sizes={carImageSizes} quality={carImageQuality} loading={mediaNear ? 'eager' : 'lazy'} draggable={false} onLoad={() => setLoaded(s => ({ ...s, novitec: true }))} />
               <Image className={`${styles.carImage} ${styles.roofParts}`} src="/images/purosangue-film/roof-user-selected.png" alt="" aria-hidden="true" width={1672} height={941} sizes={carImageSizes} quality={carImageQuality} loading={mediaNear ? 'eager' : 'lazy'} draggable={false} onLoad={() => setLoaded(s => ({ ...s, roof: true }))} />
               <Image className={`${styles.carImage} ${styles.spoilerParts}`} src="/images/purosangue-film/rear-lip-fitted.png" alt="" aria-hidden="true" width={1672} height={941} sizes={carImageSizes} quality={carImageQuality} loading={mediaNear ? 'eager' : 'lazy'} draggable={false} onLoad={() => setLoaded(s => ({ ...s, spoilers: true }))} />
