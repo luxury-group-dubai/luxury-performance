@@ -27,6 +27,6 @@ export function BrandArtwork({ brand, labelled = true, className = '', sizes = '
     </span> : brand === 'voltrix' ? <svg viewBox="0 0 1600 260" aria-hidden="true">
       <defs><filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -0.2126 -0.7152 -0.0722 1 0" /></filter></defs>
       <image href={item.src} width="1600" height="260" filter={`url(#${filterId})`} />
-    </svg> : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={sizes} quality={90} unoptimized={item.src.endsWith('.svg')} loading="eager" />}
+    </svg> : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={sizes} quality={75} unoptimized={item.src.endsWith('.svg')} loading="eager" />}
   </span>;
 }

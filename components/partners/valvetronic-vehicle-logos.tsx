@@ -19,7 +19,7 @@ export function ValvetronicVehicleLogos() {
           alt=""
           width={200}
           height={80}
-          sizes="(max-width: 700px) 40vw, 220px"
+          sizes="(max-width: 700px) 32vw, 200px"
           className={`${styles.mark}${vehicle.lightMonochrome ? ` ${styles.monochrome}` : ''}`}
         />
       </Link>
