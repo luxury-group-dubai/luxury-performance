@@ -1,3 +1,4 @@
+import './contact.css';
 import type { Metadata } from 'next';
 import { Eyebrow, ArrowLink } from '@/components/ui';
 import { EnquiryForm } from '@/components/enquiry-form';

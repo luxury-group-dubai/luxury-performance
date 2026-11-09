@@ -1,3 +1,4 @@
+import './about.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { ArrowLink, Eyebrow } from '@/components/ui';

@@ -1,3 +1,4 @@
+import '@/app/shop.css';
 import { ferrariVersionMatch, is812Selection, isSF90Body, isSF90Selection, sf90Bodies } from '@/lib/shop/novitec-ferrari-fitment';
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';

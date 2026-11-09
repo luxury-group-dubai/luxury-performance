@@ -11,7 +11,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { WhatsAppWidget } from '@/components/whatsapp-widget';
 import './globals.css';
-import './shop.css';
+import './shop-shared.css';
 import './display-type.css';
 import { CartProvider } from '@/components/shop/cart-provider';
 const montserratUi = localFont({ src: './Montserrat-Variable-ui.woff2', variable: '--font-montserrat-ui', display: 'swap', preload: true, adjustFontFallback: false, fallback: [] });
