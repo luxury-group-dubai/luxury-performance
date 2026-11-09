@@ -1,4 +1,7 @@
 .selector { min-width: 0; }
+.filters { padding-bottom: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
+.results, .models { min-width: 0; }
+.models > nav { padding: 0; margin: 0; border: 0; }
 .control { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 16px; align-items: start; margin-bottom: 16px; }
 .label { padding-top: 15px; font-size: 10px; line-height: 1.4; letter-spacing: .07em; color: #73736b; text-transform: uppercase; }
 .pills { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
@@ -6,17 +9,34 @@
 .pills button[aria-pressed=true] { background: #20201e; border-color: #20201e; color: #fff; }
 .pills button:hover { border-color: #7e7b70; }
 .pills button:focus-visible, .change:focus-visible, .trimCard:focus-visible { outline: 2px solid #9b855c; outline-offset: 4px; }
-.familyHeading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin: 32px 0 16px; }
+.familyHeading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 16px; }
 .familyHeading h3 { font-size: 18px; line-height: 1.4; letter-spacing: -.03em; }
+.seriesBadge { display: inline-block; width: 60px; height: 16px; margin-right: 8px; vertical-align: -1px; }
+.cayenneSeriesBadge { width: 112px; }
 .familyHeading p { font-size: 12px; color: #73736b; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .card { display: flex; min-width: 0; flex-direction: column; background: #fff; border: 1px solid #deddd7; border-radius: 14px; overflow: hidden; }
-.image { display: flex; align-items: center; justify-content: center; padding: 24px 16px 12px; aspect-ratio: 2.5; }
-.image img { width: 100%; height: 100%; object-fit: contain; }
-.trimCard:hover { border-color: #7e7b70; }
-.trimCaption { display: flex; flex: 1; align-items: start; justify-content: space-between; gap: 8px; padding: 10px 16px 16px; font-size: 15px; line-height: 1.4; }
-.trimCaption small { display: block; margin-top: 4px; font-size: 11px; color: #73736b; }
-.trimCaption svg { flex: none; }
+.image { position: relative; flex: none; min-width: 0; width: 100%; aspect-ratio: 2.5; }
+.image img { position: absolute; inset: 0; display: block; box-sizing: border-box; min-width: 0; width: 100%; max-width: 100%; height: 100%; padding: 24px 16px 12px; object-fit: contain; object-position: center; }
+.trimCard { position: relative; isolation: isolate; background: transparent; border: 0; overflow: visible; }
+/* 28% of the card width is 70% of the 2.5:1 image frame's height. */
+.trimCard::before { content: ''; position: absolute; z-index: -1; inset: 0; margin-top: 28%; background: #fff; border: 1px solid #deddd7; border-radius: 14px; pointer-events: none; }
+.trimCard:hover::before { border-color: #7e7b70; }
+.trimCaption { position: relative; display: flex; flex: 1; align-items: start; padding: 12px 18px 20px; font-size: 18px; font-weight: 500; line-height: 1.4; }
+.trimCaption > div { display: flex; flex: 1; flex-direction: column; align-self: stretch; min-width: 0; overflow-wrap: anywhere; }
+.trimCaption small { display: block; margin-top: auto; padding-top: 6px; padding-right: 28px; font-size: 13px; font-weight: 400; color: #68685f; }
+.trimCaption svg { position: absolute; right: 18px; bottom: 20px; width: 20px; height: 20px; }
+.modelWordmark { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 9px; min-height: 26px; }
+.modelBadge { display: block; width: auto; max-width: 100%; height: 21px; object-fit: contain; object-position: left center; }
+.stBadge { height: 30px; }
+.carreraBadge { height: 18px; }
+.targaBadge { height: 30px; }
+.hybridBadge { width: 128px; height: auto; }
+.touringBadge { height: 17px; }
+.dakarBadge { height: 18px; }
+.mixedWordmark { column-gap: 8px; }
+.badgeSuffix { display: flex; align-items: center; gap: 1px; max-width: 100%; }
+.badgeSuffix .modelBadge { height: 17px; min-width: 0; }
 .note { margin-top: 20px; max-width: 780px; font-size: 11px; line-height: 1.7; color: #77766e; }
 .note a { text-decoration: underline; text-underline-offset: 3px; }
 :global(.shop-intro).catalogIntro { grid-template-columns: minmax(0, 1fr) minmax(340px, 1.15fr); align-items: center; gap: clamp(24px, 4vw, 64px); padding: 32px 0 28px; }
@@ -33,17 +53,43 @@
 .review p, .review ul { margin-top: 16px; font-size: 12px; line-height: 1.8; color: #73736b; }
 .review ul { padding-left: 18px; }
 .review a { text-decoration: underline; text-underline-offset: 3px; }
-@media (max-width: 1000px) { .grid { gap: 12px; } .pills button { padding-inline: 14px; } }
+@media (max-width: 1000px) { .grid { gap: 12px; } .pills button { padding-inline: 14px; } .image img { padding: 16px 12px 8px; } }
+@media (min-width: 1200px), (min-width: 900px) and (min-height: 500px) and (orientation: landscape) {
+  .selector { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 32px; align-items: start; }
+  .filters { position: sticky; top: 120px; margin: 0; padding: 0 24px 0 0; border-bottom: 0; border-right: 1px solid var(--line); }
+  .control { grid-template-columns: 1fr; gap: 12px; margin-bottom: 28px; }
+  .control:last-child { margin-bottom: 0; }
+  .label { padding-top: 0; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .familyHeading { display: block; }
+  .familyHeading p { margin-top: 6px; }
+}
+@media (min-width: 1280px) {
+  .selector { grid-template-columns: 230px minmax(0, 1fr); gap: 40px; }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 @media (max-width: 700px) {
   .control { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
   .label { padding-top: 0; }
-  .familyHeading { display: block; margin-top: 28px; }
+  .familyHeading { display: block; }
   .familyHeading p { margin-top: 8px; }
-  .image { padding: 20px 20px 8px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .grid .image { padding: 12px 8px 4px; }
-  .trimCaption { padding: 8px 10px 12px; font-size: 12px; }
-  .trimCaption svg { width: 15px; height: 15px; }
+  .image img { padding: 12px 8px 4px; }
+  .trimCaption { padding: 10px 12px 14px; font-size: 14px; }
+  .trimCaption small { font-size: 12px; }
+  .trimCaption svg { right: 12px; bottom: 14px; width: 17px; height: 17px; }
+  .seriesBadge { width: 53px; height: 14px; }
+  .cayenneSeriesBadge { width: 98px; }
+  .modelWordmark { min-height: 32px; align-content: center; gap: 3px 5px; }
+  .modelBadge { height: 15px; }
+  .gt3RsBadge { height: 12px; }
+  .stBadge { height: 21px; }
+  .carreraBadge { height: 12px; }
+  .targaBadge { height: 20px; }
+  .hybridBadge { width: 96px; height: auto; }
+  .touringBadge { height: 11px; }
+  .dakarBadge { height: 12px; }
+  .badgeSuffix .modelBadge { height: 11px; }
   .note { margin-top: 16px; }
   :global(.shop-intro).catalogIntro { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px 0; }
   .catalogIntro h1 { font-size: 42px; margin-top: 12px; }

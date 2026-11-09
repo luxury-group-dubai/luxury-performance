@@ -24,7 +24,11 @@ export function tagsFor(p: CatalogProduct, type: 'make' | 'model' | 'fit') {
   const junk = /^(model_|make_|sports$|waitlist$|exclusivecarbon$|muffler$|nsactive$|standar$|tecnic$|technica$|sports$|truck$|v8$|vtec$|n55$|fa20$|lp$|vw$)/;
   return [...new Set(result.filter(v => !junk.test(v)))];
 }
-export function fitLabel(v: string) { return label(v.replace(/^(99[12]|e3)_([12])(?=_|$)/, '$1.$2')).replace(/Turbo S/gi, 'Turbo S').replace(/Gt3/gi, 'GT3').replace(/Gts/gi, 'GTS').replace(/\bE Hybrid\b/g, 'E-Hybrid').replace(/\bTurbo Gt\b/g, 'Turbo GT'); }
+export function fitLabel(v: string) {
+  const display = v.replace(/_gt3_gt3_touring$/, v.startsWith('991_1_') ? '_gt3' : '_gt3_touring').replace(/_gt3_with_wing$/, '_gt3')
+    .replace(/_gt3_rs_st$/, '_gt3_RS_/_S/T').replace(/_st$/, '_S/T');
+  return label(display.replace(/^(99[12]|e3)_([12])(?=_|$)/, '$1.$2')).replace(/Turbo S/gi, 'Turbo S').replace(/Gt3/gi, 'GT3').replace(/Gts/gi, 'GTS').replace(/\bRs\b/g, 'RS').replace(/\bE Hybrid\b/g, 'E-Hybrid').replace(/\bTurbo Gt\b/g, 'Turbo GT');
+}
 export function categoryOf(p: CatalogProduct) {
   const type = p.productType.toLowerCase(), tags = p.tags.join(' '), title = p.title.toLowerCase();
   if (supplierOf(p) === 'collectibles') return 'Collectibles';
@@ -47,7 +51,14 @@ export function categoryOf(p: CatalogProduct) {
   return /accessor/.test(type) ? 'Accessories' : 'Other parts';
 }
 export type Filters = { brand?: string; make?: string; model?: string; fit?: string; body?: string; category?: string; q?: string; sort?: string; page?: string };
-export function targaFitKeys(fit: string, body?: string) {
+export function techartFitKeys(fit: string, body?: string) {
+  // Both distinct 992.1 cars have parts in this shared manufacturer column.
+  // Model-specific approval is applied separately by bodyMatch.
+  if (/^992_1_(gt3_rs|st)$/.test(fit)) return [fit, '992_1_gt3_rs_st'];
+  // Rear-wing GT3 selections also consider shared GT3 listings. The body-fitment
+  // evidence must still approve each part for the winged car, excluding Touring-only parts.
+  const gt3 = /^(991_2|992_[12])_gt3_with_wing$/.exec(fit)?.[1];
+  if (gt3) return [fit, `${gt3}_gt3_gt3_touring`];
   // TECHART uses two catalogue columns for the same Targa 4 GTS when body is Targa.
   const generation = body === 'targa' && /^(99[12]_[12])_carrera_(?:4_gts|targa_gts)$/.exec(fit)?.[1];
   return generation ? [`${generation}_carrera_4_gts`, `${generation}_carrera_targa_gts`] : [fit];
@@ -56,7 +67,7 @@ export function filterProducts(products: CatalogProduct[], f: Filters) {
   const f8Body = isF8Selection(f) && isF8Body(f.body) ? f.body : undefined;
   const sf90Body = isSF90Selection(f) && isSF90Body(f.body) ? f.body : undefined;
   const version812 = is812Selection(f) ? (f.model === '812_gts' ? 'gts' : 'superfast') : undefined;
-  const fits = f.fit ? targaFitKeys(f.fit, f.brand === 'techart' && f.model === '911' ? f.body : undefined) : [];
+  const fits = f.fit ? f.brand === 'techart' && f.model === '911' ? techartFitKeys(f.fit, f.body) : [f.fit] : [];
   const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
   if (f.sort === 'price-up') result.sort((a,b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
   if (f.sort === 'price-down') result.sort((a,b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
@@ -88,5 +99,12 @@ export function fitOptions(products: CatalogProduct[], filters: Filters) {
   const family = filters.brand === 'techart'
     ? filters.model === 'cayenne' ? /^e3_/ : filters.model === '911' ? /^99[12]_/ : null
     : null;
-  return [...new Set(scope.flatMap(p => tagsFor(p, 'fit')))].filter(fit => !family || family.test(fit)).sort();
+  const fits = scope.flatMap(p => tagsFor(p, 'fit'));
+  if (filters.brand === 'techart' && filters.model === '911') {
+    for (const fit of [...fits]) {
+      if (/^(991_2|992_[12])_gt3_gt3_touring$/.test(fit)) fits.push(fit.replace(/_gt3_gt3_touring$/, '_gt3_with_wing'));
+      if (fit === '992_1_gt3_rs_st') fits.push('992_1_gt3_rs', '992_1_st');
+    }
+  }
+  return [...new Set(fits)].filter(fit => !family || family.test(fit)).sort();
 }

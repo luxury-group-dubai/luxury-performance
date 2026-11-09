@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { partners, type Partner } from '@/lib/partners';
 import { getCatalog } from '@/lib/shop/storefront';
-import { categoryOf, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
+import { categoryOf, filterProducts, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
 import { money, type CatalogProduct } from '@/lib/shop/types';
 import { ArrowLink, Eyebrow } from '@/components/ui';
 import { BrandArtwork } from '@/components/brand-artwork';
@@ -22,6 +22,8 @@ import { ValvetronicExhaustComparison } from '@/components/partners/valvetronic-
 import { ValvetronicIntroExhaust } from '@/components/partners/valvetronic-intro-exhaust';
 import { ValvetronicSoundGallery } from '@/components/partners/valvetronic-sound-gallery';
 import { ValvetronicVehicleLogos } from '@/components/partners/valvetronic-vehicle-logos';
+import { TechartRangePicker } from '@/components/partners/techart-range-picker';
+import { techartRange } from '@/lib/techart-range';
 import styles from '../partners.module.css';
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
 const novitecWordmarks: Record<string, string> = {
@@ -115,28 +117,28 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   const initialBody = typeof query.body === 'string' ? query.body : undefined;
   const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
   const vehicleHeading = <><h2>{p.vehicleHeading}</h2><p>{compactNovitec ? 'NOVITEC aerodynamics, exhausts, wheels and suspension, with fitment and installation support in Dubai.' : vehicleFirst ? 'Choose your model and generation to explore TECHART parts for your Porsche.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
+  const techartModels = <nav className={styles.modelChoices} aria-label="Porsche models">
+    {vehicles.map(vehicle => {
+      if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
+      if (vehicle === '911' || vehicle === 'cayenne') {
+        return <Link key={vehicle} href={vehicle === '911' ? '/partners/techart#vehicles' : '/partners/techart?model=cayenne#vehicles'}>{label(vehicle)}</Link>;
+      }
+      return <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>;
+    })}
+  </nav>;
   const vehicleSection = vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
-    <header id={compactNovitec ? 'discover' : undefined}>{!compactNovitec && !centeredIntro && <Eyebrow number={vehicleFirst ? '01' : '02'}>Your starting point</Eyebrow>}{vehicleHeading}</header>
+    <header id={compactNovitec ? 'discover' : undefined}>{!compactNovitec && !centeredIntro && !vehicleFirst && <Eyebrow number="02">Your starting point</Eyebrow>}{vehicleHeading}</header>
     {vehicleFirst ? <>
-      <nav className={styles.modelChoices} aria-label="Porsche models">
-        {vehicles.map(vehicle => {
-          if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
-          if (vehicle === '911' || vehicle === 'cayenne') {
-            return <Link key={vehicle} href={vehicle === '911' ? '/partners/techart#vehicles' : '/partners/techart?model=cayenne#vehicles'}>{label(vehicle)}</Link>;
-          }
-          return <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>;
-        })}
-      </nav>
       {techartModel === 'cayenne'
-        ? <CayenneSelector products={products} fit={typeof query.fit === 'string' ? query.fit : undefined} body={initialBody} />
-        : <VehicleSelector products={products.filter(product => tagsFor(product, 'model').includes('911'))} fit={initialFit} body={initialBody} />}
+        ? <CayenneSelector products={products} fit={typeof query.fit === 'string' ? query.fit : undefined} body={initialBody} modelChoices={techartModels} />
+        : <VehicleSelector products={products.filter(product => tagsFor(product, 'model').includes('911'))} fit={initialFit} body={initialBody} modelChoices={techartModels} />}
     </> : compactNovitec ? <div className={styles.novitecWordmarks} aria-label="Explore NOVITEC by vehicle brand">{vehicles.map(vehicle => <Link key={vehicle} href={novitecWordmarks[vehicle] ? `/partners/novitec/${vehicle.replace(/_/g, '-')}` : filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })} aria-label={`Explore NOVITEC for ${label(vehicle)}`} data-make={vehicle}>{novitecWordmarks[vehicle] ? <Image src={novitecWordmarks[vehicle]} alt="" width={240} height={70} /> : <span>{label(vehicle)}</span>}</Link>)}</div> : vehicleLinks}
   </section>;
 
   const collectionSection = showCategories && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={filterUrl('/shop', { brand: p.supplier, category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;
 
-  const introduction = !compactNovitec && <section id="discover" className={`${styles.introduction} ${centeredIntro ? styles.centeredIntroduction : ''}`}>
-    {!centeredIntro && <Eyebrow number={vehicleFirst ? "02" : "01"}>{p.stockOnly ? 'From our stock' : `The ${p.name} approach`}</Eyebrow>}
+  const introduction = !compactNovitec && p.slug !== 'techart' && <section id="discover" className={`${styles.introduction} ${centeredIntro ? styles.centeredIntroduction : ''}`}>
+    {!centeredIntro && p.slug !== 'techart' && <Eyebrow number={vehicleFirst ? "02" : "01"}>{p.stockOnly ? 'From our stock' : `The ${p.name} approach`}</Eyebrow>}
     <div><h2>{p.intro}</h2><p>{p.detail}</p>{p.stockOnly && <span className={styles.conditionNote}>Limited stock · 2 kits</span>}{p.supplier && !products.length && <p>No parts are currently listed online. <Link href={enquiry}>Ask our team about current availability.</Link></p>}</div>
     {centeredIntro && vehicles.length > 0 && <ValvetronicIntroExhaust />}
   </section>;
@@ -145,7 +147,11 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     {vehicleFirst && vehicleSection}
     {introduction}
     {!vehicleFirst && vehicleSection}
-    {p.slug !== 'novitec' && collectionSection}
+    {p.slug === 'techart' ? <TechartRangePicker options={techartRange.map(option => ({
+      ...option,
+      count: filterProducts(products, option.filters).length,
+      href: filterUrl('/shop', { brand: 'techart', ...option.filters }),
+    })).filter(option => option.count > 0)} /> : p.slug !== 'novitec' && collectionSection}
     {p.slug === 'novitec' && <NovitecFeed looks={feedLooks.map(({ codes, model, ...look }) => {
       const album = novitecFeedAlbums[model];
       const lookProducts = codes.length ? codes.flatMap(code => {
@@ -156,9 +162,9 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     })} />}
     {p.slug === 'novitec' && <NovitecStories />}
     {p.slug === 'valvetronic' && <ValvetronicExhaustComparison />}
-    {p.slug !== 'novitec' && featured.length > 0 && <section id="selected" className={styles.selected}><div className={styles.sectionHeading}><div><Eyebrow>A closer look</Eyebrow><h2>Explore the range.</h2></div><ArrowLink href={shop}>{p.slug === 'valvetronic' ? 'View all exhausts' : 'Shop the collection'}</ArrowLink></div><div className={styles.productGrid}>{featured.map(item => <Link className="shop-product-card" key={item.id} href={`/products/${item.handle}`}><div className="shop-product-image">{item.featuredImage && <img src={`${item.featuredImage.url}${item.featuredImage.url.includes('?') ? '&' : '?'}width=700`} alt={item.featuredImage.altText || item.title} loading="lazy"/>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{item.tags.includes('condition_used') && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.name}</span><span>{categoryOf(item)}</span></div><h3>{item.title.replace(/^(TECHART|Valvetronic Designs)\s*[-–]\s*/i, '')}</h3><p className="shop-price">From {money(item.priceRange.minVariantPrice)}</p></Link>)}</div></section>}
+    {p.slug !== 'novitec' && featured.length > 0 && <section id="selected" className={styles.selected}><div className={styles.sectionHeading}><div>{p.slug !== 'techart' && <Eyebrow>A closer look</Eyebrow>}<h2>Explore the range.</h2></div><ArrowLink href={shop}>{p.slug === 'valvetronic' ? 'View all exhausts' : 'Shop the collection'}</ArrowLink></div><div className={styles.productGrid}>{featured.map(item => <Link className="shop-product-card" key={item.id} href={`/products/${item.handle}`}><div className="shop-product-image">{item.featuredImage && <img src={`${item.featuredImage.url}${item.featuredImage.url.includes('?') ? '&' : '?'}width=700`} alt={item.featuredImage.altText || item.title} loading="lazy"/>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{item.tags.includes('condition_used') && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.name}</span><span>{categoryOf(item)}</span></div><h3>{item.title.replace(/^(TECHART|Valvetronic Designs)\s*[-–]\s*/i, '')}</h3><p className="shop-price">From {money(item.priceRange.minVariantPrice)}</p></Link>)}</div></section>}
     {p.slug === 'valvetronic' && <ValvetronicSoundGallery />}
-    {(p.slug === 'novitec' || p.slug === 'valvetronic') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
+    {(p.slug === 'novitec' || p.slug === 'valvetronic' || p.slug === 'techart') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
     <section className={styles.support}><div><Eyebrow dark>Luxury Performance / Dubai</Eyebrow><h2>Your car.<br/>Your next chapter.</h2></div><div><p>{p.stockOnly ? 'Need a closer look at one of the kits? Ask us about its condition, included parts and fitment.' : 'From the first component to a complete specification, our team can help with compatibility, product choices and installation.'}</p><ArrowLink href={enquiry} light>Discuss your {p.slug === 'fi-exhaust' ? 'exhaust' : 'specification'}</ArrowLink></div></section>
   </>;
 }

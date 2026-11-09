@@ -37,12 +37,11 @@ export function isCayenneBody(body?: string): body is CayenneBody {
 
 export function cayenneImage(fit: string, body: CayenneBody = 'suv'): VehicleProfile {
   const trim = fit.slice(5);
-  if (fit.startsWith('e3_2_') && isCayenneLineupFit(fit)) {
-    const style = trim === 'turbo_gt' ? 'coupe' : body;
-    return { src: `/vehicle-selector/porsche/cayenne-${style}-${trim}.webp`, width: 800, height: 270 };
-  }
-  const image = trim === 'turbo_gt' ? 'turbo-gt' : trim === 'gts' ? `${body}-gts` : trim.startsWith('turbo') ? `${body}-turbo` : body;
-  return { src: `/vehicle-selector/vehicle-selector-cayenne-${image}.webp`, width: 794, height: 270 };
+  // Reuse the current factory profiles for earlier generations and related trims.
+  // The selected generation and fitment continue to determine the parts shown.
+  const profile = trim === 'turbo' || trim === 'turbo_s_e_hybrid' ? 'turbo_e_hybrid' : Object.hasOwn(trims, trim) ? trim : 'cayenne';
+  const style = trim === 'turbo_gt' ? 'coupe' : body;
+  return { src: `/vehicle-selector/porsche/cayenne-${style}-${profile}.webp`, width: 800, height: 270 };
 }
 
 export function cayenneName(fit: string, body?: CayenneBody) {
