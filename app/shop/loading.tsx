@@ -1,1 +1,1 @@
-export default function Loading(){return <div className="shop-page shop-loading" role="status"><span className="tiny-label">Luxury Performance</span><h1>Finding your next detail.</h1><p>Loading the collection…</p></div>;}
+export default function Loading(){return <div className="shop-page shop-loading" style={{ minHeight: '100svh' }} role="status"><span className="tiny-label">Luxury Performance</span><h1>Finding your next detail.</h1><p>Loading the collection…</p></div>;}
