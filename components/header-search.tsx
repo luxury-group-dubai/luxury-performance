@@ -71,7 +71,7 @@ export function HeaderSearch({ onOpen }: { onOpen: () => void }) {
 
   return <>
     <button ref={trigger} type="button" className={styles.trigger} aria-label="Search the store" aria-haspopup="dialog" onClick={() => { onOpen(); changeQuery(''); setOpen(true); }}><Search size={19} strokeWidth={1.5} aria-hidden="true" /></button>
-    <dialog ref={dialog} className={styles.dialog} aria-labelledby="global-search-title" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); } }} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === dialog.current) close(); }}>
+    {open && <dialog ref={dialog} className={styles.dialog} aria-labelledby="global-search-title" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); } }} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === dialog.current) close(); }}>
       <div className={styles.content}>
         <div className={styles.top}><Link href="/#top" onClick={event => { close(); if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && window.location.pathname === '/') window.scrollTo({ top: 0, behavior: 'instant' }); }} aria-label="Luxury Performance home"><BrandLogo wordmark={false}/></Link><button type="button" className={styles.close} onClick={close} aria-label="Close search"><X size={24} strokeWidth={1.2}/></button></div>
         <h2 id="global-search-title" className={styles.eyebrow}>Find your next detail.</h2>
@@ -92,6 +92,6 @@ export function HeaderSearch({ onOpen }: { onOpen: () => void }) {
           {!!error && <button type="button" className={styles.allResults} onClick={() => { changeQuery(''); input.current?.focus(); }}>Start a new search <ArrowRight size={18}/></button>}
         </div>}
       </div>
-    </dialog>
+    </dialog>}
   </>;
 }

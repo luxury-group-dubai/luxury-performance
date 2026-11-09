@@ -3,6 +3,32 @@ import Link from 'next/link';
 import styles from './partner-faq.module.css';
 
 const questions = {
+  techart: [
+    {
+      question: 'Which Porsche models can I find TECHART parts for?',
+      answer: 'Start with the vehicle selector above to see the models and generations in our catalogue. Availability varies by variant, body style and the type of upgrade you’re considering.',
+    },
+    {
+      question: 'How do I confirm a TECHART part fits my Porsche?',
+      answer: 'Check the exact generation, model, body style and any fitment notes on the listing. Share your model year, factory options and existing modifications with us if you need help. Parts marked for fitment confirmation need an additional check before ordering.',
+    },
+    {
+      question: 'Can I order individual parts or a complete TECHART package?',
+      answer: 'You can explore individual upgrades or plan a package for your Porsche. Some components require matching parts or specific factory equipment, so ask us to confirm the full requirements for your build.',
+    },
+    {
+      question: 'Can you help with TECHART installation in Dubai?',
+      answer: 'Yes. Send us your vehicle details and the parts you have in mind. We’ll discuss compatibility, fitting requirements, installation options and timing.',
+    },
+    {
+      question: 'Are TECHART parts in stock or made to order?',
+      answer: 'Check each listing for its stock status. Availability and lead times depend on the part and specification. Contact us to confirm timing for special orders and any painting or finishing required.',
+    },
+    {
+      question: 'What is included with the part I’m ordering?',
+      answer: 'Check the listing for the supplied components and finish. Photos may show a car fitted with several upgrades. Ask us to confirm whether painting, fitting hardware or additional components are included in your chosen part.',
+    },
+  ],
   novitec: [
     {
       question: 'Which cars does NOVITEC support?',

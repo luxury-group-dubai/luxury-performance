@@ -9,7 +9,7 @@ import { money } from '@/lib/shop/types';
 import { isUsedPart, wheelGroupSize, wheelGroupUnit } from '@/lib/shop/used-parts';
 import { suppliers, supplierOf, categoryOf, tagsFor, filterProducts, filterUrl, fitOptions, type Filters } from '@/lib/shop/taxonomy';
 import { cayenneBodies, isCayenneLineupFit } from '@/lib/shop/techart-cayenne';
-import { bodyStyles, filterBodyProducts, supportsBody, techartSelection, vehicleBodyMatch } from '@/lib/shop/techart-fitment';
+import { bodyStyles, filterBodyProducts, is911LineupFit, supportsBody, techartSelection, vehicleBodyMatch } from '@/lib/shop/techart-fitment';
 import { SelectedVehicle } from './vehicle-selector';
 import { f8Bodies, f8BodyMatch, isF8Body, isF8Selection } from '@/lib/shop/novitec-f8-fitment';
 import vehicleStyles from './vehicle-selector.module.css';
@@ -21,7 +21,8 @@ export function Catalog({ products, filters, title, description, basePath = '/sh
   const vehicleScope = scope.filter(p => !filters.make || tagsFor(p, 'make').includes(filters.make));
   const models = [...new Set(vehicleScope.flatMap(p => tagsFor(p, 'model')))].sort();
   const cayenne = filters.brand === 'techart' && filters.model === 'cayenne';
-  const fits = fitOptions(scope, filters).filter(fit => !cayenne || fit === filters.fit || isCayenneLineupFit(fit));
+  const porsche911 = filters.brand === 'techart' && filters.model === '911';
+  const fits = fitOptions(scope, filters).filter(fit => fit === filters.fit || (cayenne ? isCayenneLineupFit(fit) : !porsche911 || is911LineupFit(fit)));
   const vehicle = techartSelection(filters);
   const f8Selection = isF8Selection(filters);
   const f8Body = f8Selection && isF8Body(filters.body) ? filters.body : undefined;
@@ -53,7 +54,7 @@ export function Catalog({ products, filters, title, description, basePath = '/sh
       <section className="shop-results" aria-label="Products"><CatalogAppliedFilters filters={filters} basePath={basePath} /><div className="shop-results-head"><p role="status">{matches.length} {matches.length===1?'part':'parts'}{selected?` from ${selected.name}`:''}</p><span className="tiny-label">Selected for the extraordinary</span></div>
         {shown.length ? <div className="shop-product-grid">{shown.map(p=><Link className="shop-product-card" key={p.id} href={`${productBasePath}/${p.handle}`}><div className="shop-product-image">{p.featuredImage?<img src={`${p.featuredImage.url}${p.featuredImage.url.includes('?')?'&':'?'}width=700`} alt={p.featuredImage.altText||p.title} loading="lazy"/>:<span>{p.vendor}</span>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{isUsedPart(p) && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.vendor}</span><span>{categoryOf(p)}</span></div><h3>{p.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h3><p className="shop-price">{preview && Number(p.priceRange.minVariantPrice.amount) === 0 ? 'Price pending' : wheelGroupSize(p) ? `${money(p.priceRange.minVariantPrice)} / ${wheelGroupUnit(wheelGroupSize(p)!)}` : `From ${money(p.priceRange.minVariantPrice)}`}</p></Link>)}</div>:<div className="shop-empty"><h2>No matching parts.</h2><p>Try another vehicle or department, or ask our team about your car.</p><Link href={filterUrl(basePath, { brand: filters.brand })} scroll={false}>Clear filters →</Link></div>}
         {pages>1 && <nav className="shop-pagination" aria-label="Pagination">{page>1?<Link href={href({page:String(page-1)})}>← Previous</Link>:<span/>}<span>Page {page} of {pages}</span>{page<pages?<Link href={href({page:String(page+1)})}>Next →</Link>:<span/>}</nav>}
-        {!!review.length && <details className={vehicleStyles.review}><summary>{review.length} more {review.length === 1 ? 'part needs' : 'parts need'} body-style confirmation</summary><p>{f8Body || sf90Body || version812 ? 'These listings do not clearly specify your version, or are for a special programme. Confirm compatibility with our team before ordering.' : 'Confirm fitment with our team before ordering these parts.'}</p><ul>{review.map(product => <li key={product.id}><Link href={`/products/${product.handle}`}>{product.title}</Link></li>)}</ul></details>}
+        {!!review.length && <details className={vehicleStyles.review}><summary>{review.length} more {review.length === 1 ? 'part needs' : 'parts need'} fitment confirmation</summary><p>{f8Body || sf90Body || version812 ? 'These listings do not clearly specify your version, or are for a special programme. Confirm compatibility with our team before ordering.' : 'Confirm fitment with our team before ordering these parts.'}</p><ul>{review.map(product => <li key={product.id}><Link href={`/products/${product.handle}`}>{product.title}</Link></li>)}</ul></details>}
       </section>
     </div>
   </div></CatalogMobileProvider>;

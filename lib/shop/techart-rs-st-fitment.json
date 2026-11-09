@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "auditedAt": "2026-11-08",
+  "source": "Pricelist_911_992_2026_Q4_INT.pdf",
+  "method": "Separate model decisions for audited products in the combined GT3 RS / S/T column. Body is coupe only. Unrecorded shared listings need confirmation. Equipment-dependent applications remain under review when the selected model does not resolve the condition.",
+  "products": {
+    "techart-towing-loop-for-porsche-911-992-1-092-100-171-009": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-techart-front-hood-emblem-black-for-porsche-911-992-1-000-965-202-blk": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-roof-spoiler-for-porsche-911-992-1-092-100-600-009": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-techart-rear-window-pc-for-porsche-911-992-1-092-170-600-009": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-techart-rear-lettering-for-porsche-911-992-1-092-100-710-009": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-side-mirror-trims-carbon-glossy-for-porsche-911-992-1-092-121-330-009g": {
+      "gt3_rs": "allowed",
+      "st": "allowed",
+      "note": "Page 9: this SKU is RHD; the corresponding LHD SKU is 092.121.320.009G. Confirm the driving side before ordering."
+    },
+    "techart-flap-control-unit-incl-wiring-harness-w-remote-control-for-porsche-911-992-1-092-310-210-009": {
+      "gt3_rs": "allowed",
+      "st": "allowed",
+      "note": "Page 10: TECHART exhaust; racing/export use qualifications apply."
+    },
+    "techart-flap-control-unit-incl-wiring-harness-w-remote-control-for-porsche-911-992-1-092-310-200-009": {
+      "gt3_rs": "allowed",
+      "st": "allowed",
+      "note": "Page 10: original exhaust; racing/export use qualifications apply."
+    },
+    "techart-tailpipes-gt3-stainless-steel-for-porsche-911-992-1-092-310-810-009": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-techart-floor-mat-sets-for-rhd-for-porsche-911-992-1-092-410-421-ccc": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-techart-floor-mat-sets-for-lhd-for-porsche-911-992-1-092-410-401-ccc": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-roof-liner-unit-for-porsche-911-992-1-092-407-300-997": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-techart-floor-mat-sets-for-lhd-for-porsche-911-992-1-092-410-400-ccc": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-techart-floor-mat-sets-for-rhd-for-porsche-911-992-1-092-410-420-ccc": {
+      "gt3_rs": "allowed",
+      "st": "allowed"
+    },
+    "techart-carbon-interior-kit-iv-graphite-gray-for-porsche-911-992-1-092-421-080-009g": {
+      "gt3_rs": "review",
+      "st": "allowed",
+      "note": "Page 19: not compatible with the aluminum PDK selector lever (Exclusive Manufaktur). GT3 RS equipment is unknown; S/T has a manual transmission."
+    },
+    "techart-carbon-interior-kit-viii-glossy-for-porsche-911-992-1-092-421-131-009g": {
+      "gt3_rs": "review",
+      "st": "review",
+      "note": "Page 19: not compatible with bucket seats. Confirm the actual seat configuration on either model."
+    }
+  }
+}
