@@ -22,11 +22,11 @@ export function BrandArtwork({ brand, labelled = true, className = '', sizes = '
   if (!item) return null;
   return <span className={`${styles.artwork} ${className}`} data-brand-artwork={brand} role={labelled ? 'img' : undefined} aria-label={labelled ? item.name : undefined}>
     {brand === 'fi-exhaust' || brand === 'liberty-walk' ? <span className={brand === 'fi-exhaust' ? styles.fi : styles.liberty}>
-      <Image src={item.src} alt="" width={item.width} height={item.height} unoptimized loading="eager" />
-      <Image src={brand === 'fi-exhaust' ? '/brand/fi-exhaust-lettering.png' : '/brand/liberty-walk-lettering.png'} alt="" width={brand === 'fi-exhaust' ? 535 : 1200} height={brand === 'fi-exhaust' ? 73 : 137} unoptimized loading="eager" />
+      <Image src={item.src} alt="" width={item.width} height={item.height} sizes={brand === 'fi-exhaust' ? '60px' : '40px'} unoptimized={item.src.endsWith('.svg')} loading="eager" />
+      <Image src={brand === 'fi-exhaust' ? '/brand/fi-exhaust-lettering.png' : '/brand/liberty-walk-lettering.png'} alt="" width={brand === 'fi-exhaust' ? 535 : 1200} height={brand === 'fi-exhaust' ? 73 : 137} sizes={brand === 'fi-exhaust' ? '(max-width: 700px) 110px, 128px' : '(max-width: 700px) 140px, 164px'} quality={75} loading="eager" />
     </span> : brand === 'voltrix' ? <svg viewBox="0 0 1600 260" aria-hidden="true">
       <defs><filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -0.2126 -0.7152 -0.0722 1 0" /></filter></defs>
       <image href={item.src} width="1600" height="260" filter={`url(#${filterId})`} />
-    </svg> : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={sizes} quality={75} unoptimized={item.src.endsWith('.svg')} loading="eager" />}
+    </svg> : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={sizes} quality={brand === 'valvetronic' ? 60 : 75} unoptimized={item.src.endsWith('.svg')} loading="eager" />}
   </span>;
 }
