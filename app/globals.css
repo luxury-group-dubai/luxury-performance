@@ -92,10 +92,11 @@ html[data-lxp-intro] .reading-progress{opacity:0}
 .site-header .company-emblem{filter:none;mask-image:none}
 #main,.site-footer{transition:opacity .6s ease}
 html[data-lxp-intro]:not([data-lxp-intro="wings"]) #main,html[data-lxp-intro]:not([data-lxp-intro="wings"]) .site-footer{opacity:0}
-html[data-lxp-intro]:has([data-home-hero]) #site-shell,html[data-lxp-intro]:has([data-home-hero]) #main{opacity:1;transition:none}
-html[data-lxp-intro]:has([data-home-hero]) .intro-backdrop{background:rgba(16,16,16,.55)}
+/* The bootstrap sets homepage context before streamed hero markup arrives. */
+html[data-lxp-intro][data-lxp-intro-home] #site-shell,html[data-lxp-intro][data-lxp-intro-home] #main{opacity:1;transition:none}
+html[data-lxp-intro][data-lxp-intro-home] .intro-backdrop{background:rgba(16,16,16,.55)}
 @media(prefers-reduced-motion:no-preference){
-  html[data-lxp-intro="tracing"]:has([data-home-hero]) .site-header,html[data-lxp-intro="formed"]:has([data-home-hero]) .site-header{visibility:hidden}
+  html[data-lxp-intro="tracing"][data-lxp-intro-home] .site-header,html[data-lxp-intro="formed"][data-lxp-intro-home] .site-header{visibility:hidden}
 }
 @keyframes hero-mobile-arrive{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){

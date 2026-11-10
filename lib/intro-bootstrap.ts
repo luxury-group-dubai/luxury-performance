@@ -15,12 +15,14 @@ export const introBootstrap = `(function(){try{
     scrollTo({top:0,left:0,behavior:'instant'});
     addEventListener('pageshow',function(){scrollTo({top:0,left:0,behavior:'instant'});},{once:true});
   }
+  if(location.pathname==='/')root.dataset.lxpIntroHome='true';
   root.dataset.lxpIntro='tracing';
   setTimeout(function(){
     delete root.dataset.lxpIntro;
+    delete root.dataset.lxpIntroHome;
     if(root.dataset.lxpReload==='true'){delete root.dataset.lxpReload;history.scrollRestoration='auto';}
   },5000);
 }catch(e){
   if(document.documentElement.dataset.lxpReload==='true')history.scrollRestoration='auto';
-  delete document.documentElement.dataset.lxpIntro;delete document.documentElement.dataset.lxpReload;
+  delete document.documentElement.dataset.lxpIntro;delete document.documentElement.dataset.lxpIntroHome;delete document.documentElement.dataset.lxpReload;
 }})()`;
