@@ -31,6 +31,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
   const context = useRef<HTMLHeadingElement>(null);
   const touch = useRef<{ x: number; y: number } | null>(null);
   const [active, setActive] = useState(0);
+  const [transitioned, setTransitioned] = useState(false);
   const [requested, setRequested] = useState<number | null>(null);
   const [mounted, setMounted] = useState([0]);
   const [paused, setPaused] = useState(false);
@@ -78,7 +79,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     if (!image) return;
     image.loading = 'eager';
     return afterImageReady(image, loaded => {
-      if (loaded) setActive(requested);
+      if (loaded) { setTransitioned(true); setActive(requested); }
       else setAnnouncement(`Unable to load the ${brands[requested].name} photograph. ${brands[active].name} remains visible.`);
       setRequested(null);
     });
@@ -129,7 +130,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
         const image = root.current?.querySelector<HTMLImageElement>(`[data-hero-slide="${next}"] picture img`);
         if (!image) return;
         image.loading = 'eager';
-        cancelImage = afterImageReady(image, loaded => { if (loaded && eligible()) setActive(next); });
+        cancelImage = afterImageReady(image, loaded => { if (loaded && eligible()) { setTransitioned(true); setActive(next); } });
       }, 8000);
     };
     const visibility = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; schedule(); }, { threshold: .2 });
@@ -155,7 +156,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     setAnnouncement(`${brands[index].name}, slide ${index + 1} of ${brands.length}`);
   }
 
-  return <section ref={root} className={styles.hero} data-home-hero aria-roledescription="carousel" aria-label="Featured performance brands"
+  return <section ref={root} className={styles.hero} data-home-hero data-transitioned={transitioned} aria-roledescription="carousel" aria-label="Featured performance brands"
     onPlayCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(true); }}
     onPauseCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(false); }}
     onEndedCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(false); }}
