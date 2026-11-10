@@ -70,9 +70,33 @@ export function Header() {
   const close = () => { setOpen(false); setShopMenu(null); };
   useEffect(() => {
     let frame = 0;
-    const update = () => { frame = 0; const progress = Math.min(1, Math.max(0, window.scrollY / 160)); header.current?.style.setProperty('--glass-progress', String(progress)); header.current?.classList.toggle('is-scrolled', window.scrollY > 32); const hero = overlaysHero ? document.querySelector('[data-header-hero], [data-home-hero]') : null; const heroBottom = hero?.getBoundingClientRect().bottom ?? 0; const headerHeight = header.current?.offsetHeight ?? 112; header.current?.classList.toggle('is-past-hero', !hero || heroBottom <= headerHeight); const heroFade = Math.min(1, Math.max(0, (heroBottom - headerHeight) / 180)); header.current?.style.setProperty('--hero-fade-opacity', String(heroFade)); header.current?.style.setProperty('--hero-glass-progress', String(1 - heroFade)); };
+    const update = () => {
+      frame = 0;
+      const nav = header.current;
+      if (!nav) return;
+      // Read layout before changing classes or custom properties.
+      const y = window.scrollY;
+      const hero = overlaysHero ? document.querySelector('[data-header-hero], [data-home-hero]') : null;
+      const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
+      const headerHeight = nav.offsetHeight;
+      const heroFade = Math.min(1, Math.max(0, (heroBottom - headerHeight) / 180));
+      nav.style.setProperty('--glass-progress', String(Math.min(1, Math.max(0, y / 160))));
+      nav.classList.toggle('is-scrolled', y > 32);
+      nav.classList.toggle('is-past-hero', !hero || heroBottom <= headerHeight);
+      nav.style.setProperty('--hero-fade-opacity', String(heroFade));
+      nav.style.setProperty('--hero-glass-progress', String(1 - heroFade));
+    };
     const scroll = () => { if (!frame) frame = requestAnimationFrame(update); };
-    update(); window.addEventListener('scroll', scroll, { passive: true }); window.addEventListener('resize', scroll);
+    // The homepage CSS already describes the unscrolled header. Restored positions
+    // and other routes still need their current geometry applied immediately.
+    if (pathname !== '/' || window.scrollY > 0) update();
+    else {
+      header.current?.style.setProperty('--glass-progress', '0');
+      header.current?.style.setProperty('--hero-fade-opacity', '1');
+      header.current?.style.setProperty('--hero-glass-progress', '0');
+      header.current?.classList.remove('is-scrolled', 'is-past-hero');
+    }
+    window.addEventListener('scroll', scroll, { passive: true }); window.addEventListener('resize', scroll);
     return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', scroll); window.removeEventListener('resize', scroll); };
   }, [pathname, overlaysHero]);
   useEffect(() => {

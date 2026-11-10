@@ -6,11 +6,15 @@ export function Reveal({ children, className = '' }: { children: ReactNode; clas
   useEffect(() => {
     const el = element.current;
     if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // Only animate content below the viewport, so first paint remains visible.
-    if (el.getBoundingClientRect().top < window.innerHeight) return;
-    el.classList.add('reveal-pending');
+    // Observer geometry is supplied after layout; do not force a synchronous
+    // page layout during hydration just to prepare an offscreen entrance.
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { el.classList.remove('reveal-pending'); observer.disconnect(); }
+      if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+        el.classList.remove('reveal-pending');
+        observer.disconnect();
+      } else if (entry.boundingClientRect.top >= (entry.rootBounds?.bottom ?? window.innerHeight)) {
+        el.classList.add('reveal-pending');
+      }
     }, { threshold: 0.08 });
     observer.observe(el);
     return () => observer.disconnect();

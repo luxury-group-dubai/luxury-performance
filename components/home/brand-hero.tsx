@@ -96,22 +96,26 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     let headerHeight = 0;
     let fadeDistance = 1;
     let painted = '';
+    let measured = false;
     const update = () => {
       frame = 0;
+      if (!measured) {
+        headerHeight = header.offsetHeight;
+        const offset = heading.offsetTop;
+        headingTop = hero.getBoundingClientRect().top + window.scrollY + offset;
+        fadeDistance = Math.max(1, Math.min(32, offset - headerHeight - 8));
+        measured = true;
+      }
       const opacity = Math.min(1, Math.max(0, (headingTop - window.scrollY - headerHeight - 8) / fadeDistance)).toFixed(3);
       if (opacity !== painted) { heading.style.opacity = opacity; painted = opacity; }
     };
-    const measure = () => {
-      headerHeight = header.offsetHeight;
-      headingTop = hero.getBoundingClientRect().top + window.scrollY + heading.offsetTop;
-      fadeDistance = Math.max(1, Math.min(32, heading.offsetTop - headerHeight - 8));
-      update();
-    };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-    measure();
+    const resize = () => { measured = false; schedule(); };
+    // At the top CSS already displays the heading. Measure only when it moves.
+    if (window.scrollY > 0) schedule();
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', measure);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', measure); };
+    window.addEventListener('resize', resize);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', resize); };
   }, []);
 
   // Begin each full reading interval after the intro, and suspend it off screen.
