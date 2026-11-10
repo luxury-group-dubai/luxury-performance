@@ -15,16 +15,12 @@ export const introBootstrap = `(function(){try{
     scrollTo({top:0,left:0,behavior:'instant'});
     addEventListener('pageshow',function(){scrollTo({top:0,left:0,behavior:'instant'});},{once:true});
   }
-  var introDeadline=location.pathname==='/'&&matchMedia('(max-width: 700px)').matches?performance.now()+2200:0;
   root.dataset.lxpIntro='tracing';
-  if(introDeadline)root.dataset.lxpIntroDeadline=String(introDeadline);
   setTimeout(function(){
     delete root.dataset.lxpIntro;
-    delete root.dataset.lxpIntroDeadline;
-    if(introDeadline){var shell=document.getElementById('site-shell');if(shell)shell.removeAttribute('inert');}
     if(root.dataset.lxpReload==='true'){delete root.dataset.lxpReload;history.scrollRestoration='auto';}
-  },introDeadline?2200:5000);
+  },5000);
 }catch(e){
   if(document.documentElement.dataset.lxpReload==='true')history.scrollRestoration='auto';
-  delete document.documentElement.dataset.lxpIntro;delete document.documentElement.dataset.lxpIntroDeadline;delete document.documentElement.dataset.lxpReload;
+  delete document.documentElement.dataset.lxpIntro;delete document.documentElement.dataset.lxpReload;
 }})()`;
