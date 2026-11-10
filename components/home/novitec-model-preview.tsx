@@ -109,11 +109,11 @@ export function ModelPreviewCard({ href, name, make, images, effect = 'slide', m
   >
     <div className={`${styles.image} ${styles.previewImage}`}>
       <Link href={href} className={styles.previewLink} aria-label={`Shop NOVITEC for ${make} ${name}`} aria-describedby={hintId} onKeyDown={previewKey}>
-        {effect === 'fade' ? images.map((photo, index) => <span key={photo.image} className={styles.previewFadeFrame} data-preview-photo={index} data-active={active === index} aria-hidden={active !== index}>
+        {effect === 'fade' ? (hoverEnabled ? images : images.slice(0, 1)).map((photo, index) => <span key={photo.image} className={styles.previewFadeFrame} data-preview-photo={index} data-active={active === index} aria-hidden={active !== index}>
           <DeferredModelImage enabled={index === 0 ? mediaReady || hoverEnabled : hoverEnabled} src={`/images/novitec-models/${photo.image}`} alt={photo.alt} fallback={index === 0}/>
         </span>) : <>
           <span className={styles.previewTrack} style={{ transform: `translateX(${-(preview.hover - 1) * 100}%)`, transitionDuration: slideDuration }}>
-            {images.slice(1).map((photo, index) => <span key={photo.image} className={styles.previewFrame} data-preview-photo={index + 1} aria-hidden={active !== index + 1}>
+            {hoverEnabled && images.slice(1).map((photo, index) => <span key={photo.image} className={styles.previewFrame} data-preview-photo={index + 1} aria-hidden={active !== index + 1}>
               <DeferredModelImage enabled={hoverEnabled} src={`/images/novitec-models/${photo.image}`} alt={photo.alt}/>
             </span>)}
           </span>
