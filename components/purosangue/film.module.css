@@ -118,3 +118,5 @@
  .camera{filter:none;backface-visibility:hidden}
  .floor,.lightMask{display:none}
 }
+
+/* Skip the offscreen film layout before its viewport observer starts the engine.\n   The existing explicit stage height reserves space; active sticky details stay uncontained. */\n.film:not([data-motion]) .stage{content-visibility:auto;contain-intrinsic-size:auto 650px}
