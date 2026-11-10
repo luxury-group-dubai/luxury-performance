@@ -79,15 +79,23 @@ export function BrandIntro() {
     async function play() {
       const strokes = overlay.current?.querySelectorAll<SVGPathElement>('[data-trace]');
       if (!strokes || !mark.current) { finish(); return; }
-      // L, descending X arm, ascending X arm, then P. The masks reveal exact silhouettes.
-      for (const [index, stroke] of Array.from(strokes).entries()) {
-        if (finished || cancelled) return;
-        const duration = [300, 170, 170, 320][index];
-        const animation = stroke.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], {
-          duration, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards',
-        });
-        animations.push(animation);
-        await animation.finished.catch(() => {});
+      // On the homepage, CSS starts tracing at first paint, before hydration.
+      // Reuse its progress rather than replaying the full sequence after JS loads.
+      const earlyTraces = Array.from(strokes).flatMap(stroke => stroke.getAnimations())
+        .filter(animation => animation instanceof CSSAnimation && animation.animationName === 'intro-trace-draw');
+      if (earlyTraces.length === strokes.length) {
+        await Promise.all(earlyTraces.map(animation => animation.finished.catch(() => {})));
+      } else {
+        // Other pages retain the existing JavaScript entrance.
+        for (const [index, stroke] of Array.from(strokes).entries()) {
+          if (finished || cancelled) return;
+          const duration = [300, 170, 170, 320][index];
+          const animation = stroke.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], {
+            duration, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards',
+          });
+          animations.push(animation);
+          await animation.finished.catch(() => {});
+        }
       }
       if (finished || cancelled) return;
       root.dataset.lxpIntro = 'formed';
