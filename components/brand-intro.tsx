@@ -42,6 +42,7 @@ export function BrandIntro() {
       animations.forEach(animation => animation.cancel());
       const introHadFocus = overlay.current?.contains(document.activeElement);
       delete root.dataset.lxpIntro;
+      delete root.dataset.lxpIntroHome;
       shell?.removeAttribute('inert');
       if (completed) {
         pending.current = false;

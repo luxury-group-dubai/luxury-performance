@@ -41,11 +41,22 @@ function page({ storage = new Map(), reduced = false, reload = false, storageErr
 test('first visit starts the full intro while preserving fresh deep links', () => {
   const result = page();
   assert.equal(result.dataset.lxpIntro, 'tracing');
+  assert.equal(result.dataset.lxpIntroHome, 'true');
   assert.equal(result.storage.get('lxp:intro-played:v1'), '1');
   assert.equal(result.scrolls.length, 0);
   assert.equal(result.replacements.length, 0);
   assert.equal(result.history.scrollRestoration, 'auto');
   assert.equal(result.timers[0].delay, 5000);
+});
+
+test('homepage visibility context exists before hero markup and is released by the fallback', () => {
+  const home = page();
+  assert.equal(home.dataset.lxpIntroHome, 'true');
+  home.timers[0].callback();
+  assert.equal(home.dataset.lxpIntroHome, undefined);
+  const about = page({ pathname: '/about' });
+  assert.equal(about.dataset.lxpIntro, 'tracing');
+  assert.equal(about.dataset.lxpIntroHome, undefined);
 });
 
 test('later full navigations and reloads skip intro and retain native scroll and anchors', () => {
