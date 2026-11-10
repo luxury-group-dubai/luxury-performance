@@ -1,17 +1,26 @@
 .hero { --hero-title-size: clamp(40px,4vw,64px); --hero-title-line: calc(var(--hero-title-size) * 1.25); position: relative; isolation: isolate; height: 100svh; min-height: 740px; max-height: 1100px; overflow: clip; background: #151617; color: #fff; }
 .context { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: 145px; font-size: 11px; line-height: 1.7; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
 .context span { margin-inline: 10px; color: #ffffff80; }
-/* Keep the photograph painted; fade the copy in after the brief logo entrance. */
+/* Keep the photograph painted and use a short fade for the copy. */
 @media (prefers-reduced-motion: no-preference) {
   .context, .controls, .layer:first-child .copy > * { animation: hero-copy-arrive 360ms ease-out backwards; }
   .layer:first-child .copy > h2 { animation-delay: 30ms; }
   .layer:first-child .copy > p { animation-delay: 60ms; }
   .layer:first-child .copy > .cta { animation-delay: 90ms; }
   .controls { animation-delay: 100ms; }
+}
+/* Mobile retains the full entrance; desktop copy starts as the centered logo departs. */
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
   :global(html[data-lxp-intro]) :is(.context, .copy, .controls) { visibility: hidden; }
   :global(html[data-lxp-intro]) .context,
   :global(html[data-lxp-intro]) .controls,
   :global(html[data-lxp-intro]) .layer:first-child .copy > * { animation-play-state: paused; }
+}
+@media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
+  :global(html:is([data-lxp-intro="tracing"], [data-lxp-intro="formed"])) :is(.context, .copy, .controls) { visibility: hidden; }
+  :global(html:is([data-lxp-intro="tracing"], [data-lxp-intro="formed"])) .context,
+  :global(html:is([data-lxp-intro="tracing"], [data-lxp-intro="formed"])) .controls,
+  :global(html:is([data-lxp-intro="tracing"], [data-lxp-intro="formed"])) .layer:first-child .copy > * { animation-play-state: paused; }
 }
 @keyframes hero-copy-arrive { from { opacity: 0; } to { opacity: 1; } }
 .stage, .layer, .slide { position: absolute; inset: 0; }
