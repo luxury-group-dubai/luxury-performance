@@ -67,7 +67,7 @@ export function PurosangueFilm() {
   useEffect(() => {
     const section = root.current;
     const frameEl = stage.current;
-    if (!section || !frameEl) return;
+    if (!mediaNear || !section || !frameEl) return;
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
     const mobile = matchMedia('(max-width: 700px)');
     let raf = 0, playRaf = 0, seekRaf = 0, seeking = false, disposed = false, isComparing = false;
@@ -297,7 +297,7 @@ export function PurosangueFilm() {
       document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVisibility);
       preference.removeEventListener('change', onPreference); control.current = null;
     };
-  }, []);
+  }, [mediaNear]);
 
   const seek = (index: number) => control.current?.seek(filmChapters[index].at);
 
