@@ -13,7 +13,7 @@ const compiled = ts.transpileModule(readFileSync(resolve(root, 'lib/intro-bootst
 const exported = {};
 runInNewContext(compiled, { exports: exported });
 
-function page({ storage = new Map(), reduced = false, mobile = false, reload = false, storageError, scrollError = false, hash = '#novitec', pathname = '/', history: sharedHistory } = {}) {
+function page({ storage = new Map(), reduced = false, reload = false, storageError, scrollError = false, hash = '#novitec', pathname = '/', history: sharedHistory } = {}) {
   const dataset = {};
   const timers = [];
   const scrolls = [];
@@ -22,7 +22,7 @@ function page({ storage = new Map(), reduced = false, mobile = false, reload = f
   const history = sharedHistory ?? { scrollRestoration: 'auto', state: null, replaceState: (...args) => replacements.push(args) };
   const context = {
     document: { documentElement: { dataset } },
-    matchMedia: query => ({ matches: query.includes('max-width') ? mobile : reduced }),
+    matchMedia: () => ({ matches: reduced }),
     sessionStorage: {
       getItem: key => { if (storageError === 'read') throw Error('Storage unavailable'); return storage.get(key) ?? null; },
       setItem: (key, value) => { if (storageError === 'write') throw Error('Storage full'); storage.set(key, value); },
@@ -47,16 +47,6 @@ test('first visit starts the full intro while preserving fresh deep links', () =
   assert.equal(result.replacements.length, 0);
   assert.equal(result.history.scrollRestoration, 'auto');
   assert.equal(result.timers[0].delay, 5000);
-});
-
-test('mobile homepage paints immediately without consuming the desktop entrance', () => {
-  const mobile = page({ mobile: true });
-  assert.deepEqual(mobile.dataset, {});
-  assert.equal(mobile.storage.size, 0);
-  assert.equal(mobile.timers.length, 0);
-  assert.equal(mobile.history.scrollRestoration, 'auto');
-  assert.equal(page({ storage: mobile.storage }).dataset.lxpIntro, 'tracing');
-  assert.equal(page({ mobile: true, pathname: '/about' }).dataset.lxpIntro, 'tracing');
 });
 
 test('homepage visibility context exists before hero markup and is released by the fallback', () => {

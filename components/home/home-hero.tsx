@@ -36,7 +36,10 @@ const heroSlides = [
 ];
 
 export function HomeHero() {
-  return <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
+  const mobileHero = heroSlides[0].mobile ? getImageProps({ ...heroSlides[0].mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
+  return <>
+    {mobileHero && <link rel="preload" as="image" media="(max-width: 700px)" imageSrcSet={mobileHero.srcSet} imageSizes="100vw" fetchPriority="high" />}
+    <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
     {heroSlides.map((slide, index) => {
       const mobile = slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
@@ -53,7 +56,8 @@ export function HomeHero() {
         </div>
       </article>;
     })}
-  </BrandHero>;
+    </BrandHero>
+  </>;
 }
 
 
