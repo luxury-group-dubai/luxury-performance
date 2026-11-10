@@ -70,6 +70,8 @@ export function PurosangueFilm() {
     if (!mediaNear || !section || !frameEl) return;
     const preference = matchMedia('(prefers-reduced-motion: reduce)');
     const mobile = matchMedia('(max-width: 700px)');
+    const touchViewport = matchMedia('(hover: none) and (pointer: coarse)');
+    const stableViewport = () => mobile.matches || touchViewport.matches;
     let raf = 0, playRaf = 0, seekRaf = 0, seeking = false, disposed = false, isComparing = false;
     type CameraPose = { scale: number; x: number; y: number };
     let cameraPose: CameraPose = { scale: 1, x: 0, y: 0 };
@@ -79,6 +81,7 @@ export function PurosangueFilm() {
     // Keep Safari's expanding browser controls out of the scroll timeline geometry.
     function captureViewport() {
       viewportWidth = window.innerWidth;
+      section!.dataset.stableViewport = String(stableViewport());
       section!.style.setProperty('--film-viewport-height', `${window.innerHeight}px`);
       section!.dataset.compact = String(mobile.matches && window.innerHeight <= 690);
     }
@@ -171,7 +174,7 @@ export function PurosangueFilm() {
     }
 
     function onResize() {
-      if (mobile.matches && Math.abs(window.innerWidth - viewportWidth) < 2) return;
+      if (stableViewport() && Math.abs(window.innerWidth - viewportWidth) < 2) return;
       captureViewport();
       measure();
     }
