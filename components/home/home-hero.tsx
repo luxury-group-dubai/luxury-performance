@@ -7,6 +7,12 @@ import heroStyles from './brand-hero.module.css';
 import { ValvetronicSoundHeadline } from './valvetronic-sound-headline';
 import { TechartPersonalHeadline } from './techart-personal-headline';
 
+const mobileHero = {
+  src: '/images/home/novitec-hero-mobile-v1-750.webp',
+  srcSet: [480, 640, 750, 828, 1080, 1200, 1440, 1600, 1920, 2048, 2560]
+    .map(width => `/images/home/novitec-hero-mobile-v1-${width}.webp ${width}w`).join(', '),
+};
+
 const heroSlides = [
   {
     slug: 'novitec', name: 'NOVITEC', logo: '/brand/novitec.svg', logoWidth: 228, logoHeight: 45,
@@ -36,15 +42,14 @@ const heroSlides = [
 ];
 
 export function HomeHero() {
-  const mobileHero = heroSlides[0].mobile ? getImageProps({ ...heroSlides[0].mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
   return <>
-    {mobileHero && <link rel="preload" as="image" href={mobileHero.src} media="(max-width: 700px)" imageSrcSet={mobileHero.srcSet} imageSizes="100vw" fetchPriority="high" />}
+    <link rel="preload" as="image" type="image/webp" href={mobileHero.src} media="(max-width: 700px)" imageSrcSet={mobileHero.srcSet} imageSizes="100vw" fetchPriority="high" />
     <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
     {heroSlides.map((slide, index) => {
-      const mobile = slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
+      const mobile = index === 0 ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
         <picture className={heroStyles.picture}>
-          {mobile && <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />}
+          {mobile && <source media="(max-width: 700px)" type={index === 0 ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
           <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />
         </picture>
         <div className={heroStyles.shade} />
