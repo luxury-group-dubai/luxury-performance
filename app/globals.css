@@ -93,7 +93,7 @@ html[data-lxp-intro] .reading-progress{opacity:0}
 #main,.site-footer{transition:opacity .6s ease}
 html[data-lxp-intro]:not([data-lxp-intro="wings"]) #main,html[data-lxp-intro]:not([data-lxp-intro="wings"]) .site-footer{opacity:0}
 html[data-lxp-intro]:has([data-home-hero]) #site-shell,html[data-lxp-intro]:has([data-home-hero]) #main{opacity:1;transition:none}
-html[data-lxp-intro]:has([data-home-hero]) .intro-backdrop{display:none}
+html[data-lxp-intro]:has([data-home-hero]) .intro-backdrop{background:rgba(16,16,16,.55)}
 @media(prefers-reduced-motion:no-preference){
   html[data-lxp-intro="tracing"]:has([data-home-hero]) .site-header,html[data-lxp-intro="formed"]:has([data-home-hero]) .site-header{visibility:hidden}
 }
