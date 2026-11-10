@@ -1,4 +1,4 @@
-:root { --font-display: var(--font-michroma), var(--font-sans); }
+:root { --font-display: var(--font-michroma), var(--font-michroma-full), var(--font-sans); }
 
 /* Display face for editorial headings; compact shopping and form UI retain Montserrat. */
 h1, h2 { font-family: var(--font-display); font-synthesis: none; }
