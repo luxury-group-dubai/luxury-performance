@@ -89,7 +89,7 @@ export function ValvetronicFeatureFilm() {
       <div className={styles.player}>
         {active ? <div ref={mount} className={styles.embed} /> : <button ref={poster} type="button" className={styles.poster} aria-label="Play Valvetronic film with Ahmed Amwell" onClick={start}>
           <Image src="/images/home/valvetronic-ahmed-short-thumbnail.webp" alt="" fill sizes="(max-width: 700px) 100vw, 50vw" className={styles.posterImage} />
-          <span className={styles.thumbnailCopy} aria-hidden="true"><Image src="/brand/valvetronic.png" alt="" width={1200} height={304} unoptimized /><span className={styles.thumbnailTitle}>Behind the sound.</span><span className={styles.thumbnailCredit}>With Ahmed Amwell</span></span>
+          <span className={styles.thumbnailCopy} aria-hidden="true"><Image src="/brand/valvetronic-compact.avif" alt="" width={384} height={97} sizes="(max-width: 700px) 120px, 330px" quality={75} /><span className={styles.thumbnailTitle}>Behind the sound.</span><span className={styles.thumbnailCredit}>With Ahmed Amwell</span></span>
           <span className={styles.play}><Play size={26} fill="currentColor" strokeWidth={1.5} aria-hidden="true" /></span>
         </button>}
       </div>

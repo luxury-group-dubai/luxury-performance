@@ -12,10 +12,10 @@ export function TechartPersonalHeadline() {
           <span className={`${styles.core} ${styles.techartCore}`} style={{ transform: `rotateY(180deg) translateZ(${depth}px)` }} />
         </span>)}
         <span className={`${styles.face} ${styles.porsche}`}>
-          <Image src="/brand/crests/porsche-metal.webp" alt="" width={420} height={476} unoptimized />
+          <Image src="/brand/crests/porsche-metal-small.webp" alt="" width={128} height={145} sizes="56px" quality={75} />
         </span>
         <span className={`${styles.face} ${styles.techart}`}>
-          <Image src="/brand/crests/techart-black-lion.webp" alt="" width={420} height={499} unoptimized />
+          <Image src="/brand/crests/techart-black-lion-small.webp" alt="" width={128} height={152} sizes="56px" quality={75} />
         </span>
       </span>
     </span>{' '}Porsche</span><br />made personal.</>;

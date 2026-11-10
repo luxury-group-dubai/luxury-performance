@@ -9,14 +9,8 @@
   .layer:first-child .copy > .cta { animation-delay: 90ms; }
   .controls { animation-delay: 100ms; }
 }
-/* Mobile retains the full entrance; desktop copy starts as the centered logo departs. */
-@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
-  :global(html[data-lxp-intro]) :is(.context, .copy, .controls) { visibility: hidden; }
-  :global(html[data-lxp-intro]) .context,
-  :global(html[data-lxp-intro]) .controls,
-  :global(html[data-lxp-intro]) .layer:first-child .copy > * { animation-play-state: paused; }
-}
-@media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
+/* Reveal copy when the centered logo departs, without shortening the entrance. */
+@media (prefers-reduced-motion: no-preference) {
   :global(html:is([data-lxp-intro="tracing"], [data-lxp-intro="formed"])) :is(.context, .copy, .controls) { visibility: hidden; }
   :global(html:is([data-lxp-intro="tracing"], [data-lxp-intro="formed"])) .context,
   :global(html:is([data-lxp-intro="tracing"], [data-lxp-intro="formed"])) .controls,

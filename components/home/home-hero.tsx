@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
@@ -21,7 +20,7 @@ const heroSlides = [
     href: '/partners/novitec', cta: 'Explore NOVITEC',
   },
   {
-    slug: 'valvetronic', name: 'Valvetronic Designs', logo: '/brand/valvetronic.png', logoWidth: 1200, logoHeight: 304,
+    slug: 'valvetronic', name: 'Valvetronic Designs', logo: '/brand/valvetronic-compact.avif', logoWidth: 384, logoHeight: 97,
     ...brandHeroImages.valvetronic!,
     title: <ValvetronicSoundHeadline />,
     description: 'Explore Valvetronic Designs valved exhaust systems, downpipes and components, with vehicle fitment advice from Dubai.',
@@ -47,7 +46,7 @@ export function HomeHero() {
         </picture>
         <div className={heroStyles.shade} />
         <div className={heroStyles.copy}>
-          <img className={heroStyles.logo} src={slide.logo} alt={slide.name} width={slide.logoWidth} height={slide.logoHeight} />
+          <Image className={heroStyles.logo} src={slide.logo} alt={slide.name} width={slide.logoWidth} height={slide.logoHeight} sizes={slide.slug === 'valvetronic' ? '(max-width: 700px) 160px, 210px' : '(max-width: 700px) 170px, 225px'} unoptimized={slide.logo.endsWith('.svg')} />
           <h2>{slide.title}</h2>
           <p>{slide.description}</p>
           <Link className={heroStyles.cta} href={slide.href}>{slide.cta}<ArrowUpRight size={18} strokeWidth={1.4} aria-hidden="true" /></Link>
@@ -56,4 +55,5 @@ export function HomeHero() {
     })}
   </BrandHero>;
 }
+
 
