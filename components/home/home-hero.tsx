@@ -42,7 +42,7 @@ export function HomeHero() {
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
         <picture className={heroStyles.picture}>
           {mobile && <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />}
-          <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" preload={index === 0} loading={index === 0 ? undefined : 'lazy'} />
+          <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" preload={index === 0} loading={index === 0 ? undefined : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />
         </picture>
         <div className={heroStyles.shade} />
         <div className={heroStyles.copy}>
