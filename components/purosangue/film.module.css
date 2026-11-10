@@ -114,9 +114,23 @@
 @media(max-width:700px){
  .film{overflow:visible}
  .stage,.stage[data-detail=true]{overflow:visible;clip-path:none;transform:translateZ(0);backface-visibility:hidden}
- .composition,.stage[data-detail=true] .composition{overflow:hidden;clip-path:none}
+ .composition,.stage[data-detail=true] .composition{margin-inline:-20px;overflow:hidden;clip-path:none}
+ .copy,.sceneCaption{left:20px}
+ .sceneIndex{right:20px}
+ .carRig,.film[data-compact=true] .carRig{--rig-width:100%}
  .camera{filter:none;backface-visibility:hidden}
  .floor,.lightMask{display:none}
 }
 
-/* Skip the offscreen film layout before its viewport observer starts the engine.\n   The existing explicit stage height reserves space; active sticky details stay uncontained. */\n.film:not([data-motion]) .stage{content-visibility:auto;contain-intrinsic-size:auto 650px}
+/* Skip the offscreen film layout before its viewport observer starts the engine.
+   The existing explicit stage height reserves space; active sticky details stay uncontained. */
+.film:not([data-motion]) .stage{content-visibility:auto;contain-intrinsic-size:auto 650px}
+
+/* Touch Safari changes its visual viewport as browser controls move. Keep the
+   captured stage/runway dimensions and compositor layer stable during that scroll. */
+.film[data-stable-viewport=true][data-motion=full]{height:calc(var(--film-viewport-height,100svh) * 5.5);overflow:visible}
+.film[data-stable-viewport=true][data-motion=full] .stage{height:calc(var(--film-viewport-height,100svh) - var(--film-header));overflow:visible;clip-path:none;transform:translateZ(0);backface-visibility:hidden}
+.film[data-stable-viewport=true] .composition{overflow:hidden;clip-path:none}
+.film[data-stable-viewport=true] .camera{filter:none;backface-visibility:hidden}
+.film[data-stable-viewport=true] .floor,.film[data-stable-viewport=true] .lightMask{display:none}
+@media(max-width:700px){.film[data-stable-viewport=true][data-motion=full]{height:calc(var(--film-viewport-height,100svh) * 4.9)}}
