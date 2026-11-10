@@ -50,7 +50,7 @@ export function HomeHero() {
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
         <picture className={heroStyles.picture}>
           {index === 0 ? <source type="image/avif" srcSet={novitecHeroSrcSet} sizes="100vw" /> : mobile && <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />}
-          <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />
+          <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" decoding={index === 0 ? 'sync' : 'async'} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />
         </picture>
         <div className={heroStyles.shade} />
         <div className={heroStyles.copy}>
