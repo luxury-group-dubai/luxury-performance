@@ -16,7 +16,7 @@ import './display-type.css';
 import { CartProvider } from '@/components/shop/cart-provider';
 const montserratUi = localFont({ src: './Montserrat-Variable-ui.woff2', variable: '--font-montserrat-ui', display: 'swap', preload: true, adjustFontFallback: false, fallback: [] });
 const montserratFull = localFont({ src: './Montserrat-Variable.woff2', variable: '--font-montserrat-full', display: 'swap', preload: false });
-const michroma = localFont({ src: './Michroma-Regular.ttf', weight: '400', style: 'normal', variable: '--font-michroma', display: 'swap', preload: true });
+const michroma = localFont({ src: './Michroma-Regular.woff2', weight: '400', style: 'normal', variable: '--font-michroma', display: 'swap', preload: true });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'),
   title: { default: 'Luxury Performance — Beyond Ordinary', template: '%s | Luxury Performance' },

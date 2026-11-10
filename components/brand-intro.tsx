@@ -44,7 +44,6 @@ export function BrandIntro() {
       delete root.dataset.lxpIntro;
       shell?.removeAttribute('inert');
       if (completed) {
-        delete root.dataset.lxpIntroDeadline;
         pending.current = false;
         keepReloadAtTop();
         delete root.dataset.lxpReload;
@@ -74,38 +73,26 @@ export function BrandIntro() {
     skip?.addEventListener('click', skipIntro);
     document.addEventListener('keydown', onKeyDown);
     motion.addEventListener('change', reduceMotion);
-    // Mobile home shares the bootstrap deadline, so hydration cannot extend the entrance.
-    const deadline = Number(root.dataset.lxpIntroDeadline);
-    const timeout = Number.isFinite(deadline) && deadline > 0 ? Math.max(0, deadline - performance.now()) : 3200;
-    timers.push(setTimeout(() => finish(), timeout));
+    // Always release the interface if an image or animation fails.
+    timers.push(setTimeout(() => finish(), 3200));
 
     async function play() {
       const strokes = overlay.current?.querySelectorAll<SVGPathElement>('[data-trace]');
       if (!strokes || !mark.current) { finish(); return; }
-      // On the homepage, CSS starts tracing at first paint, before hydration.
-      // Reuse its progress rather than replaying the full sequence after JS loads.
-      const earlyTraces = Array.from(strokes).flatMap(stroke => stroke.getAnimations())
-        .filter(animation => animation instanceof CSSAnimation && animation.animationName === 'intro-trace-draw');
-      if (earlyTraces.length === strokes.length) {
-        await Promise.all(earlyTraces.map(animation => animation.finished.catch(() => {})));
-      } else {
-        // Other pages retain the existing JavaScript entrance.
-        for (const [index, stroke] of Array.from(strokes).entries()) {
-          if (finished || cancelled) return;
-          const duration = [300, 170, 170, 320][index];
-          const animation = stroke.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], {
-            duration, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards',
-          });
-          animations.push(animation);
-          await animation.finished.catch(() => {});
-        }
+      // L, descending X arm, ascending X arm, then P. The masks reveal exact silhouettes.
+      for (const [index, stroke] of Array.from(strokes).entries()) {
+        if (finished || cancelled) return;
+        const duration = [300, 170, 170, 320][index];
+        const animation = stroke.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], {
+          duration, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards',
+        });
+        animations.push(animation);
+        await animation.finished.catch(() => {});
       }
       if (finished || cancelled) return;
-      if (!root.dataset.lxpIntro) { finish(); return; }
       root.dataset.lxpIntro = 'formed';
       await delay(100);
       if (finished || cancelled) return;
-      if (!root.dataset.lxpIntro) { finish(); return; }
       const emblem = document.querySelector<HTMLImageElement>('.site-header .company-emblem');
       if (!emblem || !mark.current) { finish(); return; }
       const destination = emblem.getBoundingClientRect();
@@ -123,15 +110,13 @@ export function BrandIntro() {
       animations.push(flight);
       await flight.finished.catch(() => {});
       if (finished || cancelled) return;
-      if (!root.dataset.lxpIntro) { finish(); return; }
       root.dataset.lxpIntro = 'wings';
       const fade = mark.current.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' });
       animations.push(fade);
       await delay(330);
       if (!cancelled) finish();
     }
-    if (timeout === 0) finish();
-    else void play().catch(() => finish());
+    void play().catch(() => finish());
     return () => {
       cancelled = true;
       finish(false);

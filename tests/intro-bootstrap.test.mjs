@@ -13,22 +13,21 @@ const compiled = ts.transpileModule(readFileSync(resolve(root, 'lib/intro-bootst
 const exported = {};
 runInNewContext(compiled, { exports: exported });
 
-function page({ storage = new Map(), reduced = false, mobile = false, now = 100, reload = false, storageError, scrollError = false, hash = '#novitec', pathname = '/', history: sharedHistory } = {}) {
+function page({ storage = new Map(), reduced = false, reload = false, storageError, scrollError = false, hash = '#novitec', pathname = '/', history: sharedHistory } = {}) {
   const dataset = {};
   const timers = [];
   const scrolls = [];
   const listeners = [];
   const replacements = [];
   const history = sharedHistory ?? { scrollRestoration: 'auto', state: null, replaceState: (...args) => replacements.push(args) };
-  const shell = { inert: true, removeAttribute(name) { if (name === 'inert') this.inert = false; } };
   const context = {
-    document: { documentElement: { dataset }, getElementById: id => id === 'site-shell' ? shell : null },
-    matchMedia: query => ({ matches: query.includes('prefers-reduced-motion') ? reduced : mobile }),
+    document: { documentElement: { dataset } },
+    matchMedia: () => ({ matches: reduced }),
     sessionStorage: {
       getItem: key => { if (storageError === 'read') throw Error('Storage unavailable'); return storage.get(key) ?? null; },
       setItem: (key, value) => { if (storageError === 'write') throw Error('Storage full'); storage.set(key, value); },
     },
-    performance: { now: () => now, getEntriesByType: () => [{ type: reload ? 'reload' : 'navigate' }] },
+    performance: { getEntriesByType: () => [{ type: reload ? 'reload' : 'navigate' }] },
     location: { hash, pathname, search: '?ref=test' },
     history,
     scrollTo: options => { if (scrollError) throw Error('Scroll unavailable'); scrolls.push(options); },
@@ -36,7 +35,7 @@ function page({ storage = new Map(), reduced = false, mobile = false, now = 100,
     setTimeout: (callback, delay) => timers.push({ callback, delay }),
   };
   runInNewContext(exported.introBootstrap, context);
-  return { dataset, timers, scrolls, listeners, replacements, history, storage, shell };
+  return { dataset, timers, scrolls, listeners, replacements, history, storage };
 }
 
 test('first visit starts the full intro while preserving fresh deep links', () => {
@@ -147,29 +146,4 @@ test('direct shop visits and reloads open the catalogue immediately and preserve
     }
   }
   assert.equal(page({ storage }).dataset.lxpIntro, 'tracing');
-});
-
-test('mobile homepage shares a deadline measured before hydration', () => {
-  const result = page({ mobile: true, now: 100 });
-  assert.equal(result.dataset.lxpIntro, 'tracing');
-  assert.equal(result.dataset.lxpIntroDeadline, '2300');
-  assert.equal(result.timers[0].delay, 2200);
-  result.timers[0].callback();
-  assert.equal(result.dataset.lxpIntro, undefined);
-  assert.equal(result.dataset.lxpIntroDeadline, undefined);
-  assert.equal(result.shell.inert, false);
-});
-
-test('mobile intro deadline does not change other pages or desktop', () => {
-  for (const options of [{ mobile: false }, { mobile: true, pathname: '/about' }]) {
-    const result = page(options);
-    assert.equal(result.dataset.lxpIntroDeadline, undefined);
-    assert.equal(result.timers[0].delay, 5000);
-  }
-});
-
-test('reduced motion on mobile paints immediately without starting a deadline', () => {
-  const result = page({ mobile: true, reduced: true });
-  assert.deepEqual(result.dataset, {});
-  assert.equal(result.timers.length, 0);
 });

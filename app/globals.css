@@ -44,14 +44,6 @@ html[data-lxp-intro] body{background:#101010}
 .intro-mark svg{width:100%;display:block;overflow:visible}
 .intro-letter-guides{stroke:#fff;stroke-opacity:.12;stroke-width:1;fill:none}
 .intro-trace{stroke:#fff;fill:none;stroke-dasharray:1;stroke-dashoffset:1;stroke-linecap:butt;stroke-linejoin:miter}
-/* Begin the homepage trace at first paint; hydration continues the same entrance. */
-@media(prefers-reduced-motion:no-preference){
-html[data-lxp-intro]:has([data-home-hero]) .intro-trace{animation:intro-trace-draw 300ms cubic-bezier(.45,0,.2,1) both}
-html[data-lxp-intro]:has([data-home-hero]) [data-trace="x-down"]{animation-duration:170ms;animation-delay:300ms}
-html[data-lxp-intro]:has([data-home-hero]) [data-trace="x-up"]{animation-duration:170ms;animation-delay:470ms}
-html[data-lxp-intro]:has([data-home-hero]) [data-trace="p"]{animation-duration:320ms;animation-delay:640ms}
-}
-@keyframes intro-trace-draw{to{stroke-dashoffset:0}}
 .intro-caption{position:absolute;top:calc(46% + min(8.24vw,77px) + 44px);left:0;right:0;display:flex;justify-content:center;align-items:center;gap:20px;color:#999991;font-size:8px;letter-spacing:.2em}
 .intro-caption-rule{width:35px;height:1px;background:#444}
 .intro-topline,.intro-bottomline,.intro-caption{transition:opacity .28s}
