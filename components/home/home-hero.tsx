@@ -1,5 +1,4 @@
 import Image, { getImageProps } from 'next/image';
-import { preload } from 'react-dom';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { brandHeroImages } from '@/lib/brand-hero-images';
@@ -36,21 +35,14 @@ const heroSlides = [
   },
 ];
 
-const novitecHeroSrcSet = [640, 828, 1200, 1600, 2100, 2560]
-  .map(width => `/images/home/novitec-hero-${width}.avif ${width}w`).join(', ');
-
 export function HomeHero() {
-  preload('/images/home/novitec-hero-1200.avif', {
-    as: 'image', type: 'image/avif', imageSrcSet: novitecHeroSrcSet,
-    imageSizes: '100vw', fetchPriority: 'high',
-  });
   return <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
     {heroSlides.map((slide, index) => {
       const mobile = slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
         <picture className={heroStyles.picture}>
-          {index === 0 ? <source type="image/avif" srcSet={novitecHeroSrcSet} sizes="100vw" /> : mobile && <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />}
-          <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" decoding={index === 0 ? 'sync' : 'async'} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />
+          {mobile && <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />}
+          <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />
         </picture>
         <div className={heroStyles.shade} />
         <div className={heroStyles.copy}>
