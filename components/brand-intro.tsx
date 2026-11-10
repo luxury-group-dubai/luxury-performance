@@ -44,6 +44,7 @@ export function BrandIntro() {
       delete root.dataset.lxpIntro;
       shell?.removeAttribute('inert');
       if (completed) {
+        delete root.dataset.lxpIntroDeadline;
         pending.current = false;
         keepReloadAtTop();
         delete root.dataset.lxpReload;
@@ -73,8 +74,10 @@ export function BrandIntro() {
     skip?.addEventListener('click', skipIntro);
     document.addEventListener('keydown', onKeyDown);
     motion.addEventListener('change', reduceMotion);
-    // Always release the interface if an image or animation fails.
-    timers.push(setTimeout(() => finish(), 3200));
+    // Mobile home shares the bootstrap deadline, so hydration cannot extend the entrance.
+    const deadline = Number(root.dataset.lxpIntroDeadline);
+    const timeout = Number.isFinite(deadline) && deadline > 0 ? Math.max(0, deadline - performance.now()) : 3200;
+    timers.push(setTimeout(() => finish(), timeout));
 
     async function play() {
       const strokes = overlay.current?.querySelectorAll<SVGPathElement>('[data-trace]');
@@ -98,9 +101,11 @@ export function BrandIntro() {
         }
       }
       if (finished || cancelled) return;
+      if (!root.dataset.lxpIntro) { finish(); return; }
       root.dataset.lxpIntro = 'formed';
       await delay(100);
       if (finished || cancelled) return;
+      if (!root.dataset.lxpIntro) { finish(); return; }
       const emblem = document.querySelector<HTMLImageElement>('.site-header .company-emblem');
       if (!emblem || !mark.current) { finish(); return; }
       const destination = emblem.getBoundingClientRect();
@@ -118,13 +123,15 @@ export function BrandIntro() {
       animations.push(flight);
       await flight.finished.catch(() => {});
       if (finished || cancelled) return;
+      if (!root.dataset.lxpIntro) { finish(); return; }
       root.dataset.lxpIntro = 'wings';
       const fade = mark.current.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' });
       animations.push(fade);
       await delay(330);
       if (!cancelled) finish();
     }
-    void play().catch(() => finish());
+    if (timeout === 0) finish();
+    else void play().catch(() => finish());
     return () => {
       cancelled = true;
       finish(false);
