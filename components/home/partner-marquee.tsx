@@ -27,7 +27,10 @@ export function PartnerMarquee() {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    if (typeof IntersectionObserver === 'undefined') { setLogosReady(true); return; }
+    if (typeof IntersectionObserver === 'undefined') {
+      const frame = requestAnimationFrame(() => setLogosReady(true));
+      return () => cancelAnimationFrame(frame);
+    }
     const observer = new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting && entry.intersectionRatio > 0)) {
         setLogosReady(true);
