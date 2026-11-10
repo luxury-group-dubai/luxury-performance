@@ -14,7 +14,7 @@ import './globals.css';
 import './shop-shared.css';
 import './display-type.css';
 import { CartProvider } from '@/components/shop/cart-provider';
-const montserratUi = localFont({ src: './Montserrat-Variable-ui.woff2', variable: '--font-montserrat-ui', display: 'swap', preload: true, adjustFontFallback: false, fallback: [] });
+const montserratUi = localFont({ src: './Montserrat-Variable-ui.woff2', variable: '--font-montserrat-ui', display: 'swap', preload: false, adjustFontFallback: false, fallback: [] });
 const montserratFull = localFont({ src: './Montserrat-Variable.woff2', variable: '--font-montserrat-full', display: 'swap', preload: false });
 const michroma = localFont({ src: './Michroma-Regular-ui.woff2', weight: '400', style: 'normal', variable: '--font-michroma', display: 'swap', preload: true, adjustFontFallback: false, fallback: [] });
 const michromaFull = localFont({ src: './Michroma-Regular.woff2', weight: '400', style: 'normal', variable: '--font-michroma-full', display: 'swap', preload: false });
