@@ -53,8 +53,10 @@ export function NovitecModels() {
     const track = rail.current;
     if (!track) return;
     let frame = 0;
+    let nearby = typeof IntersectionObserver === 'undefined';
     const update = () => {
       frame = 0;
+      if (!nearby) return;
       const start = track.scrollLeft < 2;
       const end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
       setEnds(previous => previous.start === start && previous.end === end ? previous : { start, end });
@@ -71,12 +73,12 @@ export function NovitecModels() {
       });
       if (changed) setMedia([...warmedMedia.current]);
     };
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-    update();
+    const schedule = () => { if (nearby && !frame) frame = requestAnimationFrame(update); };
+    if (nearby) schedule();
     track.addEventListener('scroll', schedule, { passive: true });
     const observer = new ResizeObserver(schedule);
     observer.observe(track);
-    const visibility = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(schedule, { rootMargin: '500px 0px' });
+    const visibility = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(([entry]) => { nearby = entry.isIntersecting; if (nearby) schedule(); }, { rootMargin: '500px 0px' });
     visibility?.observe(track);
     // Scroll bounds also cover restored positions and browsers without IntersectionObserver.
     window.addEventListener('scroll', schedule, { passive: true });

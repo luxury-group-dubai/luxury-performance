@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation';
 export function SiteMotion() {
   const pathname = usePathname();
   useEffect(() => {
+    // The homepage has its own hero motion. Its reading line starts at zero,
+    // so no document-wide layout measurement is needed before the first scroll.
     const root = document.documentElement;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
@@ -16,11 +18,9 @@ export function SiteMotion() {
     const update = () => {
       frame = 0;
       const height = document.documentElement.scrollHeight - innerHeight;
+      const heroTop = hero && !motion.matches ? hero.getBoundingClientRect().top : null;
       root.style.setProperty('--reading-progress', `${height > 0 ? scrollY / height : 0}`);
-      if (hero && !motion.matches) {
-        const rect = hero.getBoundingClientRect();
-        hero.style.setProperty('--hero-drift', `${Math.min(28, Math.max(0, -rect.top * .05))}px`);
-      }
+      if (heroTop !== null) hero?.style.setProperty('--hero-drift', `${Math.min(28, Math.max(0, -heroTop * .05))}px`);
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
     const pointers = images.map(el => {
@@ -38,7 +38,8 @@ export function SiteMotion() {
     // Arm the entrance while the intro still covers the page. CSS pauses it until
     // the wings reveal, so the finished hero never flashes before animating.
     if (root.dataset.lxpIntro) hero?.classList.add('hero-arrived');
-    update();
+    if (pathname !== '/' || scrollY > 0) update();
+    else root.style.setProperty('--reading-progress', '0');
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onScroll);
     const resetMotion = () => { if (motion.matches) hero?.style.setProperty('--hero-drift', '0px'); };
