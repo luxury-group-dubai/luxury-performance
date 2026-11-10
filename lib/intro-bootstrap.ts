@@ -3,6 +3,7 @@
 export const introBootstrap = `(function(){try{
   var root=document.documentElement;
   var key='lxp:intro-played:v1';
+  if(location.pathname==='/'&&matchMedia('(max-width: 700px)').matches){history.scrollRestoration='auto';return;}
   if(location.pathname==='/shop'||location.pathname==='/shop/'||location.pathname.indexOf('/partners/')===0){history.scrollRestoration='auto';return;}
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){history.scrollRestoration='auto';return;}
   if(sessionStorage.getItem(key)==='1'){history.scrollRestoration='auto';return;}
