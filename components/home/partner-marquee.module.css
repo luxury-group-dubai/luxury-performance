@@ -37,6 +37,7 @@
   padding-inline: 36px;
 }
 .logo {
+  position: relative;
   display: flex;
   flex: 0 0 210px;
   align-items: center;
@@ -46,6 +47,7 @@
   opacity: .88;
   transition: opacity .2s ease;
 }
+.noscriptLogo { position: absolute; inset: 0; margin: auto; }
 .logo:hover, .logo:focus-visible { opacity: 1; }
 .logo:focus-visible { outline: 2px solid #b9a77f; outline-offset: -2px; }
 /* All partner links remain visible and reachable when navigating by keyboard. */

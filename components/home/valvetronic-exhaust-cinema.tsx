@@ -2,6 +2,7 @@
 // @refresh reset
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { ExhaustScene, ExhaustFinish } from './valvetronic-exhaust-scene';
@@ -102,7 +103,7 @@ export function ValvetronicExhaustCinema() {
     <div ref={pin} className={styles.pin}>
       <div className={styles.topline}><span>Valvetronic Designs / True F1</span><span>Lamborghini Huracán</span></div>
       <h3 id="exhaust-cinema-title" className="sr-only">Valvetronic Designs — Huracán valved exhaust system</h3>
-      <svg className={styles.wordmark} viewBox="0 0 893 208" aria-hidden="true" focusable="false"><image href="/brand/valvetronic-wordmark.svg" width="893" height="208"/></svg>
+      <Image className={styles.wordmark} src="/brand/valvetronic-wordmark.svg" alt="" aria-hidden="true" width={893} height={208} loading="lazy" unoptimized />
       <div ref={mount} className={`${styles.canvas} ${status==='ready'?styles.ready:''}`} aria-hidden={status!=='ready'}/>
       {status==='loading' && <p role="status" className={styles.loading}><i aria-hidden="true"/>Loading the details</p>}
       {status==='unavailable' && <p role="status" className={styles.loading}>Explore the Huracán system below.</p>}
