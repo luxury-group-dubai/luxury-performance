@@ -15,6 +15,12 @@ const artwork: Record<string, { name: string; src: string; width: number; height
   lxp: { name: 'Luxury Performance', src: '/brand/lxp-white.svg', width: 1088, height: 280 },
 };
 
+function CompactValvetronic({ sizes }: { sizes: string }) {
+  // Precompressed AVIF variants avoid converting the same logo a second time.
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src="/brand/valvetronic-compact.avif" srcSet="/brand/valvetronic-compact-200.avif 200w, /brand/valvetronic-compact.avif 384w" sizes={sizes} alt="" width={384} height={97} loading="eager" decoding="async" />;
+}
+
 /** Shared original artwork for the partner strip and both navigation menus. */
 export function BrandArtwork({ brand, labelled = true, className = '', sizes = '200px' }: { brand: string; labelled?: boolean; className?: string; sizes?: string }) {
   const filterId = `brand-alpha-${useId().replace(/:/g, '')}`;
@@ -27,6 +33,6 @@ export function BrandArtwork({ brand, labelled = true, className = '', sizes = '
     </span> : brand === 'voltrix' ? <svg viewBox="0 0 1600 260" aria-hidden="true">
       <defs><filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -0.2126 -0.7152 -0.0722 1 0" /></filter></defs>
       <image href={item.src} width="1600" height="260" filter={`url(#${filterId})`} />
-    </svg> : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={sizes} quality={brand === 'valvetronic' ? 60 : 75} unoptimized={item.src.endsWith('.svg') || item.src.endsWith('.avif')} loading="eager" />}
+    </svg> : brand === 'valvetronic' ? <CompactValvetronic sizes={sizes} /> : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={sizes} quality={brand === 'valvetronic' ? 60 : 75} unoptimized={item.src.endsWith('.svg') || item.src.endsWith('.avif')} loading="eager" />}
   </span>;
 }

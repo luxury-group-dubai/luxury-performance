@@ -37,7 +37,7 @@
 .spoilerParts{mask-image:url('/images/purosangue-film/rear-lip-mask.svg')}
 .upgraded{position:absolute;inset:0;clip-path:inset(0 var(--upgrade-cut) 0 0);will-change:clip-path}
 .carShadow{position:absolute;left:7%;right:7%;top:75%;height:9%;border-radius:50%;background:#000;filter:blur(18px);opacity:.75;transform:rotate(-3deg)}
-.lightMask{position:absolute;inset:0;mask-image:url('/images/purosangue-film/stock.png');mask-size:100% 100%;pointer-events:none;mix-blend-mode:screen;opacity:.12}
+.lightMask{position:absolute;inset:0;mask-image:url('/images/purosangue-film/stock-light-mask.webp');mask-size:100% 100%;pointer-events:none;mix-blend-mode:screen;opacity:.12}
 .lightMask>span{position:absolute;inset:-15% -5%;width:65%;transform:translateX(var(--light-x,-120%)) skewX(-22deg);background:linear-gradient(90deg,transparent,#fff 45%,#fff9 60%,transparent)}
 .revealLine{position:absolute;top:19%;bottom:17%;width:1px;left:var(--reveal-position);background:linear-gradient(transparent,#f0f1eccc 30%,#f0f1ec 70%,transparent);box-shadow:0 0 25px #fff5;opacity:var(--scan-opacity)}
 .annotation{position:absolute;inset:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .25s}

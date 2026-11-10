@@ -15,7 +15,7 @@ export function ValvetronicVehicles() {
         <div className={styles.vehiclesPanel}>
           <header className={styles.heading}>
             <div>
-              <h2 id="valvetronic-vehicles-title"><Image src="/brand/valvetronic.png" alt="Valvetronic Designs" width={1200} height={304} unoptimized /></h2>
+              <h2 id="valvetronic-vehicles-title"><Image src="/brand/valvetronic-compact.avif" alt="Valvetronic Designs" width={384} height={97} sizes="(max-width: 700px) 186px, 238px" quality={75} /></h2>
               <p>Choose your vehicle brand. Find your sound.</p>
             </div>
             <Link href="/shop?brand=valvetronic" className={styles.all}>Shop all Valvetronic <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" /></Link>
