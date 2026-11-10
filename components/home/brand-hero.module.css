@@ -18,7 +18,10 @@
 }
 @keyframes hero-copy-arrive { from { opacity: 0; } to { opacity: 1; } }
 .stage, .layer, .slide { position: absolute; inset: 0; }
-.layer { opacity: 0; pointer-events: none; transition: opacity 700ms ease; }
+.layer { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero[data-transitioned="true"] .layer { transition: opacity 700ms ease; }
+}
 .layer[data-active="true"] { opacity: 1; z-index: 1; pointer-events: auto; }
 .picture { position: absolute; inset: 0; display: block; }
 .picture > img { object-fit: cover; object-position: 65% 55%; }
