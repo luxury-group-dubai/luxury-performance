@@ -2,7 +2,7 @@
 
 import { BrandArtwork } from '../brand-artwork';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './partner-marquee.module.css';
 
 type PartnerLogo = { name: string; slug: string; href?: string; label?: string };
@@ -19,8 +19,27 @@ const partners: PartnerLogo[] = [
 ];
 
 export function PartnerMarquee() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [logosReady, setLogosReady] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const groupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      const frame = requestAnimationFrame(() => setLogosReady(true));
+      return () => cancelAnimationFrame(frame);
+    }
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting && entry.intersectionRatio > 0)) {
+        setLogosReady(true);
+        observer.disconnect();
+      }
+    }, { threshold: .01 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const group = groupRef.current;
@@ -38,7 +57,7 @@ export function PartnerMarquee() {
   }, []);
 
   return (
-    <section className={styles.section} id="brands" aria-label="Authorised partners">
+    <section ref={sectionRef} className={styles.section} id="brands" aria-label="Authorised partners" onFocusCapture={() => setLogosReady(true)}>
       <div className={styles.heading}>
         <p>Authorised partners</p>
       </div>
@@ -56,7 +75,7 @@ export function PartnerMarquee() {
                   className={styles.logo}
                   data-brand={partner.slug}
                 >
-                  <BrandArtwork brand={partner.slug} labelled={!duplicate} />
+                  {logosReady ? <BrandArtwork brand={partner.slug} labelled={!duplicate} /> : <noscript><BrandArtwork brand={partner.slug} labelled={!duplicate} className={styles.noscriptLogo} loading="lazy" /></noscript>}
                 </Link>
               ))}
             </div>
