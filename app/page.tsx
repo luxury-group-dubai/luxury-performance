@@ -1,5 +1,6 @@
 import './home-intro.css';
 import type { Metadata } from 'next';
+import { defaultSocialImage } from '@/lib/social-images';
 import { HomeHero } from '@/components/home/home-hero';
 import { PartnerMarquee } from '@/components/home/partner-marquee';
 import './home-tokens.css';
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Performance Parts in Dubai, UAE & GCC',
     description: 'Discover NOVITEC, TECHART and Valvetronic Designs with Luxury Performance. Performance parts and vehicle fitment advice from Dubai for the UAE & GCC.',
-    images: [{ url: '/images/home/novitec-12cilindri-desktop.jpg', width: 3840, height: 1700, alt: 'NOVITEC Ferrari 12Cilindri Spider with Luxury Performance' }],
+    images: [defaultSocialImage],
   },
 };
 
