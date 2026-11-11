@@ -36,8 +36,8 @@ test('installation quantity follows split stock and special-order parents only i
   assert.deepEqual(linkedInstallationUpdates([parent, service], service, 0), []);
 });
 test('description preserves useful formatting and removes executable content', () => {
-  const html = formatDescription('<h4>Features</h4><ul><li><strong>Titanium</strong></li></ul><table><tr><td>2018–2024</td></tr></table><script>alert(1)</script><img src="https://cdn.shopify.com/test.jpg" onerror="alert(1)"><a href="javascript:alert(1)">Click</a>');
-  assert(html.includes('<h4>Features</h4>'));
+  const html = formatDescription('<h4>Features</h4><h6>Materials</h6><h4>Fitment</h4><ul><li><strong>Titanium</strong></li></ul><table><tr><td>2018–2024</td></tr></table><script>alert(1)</script><img src="https://cdn.shopify.com/test.jpg" onerror="alert(1)"><a href="javascript:alert(1)">Click</a>');
+  assert(html.includes('<h2>Features</h2><h3>Materials</h3><h2>Fitment</h2>'));
   assert(html.includes('<li><strong>Titanium</strong></li>'));
   assert(html.includes('<td>2018–2024</td>'));
   assert(!/script|onerror|javascript:|alert\(1\)/.test(html));

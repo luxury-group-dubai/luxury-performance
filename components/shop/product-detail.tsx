@@ -1,6 +1,5 @@
 'use client';
 import '@/app/shop-product.css';
-/* eslint-disable @next/next/no-img-element */
 import { galleryImageSources } from '@/lib/shop/gallery-images';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -17,9 +16,12 @@ import offerStyles from './product-offer.module.css';
 import { useShopCart } from './cart-provider';
 const galleryImageWidths = [320, 400, 480, 640, 750, 960, 1200, 1440, 1920, 2560, 3200, 3840];
 
+const mobileGalleryWidths = [320, 400, 480, 576, 640, 750, 960, 1200, 1440, 1920];
+const mobileGallerySize = 'calc(100vw - 72px)';
+
 // Match the gallery column and its 12px image padding on each side.
 const galleryImageSizes = [
-  '(max-width: 700px) calc(100vw - 72px)',
+  `(max-width: 700px) ${mobileGallerySize}`,
   '(max-width: 1150px) calc(48vw - 43px)',
   '(max-width: 1760px) calc(45vw - 24px)',
   'calc(50vw - 118px)',
@@ -36,13 +38,17 @@ export function ProductDetail({product,initialVariant,installations,videos,previ
  function select(id:string){setVariantId(id);setQuantity(1);const v=product.variants.nodes.find(v=>v.id===id)!;setPhoto(v.image?.url || product.featuredImage?.url || images[0]?.url);setWithInstallation(false);const url=new URL(location.href);url.searchParams.set('variant',id.split('/').pop()!);history.replaceState(null,'',url);}
  const installation=installations[variantId];
  const fits=tagsFor(product,'fit');
- return <div className="shop-page shop-product-page"><div className="shop-topline"><Link href={preview?previewHome:"/shop"}>{preview?previewLabel:"The collection"}</Link><span>/</span><Link href={preview?previewHome:partnerForSupplier(supplierOf(product)) ? `/partners/${supplierOf(product)}` : `/shop?brand=${supplierOf(product)}`}>{product.vendor}</Link><span>/</span><span>{categoryOf(product)}</span></div><div className="shop-product-layout"><section className="shop-gallery" aria-label="Product images"><div className="shop-main-image">{photo?<img
+ const mobileGallery = photo ? galleryImageSources(photo, mobileGalleryWidths, 576, 65).srcSet : undefined;
+ return <div className="shop-page shop-product-page"><div className="shop-topline"><Link href={preview?previewHome:"/shop"}>{preview?previewLabel:"The collection"}</Link><span>/</span><Link href={preview?previewHome:partnerForSupplier(supplierOf(product)) ? `/partners/${supplierOf(product)}` : `/shop?brand=${supplierOf(product)}`}>{product.vendor}</Link><span>/</span><span>{categoryOf(product)}</span></div><div className="shop-product-layout"><section className="shop-gallery" aria-label="Product images"><div className="shop-main-image">{photo?<picture>
+   {mobileGallery && <source media="(max-width: 700px)" sizes={mobileGallerySize} srcSet={mobileGallery} />}
+   <img
    {...galleryImageSources(photo, galleryImageWidths, 960)}
    alt={images.find(image => image.url === photo)?.altText || product.title}
    sizes={galleryImageSizes}
    loading="eager"
    fetchPriority="high"
-  />:<span>{product.vendor}</span>}</div>{images.length>1&&<ProductThumbnails images={images} selected={photo} onSelect={setPhoto}/>}</section><section className="shop-product-information"><span className="tiny-label">{product.vendor} / {categoryOf(product)}</span><h1>{product.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h1><div className="shop-product-price">{preview&&Number(variant.price.amount)===0?'Price pending':money(variant.price)}</div><div className="shop-stock-row"><span className={`shop-stock ${variant.currentlyNotInStock?'special':!variant.availableForSale?'unavailable':''}`}>{previewPath?'Draft':!variant.availableForSale?'Out of stock':variant.currentlyNotInStock?'Special Order':'In stock'}</span>{used&&<span className="shop-condition">Used · limited to available stock</span>}</div>
+   />
+  </picture>:<span>{product.vendor}</span>}</div>{images.length>1&&<ProductThumbnails images={images} selected={photo} onSelect={setPhoto}/>}</section><section className="shop-product-information"><span className="tiny-label">{product.vendor} / {categoryOf(product)}</span><h1>{product.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h1><div className="shop-product-price">{preview&&Number(variant.price.amount)===0?'Price pending':money(variant.price)}</div><div className="shop-stock-row"><span className={`shop-stock ${variant.currentlyNotInStock?'special':!variant.availableForSale?'unavailable':''}`}>{previewPath?'Draft':!variant.availableForSale?'Out of stock':variant.currentlyNotInStock?'Special Order':'In stock'}</span>{used&&<span className="shop-condition">Used · limited to available stock</span>}</div>
   {setOnly && <p className={offerStyles.setUnit}>{groupSize === 4 ? 'Complete set' : groupSize === 3 ? 'Three-wheel lot' : 'Wheel pair'} · {groupSize} wheels · Sold together</p>}
   {product.variants.nodes.length>1&&<label className="shop-field shop-variant"><span>Configuration</span><select value={variantId} onChange={e=>select(e.target.value)}>{product.variants.nodes.map(v=><option value={v.id} key={v.id}>{v.title}{!v.availableForSale?' — Out of stock':''}</option>)}</select></label>}
   {installation && <label className="shop-installation-option"><input type="checkbox" checked={withInstallation} disabled={cart.busy || !variant.availableForSale} onChange={e=>setWithInstallation(e.target.checked)}/><span><strong>Add installation in Dubai <span>+ {money({...installation.price,amount:String(Number(installation.price.amount)*quantity)})}</span></strong><small>{installation.title}{quantity>1?` · ${quantity} units`:''}</small><small>We’ll contact you to arrange the appointment.</small></span></label>}
