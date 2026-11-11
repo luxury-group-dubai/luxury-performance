@@ -22,15 +22,21 @@ export function CayenneSelector({ products, fit, body, modelChoices }: { product
   return <VehiclePicker key={`${initialFit}:${initialBody}`} model="cayenne" options={cayenneOptions(cayennes)} initialFit={initialFit} initialBody={initialBody} shopPath="/shop" modelChoices={modelChoices} />;
 }
 
-export function SelectedVehicle({ selection }: { selection: TechartSelection }) {
+export function SelectedVehicle({ selection, compact = false }: { selection: TechartSelection; compact?: boolean }) {
   const { model, fit, body } = selection;
   const cayenne = model === 'cayenne';
   const query = new URLSearchParams({ ...(cayenne ? { model } : {}), fit, ...(body ? { body } : {}) });
   const image = cayenne ? cayenneImage(fit, selection.body) : vehicleImage(fit, selection.body);
   const name = cayenne ? cayenneName(fit, selection.body) : vehicleName(fit, selection.body);
+  if (compact) return <div className={styles.selectedProfile}>
+    <img {...image} alt={`Porsche ${name}`} />
+  </div>;
+
   return <div className={styles.selected}>
     <img {...image} alt="" />
-    <p>{name}</p>
-    <Link className={styles.change} href={`/partners/techart?${query}#vehicles`}>Change car</Link>
+    <div className={styles.selectedDetails}>
+      <p>{name}</p>
+      <Link className={styles.change} href={`/partners/techart?${query}#vehicles`}>Change car</Link>
+    </div>
   </div>;
 }

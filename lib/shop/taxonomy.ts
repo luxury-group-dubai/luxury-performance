@@ -27,7 +27,14 @@ export function tagsFor(p: CatalogProduct, type: 'make' | 'model' | 'fit') {
 export function fitLabel(v: string) {
   const display = v.replace(/_gt3_gt3_touring$/, v.startsWith('991_1_') ? '_gt3' : '_gt3_touring').replace(/_gt3_with_wing$/, '_gt3')
     .replace(/_gt3_rs_st$/, '_gt3_RS_/_S/T').replace(/_st$/, '_S/T');
-  return label(display.replace(/^(99[12]|e3)_([12])(?=_|$)/, '$1.$2')).replace(/Turbo S/gi, 'Turbo S').replace(/Gt3/gi, 'GT3').replace(/Gts/gi, 'GTS').replace(/\bRs\b/g, 'RS').replace(/\bE Hybrid\b/g, 'E-Hybrid').replace(/\bTurbo Gt\b/g, 'Turbo GT');
+  return label(display.replace(/^(99[12]|e3)_([12])(?=_|$)/, '$1.$2')).replace(/\b4s\b/gi, '4S').replace(/Turbo S/gi, 'Turbo S').replace(/Gt3/gi, 'GT3').replace(/Gts/gi, 'GTS').replace(/\bRs\b/g, 'RS').replace(/\bE Hybrid\b/g, 'E-Hybrid').replace(/\bTurbo Gt\b/g, 'Turbo GT');
+}
+export function techartGeneration(fit?: string) {
+  return /^(99[12]_[12]|e3_[12])(?:_|$)/.exec(fit ?? '')?.[1];
+}
+export function techartFitmentLabel(fit: string) {
+  const generation = techartGeneration(fit);
+  return generation && fit !== generation ? fitLabel(fit).slice(fitLabel(generation).length + 1) : fitLabel(fit);
 }
 export function categoryOf(p: CatalogProduct) {
   const type = p.productType.toLowerCase(), tags = p.tags.join(' '), title = p.title.toLowerCase();
@@ -50,7 +57,8 @@ export function categoryOf(p: CatalogProduct) {
   if (/category_(performance|engine)/.test(tags) || /performance|turbo|engine/.test(type)) return 'Performance';
   return /accessor/.test(type) ? 'Accessories' : 'Other parts';
 }
-export type Filters = { brand?: string; make?: string; model?: string; fit?: string; body?: string; category?: string; q?: string; sort?: string; page?: string };
+export const inStockShopPath = '/shop?stock=in-stock';
+export type Filters = { brand?: string; stock?: string; make?: string; model?: string; generation?: string; fit?: string; body?: string; category?: string; q?: string; sort?: string; page?: string };
 export function techartFitKeys(fit: string, body?: string) {
   // Both distinct 992.1 cars have parts in this shared manufacturer column.
   // Model-specific approval is applied separately by bodyMatch.
@@ -68,7 +76,8 @@ export function filterProducts(products: CatalogProduct[], f: Filters) {
   const sf90Body = isSF90Selection(f) && isSF90Body(f.body) ? f.body : undefined;
   const version812 = is812Selection(f) ? (f.model === '812_gts' ? 'gts' : 'superfast') : undefined;
   const fits = f.fit ? f.brand === 'techart' && f.model === '911' ? techartFitKeys(f.fit, f.body) : [f.fit] : [];
-  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
+  const generation = f.brand === 'techart' && !f.fit ? f.generation : undefined;
+  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
   if (f.sort === 'price-up') result.sort((a,b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
   if (f.sort === 'price-down') result.sort((a,b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
   if (f.sort === 'name') result.sort((a,b) => a.title.localeCompare(b.title));
@@ -78,15 +87,22 @@ export function filterProducts(products: CatalogProduct[], f: Filters) {
 // Vehicle selections form a hierarchy; never carry a previous car's fitment forward.
 export function updateFilters(current: Filters, changes: Partial<Filters>): Filters {
   const next = { ...current, ...changes, page: undefined };
-  if ('brand' in changes) return { brand: changes.brand };
-  if ('make' in changes) { next.model = undefined; next.fit = undefined; next.body = undefined; }
-  if ('model' in changes) { next.fit = undefined; next.body = undefined; }
-  if ('fit' in changes) next.body = undefined;
+  if ('brand' in changes) return { brand: changes.brand, ...(next.stock ? { stock: next.stock } : {}) };
+  if ('make' in changes) next.model = undefined;
+  if ('make' in changes || 'model' in changes) next.generation = undefined;
+  if ('make' in changes || 'model' in changes || 'generation' in changes) {
+    next.fit = undefined;
+    next.body = undefined;
+  } else if ('fit' in changes) {
+    // Fit-only links from the partner page imply their generation.
+    if (current.brand === 'techart') next.generation ||= techartGeneration(changes.fit || current.fit);
+    next.body = undefined;
+  }
   return next;
 }
 export function filterUrl(basePath: string, filters: Filters) {
   const params = new URLSearchParams();
-  for (const key of ['brand', 'make', 'model', 'fit', 'body', 'category', 'q', 'sort', 'page'] as const) {
+  for (const key of ['stock', 'brand', 'make', 'model', 'generation', 'fit', 'body', 'category', 'q', 'sort', 'page'] as const) {
     const value = filters[key]?.trim();
     if (value) params.set(key, value);
   }

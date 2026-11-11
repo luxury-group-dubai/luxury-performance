@@ -44,7 +44,31 @@
 .catalogIntro + :global(.supplier-tabs) { margin-top: 8px; }
 .selected { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 520px; margin-inline: auto; }
 .selected img { display: block; width: 100%; max-width: 500px; height: auto; object-fit: contain; }
-.catalogVehicle .selected > p { margin: 0; color: #34342f; font-size: 14px; text-align: center; line-height: 1.5; }
+.selectedDetails { display: grid; justify-items: center; gap: 10px; }
+.catalogVehicle .selectedDetails > p { margin: 0; color: #34342f; font-size: 14px; text-align: center; line-height: 1.5; }
+.selectedProfile { position: relative; height: 104px; }
+.selectedProfile img {
+  position: absolute;
+  inset: 50% 0 auto auto;
+  width: min(100%, 495px);
+  height: 146px;
+  object-fit: contain;
+  transform: translateY(-50%) scaleX(-1);
+}
+.novitecStage::before {
+  content: '';
+  position: absolute;
+  inset: 50% 4% auto auto;
+  width: min(92%, 455px);
+  aspect-ratio: 8;
+  transform: translateY(60%);
+  background: radial-gradient(ellipse, #0009, transparent 68%);
+}
+
+.selectedProfile .novitecProfile {
+  height: auto;
+  transform: translateY(-50%);
+}
 .change { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 22px; border: 1px solid #d1d0c8; border-radius: 28px; font-size: 11px; }
 .change:hover { border-color: #7e7b70; }
 .cayenneLinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
@@ -95,5 +119,5 @@
   .catalogIntro h1 { font-size: 42px; margin-top: 12px; }
   .selected { max-width: none; }
   .selected img { width: calc(100% + 2 * var(--gutter)); max-width: 480px; }
-  .catalogVehicle .selected > p { max-width: 100%; font-size: 13px; }
+  .catalogVehicle .selectedDetails > p { max-width: 100%; font-size: 13px; }
 }

@@ -6,6 +6,7 @@ import { CartButton } from './shop/cart-provider';
 import { BrandLogo } from './brand-logo';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight, ChevronDown, X } from 'lucide-react';
+import { inStockShopPath } from '@/lib/shop/taxonomy';
 import { brandMenu, limitedStock, usedParts } from '@/lib/shop-navigation';
 import styles from './header-menus.module.css';
 import { MenuCards, MenuLogo } from './shop-menu-cards';
@@ -48,7 +49,7 @@ function ShopContents({ selected, select, prefix, close, dismiss, label }: { sel
         }}>{menu.label}</button>)}
       </div>
       </div>
-      <div className={styles.shopActions}><Link className={styles.shopAll} href="/collections/in-stock" onClick={close}>All in stock <ArrowUpRight size={16}/></Link><Link className={styles.shopAll} href="/shop" onClick={close}>View all parts <ArrowUpRight size={16}/></Link>{dismiss && <button className={styles.close} aria-label="Close shop" onClick={dismiss}><X size={19}/></button>}</div>
+      <div className={styles.shopActions}><Link className={styles.shopAll} href={inStockShopPath} onClick={close}>All in stock <ArrowUpRight size={16}/></Link><Link className={styles.shopAll} href="/shop" onClick={close}>View all parts <ArrowUpRight size={16}/></Link>{dismiss && <button className={styles.close} aria-label="Close shop" onClick={dismiss}><X size={19}/></button>}</div>
     </div>
     {menus.map(menu => <div key={menu.key} id={`${prefix}-panel-${menu.key}`} role="tabpanel" aria-labelledby={`${prefix}-tab-${menu.key}`} hidden={selected !== menu.key} data-shop-category={menu.key}>
       {selected === menu.key && (menu.key === 'brands' ? <BrandMenu close={close}/> : <VehicleMenu close={close}/>)}
@@ -60,6 +61,7 @@ export function Header() {
   const [shopMenu, setShopMenu] = useState<ShopMenu | null>(null);
   const [mobileSection, setMobileSection] = useState<ShopMenu>('brands');
   const pathname = usePathname();
+  const isShop = pathname === '/shop';
   const overlaysHero = pathname === '/' || Object.keys(brandHeroImages).some(slug => pathname === `/partners/${slug}`);
   const header = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -127,8 +129,9 @@ export function Header() {
   }, []);
   useEffect(() => {
     if (!open) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const scrollRoot = isShop ? document.documentElement : document.body;
+    const previous = scrollRoot.style.overflow;
+    scrollRoot.style.overflow = 'hidden';
     const background = Array.from(document.querySelectorAll<HTMLElement>('#main, footer'));
     const previousInert = background.map(element => element.inert);
     background.forEach(element => { element.inert = true; });
@@ -144,11 +147,11 @@ export function Header() {
       }
     }
     document.addEventListener('keydown', onKey);
-    return () => { document.body.style.overflow = previous; background.forEach((element, index) => { element.inert = previousInert[index]; }); document.removeEventListener('keydown', onKey); };
-  }, [open]);
+    return () => { scrollRoot.style.overflow = previous; background.forEach((element, index) => { element.inert = previousInert[index]; }); document.removeEventListener('keydown', onKey); };
+  }, [open, isShop]);
   return <>
     <a href="#main" className="skip-link">Skip to content</a>
-    <header ref={header} className={`site-header ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
+    <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
       <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => { setOpen(!open); setShopMenu(null); setMobileSection('brands'); }}><span aria-hidden="true"><i/><i/></span></button>
       <nav aria-label="Main navigation" inert={open} className={`desktop-nav ${styles.desktop}`}>
         <div className={styles.menuGroup}>

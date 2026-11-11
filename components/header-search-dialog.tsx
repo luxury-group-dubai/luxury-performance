@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, ArrowUpRight, Search, X } from 'lucide-react';
 import { BrandLogo } from './brand-logo';
+import { inStockShopPath } from '@/lib/shop/taxonomy';
 import { money, type Money, type Photo } from '@/lib/shop/types';
 import styles from './header-search-dialog.module.css';
 
@@ -14,7 +15,7 @@ const suggestions = [
   { name: 'NOVITEC', href: '/shop?brand=novitec' },
   { name: 'Valvetronic Designs', href: '/shop?brand=valvetronic' },
   { name: 'TECHART', href: '/shop?brand=techart' },
-  { name: 'All in stock', href: '/collections/in-stock' },
+  { name: 'All in stock', href: inStockShopPath },
 ];
 
 export function HeaderSearchDialog({ trigger, onClose }: { trigger: RefObject<HTMLButtonElement | null>; onClose: () => void }) {

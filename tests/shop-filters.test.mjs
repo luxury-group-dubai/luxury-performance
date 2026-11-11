@@ -16,7 +16,7 @@ function load(path) {
   new Function('require', 'module', 'exports', outputText)(specifier => load(resolve(dirname(path), specifier)), compiled, compiled.exports);
   return compiled.exports;
 }
-const { updateFilters, filterUrl, fitOptions, filterProducts } = load(resolve(root, 'lib/shop/taxonomy.ts'));
+const { updateFilters, filterUrl, fitOptions, filterProducts, techartFitmentLabel } = load(resolve(root, 'lib/shop/taxonomy.ts'));
 const products = [
   { title: 'Shared wheels', vendor: 'TECHART', productType: 'Wheels', tags: ['make_porsche', 'model_911', 'model_cayenne', 'fit_992_1', 'fit_e3_2'], priceRange: { minVariantPrice: { amount: '2000' } } },
   { title: 'Cayenne spoiler', vendor: 'TECHART', productType: 'Spoiler', tags: ['make_porsche', 'model_cayenne', 'fit_e3_2'], priceRange: { minVariantPrice: { amount: '1000' } } },
@@ -52,4 +52,23 @@ test('combined filters and prices produce the matching subset', () => {
 test('filter URLs preserve the collection, encode values, and omit cleared filters', () => {
   assert.equal(filterUrl('/collections/techart', { brand: 'techart', q: ' Turbo S ', model: '', page: undefined }), '/collections/techart?brand=techart&q=Turbo+S');
   assert.equal(filterUrl('/shop', {}), '/shop');
+});
+
+
+test('a TECHART generation includes its trim and generation tags but excludes other generations', () => {
+  const carrera = { ...products[0], title: '992.1 Carrera', tags: ['model_911', 'fit_992_1_carrera'] };
+  const laterCarrera = { ...carrera, title: '992.2 Carrera', tags: ['model_911', 'fit_992_2_carrera'] };
+  const filters = { brand: 'techart', model: '911', generation: '992_1' };
+  assert.deepEqual(filterProducts([...products, carrera, laterCarrera], filters), [products[0], carrera]);
+  assert.equal(filterUrl('/shop', filters), '/shop?brand=techart&model=911&generation=992_1');
+});
+
+test('changing TECHART generation clears fitment and body, and clearing a legacy fit retains generation', () => {
+  const legacy = { brand: 'techart', model: '911', fit: '992_1_carrera_4s', body: 'targa' };
+  assert.equal(techartFitmentLabel(legacy.fit), 'Carrera 4S');
+  assert.equal(updateFilters(legacy, { fit: '' }).generation, '992_1');
+  const next = updateFilters(legacy, { generation: '992_2' });
+  assert.equal(next.fit, undefined);
+  assert.equal(next.body, undefined);
+  assert.equal(updateFilters(next, { model: 'cayenne' }).generation, undefined);
 });
