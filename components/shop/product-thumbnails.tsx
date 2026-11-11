@@ -1,8 +1,11 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
+import { galleryImageSources } from '@/lib/shop/gallery-images';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Photo } from '@/lib/shop/types';
+
+const thumbnailWidths = [160, 180, 240, 320, 360, 480, 540];
 
 export function ProductThumbnails({ images, selected, onSelect }: { images: Photo[]; selected?: string; onSelect: (url: string) => void }) {
   const strip = useRef<HTMLDivElement>(null);
@@ -53,7 +56,15 @@ export function ProductThumbnails({ images, selected, onSelect }: { images: Phot
       onPointerLeave={() => { if (drag.current && !drag.current.moved) drag.current = null; }}
       onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}
       onDragStart={event => event.preventDefault()}>
-      {images.map((image, i) => <button type="button" key={image.url} aria-label={`View product image ${i + 1}`} aria-pressed={selected === image.url} onClick={() => onSelect(image.url)}><img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=360`} alt="" draggable={false}/></button>)}
+      {images.map((image, i) => <button type="button" key={image.url} aria-label={`View product image ${i + 1}`} aria-pressed={selected === image.url} onClick={() => onSelect(image.url)}><img
+        {...galleryImageSources(image.url, thumbnailWidths, 360)}
+        alt=""
+        width={180}
+        height={120}
+        sizes="(max-width: 700px) 154px, 178px"
+        loading="lazy"
+        draggable={false}
+      /></button>)}
     </div>
   </div>;
 }
