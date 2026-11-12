@@ -145,3 +145,14 @@
   .page[data-partner="capristo"] .vehicleLinks { column-gap: 20px; }
   .page[data-partner="capristo"] .vehicleLinks a { font-size: 11px; min-height: 55px; }
 }
+
+.capristoFind { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(40px, 9vw, 140px); padding: clamp(65px, 8vw, 110px) var(--gutter); background: #e2e3e1; }
+.capristoFind h2 { max-width: 650px; font-size: clamp(38px, 4.8vw, 68px); line-height: 1.08; }
+.capristoFind p { max-width: 520px; margin-top: 22px; color: #5f615f; font-size: 14px; line-height: 1.8; }
+.capristoFindSearch { display: flex; border-bottom: 1px solid #666; max-width: 560px; margin-top: 32px; }
+.capristoFindSearch input[type=search] { min-width: 0; flex: 1; padding: 15px 0; border: 0; outline-offset: 3px; background: transparent; color: #171819; font-size: 14px; }
+.capristoFindSearch button { display: flex; align-items: center; gap: 14px; padding: 14px 0 14px 20px; background: transparent; color: #171819; font-size: 13px; }
+.capristoFindHelp { align-self: center; border-left: 1px solid #b8bab6; padding-left: clamp(25px, 4vw, 60px); }
+.capristoFindHelp h3 { font-size: clamp(24px, 2.4vw, 34px); line-height: 1.15; letter-spacing: -.04em; }
+.capristoFindHelp p { margin: 18px 0 25px; }
+@media (max-width: 700px) { .capristoFind { grid-template-columns: 1fr; gap: 48px; padding-block: 60px; } .capristoFindHelp { border-left: 0; border-top: 1px solid #b8bab6; padding: 32px 0 0; } }
