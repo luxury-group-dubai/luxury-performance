@@ -112,5 +112,4 @@
 
 .page[data-partner="techart"] .selected { padding-top: clamp(48px, 6vw, 88px); }
 
-.page[data-partner="capristo"] :global(.eyebrow),
-.page[data-partner="techart"] :global(.eyebrow) { display: none; }
+.page :global(.eyebrow) { display: none; }
