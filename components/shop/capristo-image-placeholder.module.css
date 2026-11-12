@@ -1,0 +1,15 @@
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at 50% 44%, #363638, #1b1b1d 54%, #0d0d0e 100%);
+}
+
+.placeholder > img {
+  position: static;
+  width: 58%;
+  max-width: 280px;
+  height: auto;
+  padding: 0;
+}

@@ -1,4 +1,6 @@
 'use client';
+
+import { CapristoImagePlaceholder } from './capristo-image-placeholder';
 import '@/app/shop-product.css';
 import { galleryImageSources } from '@/lib/shop/gallery-images';
 import { useState } from 'react';
@@ -48,7 +50,7 @@ export function ProductDetail({product,initialVariant,installations,videos,previ
    loading="eager"
    fetchPriority="high"
    />
-  </picture>:<span>{product.vendor}</span>}</div>{images.length>1&&<ProductThumbnails images={images} selected={photo} onSelect={setPhoto}/>}</section><section className="shop-product-information"><span className="tiny-label">{product.vendor} / {categoryOf(product)}</span><h1>{product.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h1><div className="shop-product-price">{preview&&Number(variant.price.amount)===0?'Price pending':money(variant.price)}</div><div className="shop-stock-row"><span className={`shop-stock ${variant.currentlyNotInStock?'special':!variant.availableForSale?'unavailable':''}`}>{previewPath?'Draft':!variant.availableForSale?'Out of stock':variant.currentlyNotInStock?'Special Order':'In stock'}</span>{used&&<span className="shop-condition">Used · limited to available stock</span>}</div>
+  </picture>:product.vendor.toLowerCase() === 'capristo' ? <CapristoImagePlaceholder /> : <span>{product.vendor}</span>}</div>{images.length>1&&<ProductThumbnails images={images} selected={photo} onSelect={setPhoto}/>}</section><section className="shop-product-information"><span className="tiny-label">{product.vendor} / {categoryOf(product)}</span><h1>{product.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h1><div className="shop-product-price">{preview&&Number(variant.price.amount)===0?'Price pending':money(variant.price)}</div><div className="shop-stock-row"><span className={`shop-stock ${variant.currentlyNotInStock?'special':!variant.availableForSale?'unavailable':''}`}>{previewPath?'Draft':!variant.availableForSale?'Out of stock':variant.currentlyNotInStock?'Special Order':'In stock'}</span>{used&&<span className="shop-condition">Used · limited to available stock</span>}</div>
   {setOnly && <p className={offerStyles.setUnit}>{groupSize === 4 ? 'Complete set' : groupSize === 3 ? 'Three-wheel lot' : 'Wheel pair'} · {groupSize} wheels · Sold together</p>}
   {product.variants.nodes.length>1&&<label className="shop-field shop-variant"><span>Configuration</span><select value={variantId} onChange={e=>select(e.target.value)}>{product.variants.nodes.map(v=><option value={v.id} key={v.id}>{v.title}{!v.availableForSale?' — Out of stock':''}</option>)}</select></label>}
   {installation && <label className="shop-installation-option"><input type="checkbox" checked={withInstallation} disabled={cart.busy || !variant.availableForSale} onChange={e=>setWithInstallation(e.target.checked)}/><span><strong>Add installation in Dubai <span>+ {money({...installation.price,amount:String(Number(installation.price.amount)*quantity)})}</span></strong><small>{installation.title}{quantity>1?` · ${quantity} units`:''}</small><small>We’ll contact you to arrange the appointment.</small></span></label>}

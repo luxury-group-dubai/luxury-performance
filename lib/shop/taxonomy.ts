@@ -6,6 +6,7 @@ export const suppliers = [
   { slug: 'novitec', name: 'NOVITEC', image: 'ferrari', line: 'Individuality, without compromise.', description: 'Explore by vehicle, then discover the exhaust, aerodynamic, wheel and suspension programme.', categories: ['Aerodynamics', 'Exhaust', 'Wheels', 'Suspension', 'Performance'] },
   { slug: 'techart', name: 'TECHART', image: 'porsche', line: 'Your Porsche. Your signature.', description: 'Start with your Porsche model and exact fitment group. Build a specification across exterior, interior and performance.', categories: ['Aerodynamics', 'Wheels', 'Exhaust', 'Suspension', 'Performance', 'Interior', 'Accessories'] },
   { slug: 'valvetronic', name: 'Valvetronic Designs', image: 'lamborghini', line: 'A voice of its own.', description: 'Find your vehicle, then explore valved systems, downpipes and exhaust components.', categories: ['Valved exhaust systems', 'Downpipes', 'Front pipes', 'Exhaust components'] },
+  { slug: 'capristo', name: 'CAPRISTO', image: 'ferrari', line: 'Performance and sound.', description: 'Explore exhaust systems, carbon components and performance parts for your vehicle.', categories: ['Exhaust', 'Aerodynamics', 'Wheels', 'Performance', 'Interior'] },
   { slug: 'urban', name: 'URBAN Automotive', image: 'wheel', line: 'Distinctive details.', description: 'Selected used URBAN components, limited to the stock available.', categories: ['Wheels', 'Aerodynamics', 'Accessories', 'Other parts'] },
   { slug: 'oem', name: 'Genuine OEM', image: 'sf90', line: 'Original engineering.', description: 'Selected original components. Review the individual listing for condition, included parts and vehicle compatibility.', categories: ['Exhaust', 'Aerodynamics', 'Performance', 'Other parts'] },
   { slug: 'collectibles', name: 'Collectibles', image: 'mclaren', line: 'Performance, in another form.', description: 'Scale models and automotive pieces for your collection.', categories: ['Collectibles'] },
@@ -13,7 +14,7 @@ export const suppliers = [
 export function supplierOf(p: CatalogProduct) {
   const v = p.vendor.toLowerCase();
   if (v.includes('novitec')) return 'novitec'; if (v.includes('techart')) return 'techart'; if (v.includes('valvetronic')) return 'valvetronic';
-  if (v.includes('urban')) return 'urban';
+  if (v.includes('capristo')) return 'capristo'; if (v.includes('urban')) return 'urban';
   if (v.includes('collectible')) return 'collectibles'; return 'oem';
 }
 const exact: Record<string, string> = { bmw: 'BMW', amg: 'AMG', mclaren: 'McLaren', rolls_royce: 'Rolls-Royce', mercedes: 'Mercedes-Benz', mercedes_benz: 'Mercedes-Benz', porsche: 'Porsche', audi: 'Audi', f12: 'F12', f8: 'F8', sf90: 'SF90', '812_gts': '812 GTS', '812_superfast': '812 Superfast', '12cilindri': '12Cilindri', '911': '911', gt3: 'GT3', g63: 'G63', m3: 'M3', m4: 'M4', m5: 'M5', x5: 'X5', x6: 'X6' };

@@ -434,6 +434,11 @@
     scrollbar-color: #15151555 transparent;
   }
 
+  .shop-filter-panel:has(.shop-choice-trigger[aria-expanded="true"]) {
+    overflow: visible;
+    max-block-size: none;
+  }
+
   .shop-desktop-filters .shop-field { gap: 6px; margin-block: 12px; }
   .shop-desktop-filters .shop-fitment-help { margin-top: 22px; padding-top: 14px; }
   .shop-desktop-filters .shop-fitment-help a { min-height: 32px; align-items: center; }
