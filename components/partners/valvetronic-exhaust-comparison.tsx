@@ -16,7 +16,7 @@ export function ValvetronicExhaustComparison() {
       <div className={styles.copy}>
         <Eyebrow dark>BMW M3 / G80</Eyebrow>
         <h2 id="exhaust-comparison-title">Stock vs. Valvetronic.</h2>
-        <p id="exhaust-comparison-instructions">Drag the divider to compare the exhausts.</p>
+        <p id="exhaust-comparison-instructions">Drag the divider to compare exhausts on a BMW M3 (G80).</p>
       </div>
       <figure className={styles.figure}>
         <div className={styles.stage} style={{ '--split': split / 100 } as CSSProperties}>
