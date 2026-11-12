@@ -30,5 +30,14 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#101010' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable} ${michroma.variable} ${michromaFull.variable}`}><body id="top"><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
+  return <html lang="en" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable} ${michroma.variable} ${michromaFull.variable}`}>
+    <head>
+      <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-P36C344D" />
+      <script dangerouslySetInnerHTML={{ __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      ` }} />
+    </head>
+    <body id="top"><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
 }
