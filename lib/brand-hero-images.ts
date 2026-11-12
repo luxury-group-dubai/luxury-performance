@@ -22,6 +22,11 @@ export const brandHeroImages: Partial<Record<string, HeroImage>> = {
 /** Partner cards and landing pages share each brand's selected artwork. */
 export const partnerHeroImages: Partial<Record<string, HeroImage>> = {
   ...brandHeroImages,
+  capristo: {
+    image: '/images/ferrari.webp',
+    mobile: { src: '/images/ferrari.webp', width: 1320, height: 1623 },
+    alt: 'Rear detail of a Ferrari',
+  },
   novitec: {
     image: '/images/novitec-models/novitec-partner-hero-wide.jpg',
     mobile: { src: '/images/novitec-models/novitec-partner-hero-mobile.jpg', width: 687, height: 1024 },
