@@ -23,8 +23,8 @@ export const brandHeroImages: Partial<Record<string, HeroImage>> = {
 export const partnerHeroImages: Partial<Record<string, HeroImage>> = {
   ...brandHeroImages,
   capristo: {
-    image: '/images/partners/capristo-f40.jpg',
-    mobile: { src: '/images/partners/capristo-f40.jpg', width: 720, height: 405 },
+    image: '/images/partners/capristo-f40-enhanced.png',
+    mobile: { src: '/images/partners/capristo-f40-enhanced.png', width: 1672, height: 941 },
     alt: 'Ferrari F40 fitted with a Capristo exhaust',
   },
   novitec: {
