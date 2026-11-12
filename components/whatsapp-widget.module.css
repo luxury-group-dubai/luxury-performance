@@ -46,3 +46,7 @@
 }
 @media (hover: none) { .label { display: none; } }
 @media (prefers-reduced-motion: reduce) { .widget, .label { transition: none; } }
+
+@media (max-width: 700px) {
+  :global(body:has([data-partner="capristo"])) .widget { display: none; }
+}

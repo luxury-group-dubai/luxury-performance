@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { partners, type Partner } from '@/lib/partners';
+import { contact } from '@/lib/content';
 import { getCatalog } from '@/lib/shop/storefront';
 import { categoryOf, filterProducts, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
 import { money, type CatalogProduct } from '@/lib/shop/types';
@@ -177,7 +178,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     {p.slug === 'valvetronic' && <ValvetronicExhaustComparison />}
     {p.slug === 'capristo' && <section className={styles.capristoFind} aria-labelledby="capristo-find-title">
       <div><h2 id="capristo-find-title">Find the right part.</h2><p>Choose your vehicle above, then narrow the collection by model and category. Already know what you need? Search by model or part number.</p><form action="/shop" className={styles.capristoFindSearch}><input type="hidden" name="brand" value="capristo"/><label htmlFor="capristo-find-query" className="sr-only">Search Capristo by model or part number</label><input id="capristo-find-query" name="q" type="search" placeholder="Model or part number"/><button type="submit">Search <ArrowUpRight size={17} aria-hidden="true"/></button></form></div>
-      <div className={styles.capristoFindHelp}><h3>Need help with fitment?</h3><p>Tell us your car’s model and year. Our team can help confirm the right parts and installation options.</p><ArrowLink href={enquiry}>Talk to our team</ArrowLink></div>
+      <div className={styles.capristoFindHelp}><h3>Need help with fitment?</h3><p>Tell us your car’s model and year. Our team can help confirm the right parts and installation options.</p><ArrowLink href={enquiry}>Talk to our team</ArrowLink><a className={styles.capristoMobileWhatsapp} href={contact.whatsapp} target="_blank" rel="noopener noreferrer">Chat on WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></a></div>
     </section>}
     {p.slug !== 'novitec' && p.slug !== 'capristo' && featured.length > 0 && <section id="selected" className={styles.selected}>
       <div className={styles.sectionHeading}>
