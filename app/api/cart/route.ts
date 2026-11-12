@@ -80,8 +80,13 @@ export async function POST(request:Request){
       if(service)additions.push({merchandiseId:service.variantId,quantity:Number(body.quantity),attributes:existingService?.attributes || [{key:'_installation_for',value:group},{key:'Installation for',value:`${product.title} — ${variant.title}`.slice(0,255)}]});
       const result=cart?await mutate(CART_ADD,{cartId:cart.id,lines:additions}):await mutate(CART_CREATE,{input:{lines:additions,buyerIdentity:{countryCode:'AE'}}});
       cart=result.cart!;
+      const previousQuantity = matching.reduce((sum, line) => sum + line.quantity, 0);
+      const updatedQuantity = cart.lines.nodes
+        .filter(line => line.merchandise.id === variant.id)
+        .reduce((sum, line) => sum + line.quantity, 0);
+      const addedQuantity = Math.max(0, Math.min(Number(body.quantity), updatedQuantity - previousQuantity));
       cookieStore.set(cookieName,cart.id!,{httpOnly:true,secure:new URL(request.url).protocol==='https:',sameSite:'lax',path:'/',maxAge:60*60*24*14});
-      return Response.json({cart:await visible(cart),warnings:result.warnings});
+      return Response.json({cart:await visible(cart),warnings:result.warnings,addedQuantity});
     }catch(error){return Response.json({message:error instanceof Error?error.message:'Could not update your cart. Please try again.'},{status:503});}
   });
 }
