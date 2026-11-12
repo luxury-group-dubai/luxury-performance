@@ -20,7 +20,6 @@ function trackCartAddition(reply: CartReply, variantId: string) {
 
  const analytics = window as Window & {
   gtag?: (command: 'event', event: 'add_to_cart', parameters: {
-   send_to: string;
    currency: string;
    value: number;
    items: { item_id: string; item_name: string; item_variant: string; price: number; quantity: number }[];
@@ -29,7 +28,6 @@ function trackCartAddition(reply: CartReply, variantId: string) {
 
  try {
   analytics.gtag?.('event', 'add_to_cart', {
-   send_to: 'G-MKG2EN84JK',
    currency: variant.price.currencyCode,
    value: price * quantity,
    items: [{
