@@ -111,3 +111,5 @@
 @media (prefers-reduced-motion: reduce) { .page[data-partner="novitec"] .categoryImage img { transition: none; } .page[data-partner="novitec"] .categoryCard:hover img { transform: none; } }
 
 .page[data-partner="techart"] .selected { padding-top: clamp(48px, 6vw, 88px); }
+
+.page[data-partner="capristo"] :global(.eyebrow-dot) { display: none; }
