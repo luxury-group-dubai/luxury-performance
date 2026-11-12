@@ -142,6 +142,3 @@ html{scrollbar-gutter:stable}
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
-
-.capristo-approval-note { margin: 0 var(--gutter) 24px; padding: 16px 20px; background: #f2f1ec; color: #45453f; font-size: 12px; line-height: 1.6; }
-.capristo-approval-note a { text-decoration: underline; text-underline-offset: 3px; }

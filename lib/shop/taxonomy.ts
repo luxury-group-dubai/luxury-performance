@@ -1,4 +1,3 @@
-import capristoApproval from './capristo-approval.json';
 import { ferrariVersionMatch, is812Selection, isSF90Body, isSF90Selection } from './novitec-ferrari-fitment';
 import { matchesSearch } from './search';
 import { f8BodyMatch, isF8Body, isF8Selection } from './novitec-f8-fitment';
@@ -60,7 +59,7 @@ export function categoryOf(p: CatalogProduct) {
   return /accessor/.test(type) ? 'Accessories' : 'Other parts';
 }
 export const inStockShopPath = '/shop?stock=in-stock';
-export type Filters = { approval?: string; brand?: string; stock?: string; make?: string; model?: string; generation?: string; fit?: string; body?: string; category?: string; q?: string; sort?: string; page?: string };
+export type Filters = { brand?: string; stock?: string; make?: string; model?: string; generation?: string; fit?: string; body?: string; category?: string; q?: string; sort?: string; page?: string };
 export function techartFitKeys(fit: string, body?: string) {
   // Both distinct 992.1 cars have parts in this shared manufacturer column.
   // Model-specific approval is applied separately by bodyMatch.
@@ -79,7 +78,7 @@ export function filterProducts(products: CatalogProduct[], f: Filters) {
   const version812 = is812Selection(f) ? (f.model === '812_gts' ? 'gts' : 'superfast') : undefined;
   const fits = f.fit ? f.brand === 'techart' && f.model === '911' ? techartFitKeys(f.fit, f.body) : [f.fit] : [];
   const generation = f.brand === 'techart' && !f.fit ? f.generation : undefined;
-  const result = products.filter(p => (!f.approval || (supplierOf(p) === 'capristo' && (capristoApproval as Record<string, string>)[p.handle] === f.approval) || (f.approval === 'unverified' && supplierOf(p) === 'capristo' && !(p.handle in capristoApproval))) && (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
+  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
   if (f.sort === 'price-up') result.sort((a,b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
   if (f.sort === 'price-down') result.sort((a,b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
   if (f.sort === 'name') result.sort((a,b) => a.title.localeCompare(b.title));
@@ -104,7 +103,7 @@ export function updateFilters(current: Filters, changes: Partial<Filters>): Filt
 }
 export function filterUrl(basePath: string, filters: Filters) {
   const params = new URLSearchParams();
-  for (const key of ['stock', 'brand', 'approval', 'make', 'model', 'generation', 'fit', 'body', 'category', 'q', 'sort', 'page'] as const) {
+  for (const key of ['stock', 'brand', 'make', 'model', 'generation', 'fit', 'body', 'category', 'q', 'sort', 'page'] as const) {
     const value = filters[key]?.trim();
     if (value) params.set(key, value);
   }

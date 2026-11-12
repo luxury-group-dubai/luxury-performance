@@ -135,13 +135,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
       return <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>;
     })}
   </nav>;
-  const capristoRanges = [
-    { key: 'approved', title: 'Road approved', description: 'Products with ECE approval identified in Capristo Germany’s listing.' },
-    { key: 'not-approved', title: 'Not road approved', description: 'Motorsport products listed in Capristo Germany’s racing range.' },
-    { key: 'unverified', title: 'Approval to confirm', description: 'Products and configurations that need further verification.' },
-  ];
-  const capristoVehicleSection = <section id="vehicles" className={styles.capristoSelector}><header><h2>Find your vehicle.</h2><p>Choose a range and vehicle make. Based on Capristo Germany’s listings reviewed on 12 November 2026; confirm local rules and the exact configuration before ordering.</p></header><div className={styles.capristoRangeCards}>{capristoRanges.map(range => { const matches = filterProducts(products, { brand: 'capristo', approval: range.key }); const makes = [...new Set(matches.flatMap(item => tagsFor(item, 'make')))].sort(); return <details key={range.key} className={styles.capristoRange}><summary><span><strong>{range.title}</strong><small>{range.description}</small></span><span aria-hidden="true">+</span></summary><div><Link href={filterUrl('/shop', { brand: 'capristo', approval: range.key })}>View all {matches.length} parts <ArrowUpRight size={16}/></Link>{makes.map(make => <Link key={make} href={filterUrl('/shop', { brand: 'capristo', approval: range.key, make })}>{label(make)} <ArrowUpRight size={16}/></Link>)}</div></details>; })}</div></section>;
-  const vehicleSection = p.slug === 'capristo' ? capristoVehicleSection : vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
+  const vehicleSection = vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
     <header id={compactNovitec ? 'discover' : undefined}>{!compactNovitec && !centeredIntro && !vehicleFirst && <Eyebrow number="02">Your starting point</Eyebrow>}{vehicleHeading}</header>
     {vehicleFirst ? <>
       {techartModel === 'cayenne'
