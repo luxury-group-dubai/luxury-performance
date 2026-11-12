@@ -128,3 +128,20 @@
   .capristoIntroCopy h2 { font-size: clamp(40px, 10vw, 60px); }
   .capristoIntroCopy p { margin: 24px 0 28px; }
 }
+
+/* Capristo vehicle browsing: bold heading and a structured marque grid. */
+.page[data-partner="capristo"] .vehicles { margin: 0; padding: clamp(64px, 8vw, 120px) var(--gutter); background: #101112; color: #f8f8f5; border: 0; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 7vw, 110px); }
+.page[data-partner="capristo"] .vehicles header { position: sticky; top: 140px; align-self: start; }
+.page[data-partner="capristo"] .vehicles h2 { max-width: 450px; font-size: clamp(45px, 5.8vw, 86px); line-height: 1.02; letter-spacing: -.06em; }
+.page[data-partner="capristo"] .vehicles header > p { max-width: 340px; color: #aaa9a4; font-size: 14px; line-height: 1.75; margin-top: 24px; }
+.page[data-partner="capristo"] .vehicleLinks { gap: 0 28px; border-top: 1px solid #7a7b79; }
+.page[data-partner="capristo"] .vehicleLinks a { min-height: 59px; padding: 16px 0; border-bottom: 1px solid #393a39; color: #f2f2ee; font-size: 13px; font-weight: 500; letter-spacing: .035em; text-transform: uppercase; transition: color .2s; }
+.page[data-partner="capristo"] .vehicleLinks a:hover { color: #c5a67b; }
+.page[data-partner="capristo"] .vehicleLinks svg { width: 16px; height: 16px; flex: none; }
+@media (max-width: 700px) {
+  .page[data-partner="capristo"] .vehicles { grid-template-columns: 1fr; gap: 36px; padding-block: 60px; }
+  .page[data-partner="capristo"] .vehicles header { position: static; }
+  .page[data-partner="capristo"] .vehicles h2 { font-size: clamp(43px, 11vw, 62px); }
+  .page[data-partner="capristo"] .vehicleLinks { column-gap: 20px; }
+  .page[data-partner="capristo"] .vehicleLinks a { font-size: 11px; min-height: 55px; }
+}
