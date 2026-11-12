@@ -157,9 +157,6 @@
 .capristoFindHelp p { margin: 18px 0 25px; }
 @media (max-width: 700px) { .capristoFind { grid-template-columns: 1fr; gap: 48px; padding-block: 60px; } .capristoFindHelp { border-left: 0; border-top: 1px solid #b8bab6; padding: 32px 0 0; } }
 
-.capristoMobileWhatsapp { display: none; }
 @media (max-width: 700px) {
-  .fullBleedHero[data-brand="capristo"] { min-height: min(62svh, 115vw); }
-  .fullBleedHero[data-brand="capristo"] .heroImage { object-fit: contain; object-position: center 15%; }
-  .page[data-partner="capristo"] .capristoMobileWhatsapp { display: flex; align-items: center; gap: 14px; width: fit-content; margin-top: 22px; color: #176b40; font-size: 13px; font-weight: 500; min-height: 44px; }
+  .fullBleedHero[data-brand="capristo"] .heroShade { background: linear-gradient(90deg, #000b, #0008), linear-gradient(0deg, #000b, transparent 65%); }
 }
