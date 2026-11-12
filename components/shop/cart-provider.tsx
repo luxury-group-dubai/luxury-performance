@@ -9,6 +9,42 @@ import { isSpecial } from '@/lib/shop/order-policy';
 type AddRequest={handle:string;variantId:string;quantity:number;title:string;variantTitle:string;confirmSpecial?:number;installation?:boolean;parentLineId?:string};
 type Context={add:(request:AddRequest)=>Promise<void>;open:()=>void;busy:boolean;count:number};
 const CartContext=createContext<Context|null>(null);
+
+function trackCartAddition(reply: CartReply, variantId: string) {
+ const quantity = reply.addedQuantity;
+ const variant = reply.cart?.lines.nodes.find(line => line.merchandise.id === variantId)?.merchandise;
+ if (!quantity || quantity < 1 || !variant) return;
+
+ const price = Number(variant.price.amount);
+ if (!Number.isFinite(price)) return;
+
+ const analytics = window as Window & {
+  gtag?: (command: 'event', event: 'add_to_cart', parameters: {
+   send_to: string;
+   currency: string;
+   value: number;
+   items: { item_id: string; item_name: string; item_variant: string; price: number; quantity: number }[];
+  }) => void;
+ };
+
+ try {
+  analytics.gtag?.('event', 'add_to_cart', {
+   send_to: 'G-MKG2EN84JK',
+   currency: variant.price.currencyCode,
+   value: price * quantity,
+   items: [{
+    item_id: variant.sku || variant.id,
+    item_name: variant.product.title,
+    item_variant: variant.title,
+    price,
+    quantity,
+   }],
+  });
+ } catch {
+  // The cart update has already succeeded if analytics is unavailable.
+ }
+}
+
 export function useShopCart(){const c=useContext(CartContext);if(!c)throw new Error('Cart unavailable');return c;}
 export function CartButton(){const cart=useShopCart();return <button className="shop-bag-button" onClick={cart.open} aria-label={`Open bag, ${cart.count} items`}><ShoppingBag size={18}/><span>Bag ({cart.count})</span></button>;}
 export function CartProvider({children}:{children:ReactNode}){
@@ -21,7 +57,30 @@ export function CartProvider({children}:{children:ReactNode}){
  function close(el:HTMLDialogElement|null){if(!el)return;el.classList.add('shop-closing');setTimeout(()=>{el.close();el.classList.remove('shop-closing');unlockScroll();},220);}
  useEffect(()=>{fetch('/api/cart').then(r=>r.json()).then((d:CartReply)=>{if(d.cart)setCart(d.cart);}).catch(()=>{});return ()=>{if(lock.current){document.documentElement.style.overflow=lock.current.overflow;document.body.style.paddingRight=lock.current.paddingRight;}};},[]);
  async function call(body:Record<string,unknown>){const r=await fetch('/api/cart',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d:CartReply=await r.json();if(d.cart!==undefined)setCart(d.cart);if(d.message)throw new Error(d.message);if(!r.ok&&!d.confirmation)throw new Error('Please try again.');if(d.warnings?.length)setError(d.warnings.map(w=>w.message).join(' '));return d;}
- async function add(request:AddRequest){if(active.current)return;active.current=true;setBusy(true);setError('');try{const d=await call({action:'add',...request});if(d.confirmation){setNotice({request,plan:d.confirmation});show(prompt.current);}else{prompt.current?.close();setNotice(null);show(drawer.current);}}catch(e){setError(e instanceof Error?e.message:'Could not update your bag.');if(!prompt.current?.open)show(drawer.current);}finally{active.current=false;setBusy(false);}}
+ async function add(request: AddRequest) {
+  if (active.current) return;
+  active.current = true;
+  setBusy(true);
+  setError('');
+  try {
+   const reply = await call({ action: 'add', ...request });
+   if (reply.confirmation) {
+    setNotice({ request, plan: reply.confirmation });
+    show(prompt.current);
+    return;
+   }
+   trackCartAddition(reply, request.variantId);
+   prompt.current?.close();
+   setNotice(null);
+   show(drawer.current);
+  } catch (error) {
+   setError(error instanceof Error ? error.message : 'Could not update your bag.');
+   if (!prompt.current?.open) show(drawer.current);
+  } finally {
+   active.current = false;
+   setBusy(false);
+  }
+ }
  async function update(lineId:string,quantity:number){if(active.current)return;active.current=true;setBusy(true);setError('');try{await call({action:'update',lineId,quantity});}catch(e){setError(e instanceof Error?e.message:'Could not update your bag.');}finally{active.current=false;setBusy(false);}}
  async function setInstallation(lineId:string,enabled:boolean){if(active.current)return;active.current=true;setBusy(true);setError('');try{await call({action:'installation',lineId,enabled});}catch(e){setError(e instanceof Error?e.message:'Could not update installation.');}finally{active.current=false;setBusy(false);}}
  async function checkout(){if(active.current)return;active.current=true;setBusy(true);setError('');try{const d=await call({action:'checkout'});if(d.cart?.checkoutUrl&&d.cart.totalQuantity)location.assign(d.cart.checkoutUrl);else throw new Error('Your bag is empty.');}catch(e){setError(e instanceof Error?e.message:'Could not open checkout.');active.current=false;setBusy(false);}}
