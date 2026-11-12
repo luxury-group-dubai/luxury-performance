@@ -128,3 +128,18 @@
   .capristoIntroCopy h2 { font-size: clamp(40px, 10vw, 60px); }
   .capristoIntroCopy p { margin: 24px 0 28px; }
 }
+
+.capristoSelector { padding: clamp(55px, 7vw, 100px) var(--gutter); }
+.capristoSelector header { max-width: 660px; margin-bottom: 40px; }
+.capristoSelector header p { margin-top: 20px; color: #62625d; font-size: 13px; }
+.capristoRangeCards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; align-items: start; }
+.capristoRange { border: 1px solid #d3d3cc; background: #fff; }
+.capristoRange summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; cursor: pointer; padding: 26px; list-style: none; }
+.capristoRange summary::-webkit-details-marker { display:none; }
+.capristoRange summary strong { display: block; font-size: 22px; font-weight: 400; letter-spacing: -.04em; }
+.capristoRange summary small { display: block; margin-top: 12px; color: #64645e; font-size: 12px; line-height: 1.65; }
+.capristoRange summary > span:last-child { font-size: 24px; }
+.capristoRange[open] summary > span:last-child { transform: rotate(45deg); }
+.capristoRange > div { padding: 0 26px 18px; }
+.capristoRange > div a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 0; border-top: 1px solid #e3e3de; font-size: 13px; }
+@media (max-width: 700px) { .capristoRangeCards { grid-template-columns: 1fr; } .capristoRange summary { padding: 22px; } .capristoRange > div { padding-inline: 22px; } }

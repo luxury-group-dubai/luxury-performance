@@ -144,6 +144,7 @@ export function Catalog({ products, filters: queryFilters, title, description, b
       </CatalogTabs>
     </div>}
     <div className="shop-catalogue" id="catalogue">
+      {filters.brand === 'capristo' && filters.approval && <p className="capristo-approval-note">{filters.approval === 'approved' ? 'Road approved (Germany)' : filters.approval === 'not-approved' ? 'Not road approved (Germany)' : 'Approval to confirm'} · Based on Capristo Germany’s listings reviewed on 12 November 2026. Confirm the exact configuration and local requirements before ordering. <Link href="/partners/capristo#vehicles">Change range</Link></p>}
       <CatalogFilterPanel filters={queryFilters} basePath={basePath} makes={vehicleCollection ? [] : makes} models={vehicleCollection ? [] : models} fits={vehicleCollection ? [] : fits} bodies={vehicleCollection ? [] : bodies} categories={categories} total={departmentScope.length} resultCount={matches.length}><div className="shop-fitment-help"><Link href="/contact">Need help with fitment? <ArrowUpRight size={14} aria-hidden="true" /></Link></div></CatalogFilterPanel>
       <section className="shop-results" aria-label="Products">
         <CatalogProductToolbar filters={queryFilters} basePath={basePath} resultLabel={`${matches.length} ${matches.length === 1 ? 'part' : 'parts'}${selected ? ` from ${selected.name}` : ''}`} />
