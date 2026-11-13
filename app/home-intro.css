@@ -5,7 +5,7 @@
 .intro-copy p{font-size:13px;line-height:1.85}
 @media(max-width:700px){.intro-copy p{font-size:12px}}
 .intro{padding-top:120px;padding-bottom:125px}
-.intro .large-plus{color:var(--accent)}
+.intro .large-plus{color:#f0f0ec}
 @media(max-width:900px){.intro{padding-top:80px;padding-bottom:80px}
 }
 @media(max-width:700px){.intro{padding-top:68px;padding-bottom:72px}

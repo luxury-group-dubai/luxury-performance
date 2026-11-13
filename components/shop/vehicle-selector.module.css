@@ -6,7 +6,7 @@
 .label { padding-top: 15px; font-size: 10px; line-height: 1.4; letter-spacing: .07em; color: #62625d; text-transform: uppercase; }
 .pills { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
 .pills button { min-height: 44px; padding: 10px 17px; border: 1px solid #d6d5cf; border-radius: 28px; background: transparent; color: inherit; font: inherit; font-size: 12px; line-height: 1.4; cursor: pointer; }
-.pills button[aria-pressed=true] { background: #20201e; border-color: #20201e; color: #fff; }
+.pills button[aria-pressed=true] { background: var(--accent); border-color: var(--accent); color: #fff; }
 .pills button:hover { border-color: #7e7b70; }
 .pills button:focus-visible, .change:focus-visible, .trimCard:focus-visible { outline: 2px solid #9b855c; outline-offset: 4px; }
 .familyHeading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 16px; }
