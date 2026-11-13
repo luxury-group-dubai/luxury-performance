@@ -1,5 +1,6 @@
 import './home-intro.css';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { defaultSocialImage } from '@/lib/social-images';
 import { HomeHero } from '@/components/home/home-hero';
 import { PartnerMarquee } from '@/components/home/partner-marquee';
@@ -42,6 +43,7 @@ export default function Home() {
               <ArrowLink href="/about" light>Our story</ArrowLink>
             </div>
           </div>
+          <Image className="intro-lettering" src="/brand/lxp-white.svg" width={1088} height={280} alt="" aria-hidden="true" />
         </div>
       </Reveal>
     </section>
