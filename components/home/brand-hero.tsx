@@ -122,13 +122,17 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined;
     let cancelImage: (() => void) | undefined;
+    let progress: Animation | undefined;
     let inView = false;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const eligible = () => !(paused || focusHeld || hovered || soundPlaying || reduced.matches || document.hidden || !inView || document.documentElement.dataset.lxpIntro);
     const schedule = () => {
       clearTimeout(timer);
       cancelImage?.();
+      progress?.cancel();
       if (!eligible()) return;
+      const indicator = root.current?.querySelector<HTMLElement>('button[aria-pressed="true"] [data-slide-progress]');
+      progress = indicator?.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 8000, easing: 'linear', fill: 'forwards' });
       timer = setTimeout(() => {
         const next = (active + 1) % brands.length;
         const image = root.current?.querySelector<HTMLImageElement>(`[data-hero-slide="${next}"] picture img`);
@@ -146,6 +150,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     return () => {
       clearTimeout(timer);
       cancelImage?.();
+      progress?.cancel();
       visibility.disconnect();
       intro.disconnect();
       document.removeEventListener('visibilitychange', schedule);
@@ -183,7 +188,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     </div>
     <div className={styles.controls}>
       <nav className={styles.brandNav} aria-label="Choose a featured brand">
-        {brands.map((brand, index) => <button key={brand.slug} type="button" aria-pressed={active === index} aria-label={`Show ${brand.name}`} onClick={() => select(index)}><span className={styles.number} aria-hidden="true">0{index + 1}</span><span>{brand.name}</span></button>)}
+        {brands.map((brand, index) => <button key={brand.slug} type="button" aria-pressed={active === index} aria-label={`Show ${brand.name}`} onClick={() => select(index)}><span className={styles.progress} data-slide-progress aria-hidden="true" /><span className={styles.number} aria-hidden="true">0{index + 1}</span><span>{brand.name}</span></button>)}
       </nav>
       <button className={styles.playback} type="button" aria-label={paused || focusHeld ? 'Start automatic slides' : 'Pause automatic slides'} onClick={() => { setPaused(!(paused || focusHeld)); setFocusHeld(false); }}>
         {paused || focusHeld ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
