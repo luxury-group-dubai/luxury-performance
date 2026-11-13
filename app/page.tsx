@@ -14,7 +14,7 @@ import { Reveal } from '@/components/reveal';
 import { Closing } from '@/components/closing';
 
 export const metadata: Metadata = {
-  title: { absolute: 'Performance Parts Dubai, UAE & GCC | Luxury Performance' },
+  title: { absolute: 'Luxury Performance Dubai | Performance Parts & Upgrades' },
   description: 'Shop NOVITEC, TECHART and Valvetronic Designs performance parts for the UAE & GCC. Exhausts, carbon fibre, forged wheels and fitment support from Dubai.',
   alternates: { canonical: '/' },
   openGraph: {
