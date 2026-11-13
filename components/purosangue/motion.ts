@@ -8,12 +8,12 @@ type Chapter = { name: string; at: number; kicker: string; title: string; descri
 
 export const filmChapters: readonly Chapter[] = [
   { name: 'Original', at: .04, kicker: 'Ferrari Purosangue', title: 'Exceptional.\nFrom the start.', description: 'An extraordinary foundation. A new expression waiting to take shape.', detail: 'The original silhouette' },
-  { name: 'Widebody', at: .29, kicker: '01 / ESTESO', title: 'A presence\nall its own.', description: 'Follow the painted rear arch extension: a wider shoulder, shaped around the original body.', detail: 'ESTESO Rear Arch Extension', focus: { pin: [963, 446], centre: [991, 490], bounds: [620, 490] } },
-  { name: 'Wheels', at: .40, kicker: '02 / NF10', title: 'The detail\nthat defines it.', description: 'The forged wheel takes centre stage. Fine spokes, a deep profile and a distinct stance.', detail: 'NOVITEC NF10 Forged Wheel', focus: { pin: [1040, 687], centre: [988, 635], bounds: [510, 430] } },
-  { name: 'Tailpipes', at: .54, kicker: '03 / Exhaust finish', title: 'A sharper\nfinal note.', description: 'Black tailpipe finishers sit within the carbon rear surround. Look closely at the outlet detail.', detail: 'Black Tailpipe Finishers', focus: { pin: [1354, 642], centre: [1334, 625], bounds: [450, 330] } },
-  { name: 'Roof spoiler', at: .68, kicker: '04 / Upper carbon', title: 'Above\nexpectation.', description: 'A swept carbon RACE blade follows the roofline above the rear glass.', detail: 'ESTESO Roof Spoiler RACE', focus: { pin: [1270, 218], centre: [1280, 253], bounds: [500, 310] } },
-  { name: 'Rear spoiler', at: .82, kicker: '05 / Rear carbon', title: 'Every line.\nConsidered.', description: 'A slim three-piece carbon lip follows the curved tailgate edge above the rear lights.', detail: 'Carbon Rear Lip Spoiler', focus: { pin: [1425, 348], centre: [1398, 384], bounds: [500, 320] } },
-  { name: 'Complete', at: .97, kicker: 'Purosangue by NOVITEC', title: 'Entirely\nyour expression.', description: 'The complete transformation. Compare the original car with the NOVITEC build, then make it yours.', detail: 'The complete expression' },
+  { name: 'Widebody', at: .29, kicker: 'ESTESO', title: 'A presence\nall its own.', description: 'Follow the painted rear arch extension: a wider shoulder, shaped around the original body.', detail: 'ESTESO Rear Arch Extension', focus: { pin: [963, 446], centre: [991, 490], bounds: [620, 490] } },
+  { name: 'Wheels', at: .40, kicker: 'NF10', title: 'The detail\nthat defines it.', description: 'The forged wheel takes centre stage. Fine spokes, a deep profile and a distinct stance.', detail: 'NOVITEC NF10 Forged Wheel', focus: { pin: [1040, 687], centre: [988, 635], bounds: [510, 430] } },
+  { name: 'Tailpipes', at: .54, kicker: 'Exhaust finish', title: 'A sharper\nfinal note.', description: 'Black tailpipe finishers sit within the carbon rear surround. Look closely at the outlet detail.', detail: 'Black Tailpipe Finishers', focus: { pin: [1354, 642], centre: [1334, 625], bounds: [450, 330] } },
+  { name: 'Roof spoiler', at: .68, kicker: 'Upper carbon', title: 'Above\nexpectation.', description: 'A swept carbon RACE blade follows the roofline above the rear glass.', detail: 'ESTESO Roof Spoiler RACE', focus: { pin: [1270, 218], centre: [1280, 253], bounds: [500, 310] } },
+  { name: 'Rear spoiler', at: .82, kicker: 'Rear carbon', title: 'Every line.\nConsidered.', description: 'A slim three-piece carbon lip follows the curved tailgate edge above the rear lights.', detail: 'Carbon Rear Lip Spoiler', focus: { pin: [1425, 348], centre: [1398, 384], bounds: [500, 320] } },
+  { name: 'Complete', at: .97, kicker: 'Purosangue by NOVITEC', title: 'Entirely\nyour expression.', description: 'Explore NOVITEC upgrades for the Ferrari Purosangue.', detail: 'The complete expression' },
 ];
 // Finish the full-car reveal, hold it, then move into the first detail.
 export const filmTiming = { reveal: [.105, .18], widebodyZoom: [.22, .29] } as const;
@@ -31,10 +31,18 @@ function cameraFor(index: number, g: FilmGeometry) {
   // Fit the actual part into the clear area beside (or below) the copy.
   const availableWidth = g.width * (g.small ? .94 : .55);
   const availableHeight = g.height * (g.small ? .46 : .79);
-  const scale = Math.min(availableWidth / (g.rigWidth * focus.bounds[0] / 1672), availableHeight / (g.rigHeight * focus.bounds[1] / 941));
+  const detailScale = Math.min(availableWidth / (g.rigWidth * focus.bounds[0] / 1672), availableHeight / (g.rigHeight * focus.bounds[1] / 941));
+  // Keep the car's visible vertical extent inside the mobile composition while zoomed.
+  const scale = g.small ? Math.min(detailScale, g.height * .78 / (g.rigHeight * 680 / 941)) : detailScale;
   const targetX = g.width * (g.small ? .52 : .69);
   const targetY = g.height * (g.small ? .68 : .54);
-  return { scale, x: targetX - g.rigX - (focus.centre[0] / 1672 - .5) * g.rigWidth * scale, y: targetY - g.rigY - (focus.centre[1] / 941 - .5) * g.rigHeight * scale };
+  const x = targetX - g.rigX - (focus.centre[0] / 1672 - .5) * g.rigWidth * scale;
+  let y = targetY - g.rigY - (focus.centre[1] / 941 - .5) * g.rigHeight * scale;
+  if (g.small) {
+    const carBottom = g.rigY + y + (835 / 941 - .5) * g.rigHeight * scale;
+    y -= Math.max(0, carBottom - g.height * .97);
+  }
+  return { scale, x, y };
 }
 
 /** Both image layers and the part's annotation share exactly the same camera transform. */

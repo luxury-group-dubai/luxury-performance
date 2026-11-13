@@ -10,11 +10,11 @@
   --home-light-muted: #c8c7be;
   --home-rule: #d3d6d8;
   --home-dark-rule: #41413b;
-  --home-accent: #b89d65;
-  --home-focus: #94702c;
+  --home-accent: #e2001a;
+  --home-focus: #e2001a;
   --home-clear: transparent;
   --home-font: var(--font-sans);
-  --home-container: 1440px;
+  --home-container: 1450px;
   --home-header-tablet: 102px;
   --home-gap: 32px;
   --home-space-xs: 8px;
@@ -35,7 +35,7 @@
 .intro-dark .intro-side p, .intro-dark .intro-copy p { color: #aaa9a1; }
 .intro-dark .text-muted { color: #a8a89f; }
 .intro-dark .arrow-disc { border-color: #ffffff40; }
-.intro-dark .large-plus { color: var(--home-accent); }
+.intro-dark .large-plus { color: var(--home-white); }
 @media (max-width: 700px) {
   .intro.intro-dark { padding-top: 44px; }
 }

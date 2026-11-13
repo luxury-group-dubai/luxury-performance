@@ -2,7 +2,7 @@
   --widget-bottom: 24px;
   position: fixed;
   right: max(24px, env(safe-area-inset-right));
-  bottom: calc(var(--widget-bottom) + var(--widget-lift, 0px) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--widget-bottom) + env(safe-area-inset-bottom, 0px));
   z-index: 50;
   display: grid;
   place-items: center;
@@ -13,9 +13,9 @@
   background: #18894e;
   color: #fff;
   box-shadow: 0 4px 22px #0003, inset 0 1px 0 #ffffff26;
-  transition: background 180ms, transform 180ms;
+  transition: background 180ms;
 }
-.widget:hover { background: #147540; transform: translateY(-2px); }
+.widget:hover { background: #147540; }
 .widget:focus-visible { outline: 2px solid #c9b594; outline-offset: 5px; }
 .label {
   position: absolute;
