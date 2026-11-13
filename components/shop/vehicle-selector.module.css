@@ -3,7 +3,7 @@
 .results, .models { min-width: 0; }
 .models > nav { padding: 0; margin: 0; border: 0; }
 .control { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 16px; align-items: start; margin-bottom: 16px; }
-.label { padding-top: 15px; font-size: 10px; line-height: 1.4; letter-spacing: .07em; color: #73736b; text-transform: uppercase; }
+.label { padding-top: 15px; font-size: 10px; line-height: 1.4; letter-spacing: .07em; color: #62625d; text-transform: uppercase; }
 .pills { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
 .pills button { min-height: 44px; padding: 10px 17px; border: 1px solid #d6d5cf; border-radius: 28px; background: transparent; color: inherit; font: inherit; font-size: 12px; line-height: 1.4; cursor: pointer; }
 .pills button[aria-pressed=true] { background: #20201e; border-color: #20201e; color: #fff; }
@@ -13,7 +13,7 @@
 .familyHeading h3 { font-size: 18px; line-height: 1.4; letter-spacing: -.03em; }
 .seriesBadge { display: inline-block; width: 60px; height: 16px; margin-right: 8px; vertical-align: -1px; }
 .cayenneSeriesBadge { width: 112px; }
-.familyHeading p { font-size: 12px; color: #73736b; }
+.familyHeading p { font-size: 12px; color: #62625d; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .card { display: flex; min-width: 0; flex-direction: column; background: #fff; border: 1px solid #deddd7; border-radius: 14px; overflow: hidden; }
 .image { position: relative; flex: none; min-width: 0; width: 100%; aspect-ratio: 2.5; }
@@ -37,7 +37,7 @@
 .mixedWordmark { column-gap: 8px; }
 .badgeSuffix { display: flex; align-items: center; gap: 1px; max-width: 100%; }
 .badgeSuffix .modelBadge { height: 17px; min-width: 0; }
-.note { margin-top: 20px; max-width: 780px; font-size: 11px; line-height: 1.7; color: #77766e; }
+.note { margin-top: 20px; max-width: 780px; font-size: 11px; line-height: 1.7; color: #62625d; }
 .note a { text-decoration: underline; text-underline-offset: 3px; }
 :global(.shop-intro).catalogIntro { grid-template-columns: minmax(0, 1fr) minmax(340px, 1.15fr); align-items: center; gap: clamp(24px, 4vw, 64px); padding: 32px 0 28px; }
 .catalogIntro .catalogVehicle { width: 100%; max-width: none; justify-self: stretch; padding: 0; }
@@ -74,7 +74,7 @@
 .cayenneLinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .review { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
 .review summary { cursor: pointer; font-size: 12px; line-height: 1.6; }
-.review p, .review ul { margin-top: 16px; font-size: 12px; line-height: 1.8; color: #73736b; }
+.review p, .review ul { margin-top: 16px; font-size: 12px; line-height: 1.8; color: #62625d; }
 .review ul { padding-left: 18px; }
 .review a { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 1000px) { .grid { gap: 12px; } .pills button { padding-inline: 14px; } .image img { padding: 16px 12px 8px; } }
