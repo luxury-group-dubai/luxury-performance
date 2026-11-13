@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, type ReactNode } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import type { CayenneBody } from '@/lib/shop/techart-cayenne-body-fitment';
@@ -98,7 +99,7 @@ export function VehiclePicker({ model, options, shopPath, initialFit, initialBod
           const count = `${choice.count} ${choice.count === 1 ? 'part' : 'parts'}`;
           const bodyLabel = body.key === 'targa' || body.name === choice.name ? '' : ` ${body.name}`;
           return <Link className={`${styles.card} ${styles.trimCard}`} key={choice.fit} href={`${modelShop}&fit=${choice.fit}&body=${body.key}`} aria-label={`Shop ${count} for ${title} ${generation.name}${bodyLabel}`}>
-            <div className={styles.image}><img {...choice.image} alt="" loading="lazy" /></div>
+            <div className={styles.image}><Image {...choice.image} alt="" loading="lazy" quality={75} sizes="(max-width: 700px) 45vw, (max-width: 1000px) 30vw, 25vw" /></div>
             <div className={styles.trimCaption}><div><PorscheTrimName name={choice.name} model={model} /><small>{count}</small></div><ArrowUpRight size={18} aria-hidden="true" /></div>
           </Link>;
         })}
