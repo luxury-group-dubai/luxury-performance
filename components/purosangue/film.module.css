@@ -95,7 +95,7 @@
  .callout{font-size:9px;letter-spacing:0}.pin{width:5px;height:5px}
  .sceneCaption{bottom:7%;font-size:8px}.floor{inset:54% -50% -15%}
  .controlTop{min-height:35px;gap:15px;padding-bottom:16px}.play{font-size:8px;padding:0 11px;min-height:32px}.replay{height:32px;width:32px}.transport{gap:7px}.scrollHint{display:none}.enquire{font-size:9px;gap:13px}
- .chapters{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#aaa transparent}
+ .chapters{display:none;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#aaa transparent}
  .chapters>button{flex:0 0 82px;min-height:48px;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:8px 0;font-size:10px;line-height:1.4;scroll-snap-align:start}.chapterNumber{font-size:8px}.chapters>button[aria-current]{color:#fff}
  .footline{padding-top:10px;display:block;font-size:8px}.footline a{display:none}
  .compareControl{width:220px;max-width:66%;gap:8px;font-size:7px}.compareLine>span{width:26px;height:26px}
@@ -103,6 +103,7 @@
 }
 @media(max-width:700px){.film[data-compact=true] .stage{padding-top:12px;padding-bottom:10px}.film[data-compact=true] .copy h2{font-size:29px}.film[data-compact=true] .copy{top:4%}.film[data-compact=true] .kicker{margin-bottom:8px}.film[data-compact=true] .description{font-size:8px;max-width:220px;margin-top:10px}.film[data-compact=true] .sceneIndex{top:5%}.film[data-compact=true] .carRig{--rig-width:94%;--rig-top:68}.film[data-compact=true] .word{font-size:13vw;top:55%}.film[data-compact=true] .callout{font-size:8px}.film[data-compact=true] .sceneCaption{bottom:2%}.film[data-compact=true] .controlTop{padding-bottom:10px}.film[data-compact=true] .chapters>button{padding-top:10px;padding-bottom:9px;gap:5px}.film[data-compact=true] .footline{font-size:5.5px;padding-top:8px}}
 @media(prefers-reduced-motion:reduce){.film[data-motion]{height:auto}.film .stage{position:relative;top:auto;min-height:680px;height:calc(100svh - var(--film-header))}.copy{animation:none}.camera,.upgraded,.callout{transition:none;will-change:auto}.lightMask{display:none}.word{opacity:.20}}
+@media(max-width:700px) and (prefers-reduced-motion:reduce){.chapters{display:flex}}
 
 /* Let detail close-ups rise behind the glass header instead of hitting the composition edge. */
 .film{overflow-x:clip;overflow-y:visible}
