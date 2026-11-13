@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, MoveHorizontal, Pause, Play, RotateCcw, X } from 'lucide-react';
+import { ArrowUpRight, MoveHorizontal, Pause, Play, RotateCcw, X } from 'lucide-react';
 import { clamp, completeAt, filmChapters, filmFrame, filmTiming, type FilmGeometry } from './motion';
 import styles from './film.module.css';
 
@@ -307,9 +307,7 @@ export function PurosangueFilm() {
   return <section ref={root} className={styles.film} id="purosangue" aria-labelledby={titleId}>
     <div ref={stage} className={`${styles.stage} ${comparing ? styles.comparing : ''}`} data-chapter="0">
       <div className={styles.topline}>
-        <a className={styles.edition} href="#purosangue"><span />The transformation series <i>/ 001</i></a>
         <span className={styles.signature}>FERRARI <span>×</span> NOVITEC</span>
-        <button className={styles.compareButton} disabled={!imageReady} aria-pressed={comparing} onClick={() => control.current?.compare(!comparing)}>{comparing ? <X size={14} /> : <MoveHorizontal size={15} />}<span>{comparing ? 'Close comparison' : 'Before / after'}</span></button>
       </div>
 
       <div ref={composition} className={styles.composition}>
@@ -344,15 +342,13 @@ export function PurosangueFilm() {
           <span className={styles.callout}>{current.detail}</span>
         </div>
         <div className={styles.sceneIndex} aria-hidden="true"><span>0{chapter + 1}</span><i>/ 0{filmChapters.length}</i></div>
-        <span className={styles.sceneCaption}>{chapter === 0 ? 'ORIGINAL CONFIGURATION' : 'NOVITEC / DESIGN VISUALISATION'}</span>
       </div>
 
       <div className={styles.controls} data-film-controls>
         <div className={styles.controlTop}>
-          {comparing ? <label className={styles.compareControl}><span>Original</span><input type="range" min="0" max="100" value={split} aria-label="Reveal NOVITEC build" aria-valuetext={`${split}% NOVITEC, ${100 - split}% original`} onChange={event => setSplit(Number(event.target.value))} /><span>NOVITEC</span></label> : <div className={styles.transport}>
+          {comparing ? <div className={styles.transport}><label className={styles.compareControl}><span>Original</span><input type="range" min="0" max="100" value={split} aria-label="Reveal NOVITEC build" aria-valuetext={`${split}% NOVITEC, ${100 - split}% original`} onChange={event => setSplit(Number(event.target.value))} /><span>NOVITEC</span></label><button className={styles.replay} aria-label="Close comparison" onClick={() => control.current?.compare(false)}><X size={14} /></button></div> : <div className={styles.transport}>
             {complete && !playing ? <button className={styles.play} disabled={!imageReady} onClick={() => control.current?.compare(true)}><MoveHorizontal size={15} /><span>Compare before / after</span></button> : !reduced && <button className={styles.play} disabled={!imageReady} onClick={() => control.current?.play()} aria-label={playing ? 'Pause transformation film' : 'Play transformation film'}>{playing ? <Pause size={13} fill="currentColor" /> : <Play size={13} fill="currentColor" />}<span>{playing ? 'Pause film' : imageReady ? 'Play film' : 'Preparing images'}</span></button>}
             <button className={styles.replay} aria-label="Return to original car" onClick={() => seek(0)}><RotateCcw size={14} /></button>
-            <span className={styles.scrollHint}>{complete ? 'Explore both builds' : reduced ? 'Choose a chapter to explore' : 'Scroll to transform'}{!reduced && !complete && <ArrowDown size={12} />}</span>
           </div>}
           <Link className={styles.enquire} href="/contact?interest=A%20complete%20programme&programme=NOVITEC%20Purosangue&vehicle=Ferrari%20Purosangue">Make it yours <ArrowUpRight size={17} /></Link>
         </div>

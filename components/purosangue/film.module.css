@@ -2,7 +2,7 @@
 .film[data-motion=full]{height:550svh}
 .stage{--camera-scale:1;--camera-x:0%;--camera-y:0%;--upgrade-cut:100%;--reveal-position:0%;--scan-opacity:0;--car-light:1;--word-opacity:.20;position:relative;min-height:650px;height:calc(100svh - var(--film-header));max-height:1000px;overflow:clip;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:27px var(--gutter,5vw) 19px;background:radial-gradient(ellipse at 70% 51%,#2a2b2d 0%,#161718 35%,#0b0c0d 72%);border-top:1px solid #ffffff17;border-bottom:1px solid #ffffff12}
 .film[data-motion=full] .stage{position:sticky;top:var(--film-header);min-height:0;max-height:none}
-.topline{display:flex;justify-content:space-between;align-items:center;gap:20px;position:relative;z-index:5;font-size:8px;letter-spacing:.12em;text-transform:uppercase;min-height:30px}
+.topline{display:flex;justify-content:center;align-items:center;gap:20px;position:relative;z-index:5;font-size:8px;letter-spacing:.12em;text-transform:uppercase;min-height:30px}
 .edition{display:flex;align-items:center;gap:9px;color:#bfc0b9;white-space:nowrap}
 .edition>span{width:5px;height:5px;border-radius:50%;background:#c9b594;box-shadow:0 0 10px #c9b59466}
 .edition i{font-style:normal;color:#6f726e;margin-left:10px}
@@ -51,7 +51,7 @@
 .sceneCaption{position:absolute;left:0;bottom:6%;font-size:7px;letter-spacing:.14em;color:#6f746d}
 .controls{position:relative;z-index:6;padding-right:max(0px,calc(92px - var(--gutter)))}
 .controlTop{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:46px;padding-bottom:17px}
-.transport{display:flex;align-items:center;gap:10px}
+.transport{display:flex;align-items:center;gap:10px;min-width:0}
 .play{display:flex;align-items:center;gap:9px;background:#eeeeea;color:#131411;min-height:34px;padding:0 15px;font-size:9px;border-radius:2px}
 .play:hover{background:#fff}
 .replay{width:34px;height:34px;display:grid;place-items:center;color:#c3c8bd;background:transparent;border:1px solid #ffffff25;border-radius:2px}
@@ -75,7 +75,7 @@
 .camera:has(.dragCompare:focus-visible) .compareLine>span{outline:2px solid #c9b594;outline-offset:5px}
 .compareLine{position:absolute;top:17%;bottom:14%;width:1px;background:#efefeb;box-shadow:0 0 14px #fff3}
 .compareLine>span{position:absolute;left:50%;top:55%;transform:translate(-50%,-50%);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#f3f3ef;color:#171915;box-shadow:0 3px 24px #0008}
-.compareControl{display:flex;align-items:center;gap:14px;font-size:8px;color:#b6bdb0;width:330px;max-width:60%}
+.compareControl{display:flex;align-items:center;gap:14px;font-size:8px;color:#b6bdb0;width:min(330px,100%);min-width:0}
 .compareControl input{min-width:40px;flex:1;height:24px;accent-color:#e5e7dd;cursor:ew-resize}
 .stage[data-instant=true] .copy{animation:none}
 .film:not([data-motion]) .controls{visibility:hidden}
