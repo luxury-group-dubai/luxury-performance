@@ -86,8 +86,8 @@
 @media(max-width:700px){
  .controls{padding-right:max(0px,calc(80px - var(--gutter)))}
  .film{--film-header:100px}.film[data-motion=full]{height:calc(var(--film-viewport-height,100svh) * 4.9)}
- .stage{height:calc(var(--film-viewport-height,100svh) - var(--film-header));padding:16px 20px 15px;min-height:650px}
- .topline{font-size:8px;gap:8px;min-height:25px}.edition{gap:7px}.edition i{display:none}.compareButton{font-size:8px;gap:6px;padding-left:0}
+ .stage{height:calc(var(--film-viewport-height,100svh) - var(--film-header));padding:16px 20px 15px;min-height:650px;grid-template-rows:minmax(0,1fr) auto}
+ .topline{display:none}.edition{gap:7px}.edition i{display:none}.compareButton{font-size:8px;gap:6px;padding-left:0}
  .stage[data-detail=true] .composition:after{background:linear-gradient(180deg,#0b0c0def, #0b0c0db0 23%, transparent 53%),linear-gradient(90deg,#0b0c0d55,transparent);inset:0 calc(-1 * var(--gutter))}
  .copy{top:5%;max-width:280px}.kicker{font-size:7px;margin-bottom:13px}.copy h2{font-size:38px}.description{font-size:12px;max-width:245px;line-height:1.7;margin-top:13px}
  .carRig{--rig-width:113%;--rig-top:68;left:50%}.word{left:50%;top:53%;font-size:13vw;letter-spacing:-.065em}
@@ -95,7 +95,8 @@
  .callout{font-size:9px;letter-spacing:0}.pin{width:5px;height:5px}
  .sceneCaption{bottom:7%;font-size:8px}.floor{inset:54% -50% -15%}
  .controlTop{min-height:35px;gap:15px;padding-bottom:16px}.play{font-size:8px;padding:0 11px;min-height:32px}.replay{height:32px;width:32px}.transport{gap:7px}.scrollHint{display:none}.enquire{font-size:9px;gap:13px}
- .chapters>button{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:7px;padding:14px 3px 14px 0;font-size:8px;line-height:1.5}.chapterNumber{font-size:7px}.chapters>button[aria-current]{color:#fff}
+ .chapters{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#aaa transparent}
+ .chapters>button{flex:0 0 82px;min-height:48px;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:8px 0;font-size:10px;line-height:1.4;scroll-snap-align:start}.chapterNumber{font-size:8px}.chapters>button[aria-current]{color:#fff}
  .footline{padding-top:10px;display:block;font-size:8px}.footline a{display:none}
  .compareControl{width:220px;max-width:66%;gap:8px;font-size:7px}.compareLine>span{width:26px;height:26px}
 
