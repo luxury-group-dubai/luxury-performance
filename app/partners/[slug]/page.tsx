@@ -74,7 +74,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
 
   return <div className={styles.page} data-partner={p.slug}>
     <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
-      {heroAsset ? <picture className={styles.heroPicture}>
+      {heroAsset && p.slug === 'capristo' ? <img className={styles.heroImage} src="/images/partners/capristo-hero/f40-1440.webp" srcSet="/images/partners/capristo-hero/f40-640.webp 640w, /images/partners/capristo-hero/f40-960.webp 960w, /images/partners/capristo-hero/f40-1440.webp 1440w, /images/partners/capristo-hero/f40-1672.webp 1672w" sizes="100vw" alt={heroAsset.alt} width={1672} height={941} loading="eager" fetchPriority="high" /> : heroAsset ? <picture className={styles.heroPicture}>
         {p.slug === 'valvetronic' && <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/hero.avif"/>}
         {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
         <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={p.slug === 'valvetronic' || p.slug === 'techart' ? 75 : 95} sizes="100vw" loading="eager" fetchPriority="high"/>
