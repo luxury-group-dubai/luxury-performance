@@ -4,7 +4,7 @@ import { defaultSocialImage } from '@/lib/social-images';
 import { HomeHero } from '@/components/home/home-hero';
 import { PartnerMarquee } from '@/components/home/partner-marquee';
 import './home-tokens.css';
-import { Eyebrow, ArrowLink } from '@/components/ui';
+import { ArrowLink } from '@/components/ui';
 import { PurosangueFilm } from '@/components/purosangue/film';
 import { NovitecModels } from '@/components/home/novitec-models';
 import { NovitecFeatureFilm } from '@/components/home/novitec-feature-film';
@@ -30,11 +30,10 @@ export default function Home() {
     <PartnerMarquee />
     <section className="intro intro-dark section-pad" aria-labelledby="home-welcome-title">
       <Reveal>
-        <Eyebrow dark number="01">Welcome to Luxury Performance</Eyebrow>
+        <div className="eyebrow on-dark">Luxury Performance / Dubai</div>
         <div className="intro-grid">
-          <div className="intro-side"><span className="large-plus" aria-hidden="true">+</span><p>Based in Dubai.<br />Serving the UAE &amp; GCC.</p></div>
           <div>
-            <h2 id="home-welcome-title">Performance.<br /><span className="text-muted">Without compromise.</span></h2>
+            <h2 id="home-welcome-title">Built around<br /><span className="text-muted">your car.</span></h2>
             <div className="intro-copy">
               <div className="intro-body">
                 <p>Discover genuine performance parts and upgrades for supercars and luxury vehicles, with products from NOVITEC, TECHART, Valvetronic Designs and other specialist brands.</p>

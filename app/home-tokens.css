@@ -52,3 +52,9 @@
   .intro-dark .intro-copy { margin-top: 28px; }
   .intro-dark .intro-body p { font-size: 14px; }
 }
+
+/* Keep the introduction focused on its heading and description. */
+.intro-dark .intro-grid { display: block; }
+.intro-dark .intro-grid > div { max-width: 760px; }
+.intro-dark .intro-copy { display: block; }
+.intro-dark .intro-copy .arrow-link { display: inline-flex; margin: 30px 0 0; }
