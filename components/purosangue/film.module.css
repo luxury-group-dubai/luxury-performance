@@ -49,7 +49,7 @@
 .sceneIndex>span{font-size:36px;line-height:1;font-weight:300;letter-spacing:-.07em;font-variant-numeric:tabular-nums}
 .sceneIndex i{font-size:9px;font-style:normal;color:#636960}
 .sceneCaption{position:absolute;left:0;bottom:6%;font-size:7px;letter-spacing:.14em;color:#6f746d}
-.controls{position:relative;z-index:6}
+.controls{position:relative;z-index:6;padding-right:max(0px,calc(92px - var(--gutter)))}
 .controlTop{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:46px;padding-bottom:17px}
 .transport{display:flex;align-items:center;gap:10px}
 .play{display:flex;align-items:center;gap:9px;background:#eeeeea;color:#131411;min-height:34px;padding:0 15px;font-size:9px;border-radius:2px}
@@ -84,6 +84,7 @@
 @media(max-height:750px) and (min-width:701px){.stage{padding-top:17px;padding-bottom:12px}.copy{top:4%}.copy h2{font-size:34px}.kicker{margin-bottom:10px}.description{font-size:9px;max-width:220px;margin-top:12px}.carRig{--rig-width:79%;--rig-top:59;left:61%}.word{left:64%;top:10%;font-size:6.2vw}.sceneIndex{top:5%}.footline{padding-top:8px}.chapters>button{padding-top:12px;padding-bottom:11px}.controlTop{padding-bottom:12px}}
 @media(max-width:900px){.film{--film-header:102px}.stage{padding-left:25px;padding-right:25px}.signature{display:none}.copy h2{font-size:38px}.description{max-width:220px;font-size:9px}.carRig{--rig-width:113%;--rig-top:65;left:56%}.word{left:50%;top:45%;font-size:12vw}.chapterDot{display:none}.scrollHint{margin-left:5px}.footline{font-size:6px}.footline a{font-size:7px}}
 @media(max-width:700px){
+ .controls{padding-right:max(0px,calc(80px - var(--gutter)))}
  .film{--film-header:100px}.film[data-motion=full]{height:calc(var(--film-viewport-height,100svh) * 4.9)}
  .stage{height:calc(var(--film-viewport-height,100svh) - var(--film-header));padding:16px 20px 15px;min-height:650px}
  .topline{font-size:8px;gap:8px;min-height:25px}.edition{gap:7px}.edition i{display:none}.compareButton{font-size:8px;gap:6px;padding-left:0}
