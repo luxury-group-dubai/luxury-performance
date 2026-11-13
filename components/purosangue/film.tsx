@@ -342,6 +342,7 @@ export function PurosangueFilm() {
         <div className={styles.controlTop}>
           <Link className={styles.enquire} href="/collections/ferrari-purosangue?brand=novitec">Explore NOVITEC Purosangue <ArrowUpRight size={17} /></Link>
         </div>
+        <div className={styles.filmProgress} aria-hidden="true"><span /></div>
         <nav className={styles.chapters} aria-label="Transformation chapters">
           {filmChapters.map((item, index) => <button type="button" key={item.name} aria-current={chapter === index ? 'step' : undefined} onClick={() => seek(index)}><span className={styles.chapterNumber}>0{index + 1}</span><span>{item.name}</span><span className={styles.chapterDot} /></button>)}
         </nav>
