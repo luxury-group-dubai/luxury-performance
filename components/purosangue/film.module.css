@@ -49,7 +49,7 @@
 .sceneIndex>span{font-size:36px;line-height:1;font-weight:300;letter-spacing:-.07em;font-variant-numeric:tabular-nums}
 .sceneIndex i{font-size:9px;font-style:normal;color:#636960}
 .sceneCaption{position:absolute;left:0;bottom:6%;font-size:7px;letter-spacing:.14em;color:#6f746d}
-.controls{position:relative;z-index:6;padding-right:max(0px,calc(92px - var(--gutter)))}
+.controls{position:relative;z-index:6;min-width:0;padding-right:max(0px,calc(92px - var(--gutter)))}
 .controlTop{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:46px;padding-bottom:17px}
 .transport{display:flex;align-items:center;gap:10px;min-width:0}
 .play{display:flex;align-items:center;gap:9px;background:#eeeeea;color:#131411;min-height:34px;padding:0 15px;font-size:9px;border-radius:2px}
