@@ -50,7 +50,7 @@ export function TechartRangePicker({ options }: { options: TechartRangeOption[] 
             tabIndex={-1} aria-label={`Preview ${option.title}`} aria-pressed={rank === 0}
             onClick={() => setSelected(option.id)}
           >
-            <span className={styles.photo}><Image data-range-photo src={`/images/techart-range/${option.image}.webp`} alt={option.alt} fill quality={90} sizes="(max-width: 700px) 58vw, (max-width: 1100px) 50vw, 620px" /></span>
+            <span className={styles.photo}><Image data-range-photo src={`/images/techart-range/${option.image}.webp`} alt={option.alt} fill quality={75} sizes="(max-width: 700px) 58vw, (max-width: 1100px) 50vw, 620px" /></span>
             <span className={styles.swatchLabel}>
               <Image className={styles.wordmark} src="/brand/techart.svg" alt="TECHART" width={487} height={35} />
               <span className={styles.swatchTitle}>{option.title}</span>
