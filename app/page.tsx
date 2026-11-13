@@ -37,8 +37,8 @@ export default function Home() {
             <h2 id="home-welcome-title">Performance.<br /><span className="text-muted">Without compromise.</span></h2>
             <div className="intro-copy">
               <div className="intro-body">
-                <p>Discover genuine performance parts for supercars and luxury vehicles, from NOVITEC, TECHART, Valvetronic Designs and other specialist brands.</p>
-                <p>Based in Dubai, we help drivers across the UAE and GCC select exhaust systems, carbon fibre aerodynamics, forged wheels and suspension upgrades, with guidance on fitment and installation.</p>
+                <p>Discover genuine performance parts and upgrades for supercars and luxury vehicles, with products from NOVITEC, TECHART, Valvetronic Designs and other specialist brands.</p>
+                <p>From carbon-fibre body kits and aerodynamics to exhaust systems, forged wheels and suspension, Luxury Performance helps you find the right parts for your car, with guidance on fitment and installation.</p>
               </div>
               <ArrowLink href="/about" light>Our story</ArrowLink>
             </div>
