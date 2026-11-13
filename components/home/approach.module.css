@@ -8,13 +8,10 @@
 }
 .image { position: relative; min-width: 0; overflow: hidden; }
 .image img { object-fit: cover; object-position: center; }
-.copy { display: flex; align-items: center; padding: 56px clamp(32px, 5vw, 88px); }
+.copy { display: flex; align-items: center; padding: 56px clamp(32px, 5vw, 88px); padding-right: var(--gutter); }
 .copy :global(.eyebrow) { margin-bottom: 30px; font-size: 8px; }
 .copy h2 { font-size: clamp(28px, 2.7vw, 44px); line-height: 1.35; letter-spacing: -.02em; }
 .copy p { max-width: 38ch; margin: 24px 0 28px; color: #b5b5ad; font-size: 13px; line-height: 1.85; }
-@media (min-width: 1800px) {
-  .copy { padding-right: max(88px, calc((100vw - 1620px) / 2)); }
-}
 @media (max-width: 1100px) {
   .section { grid-template-columns: 1fr; min-height: 0; }
   .image { aspect-ratio: 4 / 3; }
