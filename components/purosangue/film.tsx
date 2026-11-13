@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
-import { ArrowUpRight, MoveHorizontal, Pause, Play, RotateCcw, X } from 'lucide-react';
+import { ArrowUpRight, MoveHorizontal, Pause, Play } from 'lucide-react';
 import { clamp, completeAt, filmChapters, filmFrame, filmTiming, type FilmGeometry } from './motion';
 import styles from './film.module.css';
 
@@ -346,16 +346,12 @@ export function PurosangueFilm() {
 
       <div className={styles.controls} data-film-controls>
         <div className={styles.controlTop}>
-          {comparing ? <div className={styles.transport}><label className={styles.compareControl}><span>Original</span><input type="range" min="0" max="100" value={split} aria-label="Reveal NOVITEC build" aria-valuetext={`${split}% NOVITEC, ${100 - split}% original`} onChange={event => setSplit(Number(event.target.value))} /><span>NOVITEC</span></label><button className={styles.replay} aria-label="Close comparison" onClick={() => control.current?.compare(false)}><X size={14} /></button></div> : <div className={styles.transport}>
-            {complete && !playing ? <button className={styles.play} disabled={!imageReady} onClick={() => control.current?.compare(true)}><MoveHorizontal size={15} /><span>Compare builds</span></button> : !reduced && <button className={styles.play} disabled={!imageReady} onClick={() => control.current?.play()} aria-label={playing ? 'Pause transformation film' : 'Play transformation film'}>{playing ? <Pause size={13} fill="currentColor" /> : <Play size={13} fill="currentColor" />}<span>{playing ? 'Pause film' : imageReady ? 'Play film' : 'Preparing images'}</span></button>}
-            <button className={styles.replay} aria-label="Return to original car" onClick={() => seek(0)}><RotateCcw size={14} /></button>
-          </div>}
-          <Link className={styles.enquire} href="/contact?interest=A%20complete%20programme&programme=NOVITEC%20Purosangue&vehicle=Ferrari%20Purosangue">Make it yours <ArrowUpRight size={17} /></Link>
+          {!complete && !reduced && <button className={styles.play} disabled={!imageReady} onClick={() => control.current?.play()} aria-label={playing ? 'Pause transformation film' : 'Play transformation film'}>{playing ? <Pause size={13} fill="currentColor" /> : <Play size={13} fill="currentColor" />}<span>{playing ? 'Pause film' : imageReady ? 'Play film' : 'Preparing images'}</span></button>}
+          <Link className={styles.enquire} href="/collections/ferrari-purosangue?brand=novitec">Explore NOVITEC Purosangue <ArrowUpRight size={17} /></Link>
         </div>
         <nav className={styles.chapters} aria-label="Transformation chapters">
           {filmChapters.map((item, index) => <button type="button" key={item.name} aria-current={chapter === index ? 'step' : undefined} onClick={() => seek(index)}><span className={styles.chapterNumber}>0{index + 1}</span><span>{item.name}</span><span className={styles.chapterDot} /></button>)}
         </nav>
-        <div className={styles.footline}><span>Illustrative visualisation. Final specification confirmed with our team.</span><Link href="/partners/novitec">Explore NOVITEC <ArrowUpRight size={12} /></Link></div>
       </div>
     </div>
   </section>;

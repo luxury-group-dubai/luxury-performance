@@ -57,7 +57,7 @@
 .replay{width:34px;height:34px;display:grid;place-items:center;color:#c3c8bd;background:transparent;border:1px solid #ffffff25;border-radius:2px}
 .replay:hover{border-color:#aaa}
 .scrollHint{font-size:8px;color:#777f73;display:flex;align-items:center;gap:10px;margin-left:15px}
-.enquire{display:flex;gap:24px;align-items:center;font-size:10px;color:#e4e5df;border-bottom:1px solid #ffffff36;padding:8px 0}
+.enquire{display:flex;gap:24px;align-items:center;margin-left:auto;font-size:10px;color:#e4e5df;border-bottom:1px solid #ffffff36;padding:8px 0}
 .enquire:hover{border-color:#eee}
 .chapters{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid #ffffff20}
 .chapters:before{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:#b6aaa0;transform:scaleX(var(--film-progress,0));transform-origin:left;pointer-events:none}

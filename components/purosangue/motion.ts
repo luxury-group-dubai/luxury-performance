@@ -13,7 +13,7 @@ export const filmChapters: readonly Chapter[] = [
   { name: 'Tailpipes', at: .54, kicker: '03 / Exhaust finish', title: 'A sharper\nfinal note.', description: 'Black tailpipe finishers sit within the carbon rear surround. Look closely at the outlet detail.', detail: 'Black Tailpipe Finishers', focus: { pin: [1354, 642], centre: [1334, 625], bounds: [450, 330] } },
   { name: 'Roof spoiler', at: .68, kicker: '04 / Upper carbon', title: 'Above\nexpectation.', description: 'A swept carbon RACE blade follows the roofline above the rear glass.', detail: 'ESTESO Roof Spoiler RACE', focus: { pin: [1270, 218], centre: [1280, 253], bounds: [500, 310] } },
   { name: 'Rear spoiler', at: .82, kicker: '05 / Rear carbon', title: 'Every line.\nConsidered.', description: 'A slim three-piece carbon lip follows the curved tailgate edge above the rear lights.', detail: 'Carbon Rear Lip Spoiler', focus: { pin: [1425, 348], centre: [1398, 384], bounds: [500, 320] } },
-  { name: 'Complete', at: .97, kicker: 'Purosangue by NOVITEC', title: 'Entirely\nyour expression.', description: 'The complete transformation. Compare the original car with the NOVITEC build, then make it yours.', detail: 'The complete expression' },
+  { name: 'Complete', at: .97, kicker: 'Purosangue by NOVITEC', title: 'Entirely\nyour expression.', description: 'Explore NOVITEC upgrades for the Ferrari Purosangue.', detail: 'The complete expression' },
 ];
 // Finish the full-car reveal, hold it, then move into the first detail.
 export const filmTiming = { reveal: [.105, .18], widebodyZoom: [.22, .29] } as const;
