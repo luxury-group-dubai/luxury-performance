@@ -36,7 +36,7 @@ html[data-lxp-intro] .hero .hero-visual,.hero-arrived .hero-visual{animation:cin
 .hero-visual img{transform:translate3d(var(--pointer-x,0px),calc(var(--pointer-y,0px) + var(--hero-drift,0px)),0) scale(1.035);transition:transform 1.2s var(--ease-out);will-change:transform}
 .hero-visual:after{content:'';position:absolute;inset:0;border:1px solid #ffffff12;pointer-events:none}
 .hero-scroll{transition:background .25s,border-color .25s,transform .4s var(--ease-out)}
-.hero-scroll:hover{transform:translateY(4px);border-color:var(--accent);background:#b91c2b18}
+.hero-scroll:hover{transform:translateY(4px);border-color:var(--accent);background:#e2001a18}
 .hero-foot{border-bottom:1px solid #ffffff12;color:#a3a39a}
 .intro{padding-top:120px;padding-bottom:125px}
 .intro .large-plus{color:#f0f0ec}

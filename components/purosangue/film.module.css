@@ -1,4 +1,4 @@
-.film{--film-header:112px;--film-accent:#b91c2b;position:relative;background:#0b0c0d;color:#f0f0ec;scroll-margin-top:var(--film-header);isolation:isolate;overflow-anchor:none}
+.film{--film-header:112px;--film-accent:#e2001a;position:relative;background:#0b0c0d;color:#f0f0ec;scroll-margin-top:var(--film-header);isolation:isolate;overflow-anchor:none}
 .film[data-motion=full]{height:550svh}
 .stage{--camera-scale:1;--camera-x:0%;--camera-y:0%;--upgrade-cut:100%;--reveal-position:0%;--scan-opacity:0;--car-light:1;--word-opacity:.20;position:relative;min-height:650px;height:calc(100svh - var(--film-header));max-height:1000px;overflow:clip;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:27px var(--gutter,5vw) 19px;background:radial-gradient(ellipse at 70% 51%,#2a2b2d 0%,#161718 35%,#0b0c0d 72%);border-top:1px solid #ffffff17;border-bottom:1px solid #ffffff12}
 .film[data-motion=full] .stage{position:sticky;top:var(--film-header);min-height:0;max-height:none}
