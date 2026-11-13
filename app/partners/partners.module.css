@@ -160,3 +160,5 @@
 @media (max-width: 700px) {
   .fullBleedHero[data-brand="capristo"] .heroShade { background: linear-gradient(90deg, #000b, #0008), linear-gradient(0deg, #000b, transparent 65%); }
 }
+
+.page[data-partner="capristo"] .categoryCard > p { color: #62625d; }
