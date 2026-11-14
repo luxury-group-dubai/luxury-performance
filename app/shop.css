@@ -28,6 +28,31 @@
   gap: 12px;
   margin-bottom: 16px;
 }
+.shop-category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 0 20px;
+}
+.shop-category-pills a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid #aaa9a2;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.shop-category-pills a:hover {
+  border-color: var(--ink);
+}
+.shop-category-pills a[aria-current="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
 .shop-product-search {
   display: flex;
   align-items: center;
