@@ -101,10 +101,10 @@ export function Catalog({ products, filters: queryFilters, title, description, b
         {showCollectiblesWordmark ? (
           <h1 className="shop-collectibles-title">
             <Image
-              src="/brand/lxp-collectibles-sticker-bottle-cap.png"
-              alt="LXP Collectibles"
-              width={1072}
-              height={521}
+              src="/brand/collectibles-wordmark-script-white.png"
+              alt="Collectibles"
+              width={1000}
+              height={180}
               loading="eager"
               sizes="(max-width: 380px) 50vw, (max-width: 700px) 190px, (max-width: 850px) 170px, (max-width: 1350px) 20vw, 270px"
             />
