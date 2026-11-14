@@ -29,7 +29,7 @@ export type ExhaustScene = {
   zoom(direction: number): void;
   dispose(): void;
 };
-type Options = { quality?: 'balanced'; cinematic?: boolean; floor?: boolean; directProgress?: boolean; fitWithZoom?: boolean; initialIsolated?: boolean; initialRouteColors?: boolean; reducedMotion: boolean; canvasLabel?: string; topOverflow?(): number; scrollPose?(progress: number): ExhaustScrollPose; onInteract(): void; onError(): void };
+type Options = { quality?: 'balanced'; cinematic?: boolean; floor?: boolean; directProgress?: boolean; fitWithZoom?: boolean; initialIsolated?: boolean; initialRouteColors?: boolean; reducedMotion: boolean; canvasLabel?: string; referenceFrame?: HTMLElement; topOverflow?(): number; scrollPose?(progress: number): ExhaustScrollPose; onInteract(): void; onError(): void };
 
 /** Photo-based display reconstruction; not engineering or fitment geometry. */
 export function createExhaustScene(host: HTMLDivElement, options: Options): ExhaustScene {
@@ -345,12 +345,11 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
   let preparation:Promise<void>|null=null, cancelPreparation:((error:Error)=>void)|null=null;
   let isolated = options.initialIsolated ?? false, fit = 1, lastRenderTime = 0;
   let sizedWidth=0,sizedHeight=0,sizedRatio=0;
-  let viewOverflow=0,framingY=0;
+  let referenceTop=0,referenceHeight=0,framingY=0;
   function frameCamera() {
     if(!sizedWidth || !sizedHeight) return;
-    const normalHeight=sizedHeight-viewOverflow;
     // An off-axis frame moves the image without changing the product's perspective.
-    if(viewOverflow || framingY) camera.setViewOffset(sizedWidth,normalHeight,0,-viewOverflow+framingY*normalHeight,sizedWidth,sizedHeight);
+    if(referenceHeight !== sizedHeight || referenceTop || framingY) camera.setViewOffset(sizedWidth,referenceHeight,0,-referenceTop+framingY*referenceHeight,sizedWidth,sizedHeight);
     else { camera.clearViewOffset(); camera.updateProjectionMatrix(); }
   }
   rightBank.visible = !isolated; centre.visible = !isolated;
@@ -508,10 +507,12 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
       sizedWidth=width;sizedHeight=height;sizedRatio=ratio;
     }
     const requestedOverflow = options.topOverflow?.() ?? 0;
-    viewOverflow = Number.isFinite(requestedOverflow) ? Math.max(0, Math.min(height - 1, requestedOverflow)) : 0;
-    const normalHeight = height - viewOverflow;
-    camera.aspect = width / normalHeight;
-    // Extend only the upper frustum; the resting frame below keeps its scale.
+    const topOverflow = Number.isFinite(requestedOverflow) ? Math.max(0, Math.min(height - 1, requestedOverflow)) : 0;
+    const reference = options.referenceFrame;
+    referenceTop = reference ? reference.offsetTop - host.offsetTop : topOverflow;
+    referenceHeight = reference ? Math.max(1, reference.offsetHeight) : height - topOverflow;
+    camera.aspect = width / referenceHeight;
+    // Render beyond the reference frame while keeping its projection and scale.
     frameCamera();
     const nextFit = Math.max(1, (options.cinematic ? 1.5 : 1.25) / camera.aspect);
     if(!options.fitWithZoom) camera.position.sub(controls.target).multiplyScalar(nextFit / fit).add(controls.target);
@@ -520,6 +521,7 @@ export function createExhaustScene(host: HTMLDivElement, options: Options): Exha
   }
   const resize = new ResizeObserver(resizeScene);
   resize.observe(host);
+  if (options.referenceFrame) resize.observe(options.referenceFrame);
   const intersection = new IntersectionObserver(entries => {
     const latest=entries.at(-1);
     if(!latest) return;

@@ -38,3 +38,7 @@ export const partnerHeroImages: Partial<Record<string, HeroImage>> = {
     alt: 'NOVITEC Ferrari Purosangue lineup in a dark studio',
   },
 };
+
+export function hasPartnerHeroOverlay(slug: string) {
+  return Object.hasOwn(partnerHeroImages, slug) || slug === 'fi-exhaust';
+}

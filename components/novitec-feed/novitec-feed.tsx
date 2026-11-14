@@ -1,5 +1,6 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
+import { ActionArrow } from '@/components/action-arrow';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -52,7 +53,7 @@ export function NovitecFeed({ looks }: { looks: FeedLook[] }) {
   }
 
   return <section id="novitec-feed" className={styles.section} aria-labelledby="feed-title">
-    <div className={styles.heading}><div><h2 id="feed-title">Shop the feed</h2><p>Explore the parts behind the cars.</p></div><a href="https://www.instagram.com/lxp.official/" target="_blank" rel="noopener noreferrer" className={styles.follow}><SocialIcon type="instagram" />Follow @lxp.official <ArrowUpRight size={16} aria-hidden="true" /></a></div>
+    <div className={styles.heading}><div><h2 id="feed-title">Shop the feed</h2><p>Explore the parts behind the cars.</p></div><a href="https://www.instagram.com/lxp.official/" target="_blank" rel="noopener noreferrer" className={`${styles.follow} action-secondary`}><SocialIcon type="instagram" />Follow @lxp.official <ActionArrow size={16} /></a></div>
     <ul className={styles.grid}>{looks.map(look => <li key={look.name}><button type="button" className={styles.card} onClick={() => open(look)} aria-label={`Shop the ${look.name} look`} aria-haspopup="dialog" aria-controls="novitec-look-dialog">
       <Image src={look.image} alt={`${look.name} with NOVITEC upgrades`} fill sizes="(max-width: 700px) 33vw, 25vw" />
       <span className={styles.shopIcon} aria-hidden="true"><ShoppingBag size={18} strokeWidth={1.5} /></span>
@@ -83,8 +84,8 @@ export function NovitecFeed({ looks }: { looks: FeedLook[] }) {
             <div className={styles.dialogHead}><span className={styles.label}>Shop the look</span><h3 id="look-title">{selected.name}</h3></div>
             <div className={styles.productList}>{selected.products.map(product => <Link href={`/products/${product.handle}`} className={styles.product} key={product.id} onClick={() => dialog.current?.close()}><span className={styles.productImage}>{product.featuredImage && <img src={`${product.featuredImage.url}${product.featuredImage.url.includes('?') ? '&' : '?'}width=240`} alt="" loading="lazy" />}</span><span><span className={styles.productName}>{product.title}</span><span className={styles.price}>From {money(product.priceRange.minVariantPrice)}</span></span><ArrowUpRight size={17} aria-hidden="true" /></Link>)}</div>
             {!selected.products.length && <p className={styles.empty}>Explore the available NOVITEC parts for this car.</p>}
-            <div className={styles.lookLinks}><Link href={selected.fallback} className={styles.more} onClick={() => dialog.current?.close()}>Explore all {selected.name} parts <ArrowUpRight size={16} aria-hidden="true" /></Link>
-              <a href="https://www.instagram.com/lxp.official/" target="_blank" rel="noopener noreferrer" className={styles.source}><SocialIcon type="instagram" />View on Instagram <ArrowUpRight size={14} aria-hidden="true" /></a>
+            <div className={styles.lookLinks}><Link href={selected.fallback} className={`${styles.more} action-secondary`} onClick={() => dialog.current?.close()}>Explore all {selected.name} parts <ActionArrow size={16} /></Link>
+              <a href="https://www.instagram.com/lxp.official/" target="_blank" rel="noopener noreferrer" className={`${styles.source} action-secondary`}><SocialIcon type="instagram" />View on Instagram <ActionArrow size={14} /></a>
             </div>
           </div>
         </div>

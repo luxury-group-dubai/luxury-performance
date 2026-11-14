@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
+import { BrandArtwork } from '@/components/brand-artwork';
 import styles from './capristo-image-placeholder.module.css';
 
-export function CapristoImagePlaceholder() {
-  return <div className={styles.placeholder} role="img" aria-label="CAPRISTO — product photo unavailable">
-    <img src="/brand/capristo.svg" alt="" width={537} height={116} />
+export function CapristoImagePlaceholder({ brand = 'capristo' }: { brand?: 'capristo' | 'gintani' }) {
+  return <div className={styles.placeholder} role="img" aria-label={`${brand.toUpperCase()} — product photo unavailable`}>
+    <BrandArtwork brand={brand} labelled={false} />
   </div>;
 }

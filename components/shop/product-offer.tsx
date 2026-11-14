@@ -1,7 +1,8 @@
 'use client';
 
+import { ActionArrow } from '@/components/action-arrow';
 import { useEffect, useId, useRef, useState } from 'react';
-import { ArrowUpRight, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { contact } from '@/lib/content';
 import { buildOfferMessage } from '@/lib/shop/offer';
 import { money, type Product, type Variant } from '@/lib/shop/types';
@@ -44,8 +45,8 @@ export function ProductOffer({ product, variant, quantity, setSize }: {
   }, [open]);
 
   return <div className={styles.offer}>
-    <button ref={trigger} type="button" className={styles.trigger} aria-haspopup="dialog" disabled={!variant.availableForSale} onClick={() => setOpen(true)}>
-      Make an offer <ArrowUpRight size={18} aria-hidden="true" />
+    <button ref={trigger} type="button" className={`${styles.trigger} action-secondary`} aria-haspopup="dialog" disabled={!variant.availableForSale} onClick={() => setOpen(true)}>
+      Make an offer <ActionArrow size={18} />
     </button>
     <dialog ref={dialog} className={styles.dialog} aria-labelledby={id + '-title'} onCancel={event => { event.preventDefault(); setOpen(false); }} onClick={event => {
       if (event.target !== dialog.current) return;
@@ -72,7 +73,7 @@ export function ProductOffer({ product, variant, quantity, setSize }: {
         {invalid && <p id={id + '-error'} role="alert" className={styles.error}>Enter a price greater than zero, with up to two decimal places.</p>}
         <label className={styles.field}><span>Your name <small>optional</small></span><input autoComplete="name" maxLength={80} value={name} onChange={event => setName(event.target.value)} /></label>
         <label className={styles.field}><span>Message <small>optional</small></span><textarea rows={2} maxLength={1000} value={note} onChange={event => setNote(event.target.value)} placeholder="Anything you’d like us to know?" /></label>
-        <button type="submit" className={styles.submit}>Continue on WhatsApp <ArrowUpRight size={18} aria-hidden="true" /></button>
+        <button type="submit" className={styles.submit}>Continue on WhatsApp <ActionArrow size={18} /></button>
         <p className={styles.note}>Review and send your offer to our team in WhatsApp. We’ll reply there to agree a price. Your offer does not reserve the item.</p>
       </form>
     </dialog>

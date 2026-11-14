@@ -22,7 +22,7 @@ function page(catalogue) {
     'next/image': { __esModule: true, default: emptyComponent, getImageProps: () => ({ props: {} }) },
     'next/link': { __esModule: true, default: ({ href, children }) => React.createElement('a', { href }, children) },
     '@/lib/partners': { partners: [partner] },
-    '@/lib/brand-hero-images': { partnerHeroImages: {} },
+    '@/lib/brand-hero-images': { partnerHeroImages: {}, hasPartnerHeroOverlay: () => false },
     '@/lib/shop/storefront': { getCatalog: () => catalogue },
     '@/lib/shop/taxonomy': { filterUrl: () => '/shop?brand=valvetronic', categoryOf: () => 'Exhausts', suppliers: [] },
     '@/lib/techart-range': { techartRange: [] },

@@ -22,7 +22,7 @@
 .pivot::after { content: ''; position: absolute; inset: 4px 10px; background: #9a9b96; transform: rotate(-25deg); box-shadow: 1px 0 #fff; }
 .detail { position: absolute; right: 0; top: 47%; width: 30%; max-width: 350px; }
 .count { display: block; margin-bottom: 15px; font-size: 10px; color: #949990; letter-spacing: .04em; }
-.detail h3 { font-family: var(--font-display); font-size: clamp(19px, 2vw, 29px); line-height: 1.4; letter-spacing: -.04em; }
+.detail h3 { font-family: var(--font-display); font-size: clamp(19px, 2vw, 29px); font-weight: var(--font-display-weight); line-height: 1.4; font-kerning: normal; letter-spacing: var(--display-letter-spacing); text-transform: uppercase; }
 .detail p { margin-top: 18px; max-width: 330px; color: #a8aca5; font-size: 12px; line-height: 1.85; }
 .detail > a { margin-top: 28px; }
 .hint { margin-top: 20px; color: #7e847a; font-size: 10px; text-align: right; }

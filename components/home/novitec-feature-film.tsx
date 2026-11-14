@@ -1,9 +1,10 @@
 "use client";
 
+import { ActionArrow } from '@/components/action-arrow';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { ArrowUpRight, Play, X } from 'lucide-react';
+import { Play, X } from 'lucide-react';
 import styles from './novitec-feature-film.module.css';
 
 const videoId = 'QYbObl7MWxk';
@@ -60,10 +61,10 @@ export function NovitecFeatureFilm() {
       </div>
       <div className={styles.footer}>
         <div className={styles.filmActions}>
-          <a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">Watch on YouTube <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
+          <a className="action-secondary" href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">Watch on YouTube <ActionArrow size={15} /><span className="sr-only"> (opens in a new tab)</span></a>
           {playing && <button type="button" onClick={stop}><X size={15} aria-hidden="true" /> Close video</button>}
         </div>
-        <Link href="/collections/ferrari-purosangue?brand=novitec">Explore Purosangue parts <ArrowUpRight size={15} aria-hidden="true" /></Link>
+        <Link className="action-secondary" href="/collections/ferrari-purosangue?brand=novitec">Explore Purosangue parts <ActionArrow size={15} /></Link>
       </div>
     </div>
   </section>;

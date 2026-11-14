@@ -1,7 +1,9 @@
+import { ActionArrow } from '@/components/action-arrow';
 import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import { brandHeroImages } from '@/lib/brand-hero-images';
+import { HeroNewsprintFilter } from '@/components/hero-newsprint-filter';
+import newsprint from '@/components/hero-newsprint.module.css';
 import { BrandHero } from './brand-hero';
 import heroStyles from './brand-hero.module.css';
 import { ValvetronicSoundHeadline } from './valvetronic-sound-headline';
@@ -28,6 +30,8 @@ const heroSlides = [
   {
     slug: 'valvetronic', name: 'Valvetronic Designs', logo: '/brand/valvetronic-compact.avif', logoWidth: 384, logoHeight: 97,
     ...brandHeroImages.valvetronic!,
+    image: brandHeroImages.valvetronic!.mobile.src,
+    alt: 'Rear wing and exposed Valvetronic exhaust on a Porsche GT3 RS',
     title: <ValvetronicSoundHeadline />,
     description: 'Explore Valvetronic Designs valved exhaust systems, downpipes and components, with vehicle fitment advice from Dubai.',
     href: '/partners/valvetronic', cta: 'Explore Valvetronic',
@@ -43,21 +47,33 @@ const heroSlides = [
 
 export function HomeHero() {
   return <>
+    <HeroNewsprintFilter />
     <link rel="preload" as="image" type="image/webp" href={mobileHero.src} media="(max-width: 700px)" imageSrcSet={mobileHero.srcSet} imageSizes="100vw" fetchPriority="high" />
     <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
     {heroSlides.map((slide, index) => {
       const mobile = index === 0 ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
-        <picture className={heroStyles.picture}>
-          {mobile && <source media="(max-width: 700px)" type={index === 0 ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
-          <Image src={slide.image} alt={slide.alt} fill quality={75} sizes="100vw" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />
-        </picture>
+        <div className={heroStyles.imageFrame}>
+        {[false, true].map(printed => (
+          <picture key={String(printed)} className={printed ? `${heroStyles.picture} ${heroStyles.printLayer} ${newsprint.photo}` : heroStyles.picture}>
+            {mobile && <source media="(max-width: 700px)" type={index === 0 ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
+            <Image src={slide.image} alt={printed ? '' : slide.alt} fill quality={75} sizes="100vw" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={!printed && index === 0 ? 'high' : 'auto'} />
+          </picture>
+        ))}
+        {mobile && slide.slug === 'techart' && ['top', 'bottom'].map(edge => (
+          <picture key={edge} className={heroStyles.reflection} data-edge={edge}>
+            <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />
+            {/* No image is requested for this decorative layer on desktop. */}
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" decoding="async" />
+          </picture>
+        ))}
+        </div>
         <div className={heroStyles.shade} />
         <div className={heroStyles.copy}>
           <Image className={heroStyles.logo} src={slide.logo} alt={slide.name} width={slide.logoWidth} height={slide.logoHeight} sizes={slide.slug === 'valvetronic' ? '(max-width: 700px) 160px, 210px' : '(max-width: 700px) 170px, 225px'} unoptimized={slide.logo.endsWith('.svg')} />
           <h2>{slide.title}</h2>
           <p>{slide.description}</p>
-          <Link className={heroStyles.cta} href={slide.href}>{slide.cta}<ArrowUpRight size={18} strokeWidth={1.4} aria-hidden="true" /></Link>
+          <Link className={heroStyles.cta} href={slide.href}>{slide.cta}<ActionArrow size={18} strokeWidth={1.4} /></Link>
         </div>
       </article>;
     })}

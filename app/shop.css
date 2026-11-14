@@ -374,6 +374,11 @@
   background: #101010;
   color: #f6f5f2;
 }
+.shop-page .shop-intro .shop-preview-label {
+  display: block;
+  margin-block-end: 10px;
+  color: #c0bdb6;
+}
 .shop-intro-description {
   max-inline-size: 56ch;
   margin-block-start: 10px;
@@ -404,6 +409,7 @@
   padding-inline: var(--gutter);
   scrollbar-width: none;
 }
+.shop-supplier-bar .shop-scope-tab { font-weight: 700; }
 .shop-supplier-bar .supplier-tabs::-webkit-scrollbar { display: none; }
 .shop-dark-header:has(+ .shop-supplier-bar-dark) { padding-block-end: 12px; }
 .shop-supplier-bar-dark {

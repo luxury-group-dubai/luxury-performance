@@ -1,6 +1,6 @@
+import { ActionArrow } from '@/components/action-arrow';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import { valvetronicVehicles, valvetronicVehicleHref } from '@/lib/valvetronic-vehicles';
 import styles from './valvetronic-vehicles.module.css';
 import { ValvetronicFeatureFilm } from './valvetronic-feature-film';
@@ -18,7 +18,7 @@ export function ValvetronicVehicles() {
               <h2 id="valvetronic-vehicles-title"><Image src="/brand/valvetronic-compact.avif" alt="Valvetronic Designs" width={384} height={97} sizes="(max-width: 700px) 186px, 238px" quality={75} /></h2>
               <p>Choose your vehicle brand. Find your sound.</p>
             </div>
-            <Link href="/shop?brand=valvetronic" className={styles.all}>Shop all Valvetronic <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" /></Link>
+            <Link href="/shop?brand=valvetronic" className={`${styles.all} action-secondary`}>Shop all Valvetronic <ActionArrow size={17} strokeWidth={1.5} /></Link>
           </header>
           <ul className={styles.grid} aria-label="Shop Valvetronic by vehicle brand">
             {valvetronicVehicles.map(vehicle => {
