@@ -131,7 +131,10 @@ export function PurosangueFilm() {
       property('--light-x', `${-120 + f.light * 290}%`);
       property('--car-light', String(simple ? 1 : f.brightness));
       property('--word-opacity', String(simple ? .20 : f.word * .20));
-      property('--film-progress', String(progress));
+      const detailsStart = filmTiming.widebodyZoom[0];
+      const lastDetail = filmChapters[filmChapters.length - 2].at;
+      const detailsEnd = (lastDetail + completeAt) / 2;
+      property('--film-detail-progress', String(clamp((progress - detailsStart) / (detailsEnd - detailsStart))));
       data('chapter', String(f.chapter));
       data('instant', String(instant || preference.matches));
       if (selected !== f.chapter) { selected = f.chapter; setChapter(f.chapter); }
