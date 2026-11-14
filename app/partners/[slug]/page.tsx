@@ -5,6 +5,9 @@ import Image, { getImageProps } from 'next/image';
 import { partnerHeroImages } from '@/lib/brand-hero-images';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { GintaniRange } from '@/components/partners/gintani-range';
+import { HeroNewsprintFilter } from '@/components/hero-newsprint-filter';
+import newsprint from '@/components/hero-newsprint.module.css';
 import { ArrowUpRight } from 'lucide-react';
 import { partners, type Partner } from '@/lib/partners';
 import { getCatalog } from '@/lib/shop/storefront';
@@ -65,7 +68,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   const p = partners.find(partner => partner.slug === slug);
   if (!p) notFound();
 
-  const productsPromise = p.supplier
+  const productsPromise = p.supplier && p.slug !== 'gintani'
     ? getCatalog().then(products => products.filter(item => supplierOf(item) === p.supplier))
     : Promise.resolve([]);
   const shop = p.supplier ? filterUrl('/shop', { brand: p.supplier }) : `/contact?programme=${encodeURIComponent(p.name)}`;
@@ -74,7 +77,8 @@ export default async function PartnerPage({ params, searchParams }: Props) {
 
   return <div className={styles.page} data-partner={p.slug}>
     <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
-      {heroAsset && p.slug === 'capristo' ? <img className={styles.heroImage} src="/images/partners/capristo-hero/f40-1440.webp" srcSet="/images/partners/capristo-hero/f40-640-q52.webp 640w, /images/partners/capristo-hero/f40-960.webp 960w, /images/partners/capristo-hero/f40-1440.webp 1440w, /images/partners/capristo-hero/f40-1672.webp 1672w" sizes="(max-width: 700px) 80vw, 100vw" alt={heroAsset.alt} width={1672} height={941} loading="eager" fetchPriority="high" /> : heroAsset ? <picture className={styles.heroPicture}>
+      {p.slug === 'gintani' && <HeroNewsprintFilter />}
+      {heroAsset && p.slug === 'capristo' ? <img className={styles.heroImage} src="/images/partners/capristo-hero/f40-1440.webp" srcSet="/images/partners/capristo-hero/f40-640-q52.webp 640w, /images/partners/capristo-hero/f40-960.webp 960w, /images/partners/capristo-hero/f40-1440.webp 1440w, /images/partners/capristo-hero/f40-1672.webp 1672w" sizes="(max-width: 700px) 80vw, 100vw" alt={heroAsset.alt} width={1672} height={941} loading="eager" fetchPriority="high" /> : heroAsset ? <picture className={p.slug === 'gintani' ? `${styles.heroPicture} ${newsprint.photo}` : styles.heroPicture}>
         {p.slug === 'valvetronic' && <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/hero.avif"/>}
         {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
         <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={p.slug === 'valvetronic' || p.slug === 'techart' ? 75 : 95} sizes="100vw" loading="eager" fetchPriority="high"/>
@@ -82,14 +86,18 @@ export default async function PartnerPage({ params, searchParams }: Props) {
       <div className={styles.heroShade}/>
       <div className={styles.heroContent}>
         <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" /></h1></div>
-        <div className={styles.heroFoot}><Suspense fallback={<ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>}>
+        <div className={styles.heroFoot}>{p.slug === 'gintani' ? (
+          <a href="#gintani-range" className="arrow-link light">
+            <span>Explore exhaust systems</span><span className="arrow-disc"><ArrowUpRight size={19} strokeWidth={1.5} /></span>
+          </a>
+        ) : <Suspense fallback={<ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>}>
           <PartnerHeroAction partner={p} productsPromise={productsPromise} />
-        </Suspense></div>
+        </Suspense>}</div>
       </div>
     </section>
-    <Suspense fallback={<div style={{ minHeight: '100svh' }} aria-busy="true" aria-label="Loading partner collection" />}>
+    {p.slug === 'gintani' ? <GintaniRange /> : <Suspense fallback={<div style={{ minHeight: '100svh' }} aria-busy="true" aria-label="Loading partner collection" />}>
       <PartnerContent partner={p} productsPromise={productsPromise} searchParams={searchParams} />
-    </Suspense>
+    </Suspense>}
   </div>;
 }
 
