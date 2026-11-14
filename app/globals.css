@@ -143,3 +143,12 @@ html{scrollbar-gutter:stable}
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
+
+
+/* A white keyboard-focus ring with a dark edge stays visible on light and dark surfaces. */
+:is(a,button,input,textarea,select,summary,[tabindex]):focus-visible,
+.interest-options input:focus-visible+span {
+  outline: 2px solid #fff !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px #111 !important;
+}
