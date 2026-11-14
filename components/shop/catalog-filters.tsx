@@ -82,8 +82,8 @@ export function CatalogFilters({ filters, basePath, makes, models, fits, categor
           ))}
         </div>
       </div>
-    ) : (
-      <FilterChoice label={filters.brand === 'valvetronic' ? 'Exhaust type' : 'Category'} value={selection.category || ''}
+    ) : filters.brand !== 'valvetronic' && filters.brand !== 'gintani' && (
+      <FilterChoice label="Category" value={selection.category || ''}
         placeholder="All parts" placeholderCount={total}
         options={categories.map(({ name, count }) => [name, name, { count, disabled: count === 0 && selection.category !== name }])}
         onChange={category => apply({ category })} />
