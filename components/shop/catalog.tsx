@@ -11,7 +11,7 @@ import { CatalogTabs } from './catalog-tabs';
 import type { CatalogProduct } from '@/lib/shop/types';
 import { money } from '@/lib/shop/types';
 import { isUsedPart, wheelGroupSize, wheelGroupUnit } from '@/lib/shop/used-parts';
-import { suppliers, supplierOf, categoryOf, tagsFor, filterProducts, filterUrl, fitOptions, inStockShopPath, type Filters } from '@/lib/shop/taxonomy';
+import { suppliers, supplierOf, categoryOf, tagsFor, filterProducts, filterUrl, fitOptions, inStockShopPath, updateFilters, type Filters } from '@/lib/shop/taxonomy';
 import { cayenneBodies, isCayenneLineupFit } from '@/lib/shop/techart-cayenne';
 import { bodyStyles, filterBodyProducts, is911LineupFit, supportsBody, techartSelection, vehicleBodyMatch } from '@/lib/shop/techart-fitment';
 import { SelectedVehicle } from './vehicle-selector';
@@ -82,6 +82,7 @@ export function Catalog({ products, filters: queryFilters, title, description, b
     : f8Selection ? [...f8Bodies] : [];
   const departmentScope = filterBodyProducts(filterProducts(scope, { ...filters, category: undefined }), vehicle);
   const categories = [...new Set(scope.map(categoryOf))].sort().map(name => ({ name, count: departmentScope.filter(p => categoryOf(p) === name).length }));
+  const quickCategories = categories.filter(({ name, count }) => count > 0 || name === filters.category);
   const candidates = filterProducts(products, filters);
   const matches = filterBodyProducts(candidates, vehicle);
   const review = vehicle?.body ? candidates.filter(product => vehicleBodyMatch(product, vehicle) === 'review') : f8Body ? filterProducts(products, { ...filters, body: undefined }).filter(product => f8BodyMatch(product, f8Body) === 'review') : sf90Body || version812 ? filterProducts(products, { ...filters, model: version812 ? undefined : filters.model, body: undefined }).filter(product => (!version812 || tagsFor(product, 'model').includes(filters.model!)) && ferrariVersionMatch(product, (sf90Body || version812)!) === 'review') : [];
@@ -148,6 +149,21 @@ export function Catalog({ products, filters: queryFilters, title, description, b
       <section className="shop-results" aria-label="Products">
         <CatalogProductToolbar filters={queryFilters} basePath={basePath} resultLabel={`${matches.length} ${matches.length === 1 ? 'part' : 'parts'}${selected ? ` from ${selected.name}` : ''}`} />
         <CatalogAppliedFilters filters={queryFilters} basePath={basePath} />
+        {(quickCategories.length > 1 || filters.category) && (
+          <nav className="shop-category-pills" aria-label={filters.brand === 'valvetronic' ? 'Filter by exhaust type' : 'Filter by category'}>
+            {[{ label: 'All categories', value: undefined }, ...quickCategories.map(({ name }) => ({ label: name, value: name }))].map(({ label, value }) => (
+              <Link
+                key={value ?? ''}
+                href={filterUrl(basePath, updateFilters(queryFilters, { category: value }))}
+                aria-current={value === (filters.category || undefined) ? 'true' : undefined}
+                prefetch={false}
+                scroll={false}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+        )}
         {shown.length ? <div className="shop-product-grid">{shown.map(p=><Link className="shop-product-card" key={p.id} href={`${productBasePath}/${p.handle}`}><div className="shop-product-image">{p.featuredImage?<CatalogThumbnail src={p.featuredImage.url} alt={p.featuredImage.altText || p.title} preview={preview} />:['capristo', 'gintani'].includes(p.vendor.toLowerCase()) ? <CapristoImagePlaceholder brand={p.vendor.toLowerCase() as 'capristo' | 'gintani'} /> : <span>{p.vendor}</span>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{isUsedPart(p) && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.vendor}</span><span>{categoryOf(p)}</span></div><h2>{p.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h2><p className="shop-price">{preview && Number(p.priceRange.minVariantPrice.amount) === 0 ? 'Price pending' : wheelGroupSize(p) ? `${money(p.priceRange.minVariantPrice)} / ${wheelGroupUnit(wheelGroupSize(p)!)}` : `From ${money(p.priceRange.minVariantPrice)}`}</p></Link>)}</div>:<div className="shop-empty"><h2>No matching parts.</h2><p>Try another vehicle or department, or ask our team about your car.</p><Link href={filterUrl(basePath, { brand: queryFilters.brand, stock: queryFilters.stock })} scroll={false}>Clear filters →</Link></div>}
         {pages>1 && <nav className="shop-pagination" aria-label="Pagination">{page>1?<Link href={href({page:String(page-1)})}>← Previous</Link>:<span/>}<span>Page {page} of {pages}</span>{page<pages?<Link href={href({page:String(page+1)})}>Next →</Link>:<span/>}</nav>}
         {!!review.length && <details className={vehicleStyles.review}><summary>{review.length} more {review.length === 1 ? 'part needs' : 'parts need'} fitment confirmation</summary><p>{f8Body || sf90Body || version812 ? 'These listings do not clearly specify your version, or are for a special programme. Confirm compatibility with our team before ordering.' : 'Confirm fitment with our team before ordering these parts.'}</p><ul>{review.map(product => <li key={product.id}><Link href={`/products/${product.handle}`}>{product.title}</Link></li>)}</ul></details>}
