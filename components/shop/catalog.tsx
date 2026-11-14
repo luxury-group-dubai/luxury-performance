@@ -60,7 +60,8 @@ export function Catalog({ products, filters: queryFilters, title, description, b
     : description || selected?.description || 'Exceptional components from the names that know your car. Find your programme. Make it yours.';
   const scope = products.filter(p => !filters.brand || supplierOf(p) === filters.brand);
   const makes = [...new Set(scope.flatMap(p => tagsFor(p, 'make')))].sort();
-  const vehicleScope = scope.filter(p => !filters.make || tagsFor(p, 'make').includes(filters.make));
+  const modelMake = filters.make || (makes.length === 1 ? makes[0] : undefined);
+  const vehicleScope = scope.filter(p => !modelMake || tagsFor(p, 'make').includes(modelMake));
   const models = [...new Set(vehicleScope.flatMap(p => tagsFor(p, 'model')))].sort();
   const cayenne = filters.brand === 'techart' && filters.model === 'cayenne';
   const porsche911 = filters.brand === 'techart' && filters.model === '911';

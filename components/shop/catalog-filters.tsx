@@ -30,6 +30,8 @@ export function CatalogFilters({ filters, basePath, makes, models, fits, categor
   const [selection, setSelection] = useOptimistic(filters);
 
   const techart = filters.brand === 'techart';
+  const waitingForModelOptions = selection.make !== filters.make;
+  const needsMake = !selection.make && makes.length > 1;
   const porscheLineup = techart && (!selection.model || selection.model === '911' || selection.model === 'cayenne');
   const generation = selection.generation || techartGeneration(selection.fit) || '';
   const generationOptions = [...new Set(fits.flatMap(fit => techartGeneration(fit) ?? []))];
@@ -56,8 +58,13 @@ export function CatalogFilters({ filters, basePath, makes, models, fits, categor
     {makes.length > 1 && <FilterChoice label="Vehicle make" value={selection.make || ''} placeholder="All makes"
       options={makes.map(value => [value, label(value)])} onChange={make => apply({ make })} />}
     {makes.length === 1 && !(techart && models.length > 0) && <div className="shop-fixed-make">{label(makes[0])}</div>}
-    {!!models.length && <FilterChoice label={techart ? 'Model' : 'Vehicle model'} value={selection.model || ''} placeholder="All models"
-      options={models.map(value => [value, label(value)])} onChange={model => apply({ model })} />}
+    {(models.length > 0 || needsMake || waitingForModelOptions) && <FilterChoice
+      label={techart ? 'Model' : 'Vehicle model'}
+      value={needsMake || waitingForModelOptions ? '' : selection.model || ''}
+      placeholder={needsMake ? 'Select a make first' : waitingForModelOptions ? 'Loading models…' : 'All models'}
+      disabled={needsMake || waitingForModelOptions}
+      options={needsMake || waitingForModelOptions ? [] : models.map(value => [value, label(value)])}
+      onChange={model => apply({ model })} />}
     {porscheLineup && <>
       <FilterChoice label="Generation" value={generation} disabled={!selection.model || !generationOptions.length}
         placeholder={selection.model ? 'All generations' : 'Select a model first'}
