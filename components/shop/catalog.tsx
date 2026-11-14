@@ -67,6 +67,7 @@ export function Catalog({ products, filters: queryFilters, title, description, b
   const fits = fitOptions(scope, filters).filter(fit => fit === filters.fit || (cayenne ? isCayenneLineupFit(fit) : !porsche911 || is911LineupFit(fit)));
   const vehicle = techartSelection(filters);
   const usesShopIntro = !vehicleCollection && (basePath === '/shop' || preview);
+  const showCollectiblesWordmark = basePath === '/shop' && usesShopIntro && !preview && !inStock && selected?.slug === 'collectibles';
   const novitecProfile = usesShopIntro && filters.brand === 'novitec' && filters.model
     ? novitecShopProfile(filters.model, filters.body)
     : undefined;
@@ -96,7 +97,18 @@ export function Catalog({ products, filters: queryFilters, title, description, b
       <div>
         {vehicleCollection && <Link className="shop-model-back" href={vehicleCollection.makeHref}><ArrowLeft size={13} aria-hidden="true" />{vehicleCollection.makeLabel}</Link>}
         {preview && <span className="tiny-label shop-preview-label">{previewLabel}</span>}
-        <h1>{heading}</h1>
+        {showCollectiblesWordmark ? (
+          <h1 className="shop-collectibles-title">
+            <Image
+              src="/brand/lxp-collectibles-sticker-bottle-cap.png"
+              alt="LXP Collectibles"
+              width={1072}
+              height={521}
+              loading="eager"
+              sizes="(max-width: 380px) 50vw, (max-width: 700px) 190px, (max-width: 850px) 170px, (max-width: 1350px) 20vw, 270px"
+            />
+          </h1>
+        ) : <h1>{heading}</h1>}
         {usesShopIntro && <p className="shop-intro-description">{introDescription}</p>}
         {vehicleCollection?.versions}
       </div>
@@ -149,7 +161,7 @@ export function Catalog({ products, filters: queryFilters, title, description, b
       <section className="shop-results" aria-label="Products">
         <CatalogProductToolbar filters={queryFilters} basePath={basePath} resultLabel={`${matches.length} ${matches.length === 1 ? 'part' : 'parts'}${selected ? ` from ${selected.name}` : ''}`} />
         <CatalogAppliedFilters filters={queryFilters} basePath={basePath} />
-        {(quickCategories.length > 1 || filters.category) && (
+        {filters.brand !== 'collectibles' && (quickCategories.length > 1 || filters.category) && (
           <nav className="shop-category-pills" aria-label={filters.brand === 'valvetronic' ? 'Filter by exhaust type' : 'Filter by category'}>
             {[{ label: 'All categories', value: undefined }, ...quickCategories.map(({ name }) => ({ label: name, value: name }))].map(({ label, value }) => (
               <Link

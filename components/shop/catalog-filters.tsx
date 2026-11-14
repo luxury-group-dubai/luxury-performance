@@ -72,10 +72,22 @@ export function CatalogFilters({ filters, basePath, makes, models, fits, categor
       disabled={!bodies.length || (porscheLineup && !fitment)}
       placeholder={porscheLineup && !fitment ? 'Select a fitment first' : 'All body styles'}
       options={bodies.map(body => [body.key, body.name])} onChange={body => apply({ body })} />}
-    <FilterChoice label={filters.brand === 'valvetronic' ? 'Exhaust type' : 'Category'} value={selection.category || ''}
-      placeholder="All parts" placeholderCount={total}
-      options={categories.map(({ name, count }) => [name, name, { count, disabled: count === 0 && selection.category !== name }])}
-      onChange={category => apply({ category })} />
+    {filters.brand === 'collectibles' ? (
+      <div className="shop-field">
+        <span>Category</span>
+        <div className="shop-category-pills shop-category-pills-stacked" role="group" aria-label="Category">
+          <button type="button" aria-pressed={!selection.category} onClick={() => selection.category && apply({ category: undefined })}>All categories</button>
+          {categories.filter(({ name, count }) => count > 0 || name === selection.category).map(({ name }) => (
+            <button key={name} type="button" aria-pressed={selection.category === name} onClick={() => selection.category !== name && apply({ category: name })}>{name}</button>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <FilterChoice label={filters.brand === 'valvetronic' ? 'Exhaust type' : 'Category'} value={selection.category || ''}
+        placeholder="All parts" placeholderCount={total}
+        options={categories.map(({ name, count }) => [name, name, { count, disabled: count === 0 && selection.category !== name }])}
+        onChange={category => apply({ category })} />
+    )}
     <button className="shop-filter-reset" type="button" onClick={reset}>Reset</button>
     {onDone && <footer className="shop-sheet-footer"><button className="shop-button" type="button" disabled={pending} onClick={onDone}>{pending ? 'Updating parts…' : 'View ' + resultCount + (resultCount === 1 ? ' part' : ' parts')} <ActionArrow direction="right" size={16} /></button></footer>}
   </form>;

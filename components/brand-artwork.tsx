@@ -13,6 +13,7 @@ const artwork: Record<string, { name: string; src: string; width: number; height
   voltrix: { name: 'Voltrix', src: '/brand/voltrix.jpg', width: 1600, height: 260 },
   urban: { name: 'URBAN Automotive', src: '/brand/urban.svg', width: 644, height: 102 },
   lxp: { name: 'Luxury Performance', src: '/brand/lxp-white.svg', width: 1088, height: 280 },
+  collectibles: { name: 'LXP Collectibles', src: '/brand/lxp-collectibles-sticker-bottle-cap.png', width: 1072, height: 521 },
 };
 
 function CompactValvetronic({ sizes, loading }: { sizes: string; loading: 'eager' | 'lazy' }) {
@@ -37,6 +38,6 @@ export function BrandArtwork({ brand, labelled = true, className = '', sizes = '
       variant === 'hero'
         ? <Image src="/brand/valvetronic.png" alt="" width={1200} height={304} sizes={sizes} quality={90} loading={loading} />
         : <CompactValvetronic sizes={sizes} loading={loading} />
-    ) : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={sizes} quality={75} unoptimized={item.src.endsWith('.svg') || item.src.endsWith('.avif')} loading={loading} />}
+    ) : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={brand === 'collectibles' ? '160px' : sizes} quality={75} unoptimized={item.src.endsWith('.svg') || item.src.endsWith('.avif')} loading={loading} />}
   </span>;
 }
