@@ -347,7 +347,7 @@ export function PurosangueFilm() {
         </div>
         <div className={styles.filmProgress} aria-hidden="true"><span /></div>
         <nav className={styles.chapters} aria-label="Transformation chapters">
-          {filmChapters.map((item, index) => <button type="button" key={item.name} aria-current={chapter === index ? 'step' : undefined} onClick={() => seek(index)}><span className={styles.chapterNumber}>0{index + 1}</span><span>{item.name}</span><span className={styles.chapterDot} /></button>)}
+          {filmChapters.slice(1, -1).map((item, index) => <button type="button" key={item.name} aria-current={chapter === index + 1 ? 'step' : undefined} onClick={() => seek(index + 1)}><span className={styles.chapterNumber}>0{index + 1}</span><span>{item.name}</span><span className={styles.chapterDot} /></button>)}
         </nav>
       </div>
     </div>
