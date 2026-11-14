@@ -10,7 +10,7 @@ export const suppliers = [
   { slug: 'gintani', name: 'Gintani', image: 'lamborghini', line: 'Vehicle-specific exhaust systems.', description: 'Explore Gintani exhausts for Lamborghini, Ferrari, McLaren and Porsche.', categories: ['Exhaust'] },
   { slug: 'urban', name: 'URBAN Automotive', image: 'wheel', line: 'Distinctive details.', description: 'Selected used URBAN components, limited to the stock available.', categories: ['Wheels', 'Aerodynamics', 'Accessories', 'Other parts'] },
   { slug: 'oem', name: 'Genuine OEM', image: 'sf90', line: 'Original engineering.', description: 'Selected original components. Review the individual listing for condition, included parts and vehicle compatibility.', categories: ['Exhaust', 'Aerodynamics', 'Performance', 'Other parts'] },
-  { slug: 'collectibles', name: 'Collectibles', image: 'mclaren', line: 'Performance, in another form.', description: 'Scale models and automotive pieces for your collection.', categories: ['Collectibles'] },
+  { slug: 'collectibles', name: 'Collectibles', image: 'mclaren', line: 'Performance, in another form.', description: 'Scale models and automotive pieces for your collection.', categories: ['Model Cars', 'Model Engines'] },
 ];
 export function supplierOf(p: CatalogProduct) {
   const v = p.vendor.toLowerCase();
@@ -41,7 +41,9 @@ export function techartFitmentLabel(fit: string) {
 }
 export function categoryOf(p: CatalogProduct) {
   const type = p.productType.toLowerCase(), tags = p.tags.join(' '), title = p.title.toLowerCase();
-  if (supplierOf(p) === 'collectibles') return 'Collectibles';
+  if (supplierOf(p) === 'collectibles') {
+    return /\bengines?\b/i.test(`${type} ${title} ${p.handle}`) ? 'Model Engines' : 'Model Cars';
+  }
   if (supplierOf(p) === 'valvetronic') {
     const name = title.replace(/[–—-]/g, ' ');
     // Accessories can mention an exhaust system without being a system themselves.
@@ -80,7 +82,11 @@ export function filterProducts(products: CatalogProduct[], f: Filters) {
   const version812 = is812Selection(f) ? (f.model === '812_gts' ? 'gts' : 'superfast') : undefined;
   const fits = f.fit ? f.brand === 'techart' && f.model === '911' ? techartFitKeys(f.fit, f.body) : [f.fit] : [];
   const generation = f.brand === 'techart' && !f.fit ? f.generation : undefined;
-  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && (!f.category || categoryOf(p) === f.category) && (!f.q || matchesSearch(p, f.q)));
+  // Keep links to the former combined category working.
+  const matchesCategory = (product: CatalogProduct) => !f.category || (
+    f.category === 'Collectibles' ? supplierOf(product) === 'collectibles' : categoryOf(product) === f.category
+  );
+  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && matchesCategory(p) && (!f.q || matchesSearch(p, f.q)));
   if (f.sort === 'price-up') result.sort((a,b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
   if (f.sort === 'price-down') result.sort((a,b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
   if (f.sort === 'name') result.sort((a,b) => a.title.localeCompare(b.title));

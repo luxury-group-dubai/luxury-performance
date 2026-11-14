@@ -8,6 +8,7 @@ export const brandMenu: ShopMenuItem[] = [
   { name: 'Gintani', href: '/partners/gintani', artwork: 'gintani' },
   { name: 'Liberty Walk', href: '/contact?programme=Liberty%20Walk', artwork: 'liberty-walk' },
   { name: 'Voltrix', href: '/contact?programme=Voltrix', artwork: 'voltrix' },
+  { name: 'LXP Collectibles', href: '/shop?brand=collectibles', artwork: 'collectibles' },
 ];
 export const usedParts: ShopMenuItem = { name: 'Used parts', href: '/collections/used-parts', artwork: 'lxp', note: 'Previously owned components' };
 export const vehicleMenu: ShopMenuItem[] = [
