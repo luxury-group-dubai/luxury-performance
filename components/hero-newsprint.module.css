@@ -1,0 +1,21 @@
+.photo {
+  isolation: isolate;
+}
+
+.photo > img {
+  filter: url(#hero-newsprint);
+}
+
+.photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, #16140f 0.45px, transparent 1px) 0 0 / 3px 3px,
+    radial-gradient(circle, #fff8e5 0.6px, transparent 1.25px) 1px 2px / 5px 7px,
+    url('/images/concrete-grain.svg') 0 0 / 140px 140px;
+  opacity: .75;
+  mix-blend-mode: soft-light;
+}

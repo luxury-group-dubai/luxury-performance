@@ -22,6 +22,11 @@ export const brandHeroImages: Partial<Record<string, HeroImage>> = {
 /** Partner cards and landing pages share each brand's selected artwork. */
 export const partnerHeroImages: Partial<Record<string, HeroImage>> = {
   ...brandHeroImages,
+  gintani: {
+    image: '/images/partners/gintani/hero.webp',
+    mobile: { src: '/images/partners/gintani/hero.webp', width: 1600, height: 900 },
+    alt: '',
+  },
   capristo: {
     image: '/images/partners/capristo-f40-enhanced.png',
     mobile: { src: '/images/partners/capristo-f40-enhanced.png', width: 1672, height: 941 },

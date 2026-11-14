@@ -13,7 +13,7 @@ const partners: PartnerLogo[] = [
   { name: 'Valvetronic Designs', slug: 'valvetronic' },
   { name: 'TECHART', slug: 'techart' },
   { name: 'FI Exhaust', slug: 'fi-exhaust' },
-  { name: 'Gintani', slug: 'gintani', href: '/contact?programme=Gintani', label: 'Enquire about Gintani' },
+  { name: 'Gintani', slug: 'gintani', href: '/partners/gintani', label: 'Explore Gintani' },
   { name: 'Liberty Walk', slug: 'liberty-walk', href: '/contact?programme=Liberty%20Walk', label: 'Enquire about Liberty Walk' },
   { name: 'Voltrix', slug: 'voltrix', href: '/contact?programme=Voltrix', label: 'Enquire about Voltrix' },
 ];

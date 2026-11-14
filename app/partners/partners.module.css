@@ -162,3 +162,181 @@
 }
 
 .page[data-partner="capristo"] .categoryCard > p { color: #62625d; }
+
+.gintaniBrowsing { isolation: isolate; }
+.gintaniCategories {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  container-type: inline-size;
+  background: #f1f1ee;
+  color: #171819;
+}
+.gintaniCategorySidebar {
+  position: sticky;
+  top: var(--site-header-height);
+  align-self: start;
+  min-height: calc(100svh - var(--site-header-height));
+  display: grid;
+  align-items: center;
+  isolation: isolate;
+  overflow: clip;
+  background: #111;
+  color: #fff;
+}
+.gintaniCategoryBackdrop {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -2;
+  width: 100cqw;
+  isolation: isolate;
+  background: #e2dfd4;
+}
+.gintaniCategoryBackdrop img {
+  object-fit: cover;
+  object-position: center 60%;
+  filter: grayscale(1) contrast(1.65);
+  mix-blend-mode: multiply;
+}
+.gintaniCategoryBackdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, #16140f 0.45px, transparent 1px) 0 0 / 3px 3px,
+    radial-gradient(circle, #fff8e5 0.6px, transparent 1.25px) 1px 2px / 5px 7px,
+    url('/images/concrete-grain.svg') 0 0 / 140px 140px;
+  opacity: .75;
+  mix-blend-mode: soft-light;
+}
+.gintaniCategorySidebar::before { content: ''; position: absolute; inset: 0; z-index: -1; background: #0009; }
+.gintaniCategoryNav { padding: 48px var(--gutter); }
+.gintaniCategoryNav h2 { --display-letter-spacing: .08em; margin: 0 0 20px; font-size: 13px; line-height: 1.3; text-transform: uppercase; }
+.gintaniCategoryNav nav { display: grid; justify-items: start; }
+.gintaniCategoryNav a { display: inline-flex; align-items: center; min-height: 44px; color: #d0d0cc; font-size: clamp(22px, 2.6vw, 43px); font-weight: 700; line-height: 1.1; letter-spacing: -.035em; text-transform: uppercase; }
+.gintaniCategoryNav a:is(:hover, :focus-visible, [aria-current]) { color: #fff; text-decoration: underline; text-underline-offset: .16em; text-decoration-thickness: 1px; }
+.gintaniCategoryStory { min-width: 0; padding: 0 var(--gutter) clamp(32px, 5vw, 72px); container-type: inline-size; }
+.gintaniCategory {
+  display: grid;
+  align-content: center;
+  min-height: calc(100svh - var(--site-header-height));
+  padding-block: clamp(36px, 5vw, 76px);
+  border-bottom: 1px solid #c8c9c4;
+}
+.gintaniCategory h3 { margin: 0; font-size: clamp(24px, 10cqi, 76px); line-height: 1; font-weight: 700; letter-spacing: -.055em; overflow-wrap: anywhere; text-transform: uppercase; }
+@media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
+  .gintaniCategories { z-index: 1; }
+  @supports (animation-timeline: view()) and (view-timeline-name: --gintani-split) {
+    .gintaniCategories {
+      view-timeline-name: --gintani-split;
+      view-timeline-inset: var(--site-header-height) 0px;
+    }
+    .gintaniCategorySidebar {
+      z-index: 1;
+      animation: gintaniSplitEntrance linear both;
+      animation-timeline: --gintani-split;
+      animation-range: entry 18% entry 100%;
+    }
+    .gintaniCategoryStory {
+      /* The first heading starts at the viewport bottom when the split finishes. */
+      padding-block-start: calc(100dvh - var(--site-header-height));
+    }
+    .gintaniCategory:first-child {
+      align-content: start;
+      padding-block-start: 0;
+    }
+    .gintaniCategories:has(.gintaniCategoryStory :focus-visible) .gintaniCategorySidebar {
+      animation: none;
+    }
+  }
+}
+@keyframes gintaniSplitEntrance {
+  from { width: 200%; }
+  to { width: 100%; }
+}
+@media (max-width: 700px) {
+  .gintaniCategories { grid-template-columns: minmax(0, 1fr); }
+  .gintaniCategorySidebar { position: relative; top: auto; min-height: 280px; }
+  .gintaniCategoryBackdrop img { object-position: center 53%; }
+  .gintaniCategory { min-height: 0; padding-block: 40px; }
+  .gintaniCategory h3 { font-size: clamp(24px, 10cqi, 54px); }
+}
+
+.introduction.gintaniIntroduction {
+  --gintani-intro-padding: clamp(52px, 7vw, 100px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(32px, 7vw, 120px);
+  padding-block: var(--gintani-intro-padding);
+}
+.gintaniIntroduction > div:first-child { container-type: inline-size; }
+.introduction.gintaniIntroduction h2 {
+  --display-letter-spacing: -.035em;
+  font-size: min(10cqi, 84px);
+  line-height: 1.04;
+}
+.gintaniIntroduction p { max-width: 440px; }
+.gintaniIntroPhoto {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  aspect-ratio: 16 / 9;
+  justify-self: center;
+}
+.gintaniIntroPhotoArtwork {
+  position: absolute;
+  inset: 0 0 calc(-1 * (var(--gintani-intro-padding) + clamp(55px, 6vw, 100px)));
+  z-index: 1;
+  pointer-events: none;
+}
+.gintaniIntroPhotoArtwork img {
+  object-fit: contain;
+  object-position: top center;
+}
+.gintaniWordmark {
+  width: min(calc(100% - 2 * var(--gutter)), 1600px);
+  margin-inline: auto;
+  pointer-events: none;
+}
+.gintaniWordmark .gintaniWordmarkArtwork {
+  height: auto;
+  max-width: none;
+  opacity: .075;
+  transform: translateY(-20%);
+}
+.gintaniWordmark .gintaniWordmarkArtwork[data-brand-artwork="gintani"] > img {
+  width: 100%;
+  filter: brightness(0);
+}
+.page[data-partner="gintani"] .gintaniCategories { background: var(--paper); }
+@media (max-width: 700px) {
+  .introduction.gintaniIntroduction { grid-template-columns: minmax(0, 1fr); }
+  .gintaniIntroPhotoArtwork { bottom: calc(-1 * (var(--gintani-intro-padding) + clamp(28px, 8vw, 52px))); }
+}
+.gintaniChapter { scroll-margin-top: 12px; }
+.gintaniChapter:not(:first-child) { align-content: start; }
+.gintaniSystems {
+  display: grid;
+  gap: clamp(42px, 6vw, 90px);
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.gintaniSystemPhoto {
+  position: relative;
+  aspect-ratio: 1;
+  margin-bottom: 20px;
+  background: radial-gradient(ellipse at 47% 38%, #363636, #242424 48%, #181818 82%);
+}
+.gintaniSystem .gintaniSystemPhoto img {
+  object-fit: contain;
+  padding: 6%;
+  filter: grayscale(.45) contrast(1.08);
+}
+.gintaniSystem .gintaniSystemPhoto::before { opacity: .5; }
+.gintaniProductLink { display: block; }
+.gintaniProductLink:hover h4 { text-decoration: underline; text-underline-offset: .18em; }
+.gintaniSystem h4 { font-size: clamp(20px, 5cqi, 38px); line-height: 1.12; }
+.gintaniSystem p { margin: 6px 0 12px; color: #575956; font-size: 14px; }
+.gintaniSystem a { min-height: 44px; }

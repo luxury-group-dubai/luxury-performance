@@ -62,7 +62,7 @@ export function Header() {
   const [mobileSection, setMobileSection] = useState<ShopMenu>('brands');
   const pathname = usePathname();
   const isShop = pathname === '/shop';
-  const overlaysHero = pathname === '/' || Object.keys(brandHeroImages).some(slug => pathname === `/partners/${slug}`);
+  const overlaysHero = pathname === '/' || pathname === '/partners/gintani' || Object.keys(brandHeroImages).some(slug => pathname === `/partners/${slug}`);
   const header = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);

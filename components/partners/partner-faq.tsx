@@ -3,6 +3,28 @@ import Link from 'next/link';
 import styles from './partner-faq.module.css';
 
 const questions = {
+  gintani: [
+    {
+      question: 'Which cars does Gintani make exhausts for?',
+      answer: 'The range above covers selected Lamborghini Aventador, Huracán and Revuelto models, Ferrari 812, F12, 488, Pista, F8 and Purosangue models, the McLaren 765LT and the Porsche 992 GT3 and GT3 RS.',
+    },
+    {
+      question: 'How do I confirm fitment?',
+      answer: 'Use the enquiry link on your chosen system. Tell us your model year, exact trim and any changes to your current exhaust so we can check fitment and what the system includes.',
+    },
+    {
+      question: 'Can I choose a valved exhaust?',
+      answer: 'Some systems offer valved and non-valved configurations. Tell us how you want the car to sound and we’ll confirm the options and valve controls for your model.',
+    },
+    {
+      question: 'How do I get pricing and a lead time?',
+      answer: 'Send a fitment enquiry for the system you’re considering. Our Dubai team can confirm the configuration, current price, availability and installation options before you order.',
+    },
+    {
+      question: 'Can I use a Gintani exhaust on the road?',
+      answer: 'Some systems are intended for closed-course use. Tell us where and how you plan to use the car so we can confirm the manufacturer’s intended use for the exact system.',
+    },
+  ],
   techart: [
     {
       question: 'Which Porsche models can I find TECHART parts for?',

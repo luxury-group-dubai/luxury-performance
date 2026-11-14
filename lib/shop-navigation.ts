@@ -5,7 +5,7 @@ export const brandMenu: ShopMenuItem[] = [
   { name: 'TECHART', href: '/partners/techart#top', artwork: 'techart' },
   { name: 'FI Exhaust', href: '/partners/fi-exhaust#top', artwork: 'fi-exhaust' },
   { name: 'Capristo', href: '/partners/capristo', artwork: 'capristo' },
-  { name: 'Gintani', href: '/contact?programme=Gintani', artwork: 'gintani' },
+  { name: 'Gintani', href: '/partners/gintani', artwork: 'gintani' },
   { name: 'Liberty Walk', href: '/contact?programme=Liberty%20Walk', artwork: 'liberty-walk' },
   { name: 'Voltrix', href: '/contact?programme=Voltrix', artwork: 'voltrix' },
 ];
