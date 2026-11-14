@@ -1,7 +1,6 @@
 'use client';
 
 import { Children, type ReactNode, useEffect, useRef, useState } from 'react';
-import { Pause, Play } from 'lucide-react';
 import styles from './brand-hero.module.css';
 
 type Brand = { slug: string; name: string };
@@ -34,9 +33,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
   const [transitioned, setTransitioned] = useState(false);
   const [requested, setRequested] = useState<number | null>(null);
   const [mounted, setMounted] = useState([0]);
-  const [paused, setPaused] = useState(false);
   const [focusHeld, setFocusHeld] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [soundPlaying, setSoundPlaying] = useState(false);
   const [announcement, setAnnouncement] = useState('');
 
@@ -125,7 +122,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     let progress: Animation | undefined;
     let inView = false;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const eligible = () => !(paused || focusHeld || hovered || soundPlaying || reduced.matches || document.hidden || !inView || document.documentElement.dataset.lxpIntro);
+    const eligible = () => !(focusHeld || soundPlaying || reduced.matches || document.hidden || !inView || document.documentElement.dataset.lxpIntro);
     const schedule = () => {
       clearTimeout(timer);
       cancelImage?.();
@@ -156,12 +153,11 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
       document.removeEventListener('visibilitychange', schedule);
       reduced.removeEventListener('change', schedule);
     };
-  }, [active, paused, focusHeld, hovered, soundPlaying, brands.length, mounted.length]);
+  }, [active, focusHeld, soundPlaying, brands.length, mounted.length]);
 
   function select(index: number) {
     setMounted(indices => indices.includes(index) ? indices : [...indices, index]);
     setRequested(index === active ? null : index);
-    setPaused(true);
     setAnnouncement(`${brands[index].name}, slide ${index + 1} of ${brands.length}`);
   }
 
@@ -171,8 +167,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     onEndedCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(false); }}
     onErrorCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(false); }}
     onFocusCapture={event => { if (event.target instanceof HTMLElement && event.target.matches(':focus-visible')) setFocusHeld(true); }}
-    onPointerEnter={event => { if (event.pointerType === 'mouse') setHovered(true); }}
-    onPointerLeave={() => setHovered(false)}
+    onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocusHeld(false); }}
     onTouchStart={event => { const point = event.touches[0]; touch.current = event.touches.length === 1 ? { x: point.clientX, y: point.clientY } : null; }}
     onTouchEnd={event => {
       const start = touch.current;
@@ -190,9 +185,6 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
       <nav className={styles.brandNav} aria-label="Choose a featured brand">
         {brands.map((brand, index) => <button key={brand.slug} type="button" aria-pressed={active === index} aria-label={`Show ${brand.name}`} onClick={() => select(index)}><span className={styles.progress} data-slide-progress aria-hidden="true" /><span className={styles.number} aria-hidden="true">0{index + 1}</span><span>{brand.name}</span></button>)}
       </nav>
-      <button className={styles.playback} type="button" aria-label={paused || focusHeld ? 'Start automatic slides' : 'Pause automatic slides'} onClick={() => { setPaused(!(paused || focusHeld)); setFocusHeld(false); }}>
-        {paused || focusHeld ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
-      </button>
     </div>
     <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
   </section>;

@@ -80,8 +80,6 @@
 .brandNav button[aria-pressed="true"] .progress { transform: scaleX(1); }
 .brandNav button:hover { color: #fff; }
 .number { font-size: 10px; opacity: .6; font-variant-numeric: tabular-nums; }
-.playback { flex-shrink: 0; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; background: transparent; color: #fff; border: 1px solid #ffffff50; border-radius: 50%; margin-left: auto; }
-.playback:hover { background: #ffffff15; }
 .hero :is(a,button):focus-visible { outline: 2px solid #e2c68d; outline-offset: 6px; }
 @media (min-width: 1800px) { .copy { max-width: 680px; } }
 @media (max-width: 1000px) {
@@ -115,7 +113,6 @@
   .brandNav { gap: 12px; }
   .brandNav button { min-height: 65px; padding-block: 14px; font-size: 10px; line-height: 1.6; gap: 0; align-items: start; }
   .number { display: none; }
-  .playback { width: 44px; height: 44px; margin-top: 9px; }
 }
 @media (max-width: 360px) {
   .copy { --hero-description-row: 110.5px; }
@@ -127,7 +124,6 @@
 @media (prefers-reduced-motion: reduce) {
   .layer, .progress, .cta { transition: none; }
   .layer[data-active="true"] .glitchWord, .layer[data-active="true"] .glitchWord::before, .layer[data-active="true"] .glitchWord::after { animation: none; }
-  .playback { display: none; }
 }
 
 /* Keep the controls inside the opening screen when browser toolbars are expanded. */
