@@ -1,0 +1,41 @@
+.action-secondary:is(:hover, :focus-visible):not(:disabled) {
+  color: var(--accent);
+}
+
+.action-arrow {
+  display: inline-grid;
+  flex: none;
+  overflow: hidden;
+}
+
+.action-arrow > svg {
+  display: block;
+  grid-area: 1 / 1;
+  transform: translate(0, 0);
+  transition: none;
+}
+
+.action-arrow > svg:last-child {
+  transform: translate(-100%, 100%);
+}
+
+.arrow-link:is(:hover, :focus-visible) .arrow-disc {
+  background: transparent;
+  border-color: currentColor;
+  color: inherit;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-arrow > svg {
+    transition: transform .3s ease-in-out;
+  }
+
+  :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-arrow > svg:first-child {
+    transform: translate(100%, -100%);
+  }
+
+  :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-arrow > svg:last-child {
+    transform: translate(0, 0);
+  }
+}

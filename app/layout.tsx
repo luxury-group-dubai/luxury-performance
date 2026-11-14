@@ -13,14 +13,13 @@ import { WhatsAppWidget } from '@/components/whatsapp-widget';
 import './globals.css';
 import './shop-shared.css';
 import './display-type.css';
+import './action-buttons.css';
 import { CartProvider } from '@/components/shop/cart-provider';
 import { defaultSocialImage } from '@/lib/social-images';
-const montserratUi = localFont({ src: './Montserrat-Variable-ui.woff2', variable: '--font-montserrat-ui', display: 'swap', preload: false, adjustFontFallback: false, fallback: [] });
-const montserratFull = localFont({ src: './Montserrat-Variable.woff2', variable: '--font-montserrat-full', display: 'swap', preload: false });
-// Let the opening photograph load before display type; CSS still loads the font when needed.
+const montserratUi = localFont({ src: './Montserrat-Variable-ui.woff2', weight: '100 900', variable: '--font-montserrat-ui', display: 'swap', preload: false, adjustFontFallback: false, fallback: [] });
+const montserratFull = localFont({ src: './Montserrat-Variable.woff2', weight: '100 900', variable: '--font-montserrat-full', display: 'swap', preload: false });
 const michroma = localFont({ src: './Michroma-Regular-ui.woff2', weight: '400', style: 'normal', variable: '--font-michroma', display: 'swap', preload: false, adjustFontFallback: false, fallback: [] });
 const michromaFull = localFont({ src: './Michroma-Regular.woff2', weight: '400', style: 'normal', variable: '--font-michroma-full', display: 'swap', preload: false });
-
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002'),
   title: { default: 'Luxury Performance — Beyond Ordinary', template: '%s | Luxury Performance' },

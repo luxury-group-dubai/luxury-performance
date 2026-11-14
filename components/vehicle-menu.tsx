@@ -1,4 +1,5 @@
 "use client";
+import { ActionArrow } from '@/components/action-arrow';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
@@ -27,7 +28,7 @@ export function VehicleMenu({ close }: { close: () => void }) {
   const available = models?.[make] || [];
   return <section className={styles.modelPanel} aria-label={`${selected.name} models`}>
     <button type="button" className={styles.backToMakes} onClick={back}><ArrowLeft size={15}/>All vehicle brands</button>
-    <div className={styles.modelHeading}><div className={styles.modelIdentity}><span className="tiny-label">Choose your model</span><h3 ref={heading} tabIndex={-1} aria-label={selected.name}><MenuLogo item={selected}/></h3></div><Link className={styles.allModels} href={selected.href} onClick={close} prefetch={false}>All {selected.name} parts<ArrowUpRight size={15}/></Link></div>
+    <div className={styles.modelHeading}><div className={styles.modelIdentity}><span className="tiny-label">Choose your model</span><h3 ref={heading} tabIndex={-1} aria-label={selected.name}><MenuLogo item={selected}/></h3></div><Link className={`${styles.allModels} action-secondary`} href={selected.href} onClick={close} prefetch={false}>All {selected.name} parts <ActionArrow size={15} /></Link></div>
     {error ? <div className={styles.modelStatus} role="status">Models couldn’t load. <button type="button" onClick={() => { setError(false); setAttempt(value => value + 1); }}>Try again</button></div> : !models ? <p className={styles.modelStatus} role="status">Loading models…</p> : available.length ? <div className={styles.modelLinks}>{available.map(model => <Link key={model.slug} href={`${selected.href}&model=${encodeURIComponent(model.slug)}`} onClick={close} prefetch={false}>{model.name}<ArrowUpRight size={14}/></Link>)}</div> : <p className={styles.modelStatus}>Browse all {selected.name} parts or ask our team about your model.</p>}
   </section>;
 }

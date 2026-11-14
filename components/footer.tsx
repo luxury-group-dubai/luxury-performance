@@ -1,6 +1,6 @@
+import { ActionArrow } from '@/components/action-arrow';
 import { BrandLogo } from './brand-logo';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import { contact } from '@/lib/content';
 import { SocialLinks } from './social-links';
 import styles from './footer.module.css';
@@ -14,7 +14,7 @@ export function Footer() {
       </div>
       <div className={styles.group}>
         <span className={styles.label}>Find us</span>
-        <a href={contact.maps} target="_blank" rel="noopener noreferrer">4th Street, Al Quoz Industrial 3<br />Dubai, United Arab Emirates <ArrowUpRight size={13} /></a>
+        <a className="action-secondary" href={contact.maps} target="_blank" rel="noopener noreferrer">4th Street, Al Quoz Industrial 3<br />Dubai, United Arab Emirates <ActionArrow size={13} /></a>
         <p className={styles.hours}>Monday–Saturday · 10am–8pm</p>
       </div>
       <div className={styles.group}>
@@ -25,10 +25,10 @@ export function Footer() {
       </div>
       <nav className={`${styles.group} ${styles.navigation}`} aria-label="Footer navigation">
         <span className={styles.label}>Discover</span>
-        <Link href="/partners">Our partners</Link>
-        <Link href="/about">Our world</Link>
-        <Link href="/contact">Contact</Link>
-        <Link href="/shop" className={styles.store}>Online store <ArrowUpRight size={13} /></Link>
+        <Link href="/partners">PARTNERS</Link>
+        <Link href="/about">ABOUT</Link>
+        <Link href="/contact">CONTACT</Link>
+        <Link href="/shop" className={`${styles.store} action-secondary`}>Online store <ActionArrow size={13} /></Link>
       </nav>
     </div>
     <div className={`footer-bottom ${styles.bottom}`}>

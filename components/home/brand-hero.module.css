@@ -1,5 +1,5 @@
 .hero { --hero-title-size: clamp(40px,4vw,64px); --hero-title-line: calc(var(--hero-title-size) * 1.25); position: relative; isolation: isolate; height: 100svh; min-height: 740px; max-height: 1100px; overflow: clip; background: #151617; color: #fff; }
-.context { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: 145px; font-size: 11px; line-height: 1.7; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+.context { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: 145px; font-family: var(--font-michroma), var(--font-sans); font-size: 11px; line-height: 1.7; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
 .context span { margin-inline: 10px; color: #ffffff80; }
 /* Keep the photograph painted; reveal copy as soon as the logo departs. */
 @media (prefers-reduced-motion: no-preference) {
@@ -20,12 +20,46 @@
 }
 .layer[data-active="true"] { opacity: 1; z-index: 1; pointer-events: auto; }
 .picture { position: absolute; inset: 0; display: block; }
+.imageFrame { display: contents; }
+.reflection { display: none; }
 .picture > img { object-fit: cover; object-position: 65% 55%; }
+.printLayer {
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 53% 49% at var(--car-position, 65% 49%), #0005 30%, #000 88%);
+}
+.slide[data-brand="novitec"] .printLayer {
+  mask-image:
+    radial-gradient(ellipse 36% 46% at 33% 50%, #0005 32%, #000 91%),
+    radial-gradient(ellipse 29% 34% at 68% 36%, #0005 35%, #000 96%);
+  mask-composite: intersect;
+}
+.slide[data-brand="valvetronic"] .printLayer {
+  mask-image: radial-gradient(ellipse 60% 55% at 56% 55%, #000b 28%, #000 92%);
+}
+.slide[data-brand="techart"] .picture:not(.printLayer) > img { filter: grayscale(1); }
+@media (min-width: 701px) {
+  .slide[data-brand="valvetronic"] .picture { left: 30%; }
+  .slide[data-brand="valvetronic"] .picture > img { object-position: center 43%; }
+  .slide[data-brand="valvetronic"] .shade {
+    background: linear-gradient(90deg, #151617 32%, #151617e6 38%, #15161766 56%, transparent 74%), linear-gradient(0deg, #080a0cb8, transparent 52%);
+  }
+}
 .slide[data-brand="novitec"] .picture > img { object-position: 58% 60%; }
 .slide[data-brand="novitec"] .shade { background: linear-gradient(90deg,#080a0c55,transparent 65%),linear-gradient(0deg,#080a0c99,transparent 45%); }
 .slide[data-brand="techart"] .picture { inset: 0; }
 .slide[data-brand="techart"] .picture > img { object-position: 65% 55%; }
 .slide[data-brand="techart"] .shade { background: linear-gradient(90deg,#080a0cb8,transparent 75%),linear-gradient(0deg,#080a0ca6,transparent 45%); }
+@media (min-width: 701px) {
+  .slide[data-brand="techart"] .picture {
+    left: 22%;
+  }
+  .slide[data-brand="techart"] .picture > img {
+    object-position: right 55%;
+  }
+  .slide[data-brand="techart"] .shade {
+    background: linear-gradient(90deg, #151617 23%, #151617e6 30%, #15161766 46%, transparent 62%), linear-gradient(0deg, #080a0ca6, transparent 45%);
+  }
+}
 .shade { position: absolute; inset: 0; background: linear-gradient(90deg,#080a0ccb,transparent 80%),linear-gradient(0deg,#080a0cf2,transparent 70%); }
 .copy {
   --hero-title-row: calc(var(--hero-title-line) * 2);
@@ -92,16 +126,55 @@
   .hero { --hero-title-size: clamp(26px,7.1vw,40px); height: 100vh; height: 100svh; min-height: 0; max-height: none; }
   .context { top: 115px; font-size: 9px; letter-spacing: .08em; }
   .context span { margin-inline: 5px; }
-  .picture { top: 140px; bottom: auto; height: 350px; }
-  .picture > img, .slide[data-brand="novitec"] .picture > img { object-position: center; }
-  .slide[data-brand="novitec"] .picture { top: 160px; height: auto; aspect-ratio: 2560 / 1717; }
-  .slide[data-brand="novitec"] .picture > img { object-position: center; }
-  .slide[data-brand="techart"] .picture { inset: 140px 0 auto; height: 350px; transform: none; }
-  .slide[data-brand="techart"] .picture > img { object-position: 70% center; }
-  .picture::after, .slide[data-brand="techart"] .picture::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg,#151617,transparent 22%,transparent 55%,#151617); }
-  .slide[data-brand="novitec"] .picture::after { background: linear-gradient(180deg,#151617,transparent 15%,transparent 80%,#151617); }
-  .slide[data-brand="techart"] .picture::after { background: linear-gradient(180deg,#151617,transparent 15%,transparent 75%,#151617); }
-  .shade { background: linear-gradient(0deg,#151617 35%,#15161700 68%),linear-gradient(180deg,#151617 15%,#15161700 35%); }
+  .imageFrame { display: block; position: absolute; inset: 140px 0 auto; height: 350px; isolation: isolate; }
+  .slide[data-brand="novitec"] .imageFrame {
+    top: 140px;
+    inset-inline: 3%;
+    height: auto;
+    aspect-ratio: 0.92;
+    max-height: min(400px, 53svh);
+    filter: brightness(1.2) contrast(.94);
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 14%, #000 77%, transparent),
+      linear-gradient(to right, transparent, #0008 12%, #000 25%, #000 91%, transparent);
+    mask-composite: intersect;
+  }
+  .imageFrame :is(.picture, .reflection) > img { object-position: center; }
+  .printLayer, .slide[data-brand="novitec"] .printLayer {
+    mask-image: radial-gradient(ellipse 76% 60% at 53% 50%, #0005 40%, #000 96%);
+  }
+  .slide[data-brand="novitec"] .imageFrame .picture > img {
+    object-position: 74% center;
+  }
+  .slide[data-brand="techart"] .imageFrame :is(.picture, .reflection) > img { object-position: 70% center; }
+  .reflection {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    filter: grayscale(1);
+  }
+  .reflection > img { width: 100%; height: 100%; object-fit: cover; transform: scaleY(-1); }
+  .reflection[data-edge="top"] { transform: translateY(-100%); mask-image: linear-gradient(to bottom, transparent 78%, #0006); }
+  .reflection[data-edge="bottom"] { transform: translateY(100%); mask-image: linear-gradient(to bottom, #0006, transparent 24%); }
+  .slide[data-brand="valvetronic"] .imageFrame {
+    mask-image: linear-gradient(to bottom, transparent, #0008 7%, #000 17%, #000 80%, #0008 91%, transparent);
+  }
+  .slide[data-brand="techart"] .imageFrame::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(to bottom, #15161799, transparent 10%, transparent 86%, #15161799);
+  }
+  .slide[data-brand] .shade {
+    background: linear-gradient(to top, #151617 28%, #151617eb 39%, #15161700 59%),
+      linear-gradient(to bottom, #151617 8%, #15161700 24%);
+  }
+  .slide[data-brand="novitec"] .shade {
+    background: linear-gradient(to top, #151617 33%, #15161700 54%);
+  }
   .copy { --hero-title-row: calc(var(--hero-title-line) + max(44px, var(--hero-title-line))); --hero-description-row: 88.4px; bottom: calc(118px + env(safe-area-inset-bottom, 0px)); max-width: none; grid-template-rows: 40px 20px var(--hero-title-row) 16px var(--hero-description-row) 20px 48px; }
   .logo { width: 145px; height: 40px; }
   .slide[data-brand="valvetronic"] .logo { width: 160px; }
@@ -131,6 +204,6 @@
   .copy { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); grid-template-rows: 32px 12px var(--hero-title-row) 12px var(--hero-description-row) 12px 44px; }
   .logo { height: 32px; }
   .cta { min-height: 44px; }
-  .picture, .slide[data-brand="techart"] .picture { top: 125px; height: 260px; }
-  .slide[data-brand="novitec"] .picture { top: 125px; }
+  .imageFrame { top: 125px; height: 260px; }
+  .slide[data-brand="novitec"] .imageFrame { top: 125px; }
 }

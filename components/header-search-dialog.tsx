@@ -1,5 +1,6 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
+import { ActionArrow } from '@/components/action-arrow';
 import { useEffect, useRef, useState, type FormEvent, type RefObject } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -84,8 +85,8 @@ export function HeaderSearchDialog({ trigger, onClose }: { trigger: RefObject<HT
             <span className={styles.productCopy}><small>{product.vendor}</small><strong>{product.title}</strong><span>From {money(product.price)}</span></span><ArrowUpRight size={16} strokeWidth={1.2}/>
           </Link>)}</div>}
           {reply?.total === 0 && <p className={styles.empty}>Try another part name, brand or vehicle.</p>}
-          {!!reply?.total && <Link className={styles.allResults} href={resultsUrl} onClick={close}>View all {reply.total} results <ArrowRight size={18} strokeWidth={1.3}/></Link>}
-          {!!error && <button type="button" className={styles.allResults} onClick={() => { changeQuery(''); input.current?.focus(); }}>Start a new search <ArrowRight size={18}/></button>}
+          {!!reply?.total && <Link className={`${styles.allResults} action-secondary`} href={resultsUrl} onClick={close}>View all {reply.total} results <ActionArrow direction="right" size={18} strokeWidth={1.3} /></Link>}
+          {!!error && <button type="button" className={`${styles.allResults} action-secondary`} onClick={() => { changeQuery(''); input.current?.focus(); }}>Start a new search <ActionArrow direction="right" size={18} /></button>}
         </div>}
       </div>
     </dialog>;

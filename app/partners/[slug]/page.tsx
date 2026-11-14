@@ -1,19 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
+import { ActionArrow } from '@/components/action-arrow';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Image, { getImageProps } from 'next/image';
-import { partnerHeroImages } from '@/lib/brand-hero-images';
+import { hasPartnerHeroOverlay, partnerHeroImages } from '@/lib/brand-hero-images';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { GintaniRange } from '@/components/partners/gintani-range';
-import { HeroNewsprintFilter } from '@/components/hero-newsprint-filter';
-import newsprint from '@/components/hero-newsprint.module.css';
 import { ArrowUpRight } from 'lucide-react';
 import { partners, type Partner } from '@/lib/partners';
 import { getCatalog } from '@/lib/shop/storefront';
 import { categoryOf, filterProducts, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
 import { money, type CatalogProduct } from '@/lib/shop/types';
 import { ArrowLink, Eyebrow } from '@/components/ui';
+import { HeroNewsprintFilter } from '@/components/hero-newsprint-filter';
+import newsprint from '@/components/hero-newsprint.module.css';
 import { BrandArtwork } from '@/components/brand-artwork';
 import { CayenneSelector, VehicleSelector } from '@/components/shop/vehicle-selector';
 import { is911Fit } from '@/lib/shop/techart-fitment';
@@ -25,11 +25,56 @@ import { ValvetronicExhaustComparison } from '@/components/partners/valvetronic-
 import { ValvetronicIntroExhaust } from '@/components/partners/valvetronic-intro-exhaust';
 import { ValvetronicSoundGallery } from '@/components/partners/valvetronic-sound-gallery';
 import { ValvetronicVehicleLogos } from '@/components/partners/valvetronic-vehicle-logos';
+import { CapristoChapterNav } from '@/components/partners/capristo-chapter-nav';
+import { GintaniRange } from '@/components/partners/gintani-range';
+import { valvetronicVehicles } from '@/lib/valvetronic-vehicles';
 import { TechartPageMotion } from '@/components/partners/techart-page-motion';
 import { TechartRangePicker } from '@/components/partners/techart-range-picker';
 import { techartRange } from '@/lib/techart-range';
 import styles from '../partners.module.css';
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
+
+const capristoCategoryArt: Record<string, string | undefined> = {
+  Exhaust: '/images/partners/capristo-types/exhaust.webp',
+  Aerodynamics: '/images/partners/capristo-types/aerodynamics.webp',
+  Performance: '/images/partners/capristo-types/performance.webp',
+};
+
+function capristoChapterId(category: string) {
+  return `capristo-type-${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+}
+
+const capristoLogos: Partial<Record<string, { logo: string; monochrome?: boolean }>> = {
+  alfa_romeo: { logo: '/brand/capristo-vehicles/alfa-romeo-logo.svg' },
+  alpina: { logo: '/brand/capristo-vehicles/alpina-logo.svg' },
+  bentley: { logo: '/brand/capristo-vehicles/bentley-logo.svg' },
+  chevrolet: { logo: '/brand/capristo-vehicles/chevrolet.svg', monochrome: true },
+  jaguar: { logo: '/brand/capristo-vehicles/jaguar-logo.svg', monochrome: true },
+  mercedes: { logo: '/brand/navigation/wordmarks/mercedes.svg', monochrome: true },
+  rolls_royce: { logo: '/brand/navigation/wordmarks/rolls-royce.svg', monochrome: true },
+};
+
+function CapristoVehicleLogos({ vehicles }: { vehicles: string[] }) {
+  return <ul className={styles.capristoVehicleLogos} aria-label="Shop Capristo by vehicle brand">
+    {vehicles.map(make => {
+      const artwork = capristoLogos[make] ?? valvetronicVehicles.find(vehicle => (vehicle.make ?? vehicle.mark.replaceAll('-', '_')) === make);
+      const name = label(make);
+
+      return <li key={make} data-make={make}>
+        <Link href={filterUrl('/shop', { brand: 'capristo', make })} prefetch={false} aria-label={`Shop Capristo for ${name}`}>
+          {artwork ? <Image
+            src={artwork.logo}
+            alt=""
+            width={160}
+            height={56}
+            sizes="(max-width: 700px) 26vw, 144px"
+            className={artwork.monochrome ? styles.capristoMonochromeLogo : undefined}
+          /> : <span>{name}</span>}
+        </Link>
+      </li>;
+    })}
+  </ul>;
+}
 const novitecWordmarks: Record<string, string> = {
   ferrari: '/brand/navigation/wordmarks/ferrari.svg',
   lamborghini: '/brand/navigation/wordmarks/lamborghini.svg',
@@ -74,21 +119,29 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   const shop = p.supplier ? filterUrl('/shop', { brand: p.supplier }) : `/contact?programme=${encodeURIComponent(p.name)}`;
   const heroAsset = partnerHeroImages[p.slug];
   const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 60 }).props : null;
+  const overlaysHeader = hasPartnerHeroOverlay(p.slug);
 
   return <div className={styles.page} data-partner={p.slug}>
-    <section className={`${styles.hero} ${heroAsset ? styles.fullBleedHero : ''}`} data-header-hero={heroAsset ? true : undefined} data-brand={p.slug} aria-labelledby="partner-title">
-      {p.slug === 'gintani' && <HeroNewsprintFilter />}
-      {heroAsset && p.slug === 'capristo' ? <img className={styles.heroImage} src="/images/partners/capristo-hero/f40-1440.webp" srcSet="/images/partners/capristo-hero/f40-640-q52.webp 640w, /images/partners/capristo-hero/f40-960.webp 960w, /images/partners/capristo-hero/f40-1440.webp 1440w, /images/partners/capristo-hero/f40-1672.webp 1672w" sizes="(max-width: 700px) 80vw, 100vw" alt={heroAsset.alt} width={1672} height={941} loading="eager" fetchPriority="high" /> : heroAsset ? <picture className={p.slug === 'gintani' ? `${styles.heroPicture} ${newsprint.photo}` : styles.heroPicture}>
-        {p.slug === 'valvetronic' && <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/hero.avif"/>}
-        {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
-        <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={p.slug === 'valvetronic' || p.slug === 'techart' ? 75 : 95} sizes="100vw" loading="eager" fetchPriority="high"/>
-      </picture> : <img className={styles.heroImage} src={p.image} alt={p.imageAlt} fetchPriority="high"/>}
+    <section className={`${styles.hero} ${overlaysHeader ? styles.fullBleedHero : ''}`} data-header-hero={overlaysHeader || undefined} data-brand={p.slug} aria-labelledby="partner-title">
+      <HeroNewsprintFilter />
+      <picture className={`${styles.heroPicture} ${newsprint.photo}`}>
+        {p.slug === 'capristo' && heroAsset ? (
+          <img className={styles.heroImage} src="/images/partners/capristo-hero/f40-1440.webp"
+            srcSet="/images/partners/capristo-hero/f40-640-q52.webp 640w, /images/partners/capristo-hero/f40-960.webp 960w, /images/partners/capristo-hero/f40-1440.webp 1440w, /images/partners/capristo-hero/f40-1672.webp 1672w"
+            sizes="(max-width: 700px) 80vw, 100vw" alt={heroAsset.alt} width={1672} height={941}
+            loading="eager" fetchPriority="high" />
+        ) : heroAsset ? <>
+          {p.slug === 'valvetronic' && <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/hero.avif"/>}
+          {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
+          <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={p.slug === 'valvetronic' || p.slug === 'techart' ? 75 : 95} sizes="100vw" loading="eager" fetchPriority="high"/>
+        </> : <img className={styles.heroImage} src={p.image} alt={p.imageAlt} fetchPriority="high"/>}
+      </picture>
       <div className={styles.heroShade}/>
       <div className={styles.heroContent}>
-        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" /></h1></div>
+        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" variant="hero" /></h1></div>
         <div className={styles.heroFoot}>{p.slug === 'gintani' ? (
-          <a href="#gintani-range" className="arrow-link light">
-            <span>Explore exhaust systems</span><span className="arrow-disc"><ArrowUpRight size={19} strokeWidth={1.5} /></span>
+          <a href="#gintani-range" className="arrow-link action-secondary light">
+            <span>Explore exhaust systems</span><span className="arrow-disc"><ActionArrow size={19} strokeWidth={1.5} /></span>
           </a>
         ) : <Suspense fallback={<ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>}>
           <PartnerHeroAction partner={p} productsPromise={productsPromise} />
@@ -132,7 +185,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   const centeredIntro = p.slug === 'valvetronic';
   const initialFit = typeof query.fit === 'string' && is911Fit(query.fit) ? query.fit : undefined;
   const initialBody = typeof query.body === 'string' ? query.body : undefined;
-  const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
+  const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
   const vehicleHeading = <><h2>{p.vehicleHeading}</h2><p>{compactNovitec ? 'NOVITEC aerodynamics, exhausts, wheels and suspension, with fitment and installation support in Dubai.' : vehicleFirst ? 'Choose your model and generation to explore TECHART parts for your Porsche.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
   const techartModels = <nav className={styles.modelChoices} aria-label="Porsche models">
     {vehicles.map(vehicle => {
@@ -152,10 +205,10 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     </> : compactNovitec ? <div className={styles.novitecWordmarks} aria-label="Explore NOVITEC by vehicle brand">{vehicles.map(vehicle => <Link key={vehicle} href={novitecWordmarks[vehicle] ? `/partners/novitec/${vehicle.replace(/_/g, '-')}` : filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })} aria-label={`Explore NOVITEC for ${label(vehicle)}`} data-make={vehicle}>{novitecWordmarks[vehicle] ? <Image src={novitecWordmarks[vehicle]} alt="" width={240} height={70} /> : <span>{label(vehicle)}</span>}</Link>)}</div> : vehicleLinks}
   </section>;
 
-  const collectionSection = showCategories && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : p.slug === 'capristo' ? 'Shop by product type.' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={filterUrl('/shop', { brand: p.supplier, category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} srcSet={[240, 360, 480, 700, 1000].map(width => `${image.url}${image.url.includes('?') ? '&' : '?'}width=${width} ${width}w`).join(', ')} sizes="(max-width: 700px) calc((100vw - 64px) / 2), (max-width: 1100px) 30vw, 24vw" alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;
+  const collectionSection = showCategories && p.slug !== 'capristo' && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={filterUrl('/shop', { brand: p.supplier, category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;
 
   const introduction = p.slug === 'capristo' ? <section id="discover" className={styles.capristoIntroduction} aria-labelledby="capristo-intro-title">
-    <div className={styles.capristoIntroImage}><img src="/images/partners/capristo-hero/revuelto-750.webp" srcSet="/images/partners/capristo-hero/revuelto-480.webp 480w, /images/partners/capristo-hero/revuelto-750.webp 750w, /images/partners/capristo-hero/revuelto-960.webp 960w" sizes="50vw" alt="Capristo Lamborghini Revuelto exhaust system" width={960} height={1239} loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} /></div>
+    <div className={styles.capristoIntroImage}><Image src="/images/partners/capristo-revuelto-instagram.jpg" alt="Capristo Lamborghini Revuelto exhaust system" fill sizes="(max-width: 700px) 100vw, 50vw" quality={90} /></div>
     <div className={styles.capristoIntroCopy}><h2 id="capristo-intro-title">Sound, shaped<br />by hand.</h2><p>Capristo creates exhaust systems with a sound and finish all their own. Designed, hand-welded and polished in Sundern, Germany, each system is made to bring out the character of the car it’s built for.</p><ArrowLink href={shop}>Explore Capristo parts</ArrowLink></div>
   </section> : !compactNovitec && p.slug !== 'techart' && <section id="discover" className={`${styles.introduction} ${centeredIntro ? styles.centeredIntroduction : ''}`}>
     {!centeredIntro && p.slug !== 'techart' && <Eyebrow number={vehicleFirst ? "02" : "01"}>{p.stockOnly ? 'From our stock' : `The ${p.name} approach`}</Eyebrow>}
@@ -163,16 +216,54 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     {centeredIntro && vehicles.length > 0 && <ValvetronicIntroExhaust />}
   </section>;
 
+  const capristoBrowsing = p.slug === 'capristo' && showCategories && (
+    <div className={styles.capristoBrowsing} data-partner-browsing>
+      {vehicleSection}
+      <section id="departments" className={styles.capristoCategories} aria-labelledby="capristo-categories-title">
+        <div className={styles.capristoCategorySidebar}>
+          <div className={styles.capristoCategoryBackdrop}>
+            <Image src="/images/partners/capristo-craft-editorial.jpg" alt="" fill sizes="100vw" loading="eager" />
+          </div>
+          <div className={styles.capristoCategoryNav}>
+            <h2 id="capristo-categories-title">Shop by product type</h2>
+            <CapristoChapterNav chapters={categories.map(title => ({ title, id: capristoChapterId(title) }))} />
+          </div>
+        </div>
+        <div className={styles.capristoCategoryStory}>
+        {categories.map(category => {
+          const items = products.filter(item => categoryOf(item) === category);
+          const artwork = capristoCategoryArt[category];
+          const fallback = items.find(item => item.featuredImage)?.featuredImage;
+
+          return <article key={category} id={capristoChapterId(category)} className={styles.capristoCategory}>
+            <h3>{category}</h3>
+            <div className={styles.capristoCategoryArt}>
+              {artwork ? <Image src={artwork} alt="" fill sizes="(max-width: 700px) 90vw, 50vw" loading={category === categories[0] ? 'eager' : 'lazy'} /> : fallback && (
+                <img src={fallback.url} alt="" loading="lazy" />
+              )}
+            </div>
+            <div className={styles.capristoCategoryCopy}>
+              <ArrowLink href={filterUrl('/shop', { brand: p.supplier, category })}>Shop {category.toLowerCase()}</ArrowLink>
+              <p>{items.length} {items.length === 1 ? 'part' : 'parts'}</p>
+            </div>
+          </article>;
+        })}
+          <ArrowLink href={shop}>View all parts</ArrowLink>
+        </div>
+      </section>
+    </div>
+  );
+
   return <>
     {p.slug === 'techart' && <TechartPageMotion />}
     {vehicleFirst && vehicleSection}
     {introduction}
-    {!vehicleFirst && vehicleSection}
+    {!vehicleFirst && !capristoBrowsing && vehicleSection}
     {p.slug === 'techart' ? <TechartRangePicker options={techartRange.map(option => ({
       ...option,
       count: filterProducts(products, option.filters).length,
       href: filterUrl('/shop', { brand: 'techart', ...option.filters }),
-    })).filter(option => option.count > 0)} /> : p.slug !== 'novitec' && collectionSection}
+    })).filter(option => option.count > 0)} /> : capristoBrowsing || (p.slug !== 'novitec' && collectionSection)}
     {p.slug === 'novitec' && <NovitecFeed looks={feedLooks.map(({ codes, model, ...look }) => {
       const album = novitecFeedAlbums[model];
       const lookProducts = codes.length ? codes.flatMap(code => {
@@ -184,7 +275,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     {p.slug === 'novitec' && <NovitecStories />}
     {p.slug === 'valvetronic' && <ValvetronicExhaustComparison />}
     {p.slug === 'capristo' && <section className={styles.capristoFind} aria-labelledby="capristo-find-title">
-      <div><h2 id="capristo-find-title">Find the right part.</h2><p>Choose your vehicle above, then narrow the collection by model and category. Already know what you need? Search by model or part number.</p><form action="/shop" className={styles.capristoFindSearch}><input type="hidden" name="brand" value="capristo"/><label htmlFor="capristo-find-query" className="sr-only">Search Capristo by model or part number</label><input id="capristo-find-query" name="q" type="search" placeholder="Model or part number"/><button type="submit">Search <ArrowUpRight size={17} aria-hidden="true"/></button></form></div>
+      <div><h2 id="capristo-find-title">Find the right part.</h2><p>Choose your vehicle above, then narrow the collection by model and category. Already know what you need? Search by model or part number.</p><form action="/shop" className={styles.capristoFindSearch}><input type="hidden" name="brand" value="capristo"/><label htmlFor="capristo-find-query" className="sr-only">Search Capristo by model or part number</label><input id="capristo-find-query" name="q" type="search" placeholder="Model or part number"/><button className="action-secondary" type="submit">Search <ActionArrow size={17} /></button></form></div>
       <div className={styles.capristoFindHelp}><h3>Need help with fitment?</h3><p>Tell us your car’s model and year. Our team can help confirm the right parts and installation options.</p><ArrowLink href={enquiry}>Talk to our team</ArrowLink></div>
     </section>}
     {p.slug !== 'novitec' && p.slug !== 'capristo' && featured.length > 0 && <section id="selected" className={styles.selected}>

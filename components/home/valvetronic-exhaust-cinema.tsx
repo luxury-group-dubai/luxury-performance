@@ -1,9 +1,10 @@
 'use client';
 // @refresh reset
 
+import { ActionArrow } from '@/components/action-arrow';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { ExhaustScene, ExhaustFinish } from './valvetronic-exhaust-scene';
 import { exhaustScrollPose } from './valvetronic-exhaust-motion';
@@ -13,6 +14,7 @@ export function ValvetronicExhaustCinema() {
   const revision='broll-mobile-smooth-17';
   const section=useRef<HTMLElement>(null);
   const pin=useRef<HTMLDivElement>(null);
+  const referenceFrame = useRef<HTMLDivElement>(null);
   const mount=useRef<HTMLDivElement>(null);
   const scene=useRef<ExhaustScene|null>(null);
   const selectedFinish=useRef<ExhaustFinish>('titanium');
@@ -59,9 +61,10 @@ export function ValvetronicExhaustCinema() {
       const run=++generation;
       started=true; observer.disconnect();setStatus('loading');
       loadScene().then(async ({createExhaustScene}) => {
-        if(disposed || run!==generation || !mount.current) return;
+        if(disposed || run!==generation || !mount.current || !referenceFrame.current) return;
         const next=createExhaustScene(mount.current,{
           cinematic:true,reducedMotion:motion.matches,
+          referenceFrame: referenceFrame.current,
           onInteract:()=>{}, onError:()=>{if(disposed || run!==generation) return;failed=true;setStatus('unavailable');},
         });
         scene.current=next;
@@ -104,11 +107,12 @@ export function ValvetronicExhaustCinema() {
       <div className={styles.topline}><span>Valvetronic Designs / True F1</span><span>Lamborghini Huracán</span></div>
       <h3 id="exhaust-cinema-title" className="sr-only">Valvetronic Designs — Huracán valved exhaust system</h3>
       <Image className={styles.wordmark} src="/brand/valvetronic-wordmark.svg" alt="" aria-hidden="true" width={893} height={208} loading="lazy" unoptimized />
+      <div ref={referenceFrame} className={styles.referenceFrame} aria-hidden="true"/>
       <div ref={mount} className={`${styles.canvas} ${status==='ready'?styles.ready:''}`} aria-hidden={status!=='ready'}/>
       {status==='loading' && <p role="status" className={styles.loading}><i aria-hidden="true"/>Loading the details</p>}
       {status==='unavailable' && <p role="status" className={styles.loading}>Explore the Huracán system below.</p>}
       <div className={styles.bottom}>
-        <div className={styles.caption}><p>Every curve. One unmistakable sound.</p><Link href="/partners/valvetronic">Explore Valvetronic Designs <ArrowUpRight size={17} strokeWidth={1.4}/></Link></div>
+        <div className={styles.caption}><p>Every curve. One unmistakable sound.</p><Link className="action-secondary" href="/partners/valvetronic">Explore Valvetronic Designs <ActionArrow size={17} strokeWidth={1.4} /></Link></div>
         <span className={styles.scrollHint}>Scroll to reveal <ArrowDown size={15} strokeWidth={1.2} aria-hidden="true"/></span>
         <fieldset className={styles.finishes} disabled={status!=='ready'}><legend className="sr-only">Exhaust finish</legend>
           <button type="button" aria-pressed={finish==='titanium'} onClick={()=>chooseFinish('titanium')}><i className={styles.titanium} aria-hidden="true"/>Titanium</button>

@@ -1,0 +1,2 @@
+Alfa Romeo, Alpina, Bentley and Jaguar: https://github.com/vehiclespecs/brand-logos (see ../navigation/vehicle-logos-LICENSE).
+Chevrolet: https://github.com/simple-icons/simple-icons/blob/develop/icons/chevrolet.svg

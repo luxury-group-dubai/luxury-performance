@@ -4,7 +4,7 @@ import { BrandArtwork } from '@/components/brand-artwork';
 import newsprint from '@/components/hero-newsprint.module.css';
 import { ArrowLink } from '@/components/ui';
 import styles from '@/app/partners/partners.module.css';
-import { GintaniMakeNav } from './gintani-make-nav';
+import { CapristoChapterNav } from './capristo-chapter-nav';
 import { PartnerFaq } from './partner-faq';
 
 const makes = [
@@ -62,20 +62,20 @@ export function GintaniRange() {
       <BrandArtwork brand="gintani" className={styles.gintaniWordmarkArtwork} labelled={false}
         sizes="(min-width: 1800px) 1600px, 90vw" loading="lazy" />
     </div>
-    <div id="gintani-range" className={styles.gintaniBrowsing}>
-      <section className={styles.gintaniCategories} aria-labelledby="gintani-range-title">
-        <div className={styles.gintaniCategorySidebar}>
-          <div className={styles.gintaniCategoryBackdrop}>
+    <div id="gintani-range" className={styles.capristoBrowsing} data-partner-browsing>
+      <section className={styles.capristoCategories} aria-labelledby="gintani-range-title">
+        <div className={styles.capristoCategorySidebar}>
+          <div className={styles.capristoCategoryBackdrop}>
             <Image src="/images/partners/gintani/hero.webp" alt="" fill sizes="100vw" />
           </div>
-          <div className={styles.gintaniCategoryNav}>
+          <div className={styles.capristoCategoryNav}>
             <h2 id="gintani-range-title">Exhaust systems by make</h2>
-            <GintaniMakeNav chapters={chapters} />
+            <CapristoChapterNav chapters={chapters} label="Gintani vehicle makes" />
           </div>
         </div>
-        <div className={styles.gintaniCategoryStory}>
+        <div className={styles.capristoCategoryStory}>
           {makes.map(({ id, title, systems }) => (
-            <article key={id} id={id} className={`${styles.gintaniCategory} ${styles.gintaniChapter}`}>
+            <article key={id} id={id} className={`${styles.capristoCategory} ${styles.gintaniChapter}`}>
               <h3>{title}</h3>
               <ul className={styles.gintaniSystems}>
                 {systems.map(([photo, model, system]) => (

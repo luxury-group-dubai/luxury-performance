@@ -1,13 +1,15 @@
 'use client';
 
+import { ActionArrow } from '@/components/action-arrow';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
-import { ArrowUpRight, MoveHorizontal } from 'lucide-react';
+import { MoveHorizontal } from 'lucide-react';
 import { clamp, completeAt, filmChapters, filmFrame, filmTiming, type FilmGeometry } from './motion';
 import styles from './film.module.css';
 
 type FilmControl = { seek: (value: number) => void; play: () => void; stop: () => void; compare: (value: boolean) => void };
+const detailChapters = filmChapters.slice(1, -1);
 
 export function PurosangueFilm() {
   const root = useRef<HTMLElement>(null);
@@ -338,16 +340,18 @@ export function PurosangueFilm() {
           <span className={styles.pin} />
           <span className={styles.callout}>{current.detail}</span>
         </div>
-        <div className={styles.sceneIndex} aria-hidden="true"><span>0{chapter + 1}</span><i>/ 0{filmChapters.length}</i></div>
+        {chapter > 0 && chapter <= detailChapters.length && (
+          <div className={styles.sceneIndex} aria-hidden="true"><span>0{chapter}</span><i>/ 0{detailChapters.length}</i></div>
+        )}
       </div>
 
       <div className={styles.controls} data-film-controls>
         <div className={styles.controlTop}>
-          <Link className={styles.enquire} href="/collections/ferrari-purosangue?brand=novitec">Explore NOVITEC Purosangue <ArrowUpRight size={17} /></Link>
+          <Link className={styles.enquire} href="/collections/ferrari-purosangue?brand=novitec">Explore NOVITEC Purosangue <ActionArrow size={17} /></Link>
         </div>
         <div className={styles.filmProgress} aria-hidden="true"><span /></div>
         <nav className={styles.chapters} aria-label="Transformation chapters">
-          {filmChapters.slice(1, -1).map((item, index) => <button type="button" key={item.name} aria-current={chapter === index + 1 ? 'step' : undefined} onClick={() => seek(index + 1)}><span className={styles.chapterNumber}>0{index + 1}</span><span>{item.name}</span><span className={styles.chapterDot} /></button>)}
+          {detailChapters.map((item, index) => <button type="button" key={item.name} aria-current={chapter === index + 1 ? 'step' : undefined} onClick={() => seek(index + 1)}><span className={styles.chapterNumber}>0{index + 1}</span><span>{item.name}</span><span className={styles.chapterDot} /></button>)}
         </nav>
       </div>
     </div>

@@ -1,7 +1,8 @@
 'use client';
 
+import { ActionArrow } from '@/components/action-arrow';
 import Image from 'next/image';
-import { ArrowRight, ArrowUpRight, Play } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import styles from './valvetronic-sound-gallery.module.css';
@@ -73,8 +74,8 @@ export function ValvetronicSoundGallery() {
                 {isActive && failed ? (
                   <div className={styles.fallback}>
                     <p>This clip couldn’t load.</p>
-                    <a href={`https://www.youtube.com/watch?v=${clip.youtube}`} target="_blank" rel="noopener noreferrer">
-                      Watch {clip.name} on YouTube <ArrowUpRight size={15} aria-hidden="true" />
+                    <a className="action-secondary" href={`https://www.youtube.com/watch?v=${clip.youtube}`} target="_blank" rel="noopener noreferrer">
+                      Watch {clip.name} on YouTube <ActionArrow size={15} />
                     </a>
                   </div>
                 ) : isActive ? (

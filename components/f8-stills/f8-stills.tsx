@@ -1,5 +1,6 @@
 'use client';
 
+import { ActionArrow } from '@/components/action-arrow';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
@@ -256,7 +257,7 @@ export function F8Stills({ car = 'f8', bare = false }: { car?: Car | 'mix'; bare
       <div className={styles.heading}>
         <p className={styles.eyebrow}><span />The art of automotive expression</p>
         <h1 id="f8-stills-title">Pure<br /><span>expression.</span></h1>
-        <Link href={`/shop?brand=${vehicle.supplier}&make=${vehicle.make}`} className={styles.explore}>Explore {vehicle.brand} <ArrowUpRight size={16} strokeWidth={1.4} /></Link>
+        <Link href={`/shop?brand=${vehicle.supplier}&make=${vehicle.make}`} className={`${styles.explore} action-secondary`}>Explore {vehicle.brand} <ActionArrow size={16} strokeWidth={1.4} /></Link>
       </div>
       <div className={styles.edition}><span>{vehicle.edition}</span><span>{vehicle.city}</span></div>
       <div className={styles.bottom}>

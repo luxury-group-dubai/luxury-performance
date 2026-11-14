@@ -1,9 +1,10 @@
 'use client';
 
+import { ActionArrow } from '@/components/action-arrow';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Pause, Play, RotateCcw, Volume2, VolumeX, X } from 'lucide-react';
+import { Pause, Play, RotateCcw, Volume2, VolumeX, X } from 'lucide-react';
 import styles from './valvetronic-feature-film.module.css';
 
 const videoId = 'CL2ofk5wqMc';
@@ -83,7 +84,7 @@ export function ValvetronicFeatureFilm() {
       <h3 id="valvetronic-film-title">Behind<br />the sound.</h3>
       <p className={styles.description}>A quick look at Valvetronic exhausts with Ahmed Amwell.</p>
       <p className={styles.credit}>With Ahmed Amwell</p>
-      <Link href="/shop?brand=valvetronic" className={styles.cta}>Explore Valvetronic exhausts <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" /></Link>
+      <Link href="/shop?brand=valvetronic" className={`${styles.cta} action-secondary`}>Explore Valvetronic exhausts <ActionArrow size={17} strokeWidth={1.5} /></Link>
     </div>
     <div className={styles.media}>
       <div className={styles.player}>
@@ -100,7 +101,7 @@ export function ValvetronicFeatureFilm() {
           <button type="button" disabled={!ready} aria-label="Replay Valvetronic film" onClick={() => { player.current?.seekTo(0, true); player.current?.playVideo(); }}><RotateCcw size={17} aria-hidden="true" /></button>
           <button type="button" aria-label="Close Valvetronic film" onClick={close}><X size={18} aria-hidden="true" /></button>
         </div> : <span className={styles.duration}>32-second film</span>}
-        <a href={`https://www.youtube.com/shorts/${videoId}`} target="_blank" rel="noopener noreferrer">Watch on YouTube <ArrowUpRight size={14} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
+        <a className="action-secondary" href={`https://www.youtube.com/shorts/${videoId}`} target="_blank" rel="noopener noreferrer">Watch on YouTube <ActionArrow size={14} /><span className="sr-only"> (opens in a new tab)</span></a>
       </div>
       {error && <p className={styles.error} role="status">{error}</p>}
     </div>

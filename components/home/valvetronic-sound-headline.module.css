@@ -1,9 +1,8 @@
 .row { display: inline-flex; align-items: center; gap: clamp(8px,1.2vw,17px); vertical-align: top; white-space: nowrap; }
 .label { display: inline-grid; }
 .measure, .text { grid-area: 1 / 1; }
-.measure { visibility: hidden; font-weight: 400; }
+.measure { visibility: hidden; }
 .text {
-  font-weight: 400;
   color: #fff;
   background-image: linear-gradient(160deg,#edf0ef 0%,#bcc5ca 24%,#909ca6 48%,#c7d0d5 70%,#e3e6e4 87%,#a2abb3 100%);
   background-clip: text;
@@ -18,6 +17,10 @@
 .surface { opacity: 0; transition: opacity 500ms ease; }
 .pulse { opacity: 0; transform-box: fill-box; transform-origin: center; }
 .button:hover .glyph { filter: brightness(1.2); }
+.measure, .row[data-playing="true"] .text {
+  font-synthesis: style;
+  font-style: italic;
+}
 .row[data-playing="true"] .text { filter: var(--metal-filter); color: transparent; }
 .row[data-playing="true"] .glyph { transform: scale(1); }
 .row[data-playing="true"] .shape { stroke-width: 7; }

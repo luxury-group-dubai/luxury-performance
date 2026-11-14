@@ -1,3 +1,4 @@
+import { ActionArrow } from '@/components/action-arrow';
 import '@/app/shop.css';
 import type { ReactNode } from 'react';
 import { ferrariVersionMatch, is812Selection, isSF90Body, isSF90Selection, sf90Bodies } from '@/lib/shop/novitec-ferrari-fitment';
@@ -14,9 +15,9 @@ import { suppliers, supplierOf, categoryOf, tagsFor, filterProducts, filterUrl, 
 import { cayenneBodies, isCayenneLineupFit } from '@/lib/shop/techart-cayenne';
 import { bodyStyles, filterBodyProducts, is911LineupFit, supportsBody, techartSelection, vehicleBodyMatch } from '@/lib/shop/techart-fitment';
 import { SelectedVehicle } from './vehicle-selector';
-import { CapristoImagePlaceholder } from './capristo-image-placeholder';
 import { novitecShopProfile } from '@/lib/shop/novitec-models';
 import { f8Bodies, f8BodyMatch, isF8Body, isF8Selection } from '@/lib/shop/novitec-f8-fitment';
+import { CapristoImagePlaceholder } from './capristo-image-placeholder';
 import vehicleStyles from './vehicle-selector.module.css';
 // Match the 90% image inset, catalogue gutters, sidebar and 2/3/4-column grids.
 const catalogImageSizes = '(max-width: 700px) calc((100vw - 2 * clamp(24px, 5vw, 88px) - 12px) * 0.45), (max-width: 1150px) calc((90vw - 230px) * 0.45), (max-width: 1599px) calc((100vw - 2 * clamp(24px, 5vw, 88px) - 302px) * 0.3), calc((100vw - 2 * clamp(24px, 5vw, 88px) - 322px) * 0.225)';
@@ -65,8 +66,8 @@ export function Catalog({ products, filters: queryFilters, title, description, b
   const porsche911 = filters.brand === 'techart' && filters.model === '911';
   const fits = fitOptions(scope, filters).filter(fit => fit === filters.fit || (cayenne ? isCayenneLineupFit(fit) : !porsche911 || is911LineupFit(fit)));
   const vehicle = techartSelection(filters);
-  const usesTabHeader = !preview && !vehicleCollection && basePath === '/shop';
-  const novitecProfile = usesTabHeader && filters.brand === 'novitec' && filters.model
+  const usesShopIntro = !vehicleCollection && (basePath === '/shop' || preview);
+  const novitecProfile = usesShopIntro && filters.brand === 'novitec' && filters.model
     ? novitecShopProfile(filters.model, filters.body)
     : undefined;
   const hasVehicleArtwork = !!(vehicle || novitecProfile);
@@ -89,21 +90,20 @@ export function Catalog({ products, filters: queryFilters, title, description, b
   const shown = matches.slice((page - 1) * 24, page * 24);
   const href = (changes: Filters) => filterUrl(basePath, { ...queryFilters, ...changes });
   return <CatalogMobileProvider><div className="shop-page">
-    {preview && <div className="shop-topline"><Link href="/">Luxury Performance</Link><span>/</span><Link href={basePath}>{previewLabel}</Link>{selected && <><span>/</span><span>{selected.name}</span></>}</div>}
-    <div className={usesTabHeader ? 'shop-dark-header' : undefined}>
-    <section className={`shop-intro shop-intro-small ${vehicle && !usesTabHeader ? vehicleStyles.catalogIntro : ''}${vehicleCollection ? ' shop-model-intro' : preview ? '' : ' shop-catalogue-intro'}${usesTabHeader ? ' shop-tab-intro' : ''}`}>
+    <div className={usesShopIntro ? 'shop-dark-header' : undefined}>
+    <section className={`shop-intro shop-intro-small ${vehicle && !usesShopIntro ? vehicleStyles.catalogIntro : ''}${vehicleCollection ? ' shop-model-intro' : ' shop-catalogue-intro'}${usesShopIntro ? ' shop-tab-intro' : ''}`}>
       <div>
         {vehicleCollection && <Link className="shop-model-back" href={vehicleCollection.makeHref}><ArrowLeft size={13} aria-hidden="true" />{vehicleCollection.makeLabel}</Link>}
-        {preview && <span className="tiny-label">The parts. The possibilities.</span>}
+        {preview && <span className="tiny-label shop-preview-label">{previewLabel}</span>}
         <h1>{heading}</h1>
-        {usesTabHeader && <p className="shop-intro-description">{introDescription}</p>}
+        {usesShopIntro && <p className="shop-intro-description">{introDescription}</p>}
         {vehicleCollection?.versions}
       </div>
       {vehicleCollection ? (
         vehicleCollection.artwork && <div className="shop-intro-aside shop-intro-model-artwork">{vehicleCollection.artwork}</div>
-      ) : (!usesTabHeader || hasVehicleArtwork || partnerHref) && (
-        <div className={`shop-intro-aside ${vehicle ? vehicleStyles.catalogVehicle : ''}${hasVehicleArtwork && usesTabHeader ? ' shop-tab-vehicle' : ''}`}>
-          {vehicle ? <SelectedVehicle selection={vehicle} compact={usesTabHeader} /> : novitecProfile ? (
+      ) : (!usesShopIntro || hasVehicleArtwork || partnerHref) && (
+        <div className={`shop-intro-aside ${vehicle ? vehicleStyles.catalogVehicle : ''}${hasVehicleArtwork && usesShopIntro ? ' shop-tab-vehicle' : ''}`}>
+          {vehicle ? <SelectedVehicle selection={vehicle} compact={usesShopIntro} /> : novitecProfile ? (
             <div className={`${vehicleStyles.selectedProfile} ${vehicleStyles.novitecStage}`}>
               <Image
                 src={novitecProfile.src}
@@ -116,25 +116,25 @@ export function Catalog({ products, filters: queryFilters, title, description, b
               />
             </div>
           ) : <>
-            {!usesTabHeader && <p>{introDescription}</p>}
-            {partnerHref && <Link href={partnerHref}>Discover {selected?.name} <ArrowUpRight size={18} /></Link>}
+            {!usesShopIntro && <p>{introDescription}</p>}
+            {partnerHref && <Link className="action-secondary" href={partnerHref}>Discover {selected?.name} <ActionArrow size={18} /></Link>}
           </>}
         </div>
       )}
     </section>
     </div>
-    {!preview && !vehicleCollection && <div className={`shop-supplier-bar${usesTabHeader ? ' shop-supplier-bar-dark' : ''}`}>
+    {!preview && !vehicleCollection && <div className={`shop-supplier-bar${usesShopIntro ? ' shop-supplier-bar-dark' : ''}`}>
       <CatalogTabs activeTab={`${inStock ? 'stock' : 'all'}:${filters.brand ?? ''}`}>
-        <Link href={basePath} scroll={!usesTabHeader} aria-current={!inStock && !filters.brand ? 'page' : undefined}>
+        <Link className="shop-scope-tab" href={basePath} scroll={!usesShopIntro} aria-current={!inStock && !filters.brand ? 'page' : undefined}>
           All parts {allTotal !== undefined && <sup>{allTotal}</sup>}
         </Link>
-        <Link href={inStockShopPath} scroll={!usesTabHeader} aria-current={inStock && !filters.brand ? 'page' : undefined}>
+        <Link className="shop-scope-tab" href={inStockShopPath} scroll={!usesShopIntro} aria-current={inStock && !filters.brand ? 'page' : undefined}>
           All in stock {stockTotal !== undefined && <sup>{stockTotal}</sup>}
         </Link>
         {suppliers.filter(supplier => products.some(product => supplierOf(product) === supplier.slug)).map(supplier => (
           <Link
             href={filterUrl(basePath, { brand: supplier.slug, stock: filters.stock })}
-            scroll={!usesTabHeader}
+            scroll={!usesShopIntro}
             aria-current={filters.brand === supplier.slug ? 'page' : undefined}
             key={supplier.slug}
           >
@@ -144,11 +144,11 @@ export function Catalog({ products, filters: queryFilters, title, description, b
       </CatalogTabs>
     </div>}
     <div className="shop-catalogue" id="catalogue">
-      <CatalogFilterPanel filters={queryFilters} basePath={basePath} makes={vehicleCollection ? [] : makes} models={vehicleCollection ? [] : models} fits={vehicleCollection ? [] : fits} bodies={vehicleCollection ? [] : bodies} categories={categories} total={departmentScope.length} resultCount={matches.length}><div className="shop-fitment-help"><Link href="/contact">Need help with fitment? <ArrowUpRight size={14} aria-hidden="true" /></Link></div></CatalogFilterPanel>
+      <CatalogFilterPanel filters={queryFilters} basePath={basePath} makes={vehicleCollection ? [] : makes} models={vehicleCollection ? [] : models} fits={vehicleCollection ? [] : fits} bodies={vehicleCollection ? [] : bodies} categories={categories} total={departmentScope.length} resultCount={matches.length}><div className="shop-fitment-help"><Link className="action-secondary" href="/contact">Need help with fitment? <ActionArrow size={14} /></Link></div></CatalogFilterPanel>
       <section className="shop-results" aria-label="Products">
         <CatalogProductToolbar filters={queryFilters} basePath={basePath} resultLabel={`${matches.length} ${matches.length === 1 ? 'part' : 'parts'}${selected ? ` from ${selected.name}` : ''}`} />
         <CatalogAppliedFilters filters={queryFilters} basePath={basePath} />
-        {shown.length ? <div className="shop-product-grid">{shown.map(p=><Link className="shop-product-card" key={p.id} href={`${productBasePath}/${p.handle}`}><div className="shop-product-image">{p.featuredImage?<CatalogThumbnail src={p.featuredImage.url} alt={p.featuredImage.altText || p.title} preview={preview} />:p.vendor.toLowerCase() === 'capristo' ? <CapristoImagePlaceholder /> : <span>{p.vendor}</span>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{isUsedPart(p) && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.vendor}</span><span>{categoryOf(p)}</span></div><h2>{p.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h2><p className="shop-price">{preview && Number(p.priceRange.minVariantPrice.amount) === 0 ? 'Price pending' : wheelGroupSize(p) ? `${money(p.priceRange.minVariantPrice)} / ${wheelGroupUnit(wheelGroupSize(p)!)}` : `From ${money(p.priceRange.minVariantPrice)}`}</p></Link>)}</div>:<div className="shop-empty"><h2>No matching parts.</h2><p>Try another vehicle or department, or ask our team about your car.</p><Link href={filterUrl(basePath, { brand: queryFilters.brand, stock: queryFilters.stock })} scroll={false}>Clear filters →</Link></div>}
+        {shown.length ? <div className="shop-product-grid">{shown.map(p=><Link className="shop-product-card" key={p.id} href={`${productBasePath}/${p.handle}`}><div className="shop-product-image">{p.featuredImage?<CatalogThumbnail src={p.featuredImage.url} alt={p.featuredImage.altText || p.title} preview={preview} />:['capristo', 'gintani'].includes(p.vendor.toLowerCase()) ? <CapristoImagePlaceholder brand={p.vendor.toLowerCase() as 'capristo' | 'gintani'} /> : <span>{p.vendor}</span>}<span className="shop-product-arrow"><ArrowUpRight size={18}/></span>{isUsedPart(p) && <span className="shop-used">Used</span>}</div><div className="shop-card-meta"><span>{p.vendor}</span><span>{categoryOf(p)}</span></div><h2>{p.title.replace(/^TECHART\s*[-–]\s*/i,'')}</h2><p className="shop-price">{preview && Number(p.priceRange.minVariantPrice.amount) === 0 ? 'Price pending' : wheelGroupSize(p) ? `${money(p.priceRange.minVariantPrice)} / ${wheelGroupUnit(wheelGroupSize(p)!)}` : `From ${money(p.priceRange.minVariantPrice)}`}</p></Link>)}</div>:<div className="shop-empty"><h2>No matching parts.</h2><p>Try another vehicle or department, or ask our team about your car.</p><Link href={filterUrl(basePath, { brand: queryFilters.brand, stock: queryFilters.stock })} scroll={false}>Clear filters →</Link></div>}
         {pages>1 && <nav className="shop-pagination" aria-label="Pagination">{page>1?<Link href={href({page:String(page-1)})}>← Previous</Link>:<span/>}<span>Page {page} of {pages}</span>{page<pages?<Link href={href({page:String(page+1)})}>Next →</Link>:<span/>}</nav>}
         {!!review.length && <details className={vehicleStyles.review}><summary>{review.length} more {review.length === 1 ? 'part needs' : 'parts need'} fitment confirmation</summary><p>{f8Body || sf90Body || version812 ? 'These listings do not clearly specify your version, or are for a special programme. Confirm compatibility with our team before ordering.' : 'Confirm fitment with our team before ordering these parts.'}</p><ul>{review.map(product => <li key={product.id}><Link href={`/products/${product.handle}`}>{product.title}</Link></li>)}</ul></details>}
       </section>

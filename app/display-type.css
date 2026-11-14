@@ -1,11 +1,25 @@
-:root { --font-display: var(--font-michroma), var(--font-michroma-full), var(--font-sans); }
+:root {
+  --font-display: var(--font-sans);
+  --font-display-weight: 700;
+  --display-letter-spacing: -.01em;
+}
 
-/* Display face for editorial headings; compact shopping and form UI retain Montserrat. */
-h1, h2 { font-family: var(--font-display); font-synthesis: none; }
+/* Keep compact UI and product names at their own weights. */
+#main :is(h1, h2):not(:where(
+  dialog *, [role="dialog"] *, .shop-drawer *, .shop-order-dialog *,
+  .shop-product-information h1, .shop-description-rich *, .shop-product-card *,
+  .shop-filter-sheet-header h2, .form-heading, #global-search-title, [data-hero-eyebrow]
+)) {
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight);
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: var(--display-letter-spacing);
+  text-transform: uppercase;
+}
 :is(dialog, [role="dialog"], .shop-drawer, .shop-order-dialog) :is(h1, h2),
 .shop-product-information h1,
 .shop-description-rich :is(h2, h3, h4, h5, h6),
-.shop-filter-heading h2,
 .shop-filter-sheet-header h2,
 .form-heading,
 #global-search-title { font-family: var(--font-sans); }

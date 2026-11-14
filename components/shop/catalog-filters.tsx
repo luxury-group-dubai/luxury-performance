@@ -1,8 +1,9 @@
 "use client";
 
+import { ActionArrow } from '@/components/action-arrow';
 import { useOptimistic, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { label, fitLabel, techartFitmentLabel, techartGeneration, filterUrl, updateFilters, type Filters } from '@/lib/shop/taxonomy';
 
 import { CatalogChoice, type CatalogChoiceOption } from './catalog-choice';
@@ -76,7 +77,7 @@ export function CatalogFilters({ filters, basePath, makes, models, fits, categor
       options={categories.map(({ name, count }) => [name, name, { count, disabled: count === 0 && selection.category !== name }])}
       onChange={category => apply({ category })} />
     <button className="shop-filter-reset" type="button" onClick={reset}>Reset</button>
-    {onDone && <footer className="shop-sheet-footer"><button className="shop-button" type="button" disabled={pending} onClick={onDone}>{pending ? 'Updating parts…' : 'View ' + resultCount + (resultCount === 1 ? ' part' : ' parts')}<ArrowRight size={16} aria-hidden="true" /></button></footer>}
+    {onDone && <footer className="shop-sheet-footer"><button className="shop-button" type="button" disabled={pending} onClick={onDone}>{pending ? 'Updating parts…' : 'View ' + resultCount + (resultCount === 1 ? ' part' : ' parts')} <ActionArrow direction="right" size={16} /></button></footer>}
   </form>;
 }
 
