@@ -13,9 +13,9 @@ export const brandHeroImages: Partial<Record<string, HeroImage>> = {
     alt: 'Porsche GT3 RS with a Valvetronic Designs exhaust in a specialist installation bay',
   },
   techart: {
-    image: '/images/home/techart-gtstreet-touring-full.jpg',
-    mobile: { src: '/images/home/techart-gtstreet-touring-full.jpg', width: 3000, height: 2000 },
-    alt: 'Blue TECHART GTstreet R Touring Porsche 911 on an Alpine road, with carbon aerodynamics and custom wheels',
+    image: '/images/home/techart-gtstreet-r.webp',
+    mobile: { src: '/images/home/techart-gtstreet-r-mobile.webp', width: 744, height: 1024 },
+    alt: 'White TECHART GTstreet R Porsche 911 driving through the city, viewed from the rear',
   },
 };
 
