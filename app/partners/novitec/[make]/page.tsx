@@ -1,3 +1,4 @@
+import { AllocationBanner } from '@/components/nlargo/allocation-banner';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -61,6 +62,7 @@ export default async function NovitecModelsForMake({ params }: Props) {
         <div><p className={styles.eyebrow}>NOVITEC / {brand.name}</p><h1>Choose your {brand.name}.</h1><p>Select your model to explore the NOVITEC parts available for your car.</p></div>
         <Link href={filterUrl('/shop', { brand: 'novitec', make: brand.tag })} className={styles.all}>Shop all {brand.name} parts <ArrowUpRight size={17} aria-hidden="true" /></Link>
       </header>
+      {make === 'ferrari' && <AllocationBanner />}
       {models.length ? <ul className={styles.grid} aria-label={`${brand.name} models`}>
         {models.map(model => <li key={model}><Link className={styles.card} href={make === 'ferrari' && ['f8', '812', 'sf90'].includes(model) ? `/partners/novitec/ferrari/${model}` : filterUrl('/shop', { brand: 'novitec', make: brand.tag, model })}>
           <span className={styles.picture}>{covers[model] ? <Image src={`/images/novitec-models/${covers[model]}`} alt="" fill sizes="(max-width: 700px) 45vw, (max-width: 1100px) 45vw, 30vw" quality={90} className={styles.image} /> : <Image src="/brand/novitec.svg" alt="" width={160} height={32} className={styles.placeholder} />}</span>

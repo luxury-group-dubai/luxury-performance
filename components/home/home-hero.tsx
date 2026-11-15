@@ -8,6 +8,7 @@ import { BrandHero } from './brand-hero';
 import heroStyles from './brand-hero.module.css';
 import { ValvetronicSoundHeadline } from './valvetronic-sound-headline';
 import { TechartPersonalHeadline } from './techart-personal-headline';
+import { nlargoAvailable, nlargoCta, nlargoPath } from '@/lib/nlargo-allocation';
 
 const mobileHero = {
   src: '/images/home/novitec-hero-mobile-v1-750.webp',
@@ -16,6 +17,17 @@ const mobileHero = {
 };
 
 const heroSlides = [
+  {
+    slug: 'nlargo', name: 'N-LARGO', logo: '/brand/novitec.svg', logoWidth: 228, logoHeight: 45,
+    image: '/images/nlargo/story.webp',
+    mobile: { src: '/images/nlargo/story.webp', width: 1080, height: 1919 },
+    alt: 'Official NOVITEC teaser of the Ferrari 12Cilindri N-LARGO in red light',
+    title: <>Ferrari 12Cilindri<br />N-LARGO</>,
+    description: nlargoAvailable
+      ? 'One exclusive allocation available. The first reveal vehicle is secured for Dubai, with one additional NOVITEC conversion allocation for a private client.'
+      : 'Fully allocated. Discover the NOVITEC 12Cilindri N-LARGO project and discuss future opportunities with our team in Dubai.',
+    href: nlargoPath, cta: nlargoCta,
+  },
   {
     slug: 'novitec', name: 'NOVITEC', logo: '/brand/novitec.svg', logoWidth: 228, logoHeight: 45,
     ...brandHeroImages.novitec!,
@@ -48,22 +60,22 @@ const heroSlides = [
 export function HomeHero() {
   return <>
     <HeroNewsprintFilter />
-    <link rel="preload" as="image" type="image/webp" href={mobileHero.src} media="(max-width: 700px)" imageSrcSet={mobileHero.srcSet} imageSizes="100vw" fetchPriority="high" />
     <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
     {heroSlides.map((slide, index) => {
-      const mobile = index === 0 ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
+      const mobile = slide.slug === 'novitec' ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
         <div className={heroStyles.imageFrame}>
-        {[false, true].map(printed => (
-          <picture key={String(printed)} className={printed ? `${heroStyles.picture} ${heroStyles.printLayer} ${newsprint.photo}` : heroStyles.picture}>
-            {mobile && <source media="(max-width: 700px)" type={index === 0 ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
+        {(slide.slug === 'nlargo' ? [false] : [false, true]).map(printed => (
+          <picture key={String(printed)} className={printed ? `${heroStyles.picture} ${heroStyles.printLayer} ${newsprint.photo}` : heroStyles.picture} aria-hidden={printed || undefined}>
+            {mobile && <source media="(max-width: 700px)" type={slide.slug === 'novitec' ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
             <Image src={slide.image} alt={printed ? '' : slide.alt} fill quality={75} sizes="100vw" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={!printed && index === 0 ? 'high' : 'auto'} />
           </picture>
         ))}
         {mobile && slide.slug === 'techart' && ['top', 'bottom'].map(edge => (
-          <picture key={edge} className={heroStyles.reflection} data-edge={edge}>
+          <picture key={edge} className={heroStyles.reflection} data-edge={edge} aria-hidden="true">
             <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />
             {/* No image is requested for this decorative layer on desktop. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" decoding="async" />
           </picture>
         ))}

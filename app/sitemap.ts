@@ -6,7 +6,7 @@ import { novitecStories } from '@/lib/novitec-stories';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002';
-  const routes = ['/', '/about', '/contact'];
+  const routes = ['/', '/about', '/contact', '/novitec-12cilindri-n-largo'];
 
   if (process.env.SHOP_SEO_LIVE === 'true') {
     const [products, collections] = await Promise.all([getCatalog(), getCollections()]);

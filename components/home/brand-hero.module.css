@@ -106,14 +106,13 @@
 .cta:hover { background: #941321; }
 .cta svg { flex-shrink: 0; }
 .controls { position: absolute; z-index: 3; bottom: 28px; left: var(--gutter); right: max(var(--gutter), calc(92px + env(safe-area-inset-right, 0px))); display: flex; align-items: center; gap: 32px; }
-.brandNav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); flex: 1; max-width: 920px; gap: 32px; }
+.brandNav { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); flex: 1; max-width: 1050px; gap: 32px; }
 .brandNav button { display: flex; align-items: center; gap: 15px; position: relative; min-height: 62px; padding: 19px 0; background: transparent; color: #c3c3bd; border-top: 1px solid #ffffff40; font-size: 13px; text-align: left; transition: color 180ms; }
 .brandNav button[aria-pressed="true"]::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 2px; background: #e4e5df; }
 .progress { position: absolute; top: -1px; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
 .brandNav button[aria-pressed="true"] { color: #fff; }
 .brandNav button[aria-pressed="true"] .progress { transform: scaleX(1); }
 .brandNav button:hover { color: #fff; }
-.number { font-size: 10px; opacity: .6; font-variant-numeric: tabular-nums; }
 .hero :is(a,button):focus-visible { outline: 2px solid #e2c68d; outline-offset: 6px; }
 @media (min-width: 1800px) { .copy { max-width: 680px; } }
 @media (max-width: 1000px) {
@@ -129,15 +128,11 @@
   .imageFrame { display: block; position: absolute; inset: 140px 0 auto; height: 350px; isolation: isolate; }
   .slide[data-brand="novitec"] .imageFrame {
     top: 140px;
-    inset-inline: 3%;
-    height: auto;
-    aspect-ratio: 0.92;
-    max-height: min(400px, 53svh);
+    inset-inline: 0;
+    width: 100%;
+    height: min(400px, 53svh);
     filter: brightness(1.2) contrast(.94);
-    mask-image:
-      linear-gradient(to bottom, transparent, #000 14%, #000 77%, transparent),
-      linear-gradient(to right, transparent, #0008 12%, #000 25%, #000 91%, transparent);
-    mask-composite: intersect;
+    mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 77%, transparent);
   }
   .imageFrame :is(.picture, .reflection) > img { object-position: center; }
   .printLayer, .slide[data-brand="novitec"] .printLayer {
@@ -185,7 +180,6 @@
   .controls { bottom: max(18px, env(safe-area-inset-bottom, 0px)); right: max(var(--gutter), calc(80px + env(safe-area-inset-right, 0px))); gap: 14px; align-items: start; }
   .brandNav { gap: 12px; }
   .brandNav button { min-height: 65px; padding-block: 14px; font-size: 10px; line-height: 1.6; gap: 0; align-items: start; }
-  .number { display: none; }
 }
 @media (max-width: 360px) {
   .copy { --hero-description-row: 110.5px; }
@@ -206,4 +200,31 @@
   .cta { min-height: 44px; }
   .imageFrame { top: 125px; height: 260px; }
   .slide[data-brand="novitec"] .imageFrame { top: 125px; }
+}
+
+/* Private N-LARGO allocation: keep the official red teaser untouched. */
+.slide[data-brand="nlargo"] .picture { left: 43%; }
+.slide[data-brand="nlargo"] .picture > img { object-position: center 61%; }
+.slide[data-brand="nlargo"] .shade { background: linear-gradient(90deg,#151617 28%,#151617e8 43%,#15161722 75%,transparent),linear-gradient(0deg,#151617cc,transparent 35%); }
+.slide[data-brand="nlargo"] .copy { --hero-title-size: clamp(32px,3.4vw,54px); max-width: 650px; }
+@media(min-width:701px) {
+  /* Continue the photograph's left-edge colours at the same vertical crop. */
+  .slide[data-brand="nlargo"] {
+    background-image: linear-gradient(#9b0100 0%,#9d0302 8%,#970202 16%,#8e0103 24%,#850101 31%,#810101 39%,#920200 47%,#cf0301 55%,#560100 63%,#2c0101 70%,#1b0101 78%,#110001 86%,#0b0000 94%,#080300 100%);
+    background-size: 100% max(100%,101.28vw);
+    background-position: left 61%;
+    background-repeat: no-repeat;
+  }
+  .slide[data-brand="nlargo"] .picture { mask-image: linear-gradient(90deg,transparent,#000 16%); }
+  .slide[data-brand="nlargo"] .shade { background: linear-gradient(90deg,#151617e6,#151617c4 28%,#15161799 43%,#15161722 75%,transparent),linear-gradient(0deg,#151617cc,transparent 35%); }
+}
+@media(max-width:700px) {
+  .slide[data-brand="nlargo"] .imageFrame { top: 0; height: 460px; }
+  .slide[data-brand="nlargo"] .picture { left: 0; }
+  .slide[data-brand="nlargo"] .picture > img { object-position: center 68%; }
+  .slide[data-brand="nlargo"] .shade { background: linear-gradient(0deg,#151617 32%,#15161700 61%),linear-gradient(180deg,#15161799,transparent 25%); }
+  .slide[data-brand="nlargo"] .copy { --hero-title-size: clamp(24px,6.2vw,34px); }
+  .slide[data-brand="nlargo"] .copy p { font-size: 12px; line-height: 1.65; }
+  .brandNav { gap: 10px; }
+  .brandNav button { font-size: 9px; }
 }
