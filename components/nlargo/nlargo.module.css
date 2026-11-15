@@ -21,8 +21,8 @@
 .hero h1 { font-size: clamp(52px, 6.2vw, 96px); line-height: 1.05; margin: 0 0 24px; }
 .heroStatement { font-size: clamp(23px,2.3vw,35px); line-height: 1.25; margin-bottom: 23px; font-weight: 400; }
 .heroIntro { max-width: 46ch; color: #c3c1bf; font-size: 14px; line-height: 1.85; margin-bottom: 28px; }
-.button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; padding: 18px 23px; background: #b31e2b; color: #fff; min-height: 54px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; text-align: left; border: 1px solid transparent; cursor: pointer; }
-.button:hover { background: #921723; }
+.button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; padding: 16px 24px; background: var(--accent); color: #fff; min-height: 56px; font-size: 11px; font-weight: 600; line-height: 18px; letter-spacing: .06em; text-transform: uppercase; text-align: left; border: 1px solid transparent; cursor: pointer; }
+.button:hover { background: #941321; }
 .button svg { flex: 0 0 auto; }
 .packageNote { color: #aaa9a6; font-size: 11px; line-height: 1.7; margin-top: 18px; }
 .heroFoot { position: absolute; bottom: 34px; left: var(--gutter,6vw); right: var(--gutter,6vw); display: flex; justify-content: space-between; gap: 24px; color: #b7b5b3; font-size: 9px; }
@@ -125,5 +125,9 @@
   .fields { grid-template-columns: 1fr; }
   .delivery > div { gap: 20px; font-size: 10px; }
   .heroFoot span { max-width: 45%; }
-  .button { padding-inline: 18px; gap: 18px; font-size: 10px; }
+
+}
+
+@media(max-width: 700px) {
+  .button { min-height: 50px; padding: 14px 20px; gap: 20px; }
 }
