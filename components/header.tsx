@@ -68,7 +68,7 @@ export function Header() {
   const pathname = usePathname();
   const isShop = pathname === '/shop' || pathname === '/studio/capristo';
   const partnerSlug = /^\/partners\/([^/]+)$/.exec(pathname)?.[1];
-  const overlaysHero = pathname === '/' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
+  const overlaysHero = pathname === '/' || pathname === '/novitec-12cilindri-n-largo' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
   const header = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);

@@ -10,7 +10,7 @@ export function HomeApproach() {
     </div>
     <div className={styles.copy}>
       <Reveal>
-        <Eyebrow dark number="02">The Luxury Performance approach</Eyebrow>
+        <Eyebrow dark>The Luxury Performance approach</Eyebrow>
         <h2 id="home-approach-title">Good parts.<br />Great judgement.</h2>
         <p>From genuine components to fitment advice and installation support, we help you choose what works for your car.</p>
         <ArrowLink href="/about" light>Our story</ArrowLink>

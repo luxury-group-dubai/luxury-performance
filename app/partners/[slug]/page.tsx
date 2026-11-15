@@ -1,3 +1,4 @@
+import { AllocationBanner } from '@/components/nlargo/allocation-banner';
 /* eslint-disable @next/next/no-img-element */
 import { ActionArrow } from '@/components/action-arrow';
 import type { Metadata } from 'next';
@@ -258,6 +259,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     {p.slug === 'techart' && <TechartPageMotion />}
     {vehicleFirst && vehicleSection}
     {introduction}
+    {p.slug === 'novitec' && <AllocationBanner />}
     {!vehicleFirst && !capristoBrowsing && vehicleSection}
     {p.slug === 'techart' ? <TechartRangePicker options={techartRange.map(option => ({
       ...option,
