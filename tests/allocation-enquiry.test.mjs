@@ -10,17 +10,24 @@ new Function('module', 'exports', compiled.outputText)(module, module.exports);
 const { validateAllocationEnquiry, allocationEnquiryText } = module.exports;
 const enquiry = {
   name: '  Preview Client  ', phone: '+971 (50) 000-0000', email: 'preview@example.com',
-  country: 'United Arab Emirates', vehicle: 'Ferrari 12Cilindri Coupé',
+  country: 'United Arab Emirates',
   ownership: 'Already own', message: 'Specification & delivery?\nDubai collection.', consent: true,
 };
 
-test('enquiries require usable contact details, vehicle selection and consent', () => {
+test('enquiries require usable contact details, ownership status and consent', () => {
   assert.equal(validateAllocationEnquiry(enquiry).name, 'Preview Client');
   for (const invalid of [
     { name: ' ' }, { phone: '123' }, { phone: '+971hello' }, { email: 'not-an-email' },
-    { country: '' }, { vehicle: 'Other' }, { ownership: 'Unknown' }, { consent: false },
+    { country: '' }, { ownership: 'Unknown' }, { consent: false },
     { name: 'Client\nInjected field' }, { message: 'a'.repeat(3001) },
   ]) assert.equal(validateAllocationEnquiry({ ...enquiry, ...invalid }), null);
+});
+
+test('enquiries identify the Coupé without a body-style field', () => {
+  assert.equal(validateAllocationEnquiry(enquiry).vehicle, 'Ferrari 12Cilindri Coupé');
+  const data = validateAllocationEnquiry({ ...enquiry, vehicle: 'Ferrari 12Cilindri Spider' });
+  assert.equal(data.vehicle, 'Ferrari 12Cilindri Coupé');
+  assert.match(allocationEnquiryText(data, true), /Vehicle: Ferrari 12Cilindri Coupé/);
 });
 
 test('WhatsApp handoff preserves all details, Unicode and package-only scope', () => {
