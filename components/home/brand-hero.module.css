@@ -218,7 +218,8 @@
   .slide[data-brand="nlargo"] .shade { background: linear-gradient(90deg,#151617e6,#151617c4 28%,#15161799 43%,#15161722 75%,transparent),linear-gradient(0deg,#151617cc,transparent 35%); }
 }
 @media(max-width:700px) {
-  .slide[data-brand="nlargo"] .imageFrame { top: 0; height: 460px; }
+  /* Finish the fade inside the image, regardless of Safari's toolbar/viewport height. */
+  .slide[data-brand="nlargo"] .imageFrame { top: 0; height: 460px; -webkit-mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); }
   .slide[data-brand="nlargo"] .picture { left: 0; }
   .slide[data-brand="nlargo"] .picture > img { object-position: center 68%; }
   .slide[data-brand="nlargo"] .shade { background: linear-gradient(0deg,#151617 32%,#15161700 61%),linear-gradient(180deg,#15161799,transparent 25%); }

@@ -3,7 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ActionArrow } from '@/components/action-arrow';
 import { AllocationForm } from '@/components/nlargo/allocation-form';
-import { nlargoAllocation, nlargoAvailable, nlargoCta, nlargoGallery, nlargoPath, nlargoStatus } from '@/lib/nlargo-allocation';
+import { RevealFilm } from '@/components/nlargo/reveal-film';
+import { RevealGallery } from '@/components/nlargo/reveal-gallery';
+import { nlargoAllocation, nlargoAvailable, nlargoCta, nlargoPath, nlargoStatus } from '@/lib/nlargo-allocation';
 import { contact } from '@/lib/content';
 import styles from '@/components/nlargo/nlargo.module.css';
 
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
   title: 'Ferrari 12Cilindri N-LARGO | Private Allocation', description,
   alternates: { canonical: nlargoPath },
   openGraph: { title: 'Ferrari 12Cilindri N-LARGO — Luxury Performance', description, url: nlargoPath,
-    images: [{ url: '/images/nlargo/hero.webp', width: 1920, height: 1080, alt: 'NOVITEC Ferrari 12Cilindri N-LARGO' }] },
+    images: [{ url: '/images/nlargo/release-front.webp', width: 1920, height: 1280, alt: 'NOVITEC Ferrari 12Cilindri N-LARGO' }] },
 };
 
 export default function NlargoAllocationPage() {
@@ -42,9 +44,9 @@ export default function NlargoAllocationPage() {
     </section>
 
     <section className={styles.filmSection} aria-labelledby="film-title">
-      <div className={styles.sectionLabel}><h2 id="film-title">{teaser ? 'The first glimpse.' : 'The unveiling.'}</h2><span>NOVITEC / 12Cilindri N-LARGO</span></div>
-      <video className={styles.film} controls playsInline preload="none" poster="/images/nlargo/hero.webp" aria-label={teaser ? 'Official NOVITEC N-LARGO teaser film' : 'Official NOVITEC N-LARGO release film'}><source src="/videos/nlargo/teaser.mp4" type="video/mp4" />Your browser does not support this video. <a href="/videos/nlargo/teaser.mp4">Download the film</a>.</video>
-      <p className={styles.caption}>{teaser ? 'Official NOVITEC teaser film. Full release photography will follow the unveiling.' : 'Official NOVITEC release imagery and film.'}</p>
+      <div className={styles.sectionLabel}><h2 id="film-title">The unveiling.</h2><span>NOVITEC / 12Cilindri N-LARGO</span></div>
+      <RevealFilm />
+      <p className={styles.caption}>Redefining Perfection. The full official NOVITEC Ferrari 12Cilindri N-LARGO reveal film.</p>
     </section>
 
     <section className={styles.allocation} aria-labelledby="allocation-title">
@@ -57,9 +59,7 @@ export default function NlargoAllocationPage() {
       </div>
     </section>
 
-    <section className={styles.gallery} aria-label={teaser ? 'Official NOVITEC teaser stills' : 'Official NOVITEC release gallery'}>
-      {nlargoGallery.map((photo) => <figure key={photo.src}><div><Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 100vw, 50vw" /></div><figcaption>{teaser ? 'From the official NOVITEC teaser' : 'Official NOVITEC release'}</figcaption></figure>)}
-    </section>
+    <RevealGallery />
 
     <section id="private-enquiry" className={styles.enquiry} aria-labelledby="enquiry-title">
       <div className={styles.enquiryIntro}><p className={styles.eyebrow}>A private conversation</p><span className={styles.status}>{nlargoStatus}</span><h2 id="enquiry-title">{nlargoAvailable ? 'Make it yours.' : 'Stay in the conversation.'}</h2><p>{nlargoAvailable ? 'Tell us about your Ferrari and your plans. Our sales team will discuss the allocation, specification and next steps with you personally.' : 'Leave your details for a personal conversation about future NOVITEC opportunities.'}</p><p className={styles.scope}>This opportunity is for the NOVITEC N-LARGO conversion package for the Ferrari 12Cilindri Coupé. It is not an offer for a complete Ferrari vehicle.</p><a className={styles.direct} href={contact.whatsapp} target="_blank" rel="noopener noreferrer">Prefer to speak directly?<br /><strong>WhatsApp {contact.phone}</strong><ActionArrow size={18} /></a></div>
