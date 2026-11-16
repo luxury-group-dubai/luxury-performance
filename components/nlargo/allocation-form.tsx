@@ -3,7 +3,7 @@
 import { useRef, useState, type FormEvent } from 'react';
 import { ActionArrow } from '@/components/action-arrow';
 import { contact } from '@/lib/content';
-import { allocationEnquiryText, validateAllocationEnquiry, ownershipOptions } from '@/lib/allocation-enquiry';
+import { allocationEnquiryText, validateAllocationEnquiry, interestOptions } from '@/lib/allocation-enquiry';
 import styles from './nlargo.module.css';
 
 export function AllocationForm({ available }: { available: boolean }) {
@@ -31,8 +31,8 @@ export function AllocationForm({ available }: { available: boolean }) {
       <label>WhatsApp / phone <span>*</span><input suppressHydrationWarning name="phone" type="tel" autoComplete="tel" placeholder="Include country code" required maxLength={35} /></label>
       <label>Email address <span>*</span><input suppressHydrationWarning name="email" type="email" autoComplete="email" required maxLength={254} /></label>
       <label>Country <span>*</span><input suppressHydrationWarning name="country" autoComplete="country-name" required maxLength={80} pattern=".*\S.*" /></label>
-      <label className={styles.full}>Vehicle ownership <span>*</span><select suppressHydrationWarning name="ownership" required defaultValue=""><option value="" disabled>Select ownership status</option>{ownershipOptions.map(value => <option key={value}>{value}</option>)}</select></label>
-      <label className={styles.full}>Additional message<textarea suppressHydrationWarning name="message" rows={4} maxLength={3000} placeholder="Your vehicle, location or preferences for a Ferrari sourced by our team." /></label>
+      <label className={styles.full}>What are you interested in? <span>*</span><select suppressHydrationWarning name="interest" required defaultValue=""><option value="" disabled>Select your interest</option>{interestOptions.map(value => <option key={value}>{value}</option>)}</select></label>
+      <label className={styles.full}>Additional message<textarea suppressHydrationWarning name="message" rows={4} maxLength={3000} placeholder="Tell us about your vehicle or your preferred N-LARGO specification." /></label>
       <label className={styles.consent}><input suppressHydrationWarning type="checkbox" name="consent" required /><span>I agree to Luxury Performance contacting me by phone, WhatsApp or email about this enquiry.</span></label>
       <button className={styles.button} type="submit">Prepare private enquiry<ActionArrow size={18} /></button>
     </fieldset>
