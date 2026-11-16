@@ -98,7 +98,8 @@
 .page :is(a,button,input,select,textarea):focus-visible,.banner a:focus-visible { outline: 2px solid #d4bd92; outline-offset: 5px; }
 @media(max-width: 760px) {
   .hero { height: auto; min-height: max(760px, 100svh); align-items: flex-end; padding: 300px var(--gutter,24px) 72px; }
-  .heroArt { inset: 0 0 auto; height: min(620px, 65svh); }
+  /* Finish inside the image so its edge disappears at every Safari viewport height. */
+  .heroArt { inset: 0 0 auto; height: min(620px, 65svh); -webkit-mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); }
   .heroArt img { object-position: center 67%; }
   .hero::after { background: linear-gradient(0deg,#111112 37%,#11111200 70%),linear-gradient(180deg,#111112b3,transparent 23%); }
   .heroCopy { width: 100%; }

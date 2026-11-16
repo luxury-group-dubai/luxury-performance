@@ -30,7 +30,7 @@ test('enquiries identify the Coupé without a body-style field', () => {
   assert.match(allocationEnquiryText(data, true), /Vehicle: Ferrari 12Cilindri Coupé/);
 });
 
-test('WhatsApp handoff preserves all details, Unicode and package-only scope', () => {
+test('WhatsApp handoff preserves all details, Unicode and both project options', () => {
   const data = validateAllocationEnquiry(enquiry);
   const message = allocationEnquiryText(data, true);
   const link = new URL(`https://wa.me/971565155886?text=${encodeURIComponent(message)}`);
@@ -38,11 +38,19 @@ test('WhatsApp handoff preserves all details, Unicode and package-only scope', (
   for (const field of ['name', 'phone', 'email', 'country', 'vehicle', 'ownership', 'message']) {
     assert.ok(message.includes(data[field]), field);
   }
-  assert.match(message, /Ferrari vehicle not included/);
+  assert.match(message, /conversion for your own Ferrari/);
+  assert.match(message, /vehicle sourcing and conversion/);
+  assert.doesNotMatch(message, /vehicle not included|package only/);
 });
 
 test('fully allocated enquiries explicitly concern future opportunities', () => {
   const message = allocationEnquiryText(validateAllocationEnquiry(enquiry), false);
   assert.match(message, /^Future opportunity enquiry:/);
   assert.match(message, /fully allocated/);
+});
+
+test('clients can request a sourced Ferrari in their WhatsApp enquiry', () => {
+  const data = validateAllocationEnquiry({ ...enquiry, ownership: 'Please source a Ferrari for me' });
+  assert.ok(data);
+  assert.match(allocationEnquiryText(data, true), /Ownership status: Please source a Ferrari for me/);
 });

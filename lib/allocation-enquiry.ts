@@ -1,5 +1,5 @@
 export const allocationVehicle = 'Ferrari 12Cilindri Coupé' as const;
-export const ownershipOptions = ['Already own', 'Ordered', 'Considering purchase'] as const;
+export const ownershipOptions = ['Already own', 'Ordered', 'Considering purchase', 'Please source a Ferrari for me'] as const;
 export type AllocationEnquiry = {
   name: string; phone: string; email: string; country: string;
   vehicle: typeof allocationVehicle; ownership: string; message: string; consent: boolean;
@@ -25,7 +25,7 @@ export function validateAllocationEnquiry(value: unknown): AllocationEnquiry | n
 export function allocationEnquiryText(data: AllocationEnquiry, available: boolean) {
   return [
     available ? 'Private enquiry: Ferrari 12Cilindri N-LARGO allocation' : 'Future opportunity enquiry: Ferrari 12Cilindri N-LARGO (fully allocated)',
-    'NOVITEC conversion package only — Ferrari vehicle not included.',
+    'NOVITEC N-LARGO: conversion for your own Ferrari, or vehicle sourcing and conversion through Luxury Performance.',
     `Full name: ${data.name}`, `WhatsApp / phone: ${data.phone}`, `Email: ${data.email}`,
     `Country: ${data.country}`, `Vehicle: ${data.vehicle}`, `Ownership status: ${data.ownership}`,
     `Message: ${data.message || 'No additional message.'}`, 'Customer agreed to be contacted about this enquiry.',

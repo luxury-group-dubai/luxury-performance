@@ -32,8 +32,8 @@ export function AllocationForm({ available }: { available: boolean }) {
       <label>Email address <span>*</span><input suppressHydrationWarning name="email" type="email" autoComplete="email" required maxLength={254} /></label>
       <label>Country <span>*</span><input suppressHydrationWarning name="country" autoComplete="country-name" required maxLength={80} pattern=".*\S.*" /></label>
       <label className={styles.full}>Vehicle ownership <span>*</span><select suppressHydrationWarning name="ownership" required defaultValue=""><option value="" disabled>Select ownership status</option>{ownershipOptions.map(value => <option key={value}>{value}</option>)}</select></label>
-      <label className={styles.full}>Additional message<textarea suppressHydrationWarning name="message" rows={4} maxLength={3000} placeholder="Your vehicle, location or plans for the conversion." /></label>
-      <label className={styles.consent}><input suppressHydrationWarning type="checkbox" name="consent" required /><span>I agree to Luxury Performance contacting me by phone, WhatsApp or email about this enquiry. This enquiry concerns the NOVITEC conversion package only; the Ferrari vehicle is not included.</span></label>
+      <label className={styles.full}>Additional message<textarea suppressHydrationWarning name="message" rows={4} maxLength={3000} placeholder="Your vehicle, location or preferences for a Ferrari sourced by our team." /></label>
+      <label className={styles.consent}><input suppressHydrationWarning type="checkbox" name="consent" required /><span>I agree to Luxury Performance contacting me by phone, WhatsApp or email about this enquiry.</span></label>
       <button className={styles.button} type="submit">Prepare private enquiry<ActionArrow size={18} /></button>
     </fieldset>
     <p className={styles.formNote}>We prepare a message for our sales team. You review and send it in WhatsApp. This website does not submit or store your details. An enquiry does not reserve an allocation.</p>
