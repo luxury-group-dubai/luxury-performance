@@ -3,7 +3,36 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { nlargoGallery } from '@/lib/nlargo-allocation';
+import { createRegisteredGalleryImage } from '@/lib/nlargo-gallery-registration';
 import styles from './reveal-gallery.module.css';
+
+function RegisteredGalleryImage({ src, sizes, onReady }: { src: string; sizes: string; onReady: () => void }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
+  const [registered, setRegistered] = useState(false);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const abort = new AbortController();
+    let renderer: Awaited<ReturnType<typeof createRegisteredGalleryImage>> | undefined;
+    let observer: ResizeObserver | undefined;
+    function lost() { setRegistered(false); }
+    canvas.addEventListener('webglcontextlost', lost);
+    createRegisteredGalleryImage(canvas, '/images/nlargo/hero-front-quarter-light.webp', abort.signal).then(value => {
+      if (abort.signal.aborted) { value.dispose(); return; }
+      renderer = value;
+      const resize = () => value.resize(canvas.clientWidth, canvas.clientHeight);
+      resize(); observer = new ResizeObserver(resize); observer.observe(canvas);
+      setRegistered(true); onReadyRef.current();
+    }).catch(() => { /* Keep the ordinary image when GPU rendering is unavailable. */ });
+    return () => { abort.abort(); observer?.disconnect(); renderer?.dispose(); canvas.removeEventListener('webglcontextlost', lost); };
+  }, []);
+  return <>
+    <Image className={styles.lightImage} src={src} alt="" aria-hidden="true" fill sizes={sizes} onLoad={onReady} style={registered ? { visibility: 'hidden' } : undefined} />
+    <canvas ref={canvasRef} className={`${styles.lightImage} ${styles.registeredLight}`} aria-hidden="true" style={{ visibility: registered ? 'visible' : 'hidden' }} data-registered-gallery />
+  </>;
+}
 
 function RevealImage({ photo, featured, revealed, showPrompt, onReveal, onHide, onToggle }: {
   photo: (typeof nlargoGallery)[number];
@@ -32,7 +61,8 @@ function RevealImage({ photo, featured, revealed, showPrompt, onReveal, onHide, 
       onClick={() => { setPromptDismissed(true); onToggle(); }}
     >
       <Image src={photo.redSrc} alt={photo.alt} fill sizes={sizes} />
-      <Image className={styles.lightImage} src={photo.src} alt="" aria-hidden="true" fill sizes={sizes} onLoad={() => setLightReady(true)} />
+      {photo.alignment === 'front-quarter' ? <RegisteredGalleryImage src={photo.src} sizes={sizes} onReady={() => setLightReady(true)} /> :
+        <Image className={styles.lightImage} src={photo.src} alt="" aria-hidden="true" fill sizes={sizes} onLoad={() => setLightReady(true)} />}
       {showPrompt && !promptDismissed && <span className={styles.tapPrompt} aria-hidden="true">Tap to switch lighting</span>}
     </button>
     <figcaption>{photo.caption}</figcaption>

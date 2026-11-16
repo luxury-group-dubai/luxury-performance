@@ -21,7 +21,7 @@ export const nlargoGallery = [
   { redSrc: '/images/nlargo/gallery-front-red.webp', src: '/images/nlargo/gallery-front-light.webp', alt: 'Front view of the Ferrari 12Cilindri N-LARGO', caption: 'Front view' },
   { redSrc: '/images/nlargo/gallery-overhead-red.webp', src: '/images/nlargo/release-front.webp', alt: 'Overhead front three-quarter view of the Ferrari 12Cilindri N-LARGO', caption: 'Overhead view' },
   { redSrc: '/images/nlargo/gallery-rear-red.webp', src: '/images/nlargo/gallery-rear-light.webp', alt: 'Rear three-quarter view of the Ferrari 12Cilindri N-LARGO', caption: 'Rear three-quarter view' },
-  { redSrc: '/images/nlargo/gallery-low-front-red.webp', src: '/images/nlargo/gallery-low-front-light.webp', alt: 'Low front three-quarter view of the Ferrari 12Cilindri N-LARGO', caption: 'Front three-quarter view' },
+  { redSrc: '/images/nlargo/gallery-low-front-red.webp', src: '/images/nlargo/gallery-low-front-light.webp', alt: 'Low front three-quarter view of the Ferrari 12Cilindri N-LARGO', caption: 'Front three-quarter view', alignment: 'front-quarter' },
   { redSrc: '/images/nlargo/gallery-back-red.webp', src: '/images/nlargo/release-diffuser.webp', alt: 'Rear view of the Ferrari 12Cilindri N-LARGO', caption: 'Rear detailing' },
   { redSrc: '/images/nlargo/gallery-low-rear-red.webp', src: '/images/nlargo/gallery-low-rear-light.webp', alt: 'Low rear three-quarter view of the Ferrari 12Cilindri N-LARGO', caption: 'Low rear view', alignment: 'low-rear' },
 ];
