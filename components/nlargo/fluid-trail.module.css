@@ -3,6 +3,9 @@
 .fallback { position: absolute; inset: 0; isolation: isolate; opacity: 0; }
 .fallback[data-visible="true"] { opacity: 1; }
 .hint { position: absolute; bottom: 80px; right: 8%; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #fffb; }
-.touch,.reduced { display: none; }
-@media(pointer:coarse) { .mouse { display: none; } .touch { display: inline; } }
-@media(max-width:760px) { .hint { top: 175px; bottom: auto; right: 0; width: 100%; text-align: center; font-size: 9px; } }
+.touch { display: none; }
+@keyframes hintPulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+@media(pointer:coarse) { .mouse { display: none; } .touch { display: block; animation: hintPulse 2.6s ease-in-out infinite; } .hint { transition: opacity .3s ease; } .hint[data-visible="false"] { opacity: 0; } .hint[data-visible="false"] .touch { animation-play-state: paused; } }
+@media(max-width:760px) { .hint { top: calc(var(--nlargo-image-top) + max(33.199cqw,18.684cqh) - 16px); bottom: auto; right: 0; width: 100%; transform: translateY(-50%); text-align: center; font-size: 9px; color: #fff; text-shadow: 0 1px 8px #000b; } }
+
+@media(prefers-reduced-motion:reduce) { .touch { animation: none; } .hint { transition: none; } }

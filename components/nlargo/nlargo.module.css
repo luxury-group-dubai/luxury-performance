@@ -1,5 +1,6 @@
 .page { background: #111112; color: #f4f2ee; --nl-line: #ffffff24; --nl-muted: #aaa9a6; }
 .hero { min-height: 760px; height: 100svh; position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; padding: 155px var(--gutter, 6vw) 110px; }
+.hero[data-fluid-reveal="true"] { touch-action: pan-y pinch-zoom; }
 .heroArt {
   position: absolute; inset: 0; z-index: -2; container-type: size; overflow: hidden;
   --nlargo-image-top: calc(61% - max(28.4087cqw,28.5504cqh));
