@@ -9,7 +9,7 @@ void main(){ v_uv=vec2((a_position.x+1.0)*.5,(1.0-a_position.y)*.5); gl_Position
 // is advected and dissipated, rather than moving a cut-out over the photograph.
 const flowFragment = `precision highp float;
 varying vec2 v_uv;
-uniform sampler2D u_field;
+uniform highp sampler2D u_field;
 uniform vec2 u_pointer,u_previous,u_velocity,u_aspect;
 uniform float u_dt,u_inject,u_speed;
 vec4 field(vec2 uv){return texture2D(u_field,vec2(uv.x,1.-uv.y));}
@@ -35,7 +35,7 @@ void main(){
 
 const revealFragment = `precision highp float;
 varying vec2 v_uv;
-uniform sampler2D u_field,u_photo,u_edge,u_registration;
+uniform highp sampler2D u_field,u_photo,u_edge,u_registration;
 uniform vec2 u_registrationScale;
 uniform vec4 u_box;
 uniform vec2 u_edgeBox;
@@ -149,8 +149,12 @@ export async function createFluidReveal(canvas: HTMLCanvasElement, light: Nlargo
   function resize(w: number, h: number) {
     width=w; height=h;
     // Keep the flow simulation tiny, but display the photograph at screen density.
-    const scale=Math.min(window.devicePixelRatio || 1,2,4096/width,4096/height); canvas.width=Math.max(1,Math.round(width*scale)); canvas.height=Math.max(1,Math.round(height*scale));
     const mobile=window.matchMedia('(max-width:760px)').matches;
+    // Match Retina phone density without increasing the flow simulation cost.
+    // Bound the compositor to six megapixels and the GPU's viewport limits.
+    const limit = gl!.getParameter(gl!.MAX_VIEWPORT_DIMS) as Int32Array;
+    const scale=Math.min(window.devicePixelRatio || 1,mobile?3:2,Math.sqrt(6000000/(width*height)),4096/width,4096/height,limit[0]/width,limit[1]/height);
+    canvas.width=Math.max(1,Math.round(width*scale)); canvas.height=Math.max(1,Math.round(height*scale));
     const iw=Math.max(width*(mobile?1.46465:.820204),height*.82429), ih=Math.max(width*(mobile?.97643:.546801),height*.54953);
     const x=width*(mobile?.5:.72)-iw/2;
     const y=height*(mobile?.67:.61)-Math.max(width*(mobile?.61391:.284087),height*(mobile?.345504:.285504))+ih*light.shift/100;

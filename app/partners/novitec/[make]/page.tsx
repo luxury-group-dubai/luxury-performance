@@ -22,7 +22,7 @@ const covers: Record<string, string> = {
   urus_performante: 'official-covers/urus-performante.jpg',
   urus_s: 'official-covers/urus-s.jpg',
   sf90: 'official-covers/sf90.jpg',
-  '12cilindri': 'official-covers/12cilindri.jpg',
+  '12cilindri': '12cilindri-nlargo-side.jpg',
   f8: 'official-covers/f8.jpg',
   '812': 'official-covers/812-superfast.jpg',
   '812_superfast': 'official-covers/812-superfast.jpg',
@@ -64,7 +64,7 @@ export default async function NovitecModelsForMake({ params }: Props) {
       </header>
       {make === 'ferrari' && <AllocationBanner />}
       {models.length ? <ul className={styles.grid} aria-label={`${brand.name} models`}>
-        {models.map(model => <li key={model}><Link className={styles.card} href={make === 'ferrari' && ['f8', '812', 'sf90'].includes(model) ? `/partners/novitec/ferrari/${model}` : filterUrl('/shop', { brand: 'novitec', make: brand.tag, model })}>
+        {models.map(model => <li key={model}><Link className={styles.card} href={make === 'ferrari' && ['f8', '812', 'sf90', '12cilindri'].includes(model) ? `/partners/novitec/ferrari/${model}` : filterUrl('/shop', { brand: 'novitec', make: brand.tag, model })}>
           <span className={styles.picture}>{covers[model] ? <Image src={`/images/novitec-models/${covers[model]}`} alt="" fill sizes="(max-width: 700px) 45vw, (max-width: 1100px) 45vw, 30vw" quality={90} className={styles.image} /> : <Image src="/brand/novitec.svg" alt="" width={160} height={32} className={styles.placeholder} />}</span>
           <span className={styles.cardLabel}><span><small>{brand.name}</small><strong>{modelLabel(model)}</strong></span><ArrowUpRight size={20} aria-hidden="true" /></span>
         </Link></li>)}

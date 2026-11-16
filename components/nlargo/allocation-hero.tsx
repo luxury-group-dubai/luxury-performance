@@ -20,10 +20,10 @@ export function AllocationHero({ image = nlargoHeroImages[0], enquiryHref = '#pr
   image?: NlargoHeroImage; enquiryHref?: string; effect?: ReactNode;
 }) {
   return (
-    <section className={styles.hero} data-light={image.lighting === 'light'} data-header-hero aria-labelledby="nlargo-title">
+    <section className={styles.hero} data-light={image.lighting === 'light'} data-header-hero data-fluid-reveal={!!effect} aria-labelledby="nlargo-title">
       <AllocationHeroArt image={image}>{effect}</AllocationHeroArt>
       <div className={styles.heroCopy}>
-        <Link className={styles.back} href="/partners/novitec">NOVITEC / Private commissions</Link>
+        <Link className={styles.back} href="/partners/novitec">NOVITEC</Link>
         <p className={styles.kicker}>Ferrari 12Cilindri</p>
         <h1 id="nlargo-title">N-LARGO</h1>
         <p className={styles.heroStatement}>{nlargoAvailable ? <>One exclusive<br />allocation available.</> : <>An exceptional chapter.<br />Fully allocated.</>}</p>

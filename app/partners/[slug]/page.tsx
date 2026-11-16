@@ -101,12 +101,18 @@ function productImageUrl(source: string, width: number) {
   return image.toString();
 }
 
+const novitecNlargoHero = {
+  image: '/images/nlargo/hero-front-quarter-light.webp',
+  mobile: { src: '/images/nlargo/hero-front-quarter-light.webp', width: 3200, height: 2133 },
+  alt: 'Ferrari 12Cilindri N-LARGO by NOVITEC, front three-quarter view in studio lighting',
+};
+
 export function generateStaticParams() { return partners.map(p => ({ slug: p.slug })); }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const p = partners.find(p => p.slug === slug);
   if (!p) return { title: 'Partner not found' };
-  const heroAsset = partnerHeroImages[p.slug];
+  const heroAsset = p.slug === 'novitec' ? novitecNlargoHero : partnerHeroImages[p.slug];
   return { title: `${p.name} in Dubai`, description: p.intro + ' ' + p.detail, alternates: { canonical: `/partners/${p.slug}` }, robots: { index: process.env.SHOP_SEO_LIVE === 'true', follow: true }, openGraph: { title: `${p.name} | Luxury Performance`, description: p.intro, images: [{ url: heroAsset?.image || p.image, alt: heroAsset?.alt || p.imageAlt }] } };
 }
 export default async function PartnerPage({ params, searchParams }: Props) {
@@ -118,14 +124,14 @@ export default async function PartnerPage({ params, searchParams }: Props) {
     ? getCatalog().then(products => products.filter(item => supplierOf(item) === p.supplier))
     : Promise.resolve([]);
   const shop = p.supplier ? filterUrl('/shop', { brand: p.supplier }) : `/contact?programme=${encodeURIComponent(p.name)}`;
-  const heroAsset = partnerHeroImages[p.slug];
-  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: 60 }).props : null;
+  const heroAsset = p.slug === 'novitec' ? novitecNlargoHero : partnerHeroImages[p.slug];
+  const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: p.slug === 'novitec' ? 95 : 60 }).props : null;
   const overlaysHeader = hasPartnerHeroOverlay(p.slug);
 
   return <div className={styles.page} data-partner={p.slug}>
     <section className={`${styles.hero} ${overlaysHeader ? styles.fullBleedHero : ''}`} data-header-hero={overlaysHeader || undefined} data-brand={p.slug} aria-labelledby="partner-title">
-      <HeroNewsprintFilter />
-      <picture className={`${styles.heroPicture} ${newsprint.photo}`}>
+      {p.slug !== 'novitec' && <HeroNewsprintFilter />}
+      <picture className={`${styles.heroPicture} ${p.slug === 'novitec' ? '' : newsprint.photo}`}>
         {p.slug === 'capristo' && heroAsset ? (
           <img className={styles.heroImage} src="/images/partners/capristo-hero/f40-1440.webp"
             srcSet="/images/partners/capristo-hero/f40-640-q52.webp 640w, /images/partners/capristo-hero/f40-960.webp 960w, /images/partners/capristo-hero/f40-1440.webp 1440w, /images/partners/capristo-hero/f40-1672.webp 1672w"
