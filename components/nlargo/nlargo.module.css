@@ -1,12 +1,18 @@
 .page { background: #111112; color: #f4f2ee; --nl-line: #ffffff24; --nl-muted: #aaa9a6; }
 .hero { min-height: 760px; height: 100svh; position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; padding: 155px var(--gutter, 6vw) 110px; }
-.heroArt { position: absolute; inset: 0 0 0 44%; z-index: -2; }
-.heroArt img { object-fit: cover; object-position: center 61%; }
+.heroArt {
+  position: absolute; inset: 0 0 0 44%; z-index: -2; container-type: size; overflow: hidden;
+  --nlargo-image-top: calc(61% - max(50.7299cqw,28.5504cqh));
+  background-image: var(--nlargo-backdrop);
+  background-size: 100% max(100%,177.685cqw); background-position: center 61%;
+}
+.heroArt img { object-fit: cover; -webkit-mask-image: linear-gradient(to bottom,transparent,#000 14%,#000 88%,transparent 99%); mask-image: linear-gradient(to bottom,transparent,#000 14%,#000 88%,transparent 99%); }
+.hero { --nlargo-backdrop: linear-gradient(#9b0100 0%,#9d0302 8%,#970202 16%,#8e0103 24%,#850101 31%,#810101 39%,#920200 47%,#cf0301 55%,#560100 63%,#2c0101 70%,#1b0101 78%,#110001 86%,#0b0000 94%,#080300 100%); }
 .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg,#111112 30%,#111112e8 44%,#11111238 70%,transparent),linear-gradient(0deg,#111112,transparent 22%); }
 @media(min-width:761px) {
   /* Match the official portrait's edge palette and object-position crop. */
   .hero {
-    background-image: linear-gradient(#9b0100 0%,#9d0302 8%,#970202 16%,#8e0103 24%,#850101 31%,#810101 39%,#920200 47%,#cf0301 55%,#560100 63%,#2c0101 70%,#1b0101 78%,#110001 86%,#0b0000 94%,#080300 100%);
+    background-image: var(--nlargo-backdrop);
     background-size: 100% max(100%,99.5vw);
     background-position: left 61%;
     background-repeat: no-repeat;
@@ -100,7 +106,7 @@
   .hero { height: auto; min-height: max(760px, 100svh); align-items: flex-end; padding: 300px var(--gutter,24px) 72px; }
   /* Finish inside the image so its edge disappears at every Safari viewport height. */
   .heroArt { inset: 0 0 auto; height: min(620px, 65svh); -webkit-mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); }
-  .heroArt img { object-position: center 67%; }
+  .heroArt { --nlargo-image-top: calc(67% - max(61.391cqw,34.5504cqh)); background-position: center 67%; }
   .hero::after { background: linear-gradient(0deg,#111112 37%,#11111200 70%),linear-gradient(180deg,#111112b3,transparent 23%); }
   .heroCopy { width: 100%; }
   .back { position: absolute; top: 125px; left: var(--gutter,24px); margin-bottom: 0; font-size: 9px; }

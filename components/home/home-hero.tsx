@@ -19,9 +19,9 @@ const mobileHero = {
 const heroSlides = [
   {
     slug: 'nlargo', name: 'N-LARGO', logo: '/brand/novitec.svg', logoWidth: 228, logoHeight: 45,
-    image: '/images/nlargo/story.webp',
-    mobile: { src: '/images/nlargo/story.webp', width: 1080, height: 1919 },
-    alt: 'Official NOVITEC teaser of the Ferrari 12Cilindri N-LARGO in red light',
+    image: '/images/nlargo/hero-front-red.webp',
+    mobile: { src: '/images/nlargo/hero-front-red.webp', width: 2400, height: 1600 },
+    alt: 'Official front-view release photograph of the Ferrari 12Cilindri N-LARGO in red light',
     title: <>Ferrari 12Cilindri<br />N-LARGO</>,
     description: nlargoAvailable
       ? 'One exclusive allocation available. The first reveal vehicle is secured for Dubai, with one additional NOVITEC conversion allocation for a private client.'
@@ -62,13 +62,17 @@ export function HomeHero() {
     <HeroNewsprintFilter />
     <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
     {heroSlides.map((slide, index) => {
-      const mobile = slide.slug === 'novitec' ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
+      const mobile = slide.slug === 'nlargo' ? null : slide.slug === 'novitec' ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
         <div className={heroStyles.imageFrame}>
         {(slide.slug === 'nlargo' ? [false] : [false, true]).map(printed => (
           <picture key={String(printed)} className={printed ? `${heroStyles.picture} ${heroStyles.printLayer} ${newsprint.photo}` : heroStyles.picture} aria-hidden={printed || undefined}>
             {mobile && <source media="(max-width: 700px)" type={slide.slug === 'novitec' ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
-            <Image src={slide.image} alt={printed ? '' : slide.alt} fill quality={75} sizes="100vw" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={!printed && index === 0 ? 'high' : 'auto'} />
+            <Image src={slide.image} alt={printed ? '' : slide.alt} {...(slide.slug === 'nlargo' ? { width: 3200, height: 2133 } : { fill: true })} style={slide.slug === 'nlargo' ? {
+              position: 'absolute', maxWidth: 'none', inset: 'auto', left: '50%', top: 'var(--nlargo-image-top)',
+              width: 'max(146.465cqw,82.429cqh)', height: 'max(97.643cqw,54.953cqh)',
+              transform: 'translateX(-50%)',
+            } : undefined} quality={slide.slug === 'nlargo' ? 95 : 75} sizes={slide.slug === 'nlargo' ? '(max-width: 700px) 147vw, 84vw' : '100vw'} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={!printed && index === 0 ? 'high' : 'auto'} />
           </picture>
         ))}
         {mobile && slide.slug === 'techart' && ['top', 'bottom'].map(edge => (
