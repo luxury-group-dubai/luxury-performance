@@ -15,8 +15,28 @@
 @keyframes hero-copy-arrive { from { opacity: 0; } to { opacity: 1; } }
 .stage, .layer, .slide { position: absolute; inset: 0; }
 .layer { opacity: 0; pointer-events: none; }
+/* A short image-only signal break on slide changes; copy stays in place. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero[data-transitioned="true"] .layer { transition: opacity 700ms ease; }
+  .hero[data-transitioned="true"] .layer { transition: opacity 280ms ease; }
+  .hero[data-transitioned="true"] .layer[data-active="true"] .picture {
+    animation: hero-image-glitch 480ms steps(1,end) both;
+  }
+}
+@keyframes hero-image-glitch {
+  0% {
+    translate: 8px 0;
+    clip-path: polygon(0 0,100% 0,100% 28%,0 28%,0 36%,100% 36%,100% 64%,0 64%,0 72%,100% 72%,100% 100%,0 100%);
+  }
+  18% {
+    translate: -6px 0;
+    clip-path: polygon(0 0,100% 0,100% 43%,0 43%,0 49%,100% 49%,100% 78%,0 78%,0 84%,100% 84%,100% 100%,0 100%);
+  }
+  34% { translate: 3px 0; clip-path: inset(0); }
+  48% {
+    translate: -3px 0;
+    clip-path: polygon(0 0,100% 0,100% 57%,0 57%,0 60%,100% 60%,100% 100%,0 100%);
+  }
+  64%,100% { translate: 0 0; clip-path: inset(0); }
 }
 .layer[data-active="true"] { opacity: 1; z-index: 1; pointer-events: auto; }
 .picture { position: absolute; inset: 0; display: block; }
@@ -201,9 +221,18 @@
   .slide[data-brand="novitec"] .imageFrame { top: 125px; }
 }
 
-/* Private N-LARGO allocation: keep the official red teaser untouched. */
-.slide[data-brand="nlargo"] .picture { left: 43%; }
-.slide[data-brand="nlargo"] .picture > img { object-position: center 61%; }
+/* Match the release photo's car width and roof line to the original portrait.
+   Container units preserve that framing through both cover-crop regimes. */
+.slide[data-brand="nlargo"] .picture {
+  left: 43%; container-type: size; overflow: hidden;
+  --nlargo-image-top: calc(61% - max(50.7299cqw,28.5504cqh));
+  background-image: linear-gradient(#9b0100 0%,#9d0302 8%,#970202 16%,#8e0103 24%,#850101 31%,#810101 39%,#920200 47%,#cf0301 55%,#560100 63%,#2c0101 70%,#1b0101 78%,#110001 86%,#0b0000 94%,#080300 100%);
+  background-size: 100% max(100%,177.685cqw); background-position: center 61%;
+}
+.slide[data-brand="nlargo"] .picture > img {
+  -webkit-mask-image: linear-gradient(to bottom,transparent,#000 14%,#000 88%,transparent 99%);
+  mask-image: linear-gradient(to bottom,transparent,#000 14%,#000 88%,transparent 99%);
+}
 .slide[data-brand="nlargo"] .shade { background: linear-gradient(90deg,#151617 28%,#151617e8 43%,#15161722 75%,transparent),linear-gradient(0deg,#151617cc,transparent 35%); }
 .slide[data-brand="nlargo"] .copy { --hero-title-size: clamp(32px,3.4vw,54px); max-width: 650px; }
 @media(min-width:701px) {
@@ -220,8 +249,7 @@
 @media(max-width:700px) {
   /* Finish the fade inside the image, regardless of Safari's toolbar/viewport height. */
   .slide[data-brand="nlargo"] .imageFrame { top: 0; height: 460px; -webkit-mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); }
-  .slide[data-brand="nlargo"] .picture { left: 0; }
-  .slide[data-brand="nlargo"] .picture > img { object-position: center 68%; }
+  .slide[data-brand="nlargo"] .picture { left: 0; --nlargo-image-top: calc(68% - max(63.1679cqw,35.5504cqh)); background-position: center 68%; }
   .slide[data-brand="nlargo"] .shade { background: linear-gradient(0deg,#151617 32%,#15161700 61%),linear-gradient(180deg,#15161799,transparent 25%); }
   .slide[data-brand="nlargo"] .copy { --hero-title-size: clamp(24px,6.2vw,34px); }
   .slide[data-brand="nlargo"] .copy p { font-size: 12px; line-height: 1.65; }

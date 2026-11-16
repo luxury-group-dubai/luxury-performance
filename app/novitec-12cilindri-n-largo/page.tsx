@@ -23,7 +23,7 @@ export default function NlargoAllocationPage() {
   const teaser = nlargoAllocation.mediaStage === 'teaser';
   return <div className={styles.page}>
     <section className={styles.hero} data-header-hero aria-labelledby="nlargo-title">
-      <div className={styles.heroArt}><Image src="/images/nlargo/story.webp" alt="Front view of the Ferrari 12Cilindri N-LARGO against red lighting, official NOVITEC teaser" fill sizes="(max-width: 760px) 100vw, 56vw" loading="eager" fetchPriority="high" /></div>
+      <div className={styles.heroArt}><Image src="/images/nlargo/hero-front-red.webp" alt="Official front-view release photograph of the Ferrari 12Cilindri N-LARGO in red light" width={3200} height={2133} quality={95} sizes="(max-width: 760px) 147vw, 83vw" loading="eager" fetchPriority="high" style={{ position: 'absolute', maxWidth: 'none', left: '50%', top: 'var(--nlargo-image-top)', width: 'max(146.465cqw,82.429cqh)', height: 'max(97.643cqw,54.953cqh)', transform: 'translateX(-50%)' }} /></div>
       <div className={styles.heroCopy}>
         <Link className={styles.back} href="/partners/novitec">NOVITEC / Private commissions</Link>
         <p className={styles.kicker}>Ferrari 12Cilindri</p>
