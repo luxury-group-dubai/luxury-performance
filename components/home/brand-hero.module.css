@@ -1,5 +1,6 @@
 .hero { --hero-title-size: clamp(40px,4vw,64px); --hero-title-line: calc(var(--hero-title-size) * 1.25); position: relative; isolation: isolate; height: 100svh; min-height: 740px; max-height: 1100px; overflow: clip; background: #151617; color: #fff; }
 .context { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: 145px; font-family: var(--font-michroma), var(--font-sans); font-size: 11px; line-height: 1.7; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
+.context h1 { display: inline; margin: 0; font: inherit; letter-spacing: inherit; }
 .context span { margin-inline: 10px; color: #ffffff80; }
 /* Keep the photograph painted; reveal copy as soon as the logo departs. */
 @media (prefers-reduced-motion: no-preference) {
