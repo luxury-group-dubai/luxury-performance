@@ -21,7 +21,10 @@ function load(path) {
   const compiled = { exports: {} }; modules.set(path, compiled);
   const { outputText } = ts.transpileModule(readFileSync(path, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2020, esModuleInterop: true } });
   new Function('require', 'module', 'exports', outputText)(specifier => {
-    if (specifier === 'next/link') return ({ href, children, prefetch, ...props }) => React.createElement('a', { ...props, href }, children);
+    if (specifier === 'next/link') return function MockLink({ href, children, ...props }) {
+      delete props.prefetch;
+      return React.createElement('a', { ...props, href }, children);
+    };
     if (specifier.startsWith('@/')) return load(resolve(root, specifier.slice(2)));
     if (specifier.startsWith('.')) return load(resolve(dirname(path), specifier));
     return require(specifier);
