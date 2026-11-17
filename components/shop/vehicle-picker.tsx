@@ -2,12 +2,13 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+import { shopBrandHref } from '@/lib/shop/routes';
 import { useState, type ReactNode } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import type { CayenneBody } from '@/lib/shop/techart-cayenne-body-fitment';
 import type { BodyStyle, VehicleGeneration } from '@/lib/shop/techart-fitment';
 import styles from './vehicle-selector.module.css';
+import { SelectorCarImage } from './selector-car-image';
 
 type PickerProps = {
   model: '911' | 'cayenne';
@@ -16,6 +17,9 @@ type PickerProps = {
   initialFit?: string;
   initialBody?: BodyStyle | CayenneBody;
   modelChoices?: ReactNode;
+  showBroadCollections?: boolean;
+  cardStyle?: 'panel' | 'plain';
+  imagePlaceholders?: Record<string, string>;
 };
 
 const badgeSizes: Record<string, [number, number]> = {
@@ -67,7 +71,7 @@ function PorscheTrimName({ name, model }: { name: string; model: PickerProps['mo
   </span>;
 }
 
-export function VehiclePicker({ model, options, shopPath, initialFit, initialBody, modelChoices }: PickerProps) {
+export function VehiclePicker({ model, options, shopPath, initialFit, initialBody, modelChoices, showBroadCollections = true, cardStyle = 'panel', imagePlaceholders = {} }: PickerProps) {
   const cayenne = model === 'cayenne';
   const modelName = cayenne ? 'Cayenne' : '911';
   const initialGeneration = options.find(item => initialFit?.startsWith(`${item.key}_`));
@@ -80,7 +84,7 @@ export function VehiclePicker({ model, options, shopPath, initialFit, initialBod
   const shopQuery = new URLSearchParams({ brand: 'techart', make: 'porsche', model });
   const modelShop = `${shopPath}?${shopQuery}`;
 
-  return <div className={styles.selector}>
+  return <div className={`${styles.selector}${cardStyle === 'plain' ? ` ${styles.plainCards}` : ''}`}>
     <aside className={styles.filters} aria-label="Vehicle filters">
       {modelChoices && <div className={styles.control}><span className={styles.label}>Model</span><div className={styles.models}>{modelChoices}</div></div>}
       <div className={styles.control}><span className={styles.label}>Generation</span><div className={styles.pills} role="group" aria-label={`Porsche ${modelName} generation`}>
@@ -92,14 +96,14 @@ export function VehiclePicker({ model, options, shopPath, initialFit, initialBod
     </aside>
     <div className={styles.results}>
     {body ? <>
-      <div className={styles.familyHeading}><h3><img className={`${styles.seriesBadge} ${cayenne ? styles.cayenneSeriesBadge : ''}`} src={`/brand/porsche-models/${cayenne ? 'cayenne' : '911'}.svg`} width={cayenne ? 245 : 94} height={cayenne ? 35 : 25} alt={modelName} /> {generation.name} · {body.name}</h3><p>Choose your trim to shop parts.</p></div>
+      {cardStyle !== 'plain' && <div className={styles.familyHeading}><h3><img className={`${styles.seriesBadge} ${cayenne ? styles.cayenneSeriesBadge : ''}`} src={`/brand/porsche-models/${cayenne ? 'cayenne' : '911'}.svg`} width={cayenne ? 245 : 94} height={cayenne ? 35 : 25} alt={modelName} /> {generation.name} · {body.name}</h3><p>Choose your trim to shop parts.</p></div>}
       <div className={styles.grid}>
         {body.choices.map(choice => {
           const title = choice.name === modelName ? modelName : `${modelName} ${choice.name}`;
           const count = `${choice.count} ${choice.count === 1 ? 'part' : 'parts'}`;
           const bodyLabel = body.key === 'targa' || body.name === choice.name ? '' : ` ${body.name}`;
-          return <Link className={`${styles.card} ${styles.trimCard}`} key={choice.fit} href={`${modelShop}&fit=${choice.fit}&body=${body.key}`} aria-label={`Shop ${count} for ${title} ${generation.name}${bodyLabel}`}>
-            <div className={styles.image}><Image {...choice.image} alt="" loading="lazy" quality={75} sizes="(max-width: 700px) 45vw, (max-width: 1000px) 30vw, 25vw" /></div>
+          return <Link className={`${styles.card} ${styles.trimCard}`} key={choice.fit} href={shopPath.startsWith("/shop/") ? shopBrandHref("techart", { make: "porsche", model, fit: choice.fit, body: body.key }) : `${modelShop}&fit=${choice.fit}&body=${body.key}`} aria-label={`Shop ${count} for ${title} ${generation.name}${bodyLabel}`}>
+            <div className={styles.image}>{imagePlaceholders[choice.image.src] ? <SelectorCarImage {...choice.image} placeholder={imagePlaceholders[choice.image.src]} optimized={false} /> : <img {...choice.image} alt="" loading="lazy" />}</div>
             <div className={styles.trimCaption}><div><PorscheTrimName name={choice.name} model={model} /><small>{count}</small></div><ArrowUpRight size={18} aria-hidden="true" /></div>
           </Link>;
         })}
@@ -110,7 +114,7 @@ export function VehiclePicker({ model, options, shopPath, initialFit, initialBod
           Counts reflect recorded body-style fitment. Parts needing confirmation are listed separately.</>}
       </p>
     </> : <p className={styles.note}>No parts are currently listed for this generation. <Link href="/contact">Ask us about your Porsche.</Link></p>}
-    {cayenne && <nav className={styles.cayenneLinks} aria-label="Browse Cayenne parts">
+    {cayenne && showBroadCollections && <nav className={styles.cayenneLinks} aria-label="Browse Cayenne parts">
       {body && <Link className={styles.change} href={`${modelShop}&fit=${generation.key}`}>Shop all {generation.name} parts</Link>}
       <Link className={styles.change} href={modelShop}>All Cayenne parts</Link>
     </nav>}

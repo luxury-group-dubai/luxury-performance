@@ -1,0 +1,29 @@
+.page { background:#eceeef; }
+.page:has(.manufacturerPicker) { background:#141516; }
+.wordmark { width:180px; flex-shrink:0; }
+.manufacturerPicker { background:#141516; color:#f6f5f2; }
+.manufacturerPicker button { color:inherit; }
+.makeGrid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+.makeGrid.twoColumnMakes { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.makeCard { position:relative; display:flex; justify-content:center; align-items:center; background:#141516; color:#fff; min-height:130px; padding:30px; }
+.makeCard > span { width:100%; max-width:190px; font-size:18px; }
+.makeCard > [data-selector-logo] { max-width:none; --selector-artwork-width:190px; }
+.modelWordmark { width:200px; max-width:100%; height:36px; object-fit:contain; filter:brightness(0) invert(1); }
+.modelWordmark[data-model="911"] { width:132px; }
+.makeCard > svg { position:absolute; right:14px; bottom:14px; opacity:0; }
+.modelGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:end; gap:24px 32px; }
+.modelSwitch { min-height:44px; padding:10px 0; margin-right:24px; background:none; color:#777; font-size:12px; }
+.modelSwitch[aria-pressed=true] { color:#171819; text-decoration:underline; text-underline-offset:8px; }
+.modelCard { border:0; padding:20px 0; }
+.modelCard > div { margin-top:0; }
+.changeOnly { align-self:flex-end; position:relative; min-width:120px; height:44px; }
+.fitmentReview { margin-top:36px; font-size:12px; }
+.fitmentReview summary { cursor:pointer; padding:14px 0; }
+.fitmentReview p { max-width:640px; color:#666; margin-bottom:18px; }
+.fitmentReview ul { list-style:none; padding:0; }
+.fitmentReview a { display:flex; justify-content:space-between; gap:20px; padding:12px 0; }
+.fitmentReview svg { flex-shrink:0; }
+@media(hover:hover) { .makeCard:hover > svg { opacity:1; }.makeCard:hover { background:#252627; } }
+.makeCard:focus-visible > svg { opacity:1; }
+@media(max-width:1100px) { .makeGrid { grid-template-columns:repeat(3,minmax(0,1fr)); }.modelGrid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:700px) { .wordmark { width:145px; }.makeGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }.makeCard { min-height:100px; padding:20px; }.makeCard > span { font-size:14px; }.modelGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }.modelCard h2 { font-size:21px; }.changeOnly { margin-top:8px; } }

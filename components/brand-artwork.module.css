@@ -7,7 +7,7 @@
 .artwork[data-brand-artwork="gintani"] > img { width: 78%; }
 .artwork[data-brand-artwork="collectibles"] { height: auto; min-height: 60px; }
 .artwork[data-brand-artwork="collectibles"] > img { width: 160px; }
-.artwork[data-brand-artwork="voltrix"] > svg { width: 91%; }
+.artwork[data-brand-artwork="voltrix"] > img, .artwork[data-brand-artwork="voltrix"] > svg { width: 91%; }
 .artwork[data-brand-artwork="urban"] > img, .artwork[data-brand-artwork="lxp"] > img { width: 100%; }
 .fi, .liberty { width: 100%; display: grid; align-items: center; gap: 12px; }
 .fi { grid-template-columns: 1fr 1.83fr; }

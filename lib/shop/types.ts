@@ -1,6 +1,6 @@
 export type Money = { amount: string; currencyCode: string };
 export type Photo = { url: string; altText: string | null };
-export type CatalogProduct = { id: string; title: string; handle: string; vendor: string; productType: string; tags: string[]; featuredImage: Photo | null; priceRange: { minVariantPrice: Money }; availableForSale: boolean };
+export type CatalogProduct = { id: string; title: string; handle: string; vendor: string; productType: string; tags: string[]; featuredImage: Photo | null; priceRange: { minVariantPrice: Money }; availableForSale: boolean; programmeCategory?: string };
 export type Variant = { id: string; title: string; sku: string | null; availableForSale: boolean; currentlyNotInStock: boolean; requiresShipping: boolean; price: Money; image: Photo | null; selectedOptions: { name: string; value: string }[] };
 export type Product = CatalogProduct & { description: string; descriptionHtml: string; seo: { title: string | null; description: string | null }; images: { nodes: Photo[] }; variants: { nodes: Variant[]; pageInfo: { hasNextPage: boolean } } };
 export type InstallationService = { handle: string; title: string; variantId: string; price: Money };

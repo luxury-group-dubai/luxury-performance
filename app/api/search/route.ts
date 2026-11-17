@@ -1,12 +1,18 @@
 import { getCatalog } from '@/lib/shop/storefront';
 import { searchProducts } from '@/lib/shop/search';
+import { buildVehicleChoices } from '@/app/preview/shop/vehicle-data';
+import { prepareBrandCatalogue } from '@/app/preview/shop/brand-catalogue';
+import { searchShopDestinations } from '@/app/preview/shop/search';
 
 export async function GET(request: Request) {
-  const query = new URL(request.url).searchParams.get('q')?.trim().slice(0, 100) || '';
+  const params = new URL(request.url).searchParams;
+  const query = params.get('q')?.trim().slice(0, 100) || '';
   if (query.length < 2) return Response.json({ products: [], total: 0 });
   try {
-    const matches = searchProducts(await getCatalog(), query);
-    return Response.json({ total: matches.length, products: matches.slice(0, 6).map(product => ({
+    const catalog = await getCatalog();
+    const matches = searchProducts(catalog, query);
+    const destinations = searchShopDestinations(buildVehicleChoices(prepareBrandCatalogue(catalog)), query);
+    return Response.json({ ...destinations, total: matches.length, products: matches.slice(0, 6).map(product => ({
       id: product.id, title: product.title, handle: product.handle, vendor: product.vendor,
       image: product.featuredImage, price: product.priceRange.minVariantPrice,
     })) }, { headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' } });

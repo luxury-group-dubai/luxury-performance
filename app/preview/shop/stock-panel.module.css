@@ -1,0 +1,32 @@
+.panel { background:var(--paper); color:#171819; padding:18px var(--gutter) 70px; min-height:50vh; }
+.collections { display:flex; gap:28px; }
+.collections button { background:none; color:#777; min-height:44px; padding:10px 0; border-bottom:2px solid transparent; font-size:12px; white-space:nowrap; }
+.collections button[aria-pressed=true] { color:#171819; border-bottom-color:#171819; }
+.toolbar { display:flex; align-items:start; justify-content:space-between; gap:20px; margin:14px 0 24px; }
+.filters { display:flex; flex-wrap:wrap; align-items:center; gap:4px 24px; min-width:0; }
+.panel :global(.shop-choice) { position:relative; min-width:0; }
+.panel :global(.shop-choice-trigger) { min-height:44px; display:flex; align-items:center; gap:9px; background:none; border:0; padding:8px 0; color:#4d4e4f; font-size:12px; text-align:left; }
+.panel :global(.shop-choice-trigger) span { overflow:hidden; text-overflow:ellipsis; max-width:210px; white-space:nowrap; }
+.panel :global(.shop-choice-trigger[aria-expanded=true]) { color:#111; }
+.panel :global(.shop-choice-menu) { position:absolute; top:100%; left:0; z-index:8; min-width:200px; max-width:calc(100vw - 48px); max-height:280px; overflow:auto; padding:6px; background:#fff; box-shadow:0 10px 30px #0002; }
+.panel :global(.shop-choice-sort .shop-choice-menu) { left:auto; right:0; }
+.panel :global(.shop-choice-menu[hidden]) { display:none; }
+.panel :global(.shop-choice-menu) button { display:flex; align-items:center; justify-content:space-between; gap:15px; min-height:44px; width:100%; padding:8px 12px; background:none; text-align:left; font-size:12px; color:#333; }
+.panel :global(.shop-choice-menu) button:hover,.panel :global(.shop-choice-menu) button[aria-pressed=true] { background:var(--paper); }
+.panel :global(.shop-choice-option-meta) { display:flex; align-items:center; }
+.clear { display:flex; align-items:center; gap:6px; min-height:44px; background:none; color:#777; font-size:11px; }
+.grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:38px 24px; }
+.card { min-width:0; }
+.card :global(.shop-product-image) + h3 { margin-top:16px; -webkit-line-clamp:2; }
+.card:focus-visible :global(.shop-product-arrow) { opacity:1; transform:none; }
+.empty { padding:65px 0; font-size:13px; color:#666; text-align:center; }
+.empty button,.more { background:none; font-size:12px; color:#171819; text-decoration:underline; text-underline-offset:5px; padding:14px; }
+.more { display:block; margin:30px auto 0; }
+@media(max-width:1100px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:700px) { .panel { padding-top:12px; padding-bottom:45px; }.collections { gap:20px; }.collections button { font-size:11px; }.toolbar { gap:14px; margin:10px 0 18px; }.filters { gap:0 16px; }.panel :global(.shop-choice-trigger) { font-size:11px; }.panel :global(.shop-choice-trigger) span { max-width:145px; }.panel :global(.shop-choice-sort) { flex-shrink:0; }.grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 14px; } }
+
+.urbanEnquiry { max-width:600px; margin:24px 0 40px; padding:28px 0; }
+.urbanLogo { width:240px; max-width:70%; margin-bottom:30px; filter:brightness(0); }
+.urbanEnquiry h2 { font-size:clamp(25px,3vw,38px); letter-spacing:-.035em; }
+.urbanEnquiry p { font-size:13px; line-height:1.9; color:#666; margin-top:16px; max-width:440px; }
+.urbanEnquiry > a { display:inline-flex; align-items:center; gap:20px; font-size:12px; padding:18px 0; margin-top:12px; }

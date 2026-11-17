@@ -1,0 +1,6 @@
+.scrollable { scrollbar-width:thin; scrollbar-color:#65686a transparent; }
+.scrollable::-webkit-scrollbar { width:6px; height:6px; }
+.scrollable::-webkit-scrollbar-track { background:transparent; }
+.scrollable::-webkit-scrollbar-thumb { background:#65686a; border-radius:8px; }
+.scrollable::-webkit-scrollbar-thumb:hover { background:#96999c; }
+.scrollable::-webkit-scrollbar-corner { background:transparent; }

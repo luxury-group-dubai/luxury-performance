@@ -1,0 +1,6 @@
+.shell { min-height:80vh; background:#141516; }
+
+/* The shared shop shell stays opaque while its child routes change. */
+:global(.page-arrival):has(.shell) { animation:none; }
+:global(#main):has(.shell),
+:global(body):has(.shell) { background:#141516; }

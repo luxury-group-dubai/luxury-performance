@@ -1,0 +1,9 @@
+.logo { display:grid; grid-template-columns:minmax(0,1fr); width:100%; min-width:0; align-items:center; justify-items:center; container-type:inline-size; }
+.placeholder, .artwork { grid-area:1 / 1; transition:opacity 160ms ease; }
+.placeholder { max-width:100%; font-size:min(clamp(20px, 2vw, 26px), calc(100cqw / var(--selector-word-length) * 1.35)); font-weight:700; line-height:1.15; letter-spacing:.01em; text-align:center; text-transform:uppercase; overflow-wrap:normal; word-break:normal; }
+.artwork { display:flex; align-items:center; justify-content:center; width:100%; min-width:0; max-width:var(--selector-artwork-width, 200px); min-height:65px; opacity:0; }
+.artwork > span { width:100%; min-width:0; max-width:100%; }
+.placeholderText { display:block; }
+.logo:is([data-ready=true], [data-logo-loaded=true]) .placeholder { opacity:0; }
+.logo:is([data-ready=true], [data-logo-loaded=true]) .artwork { opacity:1; }
+@media(prefers-reduced-motion:reduce) { .placeholder, .artwork { transition:none; } }

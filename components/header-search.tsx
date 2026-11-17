@@ -9,11 +9,11 @@ const SearchDialog = dynamic(() => import('./header-search-dialog').then(module 
   loading: () => <span className="sr-only" role="status">Opening search…</span>,
 });
 
-export function HeaderSearch({ onOpen }: { onOpen: () => void }) {
+export function HeaderSearch({ onOpen, preview = true }: { onOpen: () => void; preview?: boolean }) {
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   return <>
     <button ref={trigger} type="button" className={styles.trigger} aria-label="Search the store" aria-haspopup="dialog" aria-expanded={open} onClick={() => { onOpen(); setOpen(true); }}><Search size={19} strokeWidth={1.5} aria-hidden="true" /></button>
-    {open && <SearchDialog trigger={trigger} onClose={() => setOpen(false)} />}
+    {open && <SearchDialog trigger={trigger} onClose={() => setOpen(false)} preview={preview} />}
   </>;
 }
