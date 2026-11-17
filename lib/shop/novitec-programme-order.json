@@ -1,0 +1,992 @@
+{
+  "checkedOn": "2026-11-16",
+  "models": {
+    "12cilindri_coupe": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/12-cilindri/12cilindri/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION FOR NOVITEC TIPS", "article": "F1 012 11 / 31"},
+            {"title": "POWER OPTIMIZED RACE EXHAUST SYSTEM WITH FLAP-REGULATION FOR NOVITEC TIPS", "article": "F1 012 10 / 30"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION FOR ORIGINAL TIPS", "article": "F1 012 70 / 72"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "F1 012 15 / 35"},
+            {"title": "EXHAUST REPLACEMENT PIPE X-PIPE SYSTEM", "article": "F1 012 16 / 36"},
+            {"title": "NOVITEC TAILPIPES (SET OF 2)", "article": "F1 012 17 / 18"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 012 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 012 90"},
+            {"title": "NOVITEC TECTRONIC + SWITCHTRONIC", "article": "F1 012 55 / 66"},
+            {"title": "NOVITEC GTRONIC", "article": "F1 012 88 / 77"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF9 FORGED", "article": "F4 012 00 / 01 / 70 / 96 /97"},
+            {"title": "NF10 FORGED", "article": "F4 012 60 / 61 / 62 / 66 / 67"},
+            {"title": "NF11 FORGED", "article": "F4 012 20 / 21 / 22 / 26 / 27"},
+            {"title": "NF12 FORGED", "article": "F4 012 10 / 11 / 12 / 16 / 17"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "ALUMINIUM SPACERS", "article": "F5 012 10 / 11"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 012 15"},
+            {"title": "SPORT SPRING SET", "article": "F5 012 31"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTLIP", "article": "F6 012 31"},
+            {"title": "FRONTLIP WITH CAMERA", "article": "F6 012 21"},
+            {"title": "FRONTLIP V2", "article": "F6 012 51"},
+            {"title": "FRONT ATTACHMENT", "article": "F6 012 41"},
+            {"title": "FRONT COVER INLET", "article": "F6 012 56"},
+            {"title": "FRONT COVER", "article": "F6 012 52"},
+            {"title": "FRONT ATTACHMENT", "article": "F6 012 53"},
+            {"title": "ENGINE BONNET AIR-INTAKE", "article": "F6 012 22"},
+            {"title": "INSERT ENGINE BONNET", "article": "F6 012 23"},
+            {"title": "INSERTS FRONT FENDERS", "article": "F6 012 24"},
+            {"title": "REARSPOILER", "article": "F6 012 25"},
+            {"title": "MIRROR COVERS", "article": "F6 012 42"},
+            {"title": "SIDE PANELS", "article": "F6 012 54"},
+            {"title": "SIDE PANELS (ORIGINAL LOOK)", "article": "F6 012 43"},
+            {"title": "DIFFUSOR", "article": "F6 012 44"},
+            {"title": "COVER ENGINE COMPARTMENT", "article": "F6 012 45"},
+            {"title": "AIRFILTER HOUSING", "article": "F6 012 46"}
+          ]
+        }
+      ]
+    },
+    "12cilindri_spider": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/12-cilindri/12cilindri-spider/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED RACE EXHAUST SYSTEM WITH FLAP-REGULATION FOR NOVITEC TIPS", "article": "F1 012 10 / 30"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION FOR NOVITEC TIPS", "article": "F1 012 11 / 31"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION FOR ORIGINAL TIPS", "article": "F1 012 70 / 72"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "F1 012 15 / 35"},
+            {"title": "EXHAUST REPLACEMENT PIPE X-PIPE SYSTEM", "article": "F1 012 16 / 36"},
+            {"title": "NOVITEC TAILPIPES (SET OF 2)", "article": "F1 012 17 / 18"},
+            {"title": "NOVITEC TECTRONIC + SWITCHTRONIC", "article": "F1 012 55 / 66"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 012 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 012 90"},
+            {"title": "NOVITEC GTRONIC", "article": "F1 012 88 / 77"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF9 FORGED", "article": "F4 012 00 / 01 / 70 / 96 /97"},
+            {"title": "NF10 FORGED", "article": "F4 012 60 / 61 / 62 / 66 / 67"},
+            {"title": "NF11 FORGED", "article": "F4 012 20 / 21 / 22 / 26 / 27"},
+            {"title": "NF12 FORGED", "article": "F4 012 10 / 11 / 12 / 16 / 17"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "SPORT SPRING SET", "article": "F5 012 31"},
+            {"title": "ALUMINIUM SPACERS", "article": "F5 012 10 / 11"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 012 15"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTLIP", "article": "F6 012 31"},
+            {"title": "FRONTLIP WITH CAMERA", "article": "F6 012 21"},
+            {"title": "FRONT ATTACHMENT", "article": "F6 012 41"},
+            {"title": "FRONTLIP V2", "article": "F6 012 51"},
+            {"title": "FRONT ATTACHMENT", "article": "F6 012 53"},
+            {"title": "FRONT COVER INLET", "article": "F6 012 56"},
+            {"title": "FRONT COVER", "article": "F6 012 52"},
+            {"title": "ENGINE BONNET AIR-INTAKE", "article": "F6 012 22"},
+            {"title": "INSERT ENGINE BONNET", "article": "F6 012 23"},
+            {"title": "INSERTS FRONT FENDERS", "article": "F6 012 24"},
+            {"title": "MIRROR COVERS", "article": "F6 012 42"},
+            {"title": "COVER", "article": "F6 012 60"},
+            {"title": "SIDE PANELS", "article": "F6 012 54"},
+            {"title": "SIDE PANELS (ORIGINAL LOOK)", "article": "F6 012 43"},
+            {"title": "REARSPOILER", "article": "F6 012 25"},
+            {"title": "DUCKTAIL", "article": "F6 012 55"},
+            {"title": "DIFFUSOR", "article": "F6 012 44"},
+            {"title": "COVER ENGINE COMPARTMENT", "article": "F6 012 45"},
+            {"title": "AIRFILTER HOUSING", "article": "F6 012 46"}
+          ]
+        }
+      ]
+    },
+    "f8_tributo": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/f8/f8-tributo/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP-REGULATION, COMPLETE HEAT PROTECTED", "article": "F1 444 40 / 70 / 75"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION, COMPLETE HEAT-PROTECTED", "article": "F1 444 41 / 71 / 76"},
+            {"title": "CATALYST-REPLACEMENT PIPE (SET OF TWO)", "article": "F1 444 44 / 60"},
+            {"title": "SPORT METAL CATALYSTS (SET OF TWO)", "article": "F1 444 45 / 65"},
+            {"title": "CARBON - STAINLESS STEEL TAILPIPES", "article": "F1 444 50 / 55 / 57"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 444 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 444 90 / 95"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF8 DIRECTIONAL, FORGED (20J / 21J)", "article": "F4 444 19 / 21 / 23"},
+            {"title": "NF9 FORGED (20J / 21J)", "article": "F4 444 41 / 42 / 43"},
+            {"title": "NF11 ZV LOOK FORGED (20J / 21J)", "article": "F4 444 44 / 46 / 48 / 31 / 32"},
+            {"title": "NF11 ZV LOOK FORGED (21J / 22J)", "article": "F4 444 45 / 47 / 34 / 36 / 38"},
+            {"title": "NF10 ZV LOOK FORGED (20J / 21J)", "article": "F4 444 59 / 61 / 62"},
+            {"title": "NF12 ZV LOOK FORGED (20J / 21J)", "article": "F4 444 64 / 65 / 50 / 51 /53"},
+            {"title": "NF12 ZV LOOK FORGED (21J / 22J)", "article": "F4 444 66 / 67 / 54 / 56 / 58"},
+            {"title": "NF8 DIRECTIONAL, FORGED (21J / 22J)", "article": "F4 444 77 / 78 / 79"},
+            {"title": "NF9 FORGED (21J / 22J)", "article": "F4 444 85 / 86 / 87"},
+            {"title": "NF10 ZV LOOK FORGED (21J / 22J)", "article": "F4 444 95 / 96 / 97"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "ALUMINIUM SPACERS", "article": "F5 444 10 / 11 /12"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 444 15"},
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH SUSPENSION SPRINGS", "article": "F5 444 30"},
+            {"title": "SPORT SPRING SET", "article": "F5 444 31"},
+            {"title": "NOVITEC X KW V5 SUSPENSION", "article": "F5 444 33 / 39"},
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH NOVITEC X KW V5 SUSPENSION", "article": "F5 444 36"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTSPOILER LIP", "article": "F6 444 01 / 31"},
+            {"title": "SIDEFLAPS", "article": "F6 444 02 / 32"},
+            {"title": "SIDE PANELS", "article": "F6 444 03 / 33"},
+            {"title": "AIR-GUIDE SIDE WALL", "article": "F6 444 04 / 34"},
+            {"title": "INSERT TRUNK LID", "article": "F6 444 05 / 35"},
+            {"title": "DIFFUSOR ATTACHMENT", "article": "F6 444 06 / 36"},
+            {"title": "REARWING", "article": "F6 444 07 / 37"},
+            {"title": "REARSPOILER LIP", "article": "F6 444 08 / 38"},
+            {"title": "DOOR HANDLES", "article": "F6 444 09 / 39"},
+            {"title": "N-LARGO DUCKTAIL", "article": "F6 444 10 / 11 / 40 / 41"},
+            {"title": "N-LARGO MIRRORS", "article": "F6 444 15 / 48 / 12 / 42"},
+            {"title": "N-LARGO ENGINE BONNET", "article": "F6 444 18 / 19 / 68 / 69"},
+            {"title": "COVER REARVIEW-CAMERA", "article": "F6 444 43 / 60"},
+            {"title": "COVER FRONTBUMPER", "article": "F6 444 50"},
+            {"title": "COVER MIRRORS", "article": "F6 444 51"},
+            {"title": "TRIANGLE COVER FOR SIDE WINDOW", "article": "F6 444 52"},
+            {"title": "COVER TRUNK LID", "article": "F6 444 53"},
+            {"title": "DIFFUSOR", "article": "F6 444 54 / 59"},
+            {"title": "DIFFUSOR-FINS", "article": "F6 444 55"},
+            {"title": "COVER FOR REAR DIFFUSOR AIR-OPENING", "article": "F6 444 56"},
+            {"title": "COVER ENGINE BONET", "article": "F6 444 57"},
+            {"title": "COVER 360 REARVIEW-CAMERA", "article": "F6 444 60"}
+          ]
+        },
+        {
+          "name": "Special Parts",
+          "entries": [
+            {"title": "REFLECTOR", "article": "F9 444 06"}
+          ]
+        }
+      ]
+    },
+    "f8_spider": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/f8/f8-spider/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP-REGULATION, COMPLETE HEAT PROTECTED", "article": "F1 444 40 / 70 / 75"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION, COMPLETE HEAT-PROTECTED", "article": "F1 444 41 / 71 / 76"},
+            {"title": "CATALYST-REPLACEMENT PIPE (SET OF TWO)", "article": "F1 444 44 / 60"},
+            {"title": "SPORT METAL CATALYSTS (SET OF TWO)", "article": "F1 444 45 / 65"},
+            {"title": "CARBON - STAINLESS STEEL TAILPIPES", "article": "F1 444 50 / 55 / 57"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 444 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 444 90 / 95"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF8 DIRECTIONAL, FORGED (20J / 21J)", "article": "F4 444 19 / 21 / 23"},
+            {"title": "NF9 FORGED (20J / 21J)", "article": "F4 444 41 / 42 / 43"},
+            {"title": "NF11 ZV LOOK FORGED (20J / 21J)", "article": "F4 444 44 / 46 / 48 / 31 / 32"},
+            {"title": "NF11 ZV LOOK FORGED (21J / 22J)", "article": "F4 444 45 / 47 / 34 / 36 / 38"},
+            {"title": "NF10 ZV LOOK FORGED (20J / 21J)", "article": "F4 444 59 / 61 / 62"},
+            {"title": "NF12 ZV LOOK FORGED (20J / 21J)", "article": "F4 444 64 / 65 / 50 / 51 /53"},
+            {"title": "NF12 ZV LOOK FORGED (21J / 22J)", "article": "F4 444 66 / 67 / 54 / 56 / 58"},
+            {"title": "NF8 DIRECTIONAL, FORGED (21J / 22J)", "article": "F4 444 77 / 78 / 79"},
+            {"title": "NF9 FORGED (21J / 22J)", "article": "F4 444 85 / 86 / 87"},
+            {"title": "NF10 ZV LOOK FORGED (21J / 22J)", "article": "F4 444 95 / 96 / 97"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "ALUMINIUM SPACERS", "article": "F5 444 10 / 11 /12"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 444 15"},
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH SUSPENSION SPRINGS", "article": "F5 444 30"},
+            {"title": "SPORT SPRING SET", "article": "F5 444 31"},
+            {"title": "NOVITEC X KW V5 SUSPENSION", "article": "F5 444 33 / 39"},
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH NOVITEC X KW V5 SUSPENSION", "article": "F5 444 36"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTSPOILER LIP", "article": "F6 444 01 / 31"},
+            {"title": "SIDEFLAPS", "article": "F6 444 02 / 32"},
+            {"title": "SIDE PANELS", "article": "F6 444 03 / 33"},
+            {"title": "AIR-GUIDE SIDE WALL", "article": "F6 444 04 / 34"},
+            {"title": "INSERT TRUNK LID", "article": "F6 444 05 / 35"},
+            {"title": "DIFFUSOR ATTACHMENT", "article": "F6 444 06 / 36"},
+            {"title": "REARWING", "article": "F6 444 07 / 37"},
+            {"title": "REARSPOILER LIP", "article": "F6 444 08 / 38"},
+            {"title": "DOOR HANDLES", "article": "F6 444 09 / 39"},
+            {"title": "N-LARGO DUCKTAIL", "article": "F6 444 10 / 11 / 40 / 41"},
+            {"title": "N-LARGO MIRRORS", "article": "F6 444 15 / 48 / 12 / 42"},
+            {"title": "COVER REARVIEW-CAMERA", "article": "F6 444 43 / 60"},
+            {"title": "COVER ENGINE AIR-VENT", "article": "F6 444 44"},
+            {"title": "EXTENSION COVER ENGINE", "article": "F6 444 45"},
+            {"title": "COVER B-PILLAR", "article": "F6 444 46"},
+            {"title": "COVER FRONTBUMPER", "article": "F6 444 50"},
+            {"title": "COVER MIRRORS", "article": "F6 444 51"},
+            {"title": "TRIANGLE COVER FOR SIDE WINDOW", "article": "F6 444 52"},
+            {"title": "COVER TRUNK LID", "article": "F6 444 53"},
+            {"title": "DIFFUSOR", "article": "F6 444 54 / 59"},
+            {"title": "DIFFUSOR-FINS", "article": "F6 444 55"},
+            {"title": "COVER FOR REAR DIFFUSOR AIR-OPENING", "article": "F6 444 56"},
+            {"title": "COVER 360 REARVIEW-CAMERA", "article": "F6 444 60"}
+          ]
+        },
+        {
+          "name": "Special Parts",
+          "entries": [
+            {"title": "REFLECTOR", "article": "F9 444 06"}
+          ]
+        }
+      ]
+    },
+    "812_superfast": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/812/812-superfast/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP-REGULATION", "article": "F1 812 20 / 40 / 70"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION", "article": "F1 812 21 / 41 / 71"},
+            {"title": "NOVITEC TAILPIPES (SET OF 2) WITH NEW MESH-INSERT", "article": "F1 812 22 / BL"},
+            {"title": "EXHAUST REPLACEMENT PIPE X-PIPE SYSTEM", "article": "F1 812 23 / 72"},
+            {"title": "CATALYST-REPLACEMENT PIPE (SET)", "article": "F1 812 24 / 73 / 32 / 74"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "F1 812 25 / 75 / 33 / 76"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 812 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 812 90"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF11 ZV LOOK FORGED", "article": "F4 812 20 / 21 / 22 / 26 / 27"},
+            {"title": "NF10 ZV LOOK FORGED", "article": "F4 812 62 / 66 / 67"},
+            {"title": "NF9 FORGED", "article": "F4 812 70 / 96 / 97"},
+            {"title": "NF8 DIRECTIONAL, FORGED", "article": "F4 812 80 / 91 / 92"},
+            {"title": "NF12 ZV LOOK FORGED", "article": "F4 812 88 / 81 / 82 / 86 / 87"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH SUSPENSION SPRINGS", "article": "F5 812 02"},
+            {"title": "SPORT SPRING SET", "article": "F5 812 03"},
+            {"title": "ALUMINIUM SPACERS", "article": "F5 812 10 / 11 / 12"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 812 15"},
+            {"title": "NOVITEC X KW V5 SUSPENSION", "article": "F5 812 33 / 39"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTSPOILER LIP", "article": "F6 812 20"},
+            {"title": "FRONT-ATTACHMENT", "article": "F6 812 21"},
+            {"title": "INSERT FOR AIR OUTLET FRONT FENDERS", "article": "F6 812 22"},
+            {"title": "INSERT FOR AIR OUTLET ENGINE BONNET", "article": "F6 812 23"},
+            {"title": "COVER FOR MIRRORS (SET)", "article": "F6 812 24 / 43"},
+            {"title": "SIDE PANELS (SET)", "article": "F6 812 25"},
+            {"title": "REARSPOILER LIP", "article": "F6 812 26"},
+            {"title": "REARBUMPER ATTACHMENT", "article": "F6 812 27"},
+            {"title": "ENGINE BONNET", "article": "F6 812 28 / 29"},
+            {"title": "INSERT FOR ENGINE BONNET", "article": "F6 812 31"},
+            {"title": "INSERT FOR AIR OUTLET ENGINE BONNET N-LARGO", "article": "F6 812 51"},
+            {"title": "COVER FOR TRUNK LID AND TAILLIGHTS N-LARGO", "article": "F6 812 53"},
+            {"title": "REARWING N-LARGO", "article": "F6 812 54"},
+            {"title": "DIFFUSOR N-LARGO", "article": "F6 812 70"}
+          ]
+        }
+      ]
+    },
+    "812_gts": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/812/812-gts/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP-REGULATION", "article": "F1 812 20 / 40 / 70"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION", "article": "F1 812 21 / 41 / 71"},
+            {"title": "NOVITEC TAILPIPES (SET OF 2) WITH NEW MESH-INSERT", "article": "F1 812 22 / BL"},
+            {"title": "EXHAUST REPLACEMENT PIPE X-PIPE SYSTEM", "article": "F1 812 23 / 72"},
+            {"title": "CATALYST-REPLACEMENT PIPE (SET)", "article": "F1 812 24 / 73 / 32 / 74"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "F1 812 25 / 75 / 33 / 76"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 812 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 812 90"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF8 DIRECTIONAL, FORGED", "article": "F4 812 80 / 91 / 92"},
+            {"title": "NF9 FORGED", "article": "F4 812 70 / 96 / 97"},
+            {"title": "NF10 ZV LOOK FORGED", "article": "F4 812 62 / 66 / 67"},
+            {"title": "NF11 ZV LOOK FORGED", "article": "F4 812 20 / 21 / 22 / 26 / 27"},
+            {"title": "NF12 ZV LOOK FORGED", "article": "F4 812 88 / 81 / 82 / 86 / 87"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH SUSPENSION SPRINGS", "article": "F5 812 02"},
+            {"title": "SPORT SPRING SET", "article": "F5 812 03"},
+            {"title": "ALUMINIUM SPACERS", "article": "F5 812 10 / 11 / 12"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 812 15"},
+            {"title": "NOVITEC X KW V5 SUSPENSION", "article": "F5 812 33 / 39"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTSPOILER LIP", "article": "F6 812 20"},
+            {"title": "FRONT-ATTACHMENT", "article": "F6 812 21"},
+            {"title": "INSERT FOR AIR OUTLET FRONT FENDERS", "article": "F6 812 22"},
+            {"title": "INSERT FOR AIR OUTLET ENGINE BONNET", "article": "F6 812 23"},
+            {"title": "COVER FOR MIRRORS (SET)", "article": "F6 812 24 / 43"},
+            {"title": "SIDE PANELS (SET)", "article": "F6 812 25"},
+            {"title": "REARBUMPER ATTACHMENT", "article": "F6 812 27"},
+            {"title": "ENGINE BONNET", "article": "F6 812 28 / 29"},
+            {"title": "REARSPOILER LIP", "article": "F6 812 30"},
+            {"title": "INSERT FOR ENGINE BONNET", "article": "F6 812 31"},
+            {"title": "INSERT FOR AIR OUTLET ENGINE BONNET N-LARGO", "article": "F6 812 51"}
+          ]
+        }
+      ]
+    },
+    "sf90_stradale": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/sf90/sf90-stradale/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM RACE WITHOUT FLAP-REGULATION, COMPLETE HEAT PROTECTED", "article": "F1 090 10 / 25 / 75"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION, COMPLETE HEAT-PROTECTED", "article": "F1 090 11 / 26 / 76"},
+            {"title": "SPORT METAL CATALYSTS (SET OF TWO)", "article": "F1 090 45 / 79"},
+            {"title": "CARBON - STAINLESS STEEL TAILPIPES", "article": "F1 090 50 / 55 / 51 / 56 / 52 / 57"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 090 80 / 99"},
+            {"title": "NOVITRONIC MODULE FOR EXHAUST FLAP-REGULATION", "article": "F1 090 85"},
+            {"title": "NOVITEC GTRONIC", "article": "F1 090 88"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 090 90 / 95"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF9 FORGED", "article": "F4 090 07 / 80 / 08 / 37 / 42 / 43 / 44 / 49 / 51"},
+            {"title": "NF8 DIRECTIONAL, FORGED", "article": "F4 090 11 / 70 / 14 / 16 / 21 / 23 / 25 / 30 / 31"},
+            {"title": "NF10 ZV LOOK FORGED", "article": "F4 090 33 / 90 / 35 /52 / 61 / 62 / 63 / 98 / 99"},
+            {"title": "NF11 ZV LOOK FORGED", "article": "F4 090 38 / 39 / 91 / 53 / 65 / 66 / 69 / 96 / 97"},
+            {"title": "NF12 ZV LOOK FORGED", "article": "F4 090 71 / 72 / 73 / 74 / 75 / 76 /77 / 78 / 79"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "ALUMINIUM SPACERS", "article": "F5 090 10 / 11 / 12"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 090 15"},
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH SUSPENSION SPRING", "article": "F5 090 30 / 40"},
+            {"title": "SPORT SPRING SET", "article": "F5 090 31"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONT-ATTACHMENT", "article": "F6 090 20"},
+            {"title": "FRONTFLAPS", "article": "F6 090 21"},
+            {"title": "INSERT FRONT LID", "article": "F6 090 22"},
+            {"title": "FRONT FENDERS RACE", "article": "F6 090 23"},
+            {"title": "COVER FRONT LID", "article": "F6 090 24"},
+            {"title": "SIDE PANELS", "article": "F6 090 25"},
+            {"title": "DUCKTAIL", "article": "F6 090 26"},
+            {"title": "MIRROR UPPER PART", "article": "F6 090 27"},
+            {"title": "TRIANGLE COVER SIDE WINDOW", "article": "F6 090 28 / 52"},
+            {"title": "FRONTSPOILER LIP", "article": "F6 090 30"},
+            {"title": "FRONTBUMPER CENTER PART", "article": "F6 090 31"},
+            {"title": "FRONTBUMPER ATTACHMENT LATERAL", "article": "F6 090 32"},
+            {"title": "AIR-GUIDE SIDEWALL", "article": "F6 090 33"},
+            {"title": "DIFFUSOR", "article": "F6 090 34"},
+            {"title": "REARSPOILER", "article": "F6 090 35"},
+            {"title": "COVER ENGINE BAY", "article": "F6 090 36 / 50"},
+            {"title": "COVER BOOT LID", "article": "F6 090 37 / 51"},
+            {"title": "COVER TRUNK", "article": "F6 090 38"},
+            {"title": "ROOFSPOILER", "article": "F6 090 39"},
+            {"title": "FRONTBUMPER CENTER PART WITH CAMERA", "article": "F6 090 40"}
+          ]
+        }
+      ]
+    },
+    "sf90_spider": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/sf90/sf90-spider/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM RACE WITHOUT FLAP-REGULATION, COMPLETE HEAT PROTECTED", "article": "F1 090 10 / 25 / 75"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION, COMPLETE HEAT-PROTECTED", "article": "F1 090 11 / 26 / 76"},
+            {"title": "SPORT METAL CATALYSTS (SET OF TWO)", "article": "F1 090 45 / 79"},
+            {"title": "CARBON - STAINLESS STEEL TAILPIPES", "article": "F1 090 50 / 55 / 51 / 56 / 52 / 57"},
+            {"title": "NOVITEC GTRONIC", "article": "F1 090 88"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 090 90 / 95"},
+            {"title": "NOVITRONIC MODULE FOR EXHAUST FLAP-REGULATION", "article": "F1 090 85"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 090 80 / 99"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF12 ZV LOOK FORGED", "article": "F4 090 71 / 72 / 73 / 74 / 75 / 76 /77 / 78 / 79"},
+            {"title": "NF8 DIRECTIONAL, FORGED", "article": "F4 090 11 / 70 / 14 / 16 / 21 / 23 / 25 / 30 / 31"},
+            {"title": "NF9 FORGED", "article": "F4 090 07 / 80 / 08 / 37 / 42 / 43 / 44 / 49 / 51"},
+            {"title": "NF10 ZV LOOK FORGED", "article": "F4 090 33 / 90 / 35 /52 / 61 / 62 / 63 / 98 / 99"},
+            {"title": "NF11 ZV LOOK FORGED", "article": "F4 090 38 / 39 / 91 / 53 / 65 / 66 / 69 / 96 / 97"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "SPORT SPRING SET", "article": "F5 090 31"},
+            {"title": "HYDRAULIC ADJUSTMENT IN COMBINATION WITH SUSPENSION SPRING", "article": "F5 090 30 / 40"},
+            {"title": "ALUMINIUM SPACERS", "article": "F5 090 10 / 11 / 12"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 090 15"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONT-ATTACHMENT", "article": "F6 090 20"},
+            {"title": "FRONTFLAPS", "article": "F6 090 21"},
+            {"title": "INSERT FRONT LID", "article": "F6 090 22"},
+            {"title": "FRONT FENDERS RACE", "article": "F6 090 23"},
+            {"title": "COVER FRONT LID", "article": "F6 090 24"},
+            {"title": "SIDE PANELS", "article": "F6 090 25"},
+            {"title": "DUCKTAIL", "article": "F6 090 26"},
+            {"title": "MIRROR UPPER PART", "article": "F6 090 27"},
+            {"title": "TRIANGLE COVER SIDE WINDOW", "article": "F6 090 28 / 52"},
+            {"title": "FRONTSPOILER LIP", "article": "F6 090 30"},
+            {"title": "FRONTBUMPER CENTER PART", "article": "F6 090 31"},
+            {"title": "FRONTBUMPER ATTACHMENT LATERAL", "article": "F6 090 32"},
+            {"title": "AIR-GUIDE SIDEWALL", "article": "F6 090 33"},
+            {"title": "DIFFUSOR", "article": "F6 090 34"},
+            {"title": "REARSPOILER", "article": "F6 090 35"},
+            {"title": "COVER ENGINE BAY", "article": "F6 090 36 / 50"},
+            {"title": "COVER BOOT LID", "article": "F6 090 37 / 51"},
+            {"title": "COVER TRUNK", "article": "F6 090 38"},
+            {"title": "FRONTBUMPER CENTER PART WITH CAMERA", "article": "F6 090 40"},
+            {"title": "COVER", "article": "F6 090 55"}
+          ]
+        }
+      ]
+    },
+    "purosangue": {
+      "source": "https://www.novitecgroup.com/en/brands/ferrari/purosangue/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM RACE WITHOUT FLAP-REGULATION", "article": "F1 666 10 / 20 / 30 / 40 / 50 / 60"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM RACE WITH FLAP-REGULATION", "article": "F1 666 11 / 21 / 31 / 41 / 51 / 61"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION", "article": "F1 666 12 / 13 / 14 / 22 / 23 / 24"},
+            {"title": "SPORT METAL CATALYSTS", "article": "F1 666 15"},
+            {"title": "EXHAUST REPLACEMENT PIPE X-PIPE SYSTEM", "article": "F1 666 16"},
+            {"title": "NOVITEC STAINLESS STEEL TAILPIPES", "article": "F1 666 17 / 27"},
+            {"title": "NOVITEC STAINLESS STEEL TAILPIPES GOLD", "article": "F1 666 18 / 28"},
+            {"title": "NOVITEC GTRONIC", "article": "F1 666 88 / 77"},
+            {"title": "NOVITEC TECTRONIC + SWITCHTRONIC", "article": "F1 666 55 / 66"},
+            {"title": "NOVITEC TECTRONIC", "article": "F1 666 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "F1 666 90"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NF9 FORGED", "article": "F4 666 00 / 01 / 70 / 96 / 97"},
+            {"title": "NF10 FORGED ZV LOOK", "article": "F4 666 60 / 61 / 62 / 66 / 67"},
+            {"title": "NF11 FORGED ZV LOOK", "article": "F4 666 20 / 21 / 22 / 26 / 27"},
+            {"title": "NF12 FORGED ZV LOOK", "article": "F4 666 30 / 31 / 32 / 36 / 37"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "ALUMINIUM SPACERS", "article": "F5 666 10 / 11 / 12 / 40 / 50"},
+            {"title": "TITAN WHEELBOLTS SET (10 PIECES)", "article": "F5 666 15"},
+            {"title": "SPORT SPRING SET", "article": "F5 666 31"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "NOVITEC ESTESO WIDEBODY", "article": "F6 666 00 / 83"},
+            {"title": "FRONTLIP CENTER", "article": "F6 666 20 / 30"},
+            {"title": "FRONTLIP ATTACHMENT SIDE", "article": "F6 666 21 / 31"},
+            {"title": "FRONTBUMPER ATTACHMENT", "article": "F6 666 22 / 32"},
+            {"title": "SPOILER ENGINE BONNET", "article": "F6 666 23"},
+            {"title": "COVER ENGINE BONNET / FRONTBUMPER", "article": "F6 666 24"},
+            {"title": "ENGINE BONNET AIR-INTAKE", "article": "F6 666 25"},
+            {"title": "INSERT ENGINE BONNET", "article": "F6 666 26"},
+            {"title": "INSERTS FRONT FENDERS", "article": "F6 666 27"},
+            {"title": "REARSPOILER", "article": "F6 666 28"},
+            {"title": "CARBON SET FOR FRONTBUMPER", "article": "F6 666 50 / 60"},
+            {"title": "MIRROR COVERS", "article": "F6 666 51"},
+            {"title": "WHEEL ARCH LINERS", "article": "F6 666 52"},
+            {"title": "SIDE PANELS", "article": "F6 666 53"},
+            {"title": "DIFFUSOR", "article": "F6 666 54"},
+            {"title": "COVER ENGINE COMPARTMENT", "article": "F6 666 70"},
+            {"title": "AIRFILTER HOUSING", "article": "F6 666 71"},
+            {"title": "ESTESO ENGINE BONNET", "article": "F6 666 80"},
+            {"title": "ESTESO ENGINE BONNET CARBON", "article": "F6 666 81"},
+            {"title": "ESTESO ROOFSPOILER RACE", "article": "F6 666 82 / 92"},
+            {"title": "ESTESO FRONTLIP ATTACHMENT SIDE", "article": "F6 666 84 / 94"},
+            {"title": "ESTESO SIDE PANELS", "article": "F6 666 85"},
+            {"title": "ESTESO SIDE PANEL INSERTS REAR", "article": "F6 666 86"}
+          ]
+        }
+      ]
+    },
+    "revuelto": {
+      "source": "https://www.novitecgroup.com/en/brands/lamborghini/revuelto/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP REGULATION", "article": "L1 444 10 / 20 / 30"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM RACE WITHOUT FLAP REGULATION", "article": "L1 444 11 / 21 / 31"},
+            {"title": "NOVITEC STAINLESS STEEL TAILPIPES", "article": "L1 444 39 / 40 / 41"},
+            {"title": "CAT-REPLACEMENT PIPE (2 PIECES)", "article": "L1 444 12 / 32"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "L1 444 13 / 33"},
+            {"title": "NOVITEC TECTRONIC", "article": "L1 444 80 / 99"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "L1 444 91"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NL4 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 444 50 / 60 / 51 / 61 / 70 / 80 / 90 / 71 / 81 / 91"},
+            {"title": "NL5 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 444 10 / 20 / 11 / 21 / 22 / 23 / 24 / 25 / 26 / 27"},
+            {"title": "NL6 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 444 30 / 40 / 31 / 41 / 32 / 33 / 34 / 35 / 36 / 37"},
+            {"title": "NL7 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 444 55 / 56 / 57 / 58 / 62 / 63 / 64 / 65 / 66 / 67"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "SPORT SPRING SET", "article": "L5 444 01"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONT STRUT", "article": "L6 444 10"},
+            {"title": "FRONT LIP (ORIGINAL LOOK)", "article": "L6 444 41"},
+            {"title": "MIDDLE PART (ORIGINAL LOOK)", "article": "L6 444 40"},
+            {"title": "FRONTSPOILER LIP", "article": "L6 444 11"},
+            {"title": "FRONT COVER", "article": "L6 444 12"},
+            {"title": "HEADLIGHT COVER", "article": "L6 444 13"},
+            {"title": "WIPER COVER", "article": "L6 444 16"},
+            {"title": "INSERT ENGINE BONNET", "article": "L6 444 15"},
+            {"title": "TRUNK LID", "article": "L6 444 14 / 34"},
+            {"title": "SIDE PANELS", "article": "L6 444 17"},
+            {"title": "SIDE SKIRT FIN (ORIGINAL LOOK)", "article": "L6 444 42"},
+            {"title": "MIRROR COVER", "article": "L6 444 19"},
+            {"title": "SIDE PANEL INSERT", "article": "L6 444 18"},
+            {"title": "AIR-INTAKE", "article": "L6 444 20"},
+            {"title": "ENGINE BONNET", "article": "L6 444 21"},
+            {"title": "REAR FLAPS", "article": "L6 444 22"},
+            {"title": "REAR ATTACHMENT WITHOUT SENSOR", "article": "L6 444 25"},
+            {"title": "REAR ATTACHMENT WITH SENSOR", "article": "L6 444 24"},
+            {"title": "REARSPOILER", "article": "L6 444 23"},
+            {"title": "EXHAUST COVER (ORIGINAL LOOK)", "article": "L6 444 48"},
+            {"title": "REARDIFFUSOR", "article": "L6 444 26 / 36"},
+            {"title": "DOOR CONTROL UNIT", "article": "L6 444 50"}
+          ]
+        }
+      ]
+    },
+    "urus_original": {
+      "source": "https://www.novitecgroup.com/en/brands/lamborghini/urus-2/urus/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED RACE EXHAUST SYSTEM WITH FLAP REGULATION", "article": "L1 333 51"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP REGULATION", "article": "L1 333 50"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP REGULATION", "article": "L1 333 40"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "L1 333 66"},
+            {"title": "CAT-REPLACEMENT PIPE (2 PIECES)", "article": "L1 333 65"},
+            {"title": "X-PIPE SYSTEM", "article": "L1 333 55"},
+            {"title": "Y-PIPE STAINLESS STEEL", "article": "L1 333 60"},
+            {"title": "NOVITEC TAILPIPES (SET OF 4)", "article": "L1 333 30"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "L1 333 98"},
+            {"title": "NOVITEC TECTRONIC", "article": "L1 333 99"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NL4 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 75 / 85 / 95"},
+            {"title": "NL5 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 15 / 25 / 35"},
+            {"title": "NL6 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 16 / 26 / 36"},
+            {"title": "NL7 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 44 / 45 / 46 / 47 / 48"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "ALUMINIUM SPACERS", "article": "L5 333 13 / 23 / 40 / 50"},
+            {"title": "NOVITEC CAN-TRONIC SUSPENSION MODULE", "article": "L5 333 80"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "ESTESO WIDEBODY", "article": "L6 333 00"},
+            {"title": "COVER FRONT BUMPER OUTSIDE POSITION", "article": "L6 333 50"},
+            {"title": "COVER FRONT BUMPER (4-PART)", "article": "L6 333 51"},
+            {"title": "COVER FRONT BUMPER UPPER POSITION", "article": "L6 333 52"},
+            {"title": "MIRROR COVERS", "article": "L6 333 53 / 65"},
+            {"title": "FENDER-ATTACHMENT", "article": "L6 333 54"},
+            {"title": "REARSPOILER", "article": "L6 333 55"},
+            {"title": "ROOFSPOILER", "article": "L6 333 56"},
+            {"title": "ENGINE BONNET", "article": "L6 333 59 / 60 / 61 / 62 / 63"},
+            {"title": "TRUNK LID", "article": "L6 333 70"},
+            {"title": "CENTER PART FRONT BUMPER (ORIGINAL LOOK)", "article": "L6 333 71"},
+            {"title": "LATERAL PARTS FRONT BUMPER (ORIGINAL LOOK)", "article": "L6 333 72"},
+            {"title": "REAR DIFFUSER (ORIGINAL LOOK)", "article": "L6 333 73 / 99"},
+            {"title": "COVER ROOFSPOILER (ORIGINAL LOOK)", "article": "L6 333 74"},
+            {"title": "SIDE PANELS (ORIGINAL LOOK)", "article": "L6 333 75"},
+            {"title": "COVER FENDER (4-PART, ORIGINAL LOOK)", "article": "L6 333 76"},
+            {"title": "ROOFSPOILER RACE", "article": "L6 333 84"}
+          ]
+        }
+      ]
+    },
+    "urus_s": {
+      "source": "https://www.novitecgroup.com/en/brands/lamborghini/urus-2/urus-s/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP REGULATION", "article": "L1 333 50"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP REGULATION", "article": "L1 333 40"},
+            {"title": "POWER OPTIMIZED RACE EXHAUST SYSTEM WITH FLAP REGULATION", "article": "L1 333 51"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "L1 333 66"},
+            {"title": "CAT-REPLACEMENT PIPE (2 PIECES)", "article": "L1 333 65"},
+            {"title": "Y-PIPE STAINLESS STEEL", "article": "L1 333 60"},
+            {"title": "X-PIPE SYSTEM", "article": "L1 333 55"},
+            {"title": "NOVITEC TAILPIPES (SET OF 4)", "article": "L1 333 30"},
+            {"title": "LOGO ENGINE COMPARTMENT", "article": "L1 333 01"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "L1 333 98"},
+            {"title": "NOVITEC TECTRONIC", "article": "L1 333 99"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NL5 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 15 / 25 / 35"},
+            {"title": "NL6 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 16 / 26 / 36"},
+            {"title": "NL4 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 75 / 85 / 95"},
+            {"title": "NL7 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 44 / 45 / 46 / 47 / 48"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "ALUMINIUM SPACERS", "article": "L5 333 13 / 23 / 40 / 50"},
+            {"title": "NOVITEC CAN-TRONIC SUSPENSION MODULE", "article": "L5 333 80"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "NOVITEC ESTESO WIDEBODY S", "article": "L6 333 05"},
+            {"title": "COVER FENDER (4-PART, ORIGINAL LOOK)", "article": "L6 333 31"},
+            {"title": "FRONT ATTACHMENT", "article": "L6 333 47"},
+            {"title": "MIRROR COVERS", "article": "L6 333 53 / 65"},
+            {"title": "FENDER-ATTACHMENT", "article": "L6 333 54"},
+            {"title": "REARSPOILER", "article": "L6 333 55"},
+            {"title": "ROOFSPOILER", "article": "L6 333 56"},
+            {"title": "TRUNK LID", "article": "L6 333 70"},
+            {"title": "CENTER PART FRONT BUMPER (ORIGINAL LOOK)", "article": "L6 333 71"},
+            {"title": "COVER ROOFSPOILER (ORIGINAL LOOK)", "article": "L6 333 74"},
+            {"title": "COVER FRONT BUMPER UPPER POSITION LONG", "article": "L6 333 80"},
+            {"title": "COVER FRONT BUMPER MIDDLE SHORT", "article": "L6 333 81"},
+            {"title": "FRONT SIDE COVER", "article": "L6 333 82"},
+            {"title": "ROOFSPOILER RACE", "article": "L6 333 84"},
+            {"title": "REAR DIFFUSER", "article": "L6 333 85"},
+            {"title": "REAR BUMPER SIDE COVER", "article": "L6 333 86"},
+            {"title": "ENGINE BONNET", "article": "L6 333 87 / 88"},
+            {"title": "FRONTSPOILER", "article": "L6 333 89"},
+            {"title": "SIDE PANELS (ORIGINAL LOOK)", "article": "L6 333 93"},
+            {"title": "COVER FENDER (ORIGINAL LOOK)", "article": "L6 333 94"},
+            {"title": "REAR BUMPER MIDDLE COVER", "article": "L6 333 95"}
+          ]
+        }
+      ]
+    },
+    "urus_performante": {
+      "source": "https://www.novitecgroup.com/en/brands/lamborghini/urus-2/urus-performante/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP REGULATION", "article": "L1 333 50"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP REGULATION", "article": "L1 333 40"},
+            {"title": "POWER OPTIMIZED RACE EXHAUST SYSTEM WITH FLAP REGULATION", "article": "L1 333 51"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "L1 333 66"},
+            {"title": "CAT-REPLACEMENT PIPE (2 PIECES)", "article": "L1 333 65"},
+            {"title": "Y-PIPE STAINLESS STEEL", "article": "L1 333 60"},
+            {"title": "X-PIPE SYSTEM", "article": "L1 333 55"},
+            {"title": "NOVITEC TAILPIPES (SET OF 4)", "article": "L1 333 30"},
+            {"title": "LOGO ENGINE COMPARTMENT", "article": "L1 333 01"},
+            {"title": "NOVITEC SWITCHTRONIC", "article": "L1 333 98"},
+            {"title": "NOVITEC TECTRONIC", "article": "L1 333 99"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "NL4 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 75 / 85 / 95"},
+            {"title": "NL5 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 15 / 25 / 35"},
+            {"title": "NL6 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 16 / 26 / 36"},
+            {"title": "NL7 FORGED, CENTRAL-LOCKING LOOK", "article": "L4 333 44 / 45 / 46 / 47 / 48"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "SPORT SPRING SET", "article": "L5 333 03"},
+            {"title": "ALUMINIUM SPACERS", "article": "L5 333 13 / 23 / 40 / 50"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "NOVITEC ESTESO WIDEBODY PERFORMANTE", "article": "L6 333 05"},
+            {"title": "FRONT ATTACHMENT CARBON", "article": "L6 333 40"},
+            {"title": "FRONT ATTACHMENT", "article": "L6 333 47"},
+            {"title": "MIRROR COVERS", "article": "L6 333 53 / 65"},
+            {"title": "FENDER-ATTACHMENT", "article": "L6 333 54"},
+            {"title": "REARSPOILER", "article": "L6 333 55"},
+            {"title": "TRUNK LID", "article": "L6 333 70"},
+            {"title": "COVER FRONT BUMPER UPPER POSITION LONG", "article": "L6 333 80"},
+            {"title": "COVER FRONT BUMPER MIDDLE SHORT", "article": "L6 333 81"},
+            {"title": "FRONT SIDE COVER", "article": "L6 333 82"},
+            {"title": "FRONTSPOILER LIP", "article": "L6 333 83"},
+            {"title": "ROOFSPOILER RACE", "article": "L6 333 84"},
+            {"title": "REAR DIFFUSER", "article": "L6 333 85"},
+            {"title": "REAR BUMPER SIDE COVER", "article": "L6 333 86"},
+            {"title": "ENGINE BONNET", "article": "L6 333 87 / 88"},
+            {"title": "FRONT LIP (ORIGINAL LOOK)", "article": "L6 333 90"},
+            {"title": "LATERAL PARTS FRONT BUMPER SENSOR (ORIGINAL LOOK)", "article": "L6 333 91"},
+            {"title": "LATERAL PARTS FRONT BUMPER (ORIGINAL LOOK)", "article": "L6 333 92"},
+            {"title": "SIDE PANELS (ORIGINAL LOOK)", "article": "L6 333 93"},
+            {"title": "COVER FENDER (ORIGINAL LOOK)", "article": "L6 333 94"},
+            {"title": "REAR BUMPER MIDDLE COVER", "article": "L6 333 95"}
+          ]
+        }
+      ]
+    },
+    "cullinan_series_i": {
+      "source": "https://www.novitecgroup.com/en/brands/rolls-royce/cullinan-2/cullinan/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION", "article": "R1 333 10"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP-REGULATION", "article": "R1 333 11"},
+            {"title": "SPOFEC SWITCHTRONIC", "article": "R1 333 20"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "SP2", "article": "R4 333 10 / 20 / 30"},
+            {"title": "SP3", "article": "R4 333 15 / 25 / 35"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "SPOFEC CAN-TRONIC SUSPENSION CONTROL MODULE", "article": "R5 333 01"},
+            {"title": "ALUMINIUM SPACERS", "article": "R5 333 20 / 30"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "OVERDOSE WIDEBODY", "article": "R6 333 01"},
+            {"title": "REARSPOILER LIP", "article": "R6 333 02 / 04"},
+            {"title": "OVERDOSE S WIDEBODY", "article": "R6 333 03"}
+          ]
+        }
+      ]
+    },
+    "cullinan_series_ii": {
+      "source": "https://www.novitecgroup.com/en/brands/rolls-royce/cullinan-2/cullinan-series-ii/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITH FLAP-REGULATION", "article": "R1 333 10"},
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM WITHOUT FLAP-REGULATION", "article": "R1 333 11"},
+            {"title": "SPOFEC SWITCHTRONIC", "article": "R1 333 20"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "SP2", "article": "R4 333 10 / 20 / 30"},
+            {"title": "SP3", "article": "R4 333 15 / 25 / 35"},
+            {"title": "SP4", "article": "R4 333 19 / 29 / 39"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "LOWERINGKIT", "article": "R5 333 02"},
+            {"title": "ALUMINIUM SPACERS", "article": "R5 333 20 / 30"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "REARSPOILER LIP", "article": "R6 333 02 / 04"},
+            {"title": "OVERDOSE S2", "article": "R6 333 06 / 05"}
+          ]
+        }
+      ]
+    },
+    "spectre": {
+      "source": "https://www.novitecgroup.com/en/brands/rolls-royce/spectre/",
+      "sections": [
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "SP2", "article": "R4 444 00 / 10 / 20 / 30"},
+            {"title": "SP3", "article": "R4 444 05 / 15 / 25 / 35"},
+            {"title": "SP4", "article": "R4 444 45 / 55 / 65 / 75"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "LOWERINGKIT", "article": "R5 444 01"},
+            {"title": "ALUMINIUM SPACERS", "article": "R5 444 12 / 15"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTLIP", "article": "R6 444 01"},
+            {"title": "FRONT ATTACHMENT WITH LED", "article": "R6 444 02"},
+            {"title": "SIDE PANELS", "article": "R6 444 03"},
+            {"title": "REARDIFFUSOR FINS", "article": "R6 444 04"},
+            {"title": "REARSPOILER", "article": "R6 444 05"}
+          ]
+        }
+      ]
+    },
+    "750s": {
+      "source": "https://www.novitecgroup.com/en/brands/mclaren/750s-2/750s/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM RACE, COMPLETE HEAT-PROTECTED", "article": "C1 750 20 / 25 / 75"},
+            {"title": "NOVITEC TAILPIPES", "article": "C1 750 40 / 41"},
+            {"title": "NOVITEC TAILPIPES CARBON", "article": "C1 750 45 / 46"},
+            {"title": "CATALYST-REPLACEMENT PIPE", "article": "C1 750 50 / 55"},
+            {"title": "SPORT METAL CATALYSTS", "article": "C1 750 60 / 65"},
+            {"title": "TURBO INLET", "article": "C1 750 70"},
+            {"title": "TECTRONIC", "article": "C1 750 80 / 99"},
+            {"title": "NOVITRONIC", "article": "C1 750 85"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "MC3 FORGED, CENTRAL-LOCK LOOK", "article": "C4 750 80 / 81 / 82 / 87 / 88"},
+            {"title": "MC4 FORGED, CENTRAL-LOCK LOOK", "article": "C4 750 90 / 91 / 92 / 97 / 98"}
+          ]
+        },
+        {
+          "name": "Suspension",
+          "entries": [
+            {"title": "SPORT SPRING SET", "article": "C5 750 10"},
+            {"title": "ALUMINIUM SPACERS", "article": "C5 750 11 / 15"}
+          ]
+        },
+        {
+          "name": "Aerodynamics",
+          "entries": [
+            {"title": "FRONTSPOILER LIP", "article": "C6 750 60"},
+            {"title": "SIDE SKIRTS", "article": "C6 750 61"},
+            {"title": "MIRROR COVERS", "article": "C6 750 62"},
+            {"title": "ROOF AIR-INTAKE N-LARGO", "article": "C6 750 63"},
+            {"title": "SIDE AIR-INTAKE", "article": "C6 750 64"},
+            {"title": "PANEL ENTRANCE", "article": "C6 750 65"},
+            {"title": "REARBUMPER", "article": "C6 750 66"},
+            {"title": "DIFFUSOR", "article": "C6 750 67"},
+            {"title": "DIFFUSOR FIN CENTER", "article": "C6 750 68"},
+            {"title": "DIFFUSOR FLAPS", "article": "C6 750 69"},
+            {"title": "TRUNK LID N-LARGO", "article": "C6 750 70 / 71 / 72"},
+            {"title": "INSERTS HEADLIGHTS", "article": "C6 750 81"}
+          ]
+        }
+      ]
+    },
+    "senna": {
+      "source": "https://www.novitecgroup.com/en/brands/mclaren/senna/",
+      "sections": [
+        {
+          "name": "Performance & Exhaust",
+          "entries": [
+            {"title": "POWER OPTIMIZED EXHAUST SYSTEM RACE GTR, COMPLETE HEAT-PROTECTED", "article": "C1 888 10 / 75"},
+            {"title": "CATALYST-REPLACEMENT PIPE (SET)", "article": "C1 888 11 / 51"},
+            {"title": "SPORT METAL CATALYSTS (SET)", "article": "C1 888 12 / 52"},
+            {"title": "NOVITEC TECTRONIC", "article": "C1 888 80/99"}
+          ]
+        },
+        {
+          "name": "Wheels",
+          "entries": [
+            {"title": "MC3 FORGED, CENTRAL-LOCK", "article": "C4 888 01 / 05 / 06"},
+            {"title": "MC4 FORGED, CENTRAL-LOCK", "article": "C4 888 90 / 91 / 92 / 96 / 97"}
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -5,7 +5,7 @@ export const sf90Bodies = [{ key: 'stradale', name: 'SF90 Stradale' }, { key: 's
 export type SF90Body = typeof sf90Bodies[number]['key'];
 export function isSF90Body(value?: string): value is SF90Body { return value === 'stradale' || value === 'spider'; }
 export function isSF90Selection(f: { brand?: string; make?: string; model?: string }) { return f.brand === 'novitec' && f.make === 'ferrari' && f.model === 'sf90'; }
-export function is812Selection(f: { brand?: string; make?: string; model?: string }) { return f.brand === 'novitec' && f.make === 'ferrari' && (f.model === '812_gts' || f.model === '812_superfast'); }
+export function is812Selection(f: { brand?: string; make?: string; model?: string; body?: string }) { return f.brand === 'novitec' && f.make === 'ferrari' && (f.model === '812_gts' || f.model === '812_superfast' || (f.model === '812' && (f.body === 'gts' || f.body === 'superfast'))); }
 
 // Catalogue tags can include both models even when the title specifies only one.
 // Keep uncertain and special-programme listings separate for fitment confirmation.

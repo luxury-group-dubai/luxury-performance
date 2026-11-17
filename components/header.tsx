@@ -15,10 +15,12 @@ import dynamic from 'next/dynamic';
 import { SocialLinks } from './social-links';
 import { contact } from '@/lib/content';
 import { hasPartnerHeroOverlay } from '@/lib/brand-hero-images';
+import { PreviewShopMenu } from './preview-shop-menu';
+import type { PreviewShopTab } from '@/app/preview/shop/navigation';
 
 const VehicleMenu = dynamic(() => import('./vehicle-menu').then(module => module.VehicleMenu), { loading: () => <p role="status">Loading vehicles…</p> });
 
-type ShopMenu = 'brands' | 'vehicles';
+type ShopMenu = PreviewShopTab;
 const menus = [{ key: 'brands' as const, label: 'By brand' }, { key: 'vehicles' as const, label: 'By vehicle' }];
 const links = [{ name: 'HOME', href: '/' }, { name: 'PARTNERS', href: '/partners' }, { name: 'ABOUT', href: '/about' }, { name: 'CONTACT', href: '/contact' }];
 function BrandMenu({ close }: { close: () => void }) {
@@ -66,6 +68,8 @@ export function Header() {
   const [shopMenu, setShopMenu] = useState<ShopMenu | null>(null);
   const [mobileSection, setMobileSection] = useState<ShopMenu>('brands');
   const pathname = usePathname();
+  const previewNavigation = true;
+  const shopSurface = pathname === '/shop' || pathname.startsWith('/shop/') || pathname.startsWith('/preview/');
   const isShop = pathname === '/shop' || pathname === '/studio/capristo';
   const partnerSlug = /^\/partners\/([^/]+)$/.exec(pathname)?.[1];
   const overlaysHero = pathname === '/' || pathname === '/novitec-12cilindri-n-largo' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
@@ -89,7 +93,7 @@ export function Header() {
   }, [cancelHoverClose]);
   const close = () => { setOpen(false); closeShop(); };
 
-  function openShopOnHover(event: ReactPointerEvent<HTMLButtonElement>) {
+  function openShopOnHover(event: ReactPointerEvent<HTMLElement>) {
     if (event.pointerType !== 'mouse' || open) return;
     cancelHoverClose();
     setShopMenu(current => current ?? 'brands');
@@ -188,11 +192,11 @@ export function Header() {
     const background = Array.from(document.querySelectorAll<HTMLElement>('#main, footer'));
     const previousInert = background.map(element => element.inert);
     background.forEach(element => { element.inert = true; });
-    panel.current?.querySelector<HTMLElement>('a,button')?.focus({ preventScroll: true });
+    Array.from(panel.current?.querySelectorAll<HTMLElement>('a,button,summary') ?? []).find(element => element.getClientRects().length)?.focus({ preventScroll: true });
     function onKey(event: KeyboardEvent) {
       if (event.key === 'Escape') { setOpen(false); toggle.current?.focus({ preventScroll: true }); }
       if (event.key === 'Tab') {
-        const controls = Array.from(panel.current?.querySelectorAll<HTMLElement>('a,button') ?? []).filter(el => el.getClientRects().length);
+        const controls = Array.from(panel.current?.querySelectorAll<HTMLElement>('a,button,summary') ?? []).filter(el => el.getClientRects().length);
         const elements = [toggle.current, ...controls].filter(Boolean) as HTMLElement[];
         const first = elements[0], last = elements.at(-1);
         if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
@@ -204,11 +208,19 @@ export function Header() {
   }, [open, isShop]);
   return <>
     <a href="#main" className="skip-link">Skip to content</a>
-    <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
+    <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${shopSurface ? styles.previewHeader : ''} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
       <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => { setOpen(!open); closeShop(); setMobileSection('brands'); }}><span aria-hidden="true"><i/><i/></span></button>
       <nav aria-label="Main navigation" inert={open} className={`desktop-nav ${styles.desktop}`}>
         <div className={styles.menuGroup}>
-          <button ref={shopTrigger} className={styles.trigger} aria-expanded={Boolean(shopMenu)} aria-controls="shop-menu"
+          {previewNavigation ? <span className={styles.previewShopTrigger} onPointerEnter={openShopOnHover} onPointerLeave={scheduleShopClose}>
+            <Link href="/shop" onClick={close} aria-current={pathname === '/shop' ? 'page' : undefined}>SHOP</Link>
+            <button ref={shopTrigger} className={styles.trigger} aria-label="Open shop shortcuts" aria-expanded={Boolean(shopMenu)} aria-controls="shop-menu" onClick={toggleShop} onKeyDown={event => {
+              if (event.key !== 'ArrowDown') return;
+              event.preventDefault(); cancelHoverClose(); shopPinned.current = true;
+              setShopMenu(current => current ?? 'brands');
+              requestAnimationFrame(() => dropdown.current?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]')?.focus());
+            }}><ChevronDown size={12} /></button>
+          </span> : <button ref={shopTrigger} className={styles.trigger} aria-expanded={Boolean(shopMenu)} aria-controls="shop-menu"
             onPointerEnter={openShopOnHover} onPointerLeave={scheduleShopClose} onClick={toggleShop}
             onKeyDown={event => {
               if (event.key !== 'ArrowDown') return;
@@ -217,9 +229,9 @@ export function Header() {
               shopPinned.current = true;
               setShopMenu(current => current ?? 'brands');
               requestAnimationFrame(() => dropdown.current?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]')?.focus());
-            }}>SHOP<ChevronDown size={12}/></button>
-          {shopMenu && <div className={styles.dropdown} id="shop-menu" ref={dropdown} onPointerEnter={cancelHoverClose} onPointerLeave={scheduleShopClose}>
-            <ShopContents selected={shopMenu} select={setShopMenu} prefix="desktop-shop" close={close} dismiss={() => { closeShop(); shopTrigger.current?.focus(); }}/>
+            }}>SHOP<ChevronDown size={12}/></button>}
+          {shopMenu && <div className={`${styles.dropdown} ${previewNavigation ? styles.previewDropdown : ''}`} id="shop-menu" ref={dropdown} onPointerEnter={cancelHoverClose} onPointerLeave={scheduleShopClose}>
+            {previewNavigation ? <PreviewShopMenu selected={shopMenu} select={setShopMenu} close={close} dismiss={() => { closeShop(); shopTrigger.current?.focus(); }} /> : <ShopContents selected={shopMenu === 'stock' ? 'brands' : shopMenu} select={setShopMenu} prefix="desktop-shop" close={close} dismiss={() => { closeShop(); shopTrigger.current?.focus(); }}/> }
             <div className={styles.menuFooter}>
               <Link className="action-secondary" href="/partners" onClick={close}>Explore all partners <ActionArrow size={15}/></Link>
               <Link className="action-secondary" href="/contact" onClick={close}>Need help with fitment? <ActionArrow size={15}/></Link>
@@ -232,7 +244,7 @@ export function Header() {
       <Link inert={open} className="brand" href="/#top" onClick={event => { close(); if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && window.location.pathname === '/') window.scrollTo({ top: 0, behavior: 'instant' }); }} aria-label="Luxury Performance home"><BrandLogo priority wordmark={false}/></Link>
       <div inert={open} className={`header-shop-actions ${styles.actions}`}>
         <div className={styles.utilityActions}>
-          <HeaderSearch onOpen={close}/>
+          <HeaderSearch onOpen={close} preview={previewNavigation}/>
           <span onClick={close}><CartButton/></span>
         </div>
         <Link className="header-contact" href="/contact" onClick={close}>CONTACT <ActionArrow/></Link>
@@ -240,9 +252,9 @@ export function Header() {
     </header>
     {shopMenu && <div ref={shopGlass} className={`navigation-glass-surface navigation-shop-glass ${styles.shopGlass}`} aria-hidden="true" />}
     {open && <div className="navigation-glass-surface" aria-hidden="true" />}
-    {open && <div ref={panel} className={`mobile-menu ${styles.mobile}`} id="full-navigation"><nav aria-label="Full navigation"><div className={styles.fullShop}>
-      <ShopContents selected={mobileSection} select={setMobileSection} prefix="full-shop" close={close} label="SHOP"/>
-      </div><div className={styles.mobileLinks}><span className={styles.sectionLabel}>Explore Luxury Performance</span>{links.map(link => <Link key={link.name} href={link.href} onClick={close} aria-current={pathname === link.href ? 'page' : undefined}>{link.name}<ArrowUpRight size={20}/></Link>)}
+    {open && <div ref={panel} className={`mobile-menu ${styles.mobile} ${previewNavigation ? styles.previewMobile : ''}`} id="full-navigation"><nav aria-label="Full navigation"><div className={styles.fullShop}>
+      {previewNavigation ? <PreviewShopMenu selected={mobileSection} select={setMobileSection} close={close} fullNavigation /> : <ShopContents selected={mobileSection === 'stock' ? 'brands' : mobileSection} select={setMobileSection} prefix="full-shop" close={close} label="SHOP"/>}
+      </div><div className={styles.mobileLinks}>{!previewNavigation && <span className={styles.sectionLabel}>Explore Luxury Performance</span>}{links.map(link => <Link key={link.name} href={link.href} onClick={close} aria-current={pathname === link.href ? 'page' : undefined}>{link.name}<ArrowUpRight size={20}/></Link>)}
         <div className={styles.menuDetails}>
           <p className={styles.menuMotto}>Beyond Ordinary.</p>
           <a className={`${styles.menuAddress} action-secondary`} href={contact.maps} target="_blank" rel="noopener noreferrer">4th Street, Al Quoz Industrial 3<br/>Dubai, United Arab Emirates <ActionArrow size={12} /><span className="sr-only"> (opens in a new tab)</span></a>

@@ -1,0 +1,25 @@
+.page { background:#ECEEEF; color:#171819; min-height:75vh; }
+.header { background:#141516; color:#f6f5f2; }
+.breadcrumbs { display:flex; gap:10px; font-size:11px; color:#aaa; padding-bottom:24px; }
+.breadcrumbs a:hover { color:#fff; }
+.destinations { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px 40px; padding-bottom:24px; }
+.destinations h2 { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#aaa; margin-bottom:12px; }
+.destinations a { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0; font-size:12px; }
+.destinations :global(.action-arrow) { flex:none; }
+.toolbar { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:12px 0; font-size:11px; }
+.toolbar :global(.shop-choice) { position:relative; z-index:4; }
+.toolbar :global(.shop-choice-trigger) { display:flex; align-items:center; gap:8px; padding:12px 0; background:none; color:inherit; font-size:12px; }
+.toolbar :global(.shop-choice-menu) { position:absolute; right:0; top:100%; width:210px; padding:8px; background:#202122; color:#fff; box-shadow:0 12px 30px #0004; }
+.toolbar :global(.shop-choice-menu[hidden]) { display:none; }
+.toolbar :global(.shop-choice-menu) button { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; width:100%; text-align:left; background:none; color:inherit; font-size:12px; padding:8px; }
+.toolbar :global(.shop-choice-menu) button:hover,.toolbar :global(.shop-choice-menu) button[aria-pressed=true] { background:#ffffff0d; }
+.catalogue { padding:36px var(--gutter) 70px; }
+.grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:38px 24px; }
+.card { min-width:0; }
+.card :global(.shop-product-image) + h3 { margin-top:16px; -webkit-line-clamp:2; }
+.count { margin-top:36px; text-align:center; color:#666; font-size:12px; }
+.more { display:flex; align-items:center; gap:16px; margin:16px auto 0; padding:16px; background:none; font-size:12px; }
+.empty { padding:40px 0; text-align:center; font-size:14px; }
+.empty a { display:inline-flex; align-items:center; gap:16px; margin-top:24px; font-size:12px; }
+@media(max-width:1100px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:700px) { .destinations { grid-template-columns:1fr; }.catalogue { padding-top:24px; }.grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 14px; } }

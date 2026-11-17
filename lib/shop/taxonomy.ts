@@ -1,6 +1,8 @@
 import { ferrariVersionMatch, is812Selection, isSF90Body, isSF90Selection } from './novitec-ferrari-fitment';
 import { matchesSearch } from './search';
 import { f8BodyMatch, isF8Body, isF8Selection } from './novitec-f8-fitment';
+import { novitecFilterModelKeys } from './novitec-variants';
+import { is12CilindriSpiderProduct } from './novitec-12cilindri-fitment';
 import type { CatalogProduct } from './types';
 export const suppliers = [
   { slug: 'novitec', name: 'NOVITEC', image: 'ferrari', line: 'Individuality, without compromise.', description: 'Explore by vehicle, then discover the exhaust, aerodynamic, wheel and suspension programme.', categories: ['Aerodynamics', 'Exhaust', 'Wheels', 'Suspension', 'Performance'] },
@@ -40,6 +42,7 @@ export function techartFitmentLabel(fit: string) {
   return generation && fit !== generation ? fitLabel(fit).slice(fitLabel(generation).length + 1) : fitLabel(fit);
 }
 export function categoryOf(p: CatalogProduct) {
+  if (supplierOf(p) === 'novitec' && p.programmeCategory) return p.programmeCategory;
   const type = p.productType.toLowerCase(), tags = p.tags.join(' '), title = p.title.toLowerCase();
   if (supplierOf(p) === 'collectibles') {
     return /\bengines?\b/i.test(`${type} ${title} ${p.handle}`) ? 'Model Engines' : 'Model Cars';
@@ -62,7 +65,7 @@ export function categoryOf(p: CatalogProduct) {
   if (/category_(performance|engine)/.test(tags) || /performance|turbo|engine/.test(type)) return 'Performance';
   return /accessor/.test(type) ? 'Accessories' : 'Other parts';
 }
-export const inStockShopPath = '/shop?stock=in-stock';
+export const inStockShopPath = '/shop/in-stock';
 export type Filters = { brand?: string; stock?: string; make?: string; model?: string; generation?: string; fit?: string; body?: string; category?: string; q?: string; sort?: string; page?: string };
 export function techartFitKeys(fit: string, body?: string) {
   // Both distinct 992.1 cars have parts in this shared manufacturer column.
@@ -79,14 +82,18 @@ export function techartFitKeys(fit: string, body?: string) {
 export function filterProducts(products: CatalogProduct[], f: Filters) {
   const f8Body = isF8Selection(f) && isF8Body(f.body) ? f.body : undefined;
   const sf90Body = isSF90Selection(f) && isSF90Body(f.body) ? f.body : undefined;
-  const version812 = is812Selection(f) ? (f.model === '812_gts' ? 'gts' : 'superfast') : undefined;
+  const version812 = is812Selection(f) ? (f.model === '812_gts' || f.body === 'gts' ? 'gts' : 'superfast') : undefined;
+  const modelKeys = novitecFilterModelKeys(f);
+  const spider12Cilindri = f.brand === 'novitec' && f.make === 'ferrari' && f.model === '12cilindri' && f.body === 'spider';
   const fits = f.fit ? f.brand === 'techart' && f.model === '911' ? techartFitKeys(f.fit, f.body) : [f.fit] : [];
   const generation = f.brand === 'techart' && !f.fit ? f.generation : undefined;
   // Keep links to the former combined category working.
   const matchesCategory = (product: CatalogProduct) => !f.category || (
-    f.category === 'Collectibles' ? supplierOf(product) === 'collectibles' : categoryOf(product) === f.category
+    f.category === 'Collectibles' ? supplierOf(product) === 'collectibles'
+      : product.programmeCategory === 'Performance & Exhaust' && ['Performance', 'Exhaust'].includes(f.category) ? true
+      : categoryOf(product) === f.category
   );
-  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').includes(f.model)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && matchesCategory(p) && (!f.q || matchesSearch(p, f.q)));
+  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').some(model => modelKeys.includes(model))) && (!spider12Cilindri || is12CilindriSpiderProduct(p)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && matchesCategory(p) && (!f.q || matchesSearch(p, f.q)));
   if (f.sort === 'price-up') result.sort((a,b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
   if (f.sort === 'price-down') result.sort((a,b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
   if (f.sort === 'name') result.sort((a,b) => a.title.localeCompare(b.title));

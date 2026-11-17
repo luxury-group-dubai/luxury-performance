@@ -119,12 +119,12 @@
   filter: brightness(0) invert(1);
   transform: none;
 }
-.vehicleWordmark img.ferrariWordmark { width: 140px; }
-.vehicleWordmark img.lamborghiniWordmark { width: 158px; }
-.vehicleWordmark img.porscheWordmark { width: 180px; }
-.vehicleWordmark img.mclarenWordmark { width: 200px; filter: none; }
-.vehicleWordmark img.rollsWordmark { width: 160px; }
-.vehicleWordmark img.mercedesWordmark { width: 176px; }
+.vehicleWordmark img.ferrariWordmark { width: calc(140px * var(--menu-logo-scale, 1)); }
+.vehicleWordmark img.lamborghiniWordmark { width: calc(158px * var(--menu-logo-scale, 1)); }
+.vehicleWordmark img.porscheWordmark { width: calc(180px * var(--menu-logo-scale, 1)); }
+.vehicleWordmark img.mclarenWordmark { width: calc(200px * var(--menu-logo-scale, 1)); filter: none; }
+.vehicleWordmark img.rollsWordmark { width: calc(160px * var(--menu-logo-scale, 1)); }
+.vehicleWordmark img.mercedesWordmark { width: calc(176px * var(--menu-logo-scale, 1)); }
 .vehicleWordmark img.audiWordmark { width: 110px; }
 .logoFrame img.bmwMark { width: 48px; height: 48px; max-height: 100%; transform: none; filter: none; mix-blend-mode: normal; }
 .modelHeading .vehicleWordmark { width: 150px; height: 38px; }
@@ -209,3 +209,23 @@
     to { opacity: 1; }
   }
 }
+
+/* Shared shop navigation and dark shop surfaces. */
+.header.previewHeader { background:#141516; border-bottom:0; }
+.header.previewHeader:not(:global(.menu-is-open))::before { background:#141516; -webkit-backdrop-filter:none; backdrop-filter:none; }
+/* Offset the chevron's trailing inset so the visible navigation gaps match. */
+.header .desktop .previewShopTrigger { display:flex; align-items:center; gap:0; margin-inline-end:-12px; }
+.header .desktop .previewShopTrigger > a { font-weight:700; padding:16px 0; }
+.header .desktop > a { padding:16px 0; }
+.header .desktop > a:focus-visible::after,
+.header .desktop .previewShopTrigger > a:focus-visible::after { transform:scaleX(1); }
+.previewShopTrigger .trigger { justify-content:flex-start; min-width:30px; min-height:44px; padding:12px 12px 12px 6px; }
+.header .previewDropdown, .mobile.previewMobile:global(.mobile-menu) { background:transparent; border:0; box-shadow:none; }
+.header.previewHeader:is(:global(.full-menu-is-open), :global(.shop-menu-is-open)) { background:transparent; }
+.previewDropdown .menuFooter { border:0; }
+.previewDropdown .menuFooter a { font-size:12px!important; font-weight:400; text-transform:uppercase; }
+.previewMobile .mobileLinks { border:0; }
+.previewMobile nav a { border:0; }
+.header .previewDropdown [data-selector-logo-artwork] .logoFrame { background:transparent; border-radius:0; }
+.header .previewDropdown [data-selector-logo-artwork] .vehicleWordmark,
+.previewMobile [data-selector-logo-artwork] .vehicleWordmark { width:100%; height:60px; }

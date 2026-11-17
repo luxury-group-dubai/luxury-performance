@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import localFont from 'next/font/local';
 import { BrandIntro } from '@/components/brand-intro';
+import { selectorLogoBootstrap } from '@/lib/selector-logo-bootstrap';
 import { introBootstrap } from '@/lib/intro-bootstrap';
 import { SiteMotion } from '@/components/site-motion';
 import { SmoothScroll } from '@/components/smooth-scroll';
@@ -38,5 +39,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         gtag('js', new Date());
       ` }} />
     </head>
-    <body id="top"><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
+    <body id="top"><script dangerouslySetInnerHTML={{ __html: selectorLogoBootstrap }} /><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
 }

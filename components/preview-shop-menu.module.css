@@ -1,0 +1,41 @@
+.menu { color:#f5f5f2; --menu-logo-scale:1.2; }
+.toolbar { display:flex; justify-content:space-between; align-items:center; gap:24px; margin-bottom:18px; }
+.tabs { display:flex; gap:30px; }
+.tabs button { position:relative; background:none; color:#aaa; font-size:12px; font-weight:400; padding:14px 0; border-bottom:2px solid transparent; }
+.tabs button::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:2px; background:#fff; transform:scaleX(0); transform-origin:left; transition:transform .25s; }
+.tabs button[aria-selected=true] { color:#fff; }
+.tabs button[aria-selected=true]::after, .tabs button:focus-visible::after { transform:scaleX(1); }
+@media (hover:hover) { .tabs button:hover::after { transform:scaleX(1); } }
+@media (prefers-reduced-motion:reduce) { .tabs button::after { transition:none; } }
+.actions { display:flex; align-items:center; gap:24px; }
+.menu .actions a { display:flex; align-items:center; gap:12px; font-size:12px; font-weight:400; text-transform:uppercase; }
+.actions button { display:grid; place-items:center; width:40px; height:40px; background:none; color:inherit; }
+.brandGrid, .vehicleGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 24px; }
+.vehicleGrid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.menu .brandGrid a.logoLink, .menu .vehicleGrid a.logoLink { position:relative; display:flex; align-items:center; justify-content:center; min-height:132px; padding:22px 20px; white-space:normal; animation:none; }
+.logoLink > [data-selector-logo] { width:100%; --selector-artwork-width:230px; }
+.logoLink [data-brand-artwork] { max-width:230px; height:72px; }
+.logoLink [data-brand-artwork="collectibles"] > img { width:192px; }
+.logoLink [data-selector-logo-artwork] > img[data-make] { max-width:230px; height:78px; }
+.logoLink small { position:absolute; bottom:10px; color:#aaa; font-size:10px; }
+.logoLink:hover, .logoLink:focus-visible { background:#ffffff06; }
+.menu .browseAll { display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-top:20px; font-size:12px; font-weight:400; text-transform:uppercase; }
+.stockGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:40px; }
+.menu .stockLink { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:150px; font-size:22px; white-space:normal; }
+.stockLink small { display:block; margin-top:10px; font-size:12px; color:#aaa; line-height:1.6; }
+.stockLink > svg { flex:none; }
+.fullMenu .shopHome { justify-content:space-between; font-size:clamp(22px,2.4vw,36px); font-weight:700; letter-spacing:-.035em; }
+.fullMenu a.shopHome { display:flex; align-items:center; padding:15px 0; border:0; border-bottom:1px solid #ffffff1f; animation:none; }
+.fullMenu .toolbar { margin-top:12px; }
+.fullMenu .brandGrid, .fullMenu .vehicleGrid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 16px; }
+.fullMenu .brandGrid a.logoLink, .fullMenu .vehicleGrid a.logoLink { min-width:0; padding-inline:8px; }
+.fullMenu .stockGrid { grid-template-columns:1fr; gap:0; }
+.fullMenu .stockLink { min-height:100px; }
+@media(max-width:1100px) {
+  .fullMenu .shopHome { font-size:25px; }
+  .fullMenu .tabs { gap:24px; }
+  .fullMenu .tabs button { font-size:11px; white-space:nowrap; }
+  .fullMenu .brandGrid, .fullMenu .vehicleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; }
+  .fullMenu .brandGrid a.logoLink, .fullMenu .vehicleGrid a.logoLink { min-width:0; min-height:116px; padding:16px 8px 24px; }
+  .fullMenu .logoLink > [data-selector-logo] { --selector-artwork-width:180px; }
+}
