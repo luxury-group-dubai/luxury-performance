@@ -27,7 +27,7 @@ function afterImageReady(image: HTMLImageElement, onReady: (loaded: boolean) => 
 export function BrandHero({ brands, children }: { brands: Brand[]; children: ReactNode }) {
   const slides = Children.toArray(children);
   const root = useRef<HTMLElement>(null);
-  const context = useRef<HTMLHeadingElement>(null);
+  const context = useRef<HTMLDivElement>(null);
   const touch = useRef<{ x: number; y: number } | null>(null);
   const [active, setActive] = useState(0);
   const [transitioned, setTransitioned] = useState(false);
@@ -177,7 +177,10 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
       const dx = point.clientX - start.x;
       if (Math.abs(dx) > 50 && Math.abs(point.clientY - start.y) < Math.abs(dx) * .6) select(((requested ?? active) + (dx < 0 ? 1 : brands.length - 1)) % brands.length);
     }}>
-    <h1 ref={context} className={styles.context} data-hero-eyebrow>Performance parts in Dubai <span aria-hidden="true">/</span> UAE &amp; GCC</h1>
+    <div ref={context} className={styles.context}>
+      <h1 data-hero-eyebrow>Luxury Performance</h1>{' '}
+      <span aria-hidden="true">/</span>{' '}Performance parts in Dubai
+    </div>
     <div className={styles.stage}>
       {slides.map((slide, index) => <div key={brands[index].slug} className={styles.layer} data-hero-slide={index} data-active={active === index} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${brands.length}: ${brands[index].name}`} aria-hidden={active !== index} inert={active !== index}>{mounted.includes(index) ? slide : null}</div>)}
     </div>

@@ -15,19 +15,30 @@ import { StickyIntro } from '@/components/home/sticky-intro';
 import { Closing } from '@/components/closing';
 import { defaultSocialImage } from '@/lib/social-images';
 
+const homeTitle = 'Luxury Performance Dubai | Performance Parts & Upgrades';
+
 export const metadata: Metadata = {
-  title: { absolute: 'Luxury Performance Dubai | Performance Parts & Upgrades' },
+  title: { absolute: homeTitle },
   description: 'Shop NOVITEC, TECHART and Valvetronic Designs performance parts for the UAE & GCC. Exhausts, carbon fibre, forged wheels and fitment support from Dubai.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Performance Parts in Dubai, UAE & GCC',
+    title: homeTitle,
+    siteName: 'Luxury Performance',
     description: 'Discover NOVITEC, TECHART and Valvetronic Designs with Luxury Performance. Performance parts and vehicle fitment advice from Dubai for the UAE & GCC.',
     images: [defaultSocialImage],
   },
 };
 
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Luxury Performance',
+  url: 'https://www.luxuryperformance.com/',
+};
+
 export default function Home() {
   return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema).replace(/</g, '\\u003c') }} />
     <HomeHero />
     <div className="home-intro-stack">
       <StickyIntro>

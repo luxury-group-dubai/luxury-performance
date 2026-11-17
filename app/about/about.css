@@ -7,3 +7,5 @@
 @media(max-width:700px){.about-manifesto p,.about-location p{font-size:12px}}
 
 .about-manifesto .about-emblem{width:185px;height:auto;object-fit:contain;filter:none;mix-blend-mode:normal}
+
+.about-home-link { text-decoration: underline; text-underline-offset: .18em; }
