@@ -60,27 +60,20 @@ const heroSlides = [
 export function HomeHero() {
   return <>
     <HeroNewsprintFilter />
+    <HeroNewsprintFilter id="hero-newsprint-yellow" preserveYellow />
     <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
     {heroSlides.map((slide, index) => {
       const mobile = slide.slug === 'nlargo' ? null : slide.slug === 'novitec' ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
         <div className={heroStyles.imageFrame}>
         {(slide.slug === 'nlargo' ? [false] : [false, true]).map(printed => (
-          <picture key={String(printed)} className={printed ? `${heroStyles.picture} ${heroStyles.printLayer} ${newsprint.photo}` : heroStyles.picture} aria-hidden={printed || undefined}>
+          <picture key={String(printed)} className={printed ? `${heroStyles.picture} ${heroStyles.printLayer} ${newsprint.photo} ${slide.slug === 'techart' ? newsprint.preserveYellow : ''}` : heroStyles.picture} aria-hidden={printed || undefined}>
             {mobile && <source media="(max-width: 700px)" type={slide.slug === 'novitec' ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
             <Image src={slide.image} alt={printed ? '' : slide.alt} {...(slide.slug === 'nlargo' ? { width: 3200, height: 2133 } : { fill: true })} style={slide.slug === 'nlargo' ? {
               position: 'absolute', maxWidth: 'none', inset: 'auto', left: '50%', top: 'var(--nlargo-image-top)',
               width: 'max(146.465cqw,82.429cqh)', height: 'max(97.643cqw,54.953cqh)',
               transform: 'translateX(-50%)',
             } : undefined} quality={slide.slug === 'nlargo' ? 95 : 75} sizes={slide.slug === 'nlargo' ? '(max-width: 700px) 147vw, 84vw' : '100vw'} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={!printed && index === 0 ? 'high' : 'auto'} />
-          </picture>
-        ))}
-        {mobile && slide.slug === 'techart' && ['top', 'bottom'].map(edge => (
-          <picture key={edge} className={heroStyles.reflection} data-edge={edge} aria-hidden="true">
-            <source media="(max-width: 700px)" srcSet={mobile.srcSet} sizes="100vw" />
-            {/* No image is requested for this decorative layer on desktop. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" loading="lazy" decoding="async" />
           </picture>
         ))}
         </div>

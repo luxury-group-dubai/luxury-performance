@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type FormEvent, type RefObject } from 'rea
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, ArrowUpRight, Search, X } from 'lucide-react';
+import { lockOverlayScroll } from '@/lib/overlay-scroll-lock';
 import { BrandLogo } from './brand-logo';
 import { inStockShopPath } from '@/lib/shop/taxonomy';
 import { money, type Money, type Photo } from '@/lib/shop/types';
@@ -43,11 +44,10 @@ export function HeaderSearchDialog({ trigger, onClose, preview = true }: { trigg
   useEffect(() => {
     const modal = dialog.current;
     const opener = trigger.current;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const unlockScroll = lockOverlayScroll();
     modal?.showModal();
     input.current?.focus({ preventScroll: true });
-    return () => { modal?.close(); document.body.style.overflow = previous; opener?.focus({ preventScroll: true }); };
+    return () => { modal?.close(); unlockScroll(); opener?.focus({ preventScroll: true }); };
   }, [trigger]);
 
   useEffect(() => {

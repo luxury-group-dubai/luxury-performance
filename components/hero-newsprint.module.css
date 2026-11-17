@@ -6,6 +6,10 @@
   filter: url(#hero-newsprint);
 }
 
+.preserveYellow > img {
+  filter: url(#hero-newsprint-yellow);
+}
+
 .photo::before {
   content: '';
   position: absolute;

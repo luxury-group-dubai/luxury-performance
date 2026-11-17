@@ -1,0 +1,39 @@
+.searchText { color:#aaa; font-size:13px; }
+.placeholder { display:block; background:#ffffff0b; }
+.wordmark { grid-area:title; width:185px; height:44px; }
+.tabs { display:flex; gap:30px; }
+.tabs a { position:relative; padding:17px 0; border-bottom:2px solid transparent; color:#aaa; font-size:12px; font-weight:400; text-transform:uppercase; }
+.tabs a[aria-current=page] { border-bottom-color:#fff; color:#fff; }
+.content { padding:24px var(--gutter) 40px; }
+.logo { width:150px; height:32px; }
+.selectorHeader { padding:20px 0 35px; }
+.vehicleHeader { display:flex; align-items:center; justify-content:space-between; gap:40px; min-height:240px; }
+.title { width:35%; height:45px; }
+.car { width:42%; height:115px; }
+.products { background:var(--paper); padding-top:30px; }
+.products .placeholder { background:#1718190a; }
+.productGrid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:22px; }
+.product { min-width:0; }
+.productImage { width:100%; aspect-ratio:1; background:#fff!important; }
+.productTitle { width:90%; height:14px; margin-top:20px; }
+.price { width:38%; height:12px; margin-top:14px; }
+.filters { display:flex; gap:28px; margin-bottom:30px; }
+.filters span { width:110px; height:16px; }
+@media(min-width:701px) and (max-width:1050px) { .productGrid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:700px) {
+  .searchText { font-size:12px; }
+  .tabs { gap:24px; }
+  .tabs a { font-size:11px; }
+  .content { padding-top:12px; padding-bottom:28px; }
+  .logo { width:105px; height:25px; }
+  .vehicleHeader { flex-direction:column; align-items:stretch; justify-content:center; gap:25px; min-height:260px; }
+  .title { width:70%; height:35px; }
+  .car { width:85%; height:110px; align-self:center; }
+  .productGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  .products { padding-top:24px; }
+  .filters { gap:18px; }.filters span { width:80px; }
+}
+@media(prefers-reduced-motion:no-preference) {
+  .placeholder { animation:breathe 1.8s ease-in-out infinite alternate; }
+  @keyframes breathe { from { opacity:.45; } to { opacity:1; } }
+}

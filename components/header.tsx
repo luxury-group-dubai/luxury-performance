@@ -15,6 +15,7 @@ import dynamic from 'next/dynamic';
 import { SocialLinks } from './social-links';
 import { contact } from '@/lib/content';
 import { hasPartnerHeroOverlay } from '@/lib/brand-hero-images';
+import { lockOverlayScroll } from '@/lib/overlay-scroll-lock';
 import { PreviewShopMenu } from './preview-shop-menu';
 import type { PreviewShopTab } from '@/app/preview/shop/navigation';
 
@@ -69,8 +70,9 @@ export function Header() {
   const [mobileSection, setMobileSection] = useState<ShopMenu>('brands');
   const pathname = usePathname();
   const previewNavigation = true;
-  const shopSurface = pathname === '/shop' || pathname.startsWith('/shop/') || pathname.startsWith('/preview/');
-  const isShop = pathname === '/shop' || pathname === '/studio/capristo';
+  const isShopRoute = pathname === '/shop' || pathname.startsWith('/shop/');
+  const shopSurface = isShopRoute || pathname.startsWith('/preview/');
+  const isShop = isShopRoute || pathname === '/studio/capristo';
   const partnerSlug = /^\/partners\/([^/]+)$/.exec(pathname)?.[1];
   const overlaysHero = pathname === '/' || pathname === '/novitec-12cilindri-n-largo' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
   const header = useRef<HTMLElement>(null);
@@ -186,9 +188,7 @@ export function Header() {
   }, [closeShop]);
   useEffect(() => {
     if (!open) return;
-    const scrollRoot = isShop ? document.documentElement : document.body;
-    const previous = scrollRoot.style.overflow;
-    scrollRoot.style.overflow = 'hidden';
+    const unlockScroll = lockOverlayScroll();
     const background = Array.from(document.querySelectorAll<HTMLElement>('#main, footer'));
     const previousInert = background.map(element => element.inert);
     background.forEach(element => { element.inert = true; });
@@ -204,8 +204,8 @@ export function Header() {
       }
     }
     document.addEventListener('keydown', onKey);
-    return () => { scrollRoot.style.overflow = previous; background.forEach((element, index) => { element.inert = previousInert[index]; }); document.removeEventListener('keydown', onKey); };
-  }, [open, isShop]);
+    return () => { unlockScroll(); background.forEach((element, index) => { element.inert = previousInert[index]; }); document.removeEventListener('keydown', onKey); };
+  }, [open]);
   return <>
     <a href="#main" className="skip-link">Skip to content</a>
     <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${shopSurface ? styles.previewHeader : ''} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
@@ -213,7 +213,7 @@ export function Header() {
       <nav aria-label="Main navigation" inert={open} className={`desktop-nav ${styles.desktop}`}>
         <div className={styles.menuGroup}>
           {previewNavigation ? <span className={styles.previewShopTrigger} onPointerEnter={openShopOnHover} onPointerLeave={scheduleShopClose}>
-            <Link href="/shop" onClick={close} aria-current={pathname === '/shop' ? 'page' : undefined}>SHOP</Link>
+            <Link href="/shop" onClick={close} aria-current={isShopRoute ? 'page' : undefined}>SHOP</Link>
             <button ref={shopTrigger} className={styles.trigger} aria-label="Open shop shortcuts" aria-expanded={Boolean(shopMenu)} aria-controls="shop-menu" onClick={toggleShop} onKeyDown={event => {
               if (event.key !== 'ArrowDown') return;
               event.preventDefault(); cancelHoverClose(); shopPinned.current = true;
