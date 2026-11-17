@@ -70,12 +70,16 @@
 @media (min-width: 701px) {
   .slide[data-brand="techart"] .picture {
     left: 22%;
+    mask-image: linear-gradient(90deg, transparent, #000 8%);
   }
+  .slide[data-brand="techart"] .printLayer { display: none; }
   .slide[data-brand="techart"] .picture > img {
     object-position: right 55%;
   }
   .slide[data-brand="techart"] .shade {
-    background: linear-gradient(90deg, #151617 22%, #151617e6 27%, #15161766 34%, transparent 43%), linear-gradient(0deg, #080a0ca6, transparent 45%);
+    background:
+      linear-gradient(90deg, #000000b8 0%, #000000b8 26%, #00000099 39%, #00000038 50%, #0000 64%),
+      linear-gradient(0deg, #151617, transparent 24%);
   }
 }
 .shade { position: absolute; inset: 0; background: linear-gradient(90deg,#080a0ccb,transparent 80%),linear-gradient(0deg,#080a0cf2,transparent 70%); }
