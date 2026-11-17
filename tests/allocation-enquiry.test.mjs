@@ -5,9 +5,9 @@ import ts from 'typescript';
 
 const source = readFileSync(new URL('../lib/allocation-enquiry.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } });
-const module = { exports: {} };
-new Function('module', 'exports', compiled.outputText)(module, module.exports);
-const { validateAllocationEnquiry, allocationEnquiryText, interestOptions } = module.exports;
+const compiledModule = { exports: {} };
+new Function('module', 'exports', compiled.outputText)(compiledModule, compiledModule.exports);
+const { validateAllocationEnquiry, allocationEnquiryText, interestOptions } = compiledModule.exports;
 const enquiry = {
   name: '  Preview Client  ', phone: '+971 (50) 000-0000', email: 'preview@example.com',
   country: 'United Arab Emirates',

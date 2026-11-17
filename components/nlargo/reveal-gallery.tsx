@@ -9,7 +9,7 @@ import styles from './reveal-gallery.module.css';
 function RegisteredGalleryImage({ src, sizes, onReady }: { src: string; sizes: string; onReady: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const onReadyRef = useRef(onReady);
-  onReadyRef.current = onReady;
+  useEffect(() => { onReadyRef.current = onReady; }, [onReady]);
   const [registered, setRegistered] = useState(false);
   useEffect(() => {
     const canvas = canvasRef.current;

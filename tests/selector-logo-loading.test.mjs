@@ -5,9 +5,9 @@ import vm from 'node:vm';
 import ts from 'typescript';
 
 const compiled = ts.transpileModule(readFileSync(new URL('../lib/selector-logo-bootstrap.ts', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
-const module = { exports: {} };
-new Function('exports', compiled)(module.exports);
-const script = module.exports.selectorLogoBootstrap;
+const compiledModule = { exports: {} };
+new Function('exports', compiled)(compiledModule.exports);
+const script = compiledModule.exports.selectorLogoBootstrap;
 
 function setup(specs) {
   const events = {};

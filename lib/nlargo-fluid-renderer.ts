@@ -133,7 +133,7 @@ export async function createFluidReveal(canvas: HTMLCanvasElement, light: Nlargo
   const revealNames = ['u_field','u_photo','u_edge','u_box','u_edgeBox','u_background','u_registration','u_registrationScale'];
   const f = Object.fromEntries(flowNames.map(name => [name, gl.getUniformLocation(flow, name)]));
   const r = Object.fromEntries(revealNames.map(name => [name, gl.getUniformLocation(reveal, name)]));
-  function use(p: WebGLProgram) {
+  function activateProgram(p: WebGLProgram) {
     gl!.useProgram(p); gl!.bindBuffer(gl!.ARRAY_BUFFER, buffer); const position = gl!.getAttribLocation(p, 'a_position'); gl!.enableVertexAttribArray(position); gl!.vertexAttribPointer(position, 2, gl!.FLOAT, false, 0, 0);
   }
   function bind(unit: number, value: WebGLTexture) { gl!.activeTexture(gl!.TEXTURE0 + unit); gl!.bindTexture(gl!.TEXTURE_2D, value); }
@@ -171,9 +171,9 @@ export async function createFluidReveal(canvas: HTMLCanvasElement, light: Nlargo
     const moving=Math.hypot(...delta)>.00001 && now-lastMove<100;
     velocity=velocity.map((v,i)=>v*.75+Math.max(-2,Math.min(2,delta[i]/dt))*.25);
     const speed=Math.hypot(velocity[0]*aspect[0],velocity[1]*aspect[1]);
-    use(flow);gl!.bindFramebuffer(gl!.FRAMEBUFFER,targets[1-index]);gl!.viewport(0,0,128,128);bind(0,fields[index]);
+    activateProgram(flow);gl!.bindFramebuffer(gl!.FRAMEBUFFER,targets[1-index]);gl!.viewport(0,0,128,128);bind(0,fields[index]);
     gl!.uniform1i(f.u_field,0);gl!.uniform2fv(f.u_pointer,pointer);gl!.uniform2fv(f.u_previous,previous);gl!.uniform2fv(f.u_velocity,velocity);gl!.uniform2fv(f.u_aspect,aspect);gl!.uniform1f(f.u_dt,dt);gl!.uniform1f(f.u_inject,moving?1:0);gl!.uniform1f(f.u_speed,speed);gl!.drawArrays(gl!.TRIANGLES,0,6);index=1-index;
-    use(reveal);gl!.bindFramebuffer(gl!.FRAMEBUFFER,null);gl!.viewport(0,0,canvas.width,canvas.height);bind(0,fields[index]);bind(1,photoTexture);bind(2,edgeTexture);bind(3,registrationTexture);
+    activateProgram(reveal);gl!.bindFramebuffer(gl!.FRAMEBUFFER,null);gl!.viewport(0,0,canvas.width,canvas.height);bind(0,fields[index]);bind(1,photoTexture);bind(2,edgeTexture);bind(3,registrationTexture);
     gl!.uniform1i(r.u_field,0);gl!.uniform1i(r.u_photo,1);gl!.uniform1i(r.u_edge,2);gl!.uniform1i(r.u_registration,3);gl!.uniform2f(r.u_registrationScale,registrationRange/3200,registrationRange/2133);gl!.uniform4fv(r.u_box,box);gl!.uniform2fv(r.u_edgeBox,edgeBox);gl!.uniform3fv(r.u_background,background);gl!.drawArrays(gl!.TRIANGLES,0,6);
     previous=[...pointer]; canvas.dataset.active='true';
     if(demoStart || now-lastMove<4600)frame=requestAnimationFrame(render);else clear();
