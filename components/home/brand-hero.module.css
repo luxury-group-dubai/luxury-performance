@@ -41,7 +41,6 @@
 .layer[data-active="true"] { opacity: 1; z-index: 1; pointer-events: auto; }
 .picture { position: absolute; inset: 0; display: block; }
 .imageFrame { display: contents; }
-.reflection { display: none; }
 .picture > img { object-fit: cover; object-position: 65% 55%; }
 .printLayer {
   pointer-events: none;
@@ -54,9 +53,8 @@
   mask-composite: intersect;
 }
 .slide[data-brand="valvetronic"] .printLayer {
-  mask-image: radial-gradient(ellipse 60% 55% at 56% 55%, #000b 28%, #000 92%);
+  mask-image: radial-gradient(ellipse 60% 55% at 56% 55%, #0002 28%, #000 92%);
 }
-.slide[data-brand="techart"] .picture:not(.printLayer) > img { filter: grayscale(1); }
 @media (min-width: 701px) {
   .slide[data-brand="valvetronic"] .picture { left: 30%; }
   .slide[data-brand="valvetronic"] .picture > img { object-position: center 43%; }
@@ -77,7 +75,7 @@
     object-position: right 55%;
   }
   .slide[data-brand="techart"] .shade {
-    background: linear-gradient(90deg, #151617 23%, #151617e6 30%, #15161766 46%, transparent 62%), linear-gradient(0deg, #080a0ca6, transparent 45%);
+    background: linear-gradient(90deg, #151617 22%, #151617e6 27%, #15161766 34%, transparent 43%), linear-gradient(0deg, #080a0ca6, transparent 45%);
   }
 }
 .shade { position: absolute; inset: 0; background: linear-gradient(90deg,#080a0ccb,transparent 80%),linear-gradient(0deg,#080a0cf2,transparent 70%); }
@@ -154,34 +152,32 @@
     filter: brightness(1.2) contrast(.94);
     mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 77%, transparent);
   }
-  .imageFrame :is(.picture, .reflection) > img { object-position: center; }
+  .imageFrame .picture > img { object-position: center; }
   .printLayer, .slide[data-brand="novitec"] .printLayer {
     mask-image: radial-gradient(ellipse 76% 60% at 53% 50%, #0005 40%, #000 96%);
   }
   .slide[data-brand="novitec"] .imageFrame .picture > img {
     object-position: 74% center;
   }
-  .slide[data-brand="techart"] .imageFrame :is(.picture, .reflection) > img { object-position: 70% center; }
-  .reflection {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    filter: grayscale(1);
-  }
-  .reflection > img { width: 100%; height: 100%; object-fit: cover; transform: scaleY(-1); }
-  .reflection[data-edge="top"] { transform: translateY(-100%); mask-image: linear-gradient(to bottom, transparent 78%, #0006); }
-  .reflection[data-edge="bottom"] { transform: translateY(100%); mask-image: linear-gradient(to bottom, #0006, transparent 24%); }
+  .slide[data-brand="techart"] .imageFrame .picture > img { object-position: 70% center; }
   .slide[data-brand="valvetronic"] .imageFrame {
     mask-image: linear-gradient(to bottom, transparent, #0008 7%, #000 17%, #000 80%, #0008 91%, transparent);
   }
+  .slide[data-brand="techart"] .imageFrame {
+    overflow: hidden;
+  }
+  /* Opaque ends match the hero exactly, including Safari's filtered image layers. */
   .slide[data-brand="techart"] .imageFrame::after {
+    content: '';
     position: absolute;
-    inset: 0;
-    content: "";
+    inset: -1px 0;
+    z-index: 2;
     pointer-events: none;
-    background: linear-gradient(to bottom, #15161799, transparent 10%, transparent 86%, #15161799);
+    background: linear-gradient(to bottom,
+      #151617 0%, #151617 3%, #151617f5 7%, #151617cc 12%,
+      #15161780 18%, #15161733 24%, #15161700 30%,
+      #15161700 65%, #15161733 73%, #15161780 81%,
+      #151617cc 88%, #151617f5 94%, #151617 97%, #151617 100%);
   }
   .slide[data-brand] .shade {
     background: linear-gradient(to top, #151617 28%, #151617eb 39%, #15161700 59%),

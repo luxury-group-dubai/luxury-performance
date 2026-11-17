@@ -1,6 +1,6 @@
 type HeroImage = { image: string; mobile: { src: string; width: number; height: number }; alt: string };
 
-/** Keep the homepage slides and partner landing pages on the same original artwork. */
+/** Homepage artwork; partner landing pages can override it below. */
 export const brandHeroImages: Partial<Record<string, HeroImage>> = {
   novitec: {
     image: '/images/home/novitec-purosangue-esteso.jpg',
@@ -13,19 +13,24 @@ export const brandHeroImages: Partial<Record<string, HeroImage>> = {
     alt: 'Porsche GT3 RS with a Valvetronic Designs exhaust in a specialist installation bay',
   },
   techart: {
-    image: '/images/home/techart-gtstreet-r.webp',
-    mobile: { src: '/images/home/techart-gtstreet-r-mobile.webp', width: 744, height: 1024 },
-    alt: 'White TECHART GTstreet R Porsche 911 driving through the city, viewed from the rear',
+    image: '/images/home/techart-gtstreet-r-wheel.webp',
+    mobile: { src: '/images/home/techart-gtstreet-r-wheel.webp', width: 2400, height: 1600 },
+    alt: 'Red TECHART wheel, yellow brake caliper and carbon fibre front arch on a white GTstreet R',
   },
 };
 
 /** Partner cards and landing pages share each brand's selected artwork. */
 export const partnerHeroImages: Partial<Record<string, HeroImage>> = {
   ...brandHeroImages,
+  techart: {
+    image: '/images/partners/techart-gtstreet-r-rear-detail.webp',
+    mobile: { src: '/images/partners/techart-gtstreet-r-rear-detail.webp', width: 2400, height: 1744 },
+    alt: 'Carbon fibre rear wing, red light bar and exhaust details on a white TECHART GTstreet R',
+  },
   gintani: {
-    image: '/images/partners/gintani/hero.webp',
-    mobile: { src: '/images/partners/gintani/hero.webp', width: 1600, height: 900 },
-    alt: '',
+    image: '/images/partners/gintani/hero-cinematic.webp',
+    mobile: { src: '/images/partners/gintani/hero-cinematic.webp', width: 1672, height: 941 },
+    alt: 'Red Ferrari on the road with a motion-blurred background',
   },
   capristo: {
     image: '/images/partners/capristo-f40-enhanced.png',

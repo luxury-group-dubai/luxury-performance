@@ -36,6 +36,7 @@
 .fullBleedHero .heroContent { padding-top: calc(var(--partner-header-height) + 30px); }
 .fullBleedHero .heroImage { object-position: 65% 55%; }
 .fullBleedHero[data-brand="novitec"] .heroImage { object-position: center 58%; }
+.fullBleedHero[data-brand="techart"] .heroImage { object-position: center 12%; }
 .heroFoot { justify-content: flex-end; }
 .heroFoot a { gap: 12px; min-height: 44px; font-size: 11px; letter-spacing: .03em; text-transform: none; }
 .heroFoot :global(.arrow-disc) { width: 19px; height: 19px; border: 0; background: transparent; color: inherit; }

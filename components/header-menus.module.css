@@ -212,7 +212,7 @@
 
 /* Shared shop navigation and dark shop surfaces. */
 .header.previewHeader { background:#141516; border-bottom:0; }
-.header.previewHeader:not(:global(.menu-is-open))::before { background:#141516; -webkit-backdrop-filter:none; backdrop-filter:none; }
+.header.previewHeader:global(.site-header):not(:global(.menu-is-open))::before { background:#141516; -webkit-backdrop-filter:none; backdrop-filter:none; }
 /* Offset the chevron's trailing inset so the visible navigation gaps match. */
 .header .desktop .previewShopTrigger { display:flex; align-items:center; gap:0; margin-inline-end:-12px; }
 .header .desktop .previewShopTrigger > a { font-weight:700; padding:16px 0; }

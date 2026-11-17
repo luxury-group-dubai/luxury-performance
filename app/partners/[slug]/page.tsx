@@ -131,7 +131,8 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   return <div className={styles.page} data-partner={p.slug}>
     <section className={`${styles.hero} ${overlaysHeader ? styles.fullBleedHero : ''}`} data-header-hero={overlaysHeader || undefined} data-brand={p.slug} aria-labelledby="partner-title">
       {p.slug !== 'novitec' && <HeroNewsprintFilter />}
-      <picture className={`${styles.heroPicture} ${p.slug === 'novitec' ? '' : newsprint.photo}`}>
+      {p.slug === 'gintani' && <HeroNewsprintFilter id="hero-newsprint-yellow" preserveYellow />}
+      <picture className={`${styles.heroPicture} ${p.slug === 'novitec' ? '' : newsprint.photo} ${p.slug === 'gintani' ? newsprint.preserveYellow : ''}`}>
         {p.slug === 'capristo' && heroAsset ? (
           <img className={styles.heroImage} src="/images/partners/capristo-hero/f40-1440.webp"
             srcSet="/images/partners/capristo-hero/f40-640-q52.webp 640w, /images/partners/capristo-hero/f40-960.webp 960w, /images/partners/capristo-hero/f40-1440.webp 1440w, /images/partners/capristo-hero/f40-1672.webp 1672w"
@@ -140,7 +141,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
         ) : heroAsset ? <>
           {p.slug === 'valvetronic' && <source media="(max-width: 480px)" type="image/avif" srcSet="/images/partners/valvetronic-mobile/hero.avif"/>}
           {mobileHero && <source media="(max-width: 700px)" srcSet={mobileHero.srcSet} sizes="100vw"/>}
-          <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={p.slug === 'valvetronic' || p.slug === 'techart' ? 75 : 95} sizes="100vw" loading="eager" fetchPriority="high"/>
+          <Image className={styles.heroImage} src={heroAsset.image} alt={heroAsset.alt} fill quality={p.slug === 'valvetronic' ? 75 : 95} sizes="100vw" loading="eager" fetchPriority="high"/>
         </> : <img className={styles.heroImage} src={p.image} alt={p.imageAlt} fetchPriority="high"/>}
       </picture>
       <div className={styles.heroShade}/>

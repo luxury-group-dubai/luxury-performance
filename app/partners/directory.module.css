@@ -1,0 +1,48 @@
+.directory { background:#141516; color:#f6f5f2; padding-bottom:64px; }
+:global(body):has(.directory), :global(#main):has(.directory) { background:#141516; }
+:global(body):has(.directory) :global(.site-header:not(.menu-is-open)) { background:#141516; border-bottom:0; box-shadow:none; }
+:global(body):has(.directory) :global(.site-header:not(.menu-is-open))::before { background:#141516; -webkit-backdrop-filter:none; backdrop-filter:none; }
+.intro { display:flex; justify-content:space-between; align-items:flex-end; gap:32px; padding:48px var(--gutter) 46px; }
+.intro h1 { margin:0; font-size:clamp(48px,6vw,88px); font-weight:500; line-height:1; letter-spacing:-.055em; }
+.intro p { max-width:270px; padding-bottom:5px; font-size:13px; line-height:1.75; color:#b2b4b5; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; padding-inline:24px; }
+.card { position:relative; display:block; isolation:isolate; overflow:hidden; aspect-ratio:1.55; background:#202224; }
+.photo { object-fit:cover; transform:scale(var(--photo-scale,1)); transition:transform .8s cubic-bezier(.2,.65,.2,1); }
+.card::after { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.78)); }
+.card[data-brand="novitec"] { --photo-scale:1.35; }
+.card[data-brand="novitec"] .photo { object-position:50% 60%; transform-origin:50% 60%; }
+.card[data-brand="novitec"] .logo { filter:brightness(0) invert(1); }
+.card[data-brand="techart"] .photo { object-position:50% center; }
+.card[data-brand="valvetronic"] .photo { object-position:center 65%; }
+.card[data-brand="gintani"] .photo { object-position:38% center; }
+.card[data-brand="fi-exhaust"] .photo { object-position:right center; }
+.caption { position:absolute; inset:auto 32px 28px; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:24px; }
+.brand { margin:0; line-height:1; min-width:0; }
+.brand .logo { width:clamp(155px,18vw,250px); max-width:100%; height:60px; justify-content:flex-start; }
+.brand .logo > img { width:100%; max-height:60px; object-position:left center; }
+.brand .logo[data-brand-artwork="novitec"] { width:clamp(150px,16vw,220px); }
+.brand .logo[data-brand-artwork="gintani"] { width:clamp(140px,15vw,200px); }
+.explore { display:inline-flex; align-items:center; gap:14px; flex:none; font-size:11px; letter-spacing:.06em; text-transform:uppercase; }
+.explore > span:first-child { opacity:0; transition:opacity .25s; }
+.card:focus-visible { outline:2px solid white!important; outline-offset:4px!important; }
+.card:focus-visible .explore > span:first-child { opacity:1; }
+@media(hover:hover) and (pointer:fine) {
+  .card:hover .photo { transform:scale(calc(var(--photo-scale,1) + .035)); }
+  .card:hover .explore > span:first-child { opacity:1; }
+}
+@media(hover:none) { .explore > span:first-child { opacity:1; } }
+@media(max-width:1000px) { .caption { inset:auto 24px 23px; gap:14px; }.explore > span:first-child { display:none; } }
+@media(max-width:700px) {
+  .directory { padding-bottom:32px; }
+  .intro { display:block; padding:30px var(--gutter) 32px; }
+  .intro h1 { font-size:44px; }
+  .intro p { max-width:none; margin-top:15px; padding:0; font-size:12px; }
+  .grid { grid-template-columns:1fr; gap:14px; padding-inline:16px; }
+  .card { aspect-ratio:1.2; }
+  .caption { inset:auto 22px 21px; }
+  .brand .logo { width:180px; height:48px; }
+  .brand .logo > img { max-height:48px; }
+  .brand .logo[data-brand-artwork="novitec"] { width:170px; }
+  .brand .logo[data-brand-artwork="gintani"] { width:155px; }
+}
+@media(prefers-reduced-motion:reduce) { .photo,.explore > span:first-child { transition:none; }.card:hover .photo { transform:scale(var(--photo-scale,1)); } }
