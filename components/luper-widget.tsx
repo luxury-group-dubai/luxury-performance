@@ -140,7 +140,7 @@ export function LuperWidget() {
   return <AssistantRuntimeProvider runtime={runtime}><LuperEnquiryProvider onNavigate={() => setOpen(false)}>
     <AssistantModalPrimitive.Root open={open} onOpenChange={setOpen} unstable_openOnRunStart={false} modal={mobile}>
       <AssistantModalPrimitive.Anchor className={styles.anchor}>
-        <AssistantModalPrimitive.Trigger className={styles.launcher} aria-label={open ? 'Close chat options' : 'Chat with Luxury Performance'}>
+        <AssistantModalPrimitive.Trigger className={styles.launcher} data-open={open} aria-label={open ? 'Close chat options' : 'Chat with Luxury Performance'}>
           {open ? <X size={22}/> : <MessageCircle size={25} strokeWidth={1.8} aria-hidden="true"/>}
         </AssistantModalPrimitive.Trigger>
       </AssistantModalPrimitive.Anchor>
