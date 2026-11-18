@@ -1,5 +1,11 @@
 # LXP Luper
 
+**Production paused:** hosted builds show the standalone WhatsApp button, and
+`/api/luper` returns 503 before any catalogue, budget-store or OpenAI request.
+Setting `LUPER_ENABLED=true` does not override this code-level pause. Local
+development retains Luper for continued work. Restore both layout and route gates
+only when the public launch is authorized.
+
 Luper is the website's AI concierge. It answers from `lib/content.ts`,
 `lib/partners.ts` and the existing Shopify catalog, remembers visitor-provided
 vehicle details during the chat, and offers a visitor-controlled WhatsApp draft.
