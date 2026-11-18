@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import styles from './novitec-models.module.css';
 import { DeferredModelImage, ModelPreviewCard, type ModelPreviewImage } from './novitec-model-preview';
 import { additionalModelGalleries } from './novitec-model-galleries';
+import { legacyCollectionHref } from '@/lib/shop/legacy-collections';
 
 const purosangueImages: readonly ModelPreviewImage[] = [
   { image: "purosangue-gallery/06-front-corner.jpg", label: "Front corner", alt: "Red NOVITEC Ferrari Purosangue front corner with carbon fibre splitter and yellow accent" },
@@ -113,7 +114,7 @@ export function NovitecModels() {
         <div className={styles.caption}><div><h3>All NOVITEC</h3><p>Explore all parts</p></div><ArrowUpRight size={20} strokeWidth={1.5} aria-hidden="true"/></div>
       </Link></li>
       {models.map((model, index) => <li key={model.name} className={styles.item}>
-        {model.preview ? <ModelPreviewCard href={model.href || `/collections/${model.collection}?brand=novitec`} name={model.name} make={model.make} images={model.preview} effect={model.previewEffect} mediaReady={media.includes(index + 1)} onMediaIntent={() => allowMedia(index + 1)}/> : <Link href={model.href || `/collections/${model.collection}?brand=novitec`} className={styles.card} aria-label={`Shop NOVITEC for ${model.make} ${model.name}`} onPointerEnter={() => allowMedia(index + 1)} onFocus={() => allowMedia(index + 1)}>
+        {model.preview ? <ModelPreviewCard href={model.href || legacyCollectionHref(model.collection || '', { brand: 'novitec' })} name={model.name} make={model.make} images={model.preview} effect={model.previewEffect} mediaReady={media.includes(index + 1)} onMediaIntent={() => allowMedia(index + 1)}/> : <Link href={model.href || legacyCollectionHref(model.collection || '', { brand: 'novitec' })} className={styles.card} aria-label={`Shop NOVITEC for ${model.make} ${model.name}`} onPointerEnter={() => allowMedia(index + 1)} onFocus={() => allowMedia(index + 1)}>
           <div className={styles.image}><DeferredModelImage enabled={media.includes(index + 1)} src={`/images/novitec-models/${model.image}`} alt={`NOVITEC ${model.make} ${model.name}`} fallback/></div>
           <div className={styles.caption}><div><h3>{model.name}</h3><p>{model.make}</p></div><ArrowUpRight size={20} strokeWidth={1.5} aria-hidden="true"/></div>
         </Link>}

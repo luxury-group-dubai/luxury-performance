@@ -30,7 +30,7 @@ const galleryImageSizes = [
 ].join(', ');
 
 export function ProductDetail({product,initialVariant,installations,videos,preview=false,previewPath,previewLabel='Used parts preview'}:{product:Product;initialVariant?:string;installations:Record<string,InstallationService>;videos:string[];preview?:boolean;previewPath?:string;previewLabel?:string}){
- const previewHome = previewPath ?? '/collections/used-parts';
+ const previewHome = previewPath ?? '/shop/in-stock';
  const initial=product.variants.nodes.find(v=>v.id.split('/').pop()===initialVariant)||product.variants.nodes.find(v=>v.availableForSale)||product.variants.nodes[0];
  const images = [...new Map([...product.images.nodes, ...product.variants.nodes.flatMap(v => v.image ? [v.image] : [])].map(image => [image.url, image])).values()];
  const [withInstallation,setWithInstallation]=useState(false);

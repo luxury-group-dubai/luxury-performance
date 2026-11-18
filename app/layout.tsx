@@ -10,7 +10,8 @@ import { SmoothScroll } from '@/components/smooth-scroll';
 import 'lenis/dist/lenis.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { WhatsAppWidget } from '@/components/whatsapp-widget';
+import { LuperWidget } from '@/components/luper-widget';
+import { PageScrollbar } from '@/components/page-scrollbar';
 import './globals.css';
 import './shop-shared.css';
 import './display-type.css';
@@ -39,5 +40,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         gtag('js', new Date());
       ` }} />
     </head>
-    <body id="top"><script dangerouslySetInnerHTML={{ __html: selectorLogoBootstrap }} /><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><SiteMotion /><main id="main">{children}</main><Footer /><WhatsAppWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
+    <body id="top"><script dangerouslySetInnerHTML={{ __html: selectorLogoBootstrap }} /><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><PageScrollbar /><SiteMotion /><main id="main">{children}</main><Footer /><LuperWidget /></div></CartProvider><Analytics /><SpeedInsights /></body></html>;
 }

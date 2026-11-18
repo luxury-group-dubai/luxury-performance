@@ -86,13 +86,13 @@ const feedLooks: { name: string; model: string; codes: string[]; fallback: strin
   { name: 'Ferrari Purosangue', model: 'purosangue', codes: ['F4 666 22', 'F1 666 17', 'F6 666 28', 'F6 666 52'], fallback: '/shop?brand=novitec&make=ferrari&model=purosangue' },
   { name: 'Lamborghini Revuelto', model: 'revuelto', codes: ['L1 444 10', 'L1 444 13', 'L1 444 40', 'L1 444 80'], fallback: '/shop?brand=novitec&make=lamborghini&model=revuelto' },
   { name: 'Ferrari SF90', model: 'sf90', codes: ['F6 090 26', 'F1 090 50', 'F6 090 35', 'F6 090 51'], fallback: '/partners/novitec/ferrari/sf90' },
-  { name: 'Ferrari 12Cilindri', model: '12cilindri', codes: [], fallback: '/collections/ferrari-12cilindri?brand=novitec' },
+  { name: 'Ferrari 12Cilindri', model: '12cilindri', codes: [], fallback: '/shop/novitec/ferrari/12cilindri' },
   { name: 'Lamborghini Urus', model: 'urus', codes: [], fallback: '/shop?brand=novitec&make=lamborghini&model=urus' },
   { name: 'Ferrari 812', model: '812', codes: ['F4 812 70', 'F6 812 26', 'F6 812 25', 'F6 812 27'], fallback: '/partners/novitec/ferrari/812' },
-  { name: 'Ferrari F8', model: 'f8', codes: [], fallback: '/collections/ferrari-f8?brand=novitec' },
+  { name: 'Ferrari F8', model: 'f8', codes: [], fallback: '/shop/novitec/ferrari/f8' },
   { name: 'McLaren 750S', model: '750s', codes: ['C4 750 92', 'C5 750 10', 'C6 750 67', 'C6 750 61'], fallback: '/shop?brand=novitec&make=mclaren&model=750s' },
-  { name: 'Rolls-Royce Cullinan', model: 'cullinan', codes: [], fallback: '/collections/rolls-royce-cullinan?brand=novitec' },
-  { name: 'Rolls-Royce Spectre', model: 'spectre', codes: [], fallback: '/collections/rolls-royce-spectre?brand=novitec' },
+  { name: 'Rolls-Royce Cullinan', model: 'cullinan', codes: [], fallback: '/shop/novitec/rolls-royce/cullinan' },
+  { name: 'Rolls-Royce Spectre', model: 'spectre', codes: [], fallback: '/shop/novitec/rolls-royce/spectre' },
 ];
 function productImageUrl(source: string, width: number) {
   const image = new URL(source);

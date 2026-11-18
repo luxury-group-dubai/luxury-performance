@@ -64,7 +64,7 @@ export function NovitecFeatureFilm() {
           <a className="action-secondary" href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">Watch on YouTube <ActionArrow size={15} /><span className="sr-only"> (opens in a new tab)</span></a>
           {playing && <button type="button" onClick={stop}><X size={15} aria-hidden="true" /> Close video</button>}
         </div>
-        <Link className="action-secondary" href="/collections/ferrari-purosangue?brand=novitec">Explore Purosangue parts <ActionArrow size={15} /></Link>
+        <Link className="action-secondary" href="/shop/novitec/ferrari/purosangue">Explore Purosangue parts <ActionArrow size={15} /></Link>
       </div>
     </div>
   </section>;

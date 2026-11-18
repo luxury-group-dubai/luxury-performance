@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 export function SmoothScroll() {
   useEffect(() => {
     const preference = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
-    let instance: { destroy: () => void; stop: () => void; start: () => void } | undefined;
+    let instance: { destroy: () => void; stop: () => void; start: () => void; scrollTo: (top: number, options: { immediate: boolean }) => void } | undefined;
     let generation = 0;
     let locked = false;
     let initializing = false;
@@ -36,6 +36,12 @@ export function SmoothScroll() {
       }
     }
     const onIntent = () => { void start(); };
+    const onScrollTo = (event: Event) => {
+      if (!instance) return;
+      event.preventDefault();
+      instance.scrollTo((event as CustomEvent<number>).detail, { immediate: true });
+    };
+    window.addEventListener('lxp:scroll-to', onScrollTo);
     const reset = () => {
       generation++;
       instance?.destroy();
@@ -48,6 +54,7 @@ export function SmoothScroll() {
     preference.addEventListener('change', reset);
     return () => {
       reset();
+      window.removeEventListener('lxp:scroll-to', onScrollTo);
       events.forEach(event => window.removeEventListener(event, onIntent));
       preference.removeEventListener('change', reset);
     };
