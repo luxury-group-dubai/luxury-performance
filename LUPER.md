@@ -1,9 +1,77 @@
 # LXP Luper
 
-Luper is the website's AI concierge. It answers from `lib/content.ts` and
-`lib/partners.ts`, asks for vehicle details, and offers a visitor-controlled
-WhatsApp draft. It has no live inventory, booking or order access. Replies are
-plain text; links in the interface are controlled by the application.
+Luper is the website's AI concierge. It answers from `lib/content.ts`,
+`lib/partners.ts` and the existing Shopify catalog, remembers visitor-provided
+vehicle details during the chat, and offers a visitor-controlled WhatsApp draft.
+It has no live inventory, booking or order access. Replies are plain text;
+product, shop and brand cards use application-controlled catalog links.
+
+## Shopping guidance
+
+- A static greeting and shop/brand browsing links require no AI requests.
+- Bare verified vehicle/range lookups such as `F8` return their actual shop page
+  directly, without an AI call or budget reservation. Failed catalogue lookups
+  return a factual temporary-unavailability message, never a claim of no parts.
+- Deterministic retrieval uses the existing cached Storefront readers. It sends
+  at most 12 candidates to the model, never the whole catalog. Broad enquiries
+  favor the most specific brand/vehicle shop destination (for example, NOVITEC
+  Ferrari 812), backed by actual product tags and canonical shop routes. A range
+  request offers browsing before products; a category/part request can surface
+  individual products within that brand and vehicle scope.
+  Generation and trim exclusions reduce mismatches, but retrieval is not proof
+  of fitment. Our team must confirm compatibility, stock and installation.
+- A compact make/model index from actual parts accompanies the candidates.
+  Luper must disclose unlisted vehicles before offering WhatsApp sourcing help;
+  partner descriptions and scale-model collectibles do not establish coverage.
+  The server also removes recommendations for an unlisted returned vehicle profile.
+  Catalogue lookup failures are described as unavailable, not as missing vehicles.
+- The current product, shop or partner pathname is resolved against real
+  catalog entries. Arbitrary browser titles, external URLs and unrelated query
+  parameters are not forwarded. A viewed product never establishes car ownership.
+- One Responses request returns a strict JSON schema: reply text, up to three
+  candidate IDs, make/model/year/interest/budget, and a short first-person enquiry
+  summary for WhatsApp. The summary is generated in the same request, not a second
+  AI call, and is included only after successful completion. The relay decodes only the
+  reply string during streaming. It releases cards only after successful JSON
+  validation, resolving IDs against the server's candidate set. Unknown IDs are
+  discarded. Prices and image URLs come from the catalog, never model output.
+- Profile values must quote visitor messages or the previous profile. They stay
+  in browser memory and accompany later turns after older messages are trimmed.
+  New chat clears both profile and selected options; nothing is stored locally.
+- Visitors explicitly add up to three cards to their enquiry. The WhatsApp draft
+  summarizes their vehicle, request, preferences and budget if supplied, with
+  selected product links appended. It does not copy the conversation. It is a
+  click-to-chat draft, not an automatically sent message.
+  Replies recommending a team handoff set `contactTeam` in the same AI response.
+  Once complete, those replies show a WhatsApp button and prefilled-enquiry hint.
+  Each reply button uses that message's summary/profile and selected options from
+  its recommendations, so an earlier reply retains its original vehicle context.
+  Use `NEXT_PUBLIC_SITE_URL` for production links; development falls back to the
+  current preview origin. Selecting cards and constructing drafts use no AI calls.
+- If catalog retrieval fails or exceeds 4.5 seconds, verified partner destinations
+  are not treated as vehicle coverage. A static retry/WhatsApp response is shown
+  without an AI request. No automatic AI retry or additional paid tool call is made.
+
+## Contact interface
+
+One circular LXP launcher opens a choice between Ask Luper and WhatsApp our
+team. Luper uses `@assistant-ui/react` primitives with the site's typeface,
+dark glass panel matching the navigation menu, light text and red send button. The local
+runtime sends bounded text through the existing `/api/luper` endpoint; it does
+not use Assistant Cloud or change API credentials. Closing the panel or returning
+to the contact choices preserves the conversation until page reload or New chat.
+
+Replies stream from the Responses API through a text-only SSE relay and appear
+at a steady reading pace (about 60 characters per second). The browser drains
+the network independently of that pacing, so a received reply can finish appearing
+without hitting the request timeout. Stop cancels both receipt and reveal.
+Luper uses the loading glow until the first text arrives, then a larger steady
+orb, a faster ring pulse and three dots while the reply appears. Interrupted
+streams retain the visible text and show a retryable error.
+
+WhatsApp opens directly before a chat starts. After a conversation, it prepares
+a personalized draft for review and sending in WhatsApp.
+The mobile panel uses modal focus handling and locks background scrolling.
 
 ## Local preview
 
@@ -23,7 +91,9 @@ running before removing only that lock directory.
 ## Budget and production setup
 
 - Fixed model: `gpt-6-luna`, Standard pricing, reasoning disabled, no paid tools.
-- At most 10 KB of conversation text, 12 KB of instructions, 450 output tokens.
+- At most 10 KB of conversation text, 12 KB of base instructions, and 20 KB total
+  instructions plus catalog/profile context and schema. Output is capped at 700
+  tokens to accommodate structured fields as well as the short visible reply.
 - Reserve $0.01 **before each API attempt**, up to a non-renewing $10 launch
   allowance. This deliberately overestimates request costs; it is not a display
   of actual OpenAI spend or the current credit balance. Failed attempts retain
@@ -68,10 +138,37 @@ Before public release, configure the shared ledger and run a real chat plus a
 failure test in that deployment. Current local verification does not establish
 that production credentials or shared storage are configured.
 
-Verified on 18 November 2026: six automated tests passed, TypeScript passed,
-and the production build passed. The local endpoint returned successful live
-answers for a Ferrari enquiry, a follow-up asking for price/stock/booking,
-an instruction-override attempt and an Arabic Porsche enquiry. The contact page
-served HTTP 200 with the launcher and dialog. Browser automation timed out, so
-desktop/mobile visual and keyboard checks remain outstanding. The temporary
-preview server was stopped after verification; use the command above to restart.
+Shopping verification on 18 November 2026 covers strict streamed JSON decoding,
+catalog matching and failure fallback, profile grounding, URL validation, selected
+WhatsApp drafts, car memory, cancellation and the unchanged spending guard.
+Two guarded live requests verified actual catalog suggestions and profile fields;
+the first exposed a trim mismatch that was corrected before the second check.
+Isolated desktop and mobile browser checks cover cards, explicit selection,
+draft contents, no extra requests, page context, memory and New chat reset.
+The unmerged preview runs on port 3004; deployment still needs the shared ledger.
+
+Retired `/collections/*` pages redirect into the current shop. Luper does not fetch
+or recommend Shopify collection destinations; old collection cards are rejected
+when reading message metadata or preparing WhatsApp drafts.
+
+
+Vehicle retrieval uses the shop's prepared catalogue and vehicle choices, including
+model families, versions, repaired supplier tags and canonical supplier routes.
+Manufacturer logos identify all-brand vehicle cards; supplier logos identify
+brand-specific ranges. A newly named vehicle does not inherit an earlier supplier.
+Bare verified range requests return locally without an AI request. The dedicated
+NOVITEC 12Cilindri N-LARGO card opens `/novitec-12cilindri-n-largo#private-enquiry`;
+`1cilindri` is accepted as a spelling correction. That route also bypasses AI.
+
+The 18 November 2026 catalogue snapshot (1,425 products) passed 507 named vehicle,
+version and supplier-route checks across 25 makes and 208 model families. Re-run
+against a JSON array of current `CatalogProduct` records with:
+
+```sh
+node scripts/audit-luper-catalog.mjs /path/to/catalog-products.json
+```
+
+The audit validates canonical destination matching, not every possible free-text
+phrasing or fitment. Focused regressions cover N-LARGO routing, the typo, unrelated
+N-LARGO models, brand carryover and unchanged API spending guards. Representative
+full-catalogue part queries stayed below the existing 20 KB context bound.

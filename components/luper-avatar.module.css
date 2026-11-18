@@ -1,0 +1,62 @@
+@property --luper-orb-phase { syntax:'<number>'; inherits:true; initial-value:1; }
+@property --luper-ring-phase { syntax:'<number>'; inherits:true; initial-value:1; }
+/* One element owns both clocks; the orb is 120ms ahead of the following ring. */
+.avatar { display:block; flex-shrink:0; overflow:visible; isolation:isolate; animation:orbBreath 2.1s cubic-bezier(.37,0,.63,1) -.12s infinite,ringBreath 2.1s linear 0s infinite; }
+.avatarButton { display:block; flex-shrink:0; padding:0; border:0; border-radius:50%; background:transparent; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.avatarButton:focus-visible { outline:2px solid white; outline-offset:3px; }
+.brandLogo { visibility:hidden; pointer-events:none; }
+.avatar[data-brand-active=true] .expression { visibility:hidden; }
+.avatar[data-brand-active=true] .brandLogo { visibility:visible; }
+.shell { transform-origin:40px 40px; transform:scale(1); transition:transform .3s ease; }
+.ring { r:calc(23.5px + var(--luper-ring-phase) * 2px); }
+.orb { r:calc(19px + var(--luper-orb-phase) * 2px); }
+.avatar[data-mood=idle] .orb { r:calc(18px + var(--luper-orb-phase) * 3px); }
+.halo { r:calc(24px + var(--luper-ring-phase) * 2px); opacity:calc(.28 + var(--luper-ring-phase) * .22); }
+.face { transform-origin:40px 40px; transition:transform .3s ease; }
+.eyeSlot { transform-box:fill-box; transform-origin:center; transition:transform .35s ease; }
+.middleEye { r:0px; opacity:0; transition:r .35s ease,opacity .35s ease; }
+.readingEyes { transform-origin:40px 40px; transform:scaleY(1); transition:transform .25s ease; }
+.eyes { transform-origin:40px 40px; animation:blink 8s ease-in-out infinite; }
+.eyes ellipse { transition:rx .35s ease,ry .35s ease; }
+.loadingGlow { opacity:0; mix-blend-mode:screen; transform-origin:40px 40px; transition:opacity .2s ease; }
+.thinkingAura { opacity:0; mix-blend-mode:screen; transition:opacity .3s ease; }
+.whiteAura { opacity:.5; mix-blend-mode:screen; transition:opacity .3s ease,transform .3s ease; transform-origin:40px 40px; }
+.thinkingRimGlow { opacity:0; mix-blend-mode:screen; transition:opacity .3s ease; }
+.loadingTrail { transform-origin:40px 40px; }
+.gradientRotation { transform-origin:40px 40px; }
+.avatar[data-mood=thinking] .gradientRotation { animation:loadingTurn 1.2s linear infinite; }
+.avatar[data-mood=typing] .face { transform:translate(var(--luper-gaze-x,0px),5px); transition-duration:.15s; }
+.avatar[data-mood=typing] .readingEyes { transform:scaleY(.78); }
+.avatar[data-mood=thinking] .loadingGlow { opacity:1; }
+.avatar[data-mood=thinking] .thinkingAura { opacity:.6; }
+.avatar[data-mood=thinking] .thinkingRimGlow { opacity:.85; }
+.avatar[data-mood=thinking] .whiteAura { opacity:0; }
+.avatar[data-mood=thinking] .loadingTrail { animation-name:loadingTurn; animation-timing-function:linear; animation-iteration-count:infinite; }
+.avatar[data-mood=thinking] .loadingTrail path { animation-name:trailShimmer; animation-timing-function:ease-in-out; animation-iteration-count:infinite; animation-direction:alternate; }
+.avatar[data-mood=thinking] .shell { transform:scale(.86); }
+.avatar[data-mood=thinking] { animation-duration:.8s,.8s; animation-delay:-.04s,0s; }
+.avatar[data-mood=thinking] .halo { animation:none; opacity:0; }
+.avatar[data-mood=thinking] .eyes { animation:none; }
+.avatar[data-mood=thinking] .eyes ellipse { rx:1.7px; ry:1.7px; }
+.avatar[data-mood=replying] .shell { transform:scale(1.08); }
+.avatar[data-mood=replying] .orb { animation:none; r:21px; }
+.avatar[data-mood=replying] { animation-duration:.6s,.6s; }
+.avatar[data-mood=replying] .halo { animation:none; opacity:.45; }
+.avatar[data-mood=replying] .whiteAura { opacity:.65; transform:scale(1.08); }
+.avatar[data-mood=replying] .eyes { animation:none; }
+.avatar[data-mood=replying] .eyes ellipse { rx:3.5px; ry:3.5px; }
+.avatar[data-mood=replying] .middleEye { r:3.5px; opacity:1; }
+.avatar[data-mood=replying] .eyeSlot { animation:replyDot .9s ease-in-out -.9s infinite; }
+.avatar[data-mood=replying] .eyeSlot:first-child { transform:translateX(-2px); }
+.avatar[data-mood=replying] .eyeSlot:nth-child(2) { animation-delay:-.75s; }
+.avatar[data-mood=replying] .eyeSlot:nth-child(3) { transform:translateX(2px); animation-delay:-.6s; }
+.avatar[data-mood=error] .eyes { animation:none; transform:scaleY(.65); }
+/* The orb eases through each turn; the ring keeps a steady stroke with an actual follow delay. */
+@keyframes orbBreath { 0%,100% { --luper-orb-phase:1; } 50% { --luper-orb-phase:0; } }
+@keyframes ringBreath { 0%,100% { --luper-ring-phase:1; } 50% { --luper-ring-phase:0; } }
+@keyframes blink { 0%,28%,32%,72%,76%,80%,100% { transform:scaleY(1); } 30%,74%,78% { transform:scaleY(.1); } }
+@keyframes loadingTurn { to { transform:rotate(360deg); } }
+@keyframes trailShimmer { from { opacity:.2; } to { opacity:1; } }
+@keyframes replyDot { 0%,100% { scale:.8; } 50% { scale:1; } }
+@media(prefers-reduced-motion:reduce) { .ring,.orb,.halo,.eyes,.avatar[data-mood=idle] .orb,.avatar[data-mood=thinking] .gradientRotation,.avatar[data-mood=thinking] .loadingTrail,.avatar[data-mood=thinking] .loadingTrail path,.avatar[data-mood=replying] .eyeSlot { animation:none; } .shell,.face,.readingEyes,.eyes ellipse,.eyeSlot,.loadingGlow,.thinkingAura,.whiteAura,.thinkingRimGlow,.middleEye { transition:none; } }
+@media(prefers-reduced-motion:reduce) { .avatar { animation:none; } }

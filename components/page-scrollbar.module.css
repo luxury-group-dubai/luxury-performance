@@ -1,0 +1,9 @@
+.track { position:fixed; inset:0 0 0 auto; width:16px; z-index:80; touch-action:none; user-select:none; background:transparent; }
+.track[hidden] { display:none; }
+.thumb { display:block; position:absolute; top:0; right:3px; width:4px; min-height:36px; border-radius:6px; background:#8c8c88; box-shadow:0 0 0 1px #ffffff38,0 0 3px #0005; opacity:.7; }
+.track:hover .thumb,.track:focus-visible .thumb,.track[data-dragging] .thumb { width:7px; opacity:1; }
+.track:hover,.track[data-dragging] { background:#88888812; }
+.track:focus-visible { outline:1px solid #a78848; outline-offset:-1px; }
+:global(html[data-lxp-intro]) .track,
+:global(body:has(.site-header.menu-is-open)) .track,
+:global(body:has(dialog[open])) .track { display:none; }

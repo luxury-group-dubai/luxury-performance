@@ -47,3 +47,12 @@ export const partnerHeroImages: Partial<Record<string, HeroImage>> = {
 export function hasPartnerHeroOverlay(slug: string) {
   return Object.hasOwn(partnerHeroImages, slug) || slug === 'fi-exhaust';
 }
+
+/** Shared brand-card artwork for the partner directory and Luper suggestions. */
+export const partnerCardImages: Partial<Record<string, Pick<HeroImage, 'image' | 'alt'>>> = {
+  ...partnerHeroImages,
+  novitec: { image: '/images/nlargo/gallery-low-front-red.webp', alt: 'Ferrari 12Cilindri N-LARGO in red studio lighting' },
+  valvetronic: { image: partnerHeroImages.valvetronic!.mobile.src, alt: 'Rear wing and exposed Valvetronic exhaust on a Porsche GT3 RS' },
+  techart: { image: '/images/partners/techart-gt3-touring-rear.webp', alt: 'Rear view of a grey TECHART Porsche 992.2 GT3 Touring in an amber-lit garage' },
+  gintani: { image: '/images/partners/gintani-svj-flames-cinematic.webp', alt: 'Red Lamborghini Aventador SVJ with Gintani exhaust shooting blue flames at night' },
+};

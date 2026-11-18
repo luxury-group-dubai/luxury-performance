@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <title>Luper</title>
+  <desc>Two softly angled white eyes with a quiet blink.</desc>
+  <style>
+    .eyes { transform-box:fill-box; transform-origin:center; animation:blink 5.6s ease-in-out infinite; }
+    @keyframes blink { 0%,92%,96%,100% { transform:scaleY(1); } 94% { transform:scaleY(.12); } }
+    @media (prefers-reduced-motion:reduce) { .eyes { animation:none; } }
+  </style>
+  <g class="eyes" fill="#FFFFFF">
+    <ellipse cx="15" cy="24" rx="5.5" ry="9" transform="rotate(12 15 24)"/>
+    <ellipse cx="33" cy="24" rx="5.5" ry="9" transform="rotate(12 33 24)"/>
+  </g>
+</svg>
