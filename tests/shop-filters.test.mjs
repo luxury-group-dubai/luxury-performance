@@ -13,7 +13,7 @@ function load(path) {
   if (modules.has(path)) return modules.get(path).exports;
   const compiled = { exports: {} }; modules.set(path, compiled);
   const { outputText } = ts.transpileModule(readFileSync(path, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true } });
-  new Function('require', 'module', 'exports', outputText)(specifier => load(resolve(dirname(path), specifier)), compiled, compiled.exports);
+  new Function('require', 'module', 'exports', outputText)(specifier => load(specifier.startsWith('@/') ? resolve(root, specifier.slice(2)) : resolve(dirname(path), specifier)), compiled, compiled.exports);
   return compiled.exports;
 }
 const { updateFilters, filterUrl, fitOptions, filterProducts, techartFitmentLabel } = load(resolve(root, 'lib/shop/taxonomy.ts'));
@@ -213,4 +213,45 @@ test('CAPRISTO options parse generations and exclude unrelated model tags on sha
   assert.equal(capristoFitment('f8_spider', 'ferrari', 'f8').version, 'Spider');
   const shared = capristoPart('shared', ['992_1_gt3', '992_1_gt3_rs', '992_1_gt3']);
   assert.equal(capristoFitmentOptions([shared], 'porsche', '911')[0].count, 1);
+});
+
+const { valvetronicProductFitments, valvetronicFitmentOptions } = load(resolve(root, 'lib/shop/valvetronic-fitment.ts'));
+const { prepareBrandCatalogue } = load(resolve(root, 'app/preview/shop/brand-catalogue.ts'));
+const valvetronicPart = (handle, make, model) => ({
+  ...programmePart(handle), handle, vendor: 'Valvetronic Designs',
+  tags: ['brand_valvetronic', 'make_' + make, 'model_' + model],
+});
+test('Valvetronic shared Porsche exhaust spans verified generations without mixing GT2 and GT3', () => {
+  const parts = [
+    valvetronicPart('porshce-gt3-991-exhaust', 'porsche', '911'),
+    valvetronicPart('f1-exhaust-system-for-porsche-991-2-gt2rs', 'porsche', '911'),
+    valvetronicPart('porsche-992-gt3-valved-sport-exhaust-system', 'porsche', '911'),
+  ];
+  const scope = { brand: 'valvetronic', make: 'porsche', model: '911' };
+  assert.equal(filterProducts(parts, { ...scope, generation: '991_1' }).length, 1);
+  assert.deepEqual(filterProducts(parts, { ...scope, generation: '991_2', fit: '991_2_gt3' }).map(p => p.handle), ['porshce-gt3-991-exhaust']);
+  assert.deepEqual(filterProducts(parts, { ...scope, generation: '991_2', fit: '991_2_gt2_rs' }).map(p => p.handle), ['f1-exhaust-system-for-porsche-991-2-gt2rs']);
+  assert.equal(filterProducts(parts, { ...scope, generation: '992', fit: '991_2_gt3' }).length, 0);
+  assert.equal(valvetronicFitmentOptions(parts, 'porsche', '911').find(x => x.key === '991_2_gt3').count, 1);
+});
+test('Valvetronic shared M3/M4 listings keep chassis specific to the chosen model', () => {
+  const product = valvetronicPart('bmw-m3-m4-g8x-midpipe', 'bmw', 'm3');
+  assert.deepEqual(valvetronicProductFitments(product, 'bmw', 'm3').map(x => x.generation), ['g80']);
+  assert.deepEqual(valvetronicProductFitments(product, 'bmw', 'm4').map(x => x.generation), ['g82', 'g83']);
+});
+test('Valvetronic preparation repairs misleading broad-model tags and preserves real shared models', () => {
+  const raw = valvetronicPart('bmw-x5m-x6m-f95-f96-valved-sport-exhaust-system', 'bmw', 'x5');
+  raw.title = 'BMW X5M / X6M F95 / F96 Valved Sport Exhaust System';
+  const [prepared] = prepareBrandCatalogue([raw]);
+  assert.ok(prepared.tags.includes('model_x5m'));
+  assert.ok(prepared.tags.includes('model_x6m'));
+  assert.ok(!prepared.tags.includes('model_x5'));
+  assert.equal(filterProducts([prepared], { brand: 'valvetronic', make: 'bmw', model: 'x5' }).length, 0);
+  assert.equal(filterProducts([prepared], { brand: 'valvetronic', make: 'bmw', model: 'x5m', generation: 'f95' }).length, 1);
+});
+test('Valvetronic keeps unreviewed products visible broadly, without assuming exact compatibility', () => {
+  const raw = valvetronicPart('unknown-new-system', 'porsche', '911');
+  const scope = { brand: 'valvetronic', make: 'porsche', model: '911' };
+  assert.equal(filterProducts([raw], scope).length, 1);
+  assert.equal(filterProducts([raw], { ...scope, generation: '991_1' }).length, 0);
 });

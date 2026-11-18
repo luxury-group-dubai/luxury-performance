@@ -3,6 +3,7 @@ import { matchesSearch } from './search';
 import { f8BodyMatch, isF8Body, isF8Selection } from './novitec-f8-fitment';
 import { novitecFilterModelKeys } from './novitec-variants';
 import { is12CilindriSpiderProduct } from './novitec-12cilindri-fitment';
+import { valvetronicProductFitments, valvetronicVehicles } from './valvetronic-fitment';
 import { capristoProductFitments } from './capristo-fitment';
 import type { CatalogProduct } from './types';
 export const suppliers = [
@@ -86,11 +87,13 @@ export function filterProducts(products: CatalogProduct[], f: Filters) {
   const version812 = is812Selection(f) ? (f.model === '812_gts' || f.body === 'gts' ? 'gts' : 'superfast') : undefined;
   const modelKeys = novitecFilterModelKeys(f);
   const spider12Cilindri = f.brand === 'novitec' && f.make === 'ferrari' && f.model === '12cilindri' && f.body === 'spider';
-  const fits = f.fit ? f.brand === 'techart' && f.model === '911' ? techartFitKeys(f.fit, f.body) : [f.fit] : [];
+  const fits = f.fit && f.brand !== 'valvetronic' ? f.brand === 'techart' && f.model === '911' ? techartFitKeys(f.fit, f.body) : [f.fit] : [];
   const generation = f.brand === 'techart' && !f.fit ? f.generation : undefined;
-  const matchesCapristo = (product: CatalogProduct) => {
-    if (f.brand !== 'capristo' || !f.make || !f.model || (!f.generation && !f.fit)) return true;
-    return capristoProductFitments(product, f.make, f.model).some(fitment =>
+  const matchesVehicleFitment = (product: CatalogProduct) => {
+    if (!['capristo', 'valvetronic'].includes(f.brand ?? '') || !f.make || !f.model) return true;
+    const options = f.brand === 'capristo' ? capristoProductFitments(product, f.make, f.model) : valvetronicProductFitments(product, f.make, f.model);
+    if (!f.generation && !f.fit) return f.brand !== 'valvetronic' || !valvetronicVehicles(product) || options.length > 0;
+    return options.some(fitment =>
       (!f.generation || fitment.generation === f.generation) && (!f.fit || fitment.key === f.fit));
   };
   // Keep links to the former combined category working.
@@ -99,7 +102,7 @@ export function filterProducts(products: CatalogProduct[], f: Filters) {
       : product.programmeCategory === 'Performance & Exhaust' && ['Performance', 'Exhaust'].includes(f.category) ? true
       : categoryOf(product) === f.category
   );
-  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').some(model => modelKeys.includes(model))) && matchesCapristo(p) && (!spider12Cilindri || is12CilindriSpiderProduct(p)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && matchesCategory(p) && (!f.q || matchesSearch(p, f.q)));
+  const result = products.filter(p => (!f.brand || supplierOf(p) === f.brand) && (!f.make || tagsFor(p, 'make').includes(f.make)) && (!f.model || tagsFor(p, 'model').some(model => modelKeys.includes(model))) && matchesVehicleFitment(p) && (!spider12Cilindri || is12CilindriSpiderProduct(p)) && (!generation || tagsFor(p, 'fit').some(fit => techartGeneration(fit) === generation)) && (!fits.length || tagsFor(p, 'fit').some(fit => fits.includes(fit))) && (!f8Body || f8BodyMatch(p, f8Body) === 'allowed') && (!sf90Body || ferrariVersionMatch(p, sf90Body) === 'allowed') && (!version812 || ferrariVersionMatch(p, version812) === 'allowed') && matchesCategory(p) && (!f.q || matchesSearch(p, f.q)));
   if (f.sort === 'price-up') result.sort((a,b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
   if (f.sort === 'price-down') result.sort((a,b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
   if (f.sort === 'name') result.sort((a,b) => a.title.localeCompare(b.title));
