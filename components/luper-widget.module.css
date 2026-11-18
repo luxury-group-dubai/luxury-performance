@@ -125,6 +125,8 @@
 @media(max-width:600px) {
   .anchor { right:max(16px,env(safe-area-inset-right)); bottom:calc(18px + env(safe-area-inset-bottom,0px)); }
   .launcher { width:56px; height:56px; }
+  /* Keep the anchor's size so hiding the duplicate close button cannot move the panel. */
+  .launcher[data-open=true] { visibility:hidden; pointer-events:none; }
   .panel { width:calc(100vw - 32px); max-height:calc(100dvh - 100px); border-radius:18px; }
   .panel[data-view=luper] { --chat-header-height:98px; height:calc(100dvh - 100px); }
   .header { padding:17px 14px; }.home { padding:26px 20px 20px; }
