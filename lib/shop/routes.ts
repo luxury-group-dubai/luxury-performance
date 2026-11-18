@@ -1,5 +1,6 @@
 import type { Filters } from './taxonomy';
 import { normalizeNovitecFilters } from './novitec-variants';
+import { valvetronicModelKey } from './valvetronic-models';
 
 export type ShopRouteFilters = Filters & { choose?: string; view?: string; stock_group?: string; show?: string };
 const slug = (value: string) => encodeURIComponent(value.replaceAll('_', '-'));
@@ -11,7 +12,7 @@ function extras(path: string, filters: ShopRouteFilters, omit: string[] = []) {
   return path + (query.size ? `?${query}` : '');
 }
 export function shopBrandHref(brand: string, values: ShopRouteFilters = {}) {
-  const filters = normalizeNovitecFilters({ ...values, brand });
+  const filters = normalizeNovitecFilters({ ...values, brand, ...(brand === 'valvetronic' && values.model ? { model: valvetronicModelKey(values.model) } : {}) });
   const path = ['/shop', slug(brand), ...(filters.make ? [slug(filters.make)] : []), ...(filters.make && filters.model ? [slug(filters.model)] : []), ...(filters.make && filters.model && filters.body ? [slug(filters.body)] : [])].join('/');
   return extras(path, { ...values, ...filters });
 }

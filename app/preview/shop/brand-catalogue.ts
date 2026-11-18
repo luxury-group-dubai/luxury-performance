@@ -1,5 +1,7 @@
 import type { CatalogProduct } from '@/lib/shop/types';
 import { label, supplierOf, tagsFor } from '@/lib/shop/taxonomy';
+import { valvetronicVehicles } from '@/lib/shop/valvetronic-fitment';
+import { valvetronicModelKey } from '@/lib/shop/valvetronic-models';
 
 export const previewBrands = ['capristo', 'valvetronic', 'gintani', 'techart'] as const;
 export function previewBrandPath(brand: string) {
@@ -39,7 +41,9 @@ export function prepareBrandCatalogue(products: CatalogProduct[]) {
       if (makes.includes('audi')) models = models.filter(model => !['gallardo', 'huracan', 'b8', 'b9', 'c7'].includes(model));
       if (makes.includes('range_rover')) models = ['sport'];
     }
-    return { ...product, tags: [...product.tags.filter(tag => !/^(?:car_make_|make_|car_model_|model_)/.test(tag)), ...makes.map(make => `make_${make}`), ...models.map(model => `model_${model}`)] };
+    const verifiedVehicles = valvetronicVehicles(product);
+    models = verifiedVehicles ? verifiedVehicles.filter(vehicle => makes.includes(vehicle.make)).map(vehicle => vehicle.model) : models.map(valvetronicModelKey);
+    return { ...product, tags: [...new Set([...product.tags.filter(tag => !/^(?:car_make_|make_|car_model_|model_)/.test(tag)), ...makes.map(make => `make_${make}`), ...models.map(model => `model_${model}`)])] };
   });
 }
 

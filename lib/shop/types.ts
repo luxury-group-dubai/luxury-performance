@@ -1,4 +1,5 @@
 export type Money = { amount: string; currencyCode: string };
+export type VehicleFitment = { key: string; generation?: string; generationLabel?: string; version: string };
 export type Photo = { url: string; altText: string | null };
 export type CatalogProduct = { id: string; title: string; handle: string; vendor: string; productType: string; tags: string[]; featuredImage: Photo | null; priceRange: { minVariantPrice: Money }; availableForSale: boolean; programmeCategory?: string };
 export type Variant = { id: string; title: string; sku: string | null; availableForSale: boolean; currentlyNotInStock: boolean; requiresShipping: boolean; price: Money; image: Photo | null; selectedOptions: { name: string; value: string }[] };

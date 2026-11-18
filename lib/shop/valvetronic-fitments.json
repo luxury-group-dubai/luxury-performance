@@ -1,0 +1,1310 @@
+{
+  "porsche-991-carrera-s-gts-valved-exhuast-system-2012-2016": {
+    "source": "https://valvetronic.com/products/porsche-991-1-carrera-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "911",
+        "versions": [
+          "Carrera",
+          "Carrera S",
+          "Carrera GTS",
+          "Targa 4",
+          "Targa 4S",
+          "Targa 4 GTS"
+        ],
+        "generation": "991_1"
+      }
+    ]
+  },
+  "porshce-gt3-991-exhaust": {
+    "source": "https://valvetronic.com/products/porsche-991-gt3-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "911",
+        "versions": [
+          "GT3",
+          "GT3 RS"
+        ],
+        "generation": "991_1"
+      },
+      {
+        "make": "porsche",
+        "model": "911",
+        "versions": [
+          "GT3",
+          "GT3 RS"
+        ],
+        "generation": "991_2"
+      }
+    ]
+  },
+  "f1-exhaust-system-for-porsche-991-2-gt2rs": {
+    "source": "https://valvetronic.com/products/f1-exhaust-system-for-porsche-991-2-gt2rs",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "911",
+        "versions": [
+          "GT2 RS"
+        ],
+        "generation": "991_2"
+      }
+    ]
+  },
+  "porsche-992-gt3-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/porsche-992-gt3-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "911",
+        "versions": [
+          "GT3",
+          "GT3 RS"
+        ],
+        "generation": "992"
+      }
+    ]
+  },
+  "porsche-992-turbo-race-valved-exhaust-system": {
+    "source": "https://valvetronic.com/products/porsche-992-turbo-race-valved-exhaust-system",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "911",
+        "versions": [
+          "Carrera (992.1)",
+          "Carrera S (992.1)",
+          "Carrera GTS (992.1)",
+          "Carrera 4S (992.1)",
+          "Turbo (992.1)",
+          "Turbo S (992.1)"
+        ],
+        "generation": "992"
+      }
+    ]
+  },
+  "porsche-boxter-cayman-981-valved-exhaust": {
+    "source": "https://valvetronic.com/products/porsche-boxter-cayman-981-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "boxster",
+        "versions": [
+          "Boxster",
+          "Boxster S",
+          "Boxster GTS",
+          "Boxster Spyder"
+        ],
+        "generation": "981"
+      },
+      {
+        "make": "porsche",
+        "model": "cayman",
+        "versions": [
+          "Cayman",
+          "Cayman S",
+          "Cayman GTS",
+          "Cayman GT4"
+        ],
+        "generation": "981"
+      }
+    ]
+  },
+  "porsche-718-gt4rs-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/porsche-718-gt4rs-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "718",
+        "versions": [
+          "GT4 RS",
+          "Spyder RS"
+        ],
+        "generation": "982"
+      }
+    ]
+  },
+  "porsche-781-gt4-boxter-spyder-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/porsche-781-gt4-boxter-spyder-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "718",
+        "versions": [
+          "Cayman GT4",
+          "Boxster Spyder",
+          "GTS 4.0"
+        ],
+        "generation": "982"
+      },
+      {
+        "make": "porsche",
+        "model": "boxster",
+        "versions": [
+          "Boxster Spyder"
+        ],
+        "generation": "982"
+      },
+      {
+        "make": "porsche",
+        "model": "cayman",
+        "generation": "982",
+        "versions": [
+          "GT4",
+          "GTS 4.0"
+        ]
+      }
+    ]
+  },
+  "porsche-macan-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/porsche-macan-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "porsche",
+        "model": "macan",
+        "versions": [
+          "S",
+          "GTS",
+          "Turbo"
+        ]
+      }
+    ]
+  },
+  "bmw-f90-m5-valved-exhaust": {
+    "source": "https://valvetronic.com/products/bmw-f90-m5-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m5",
+        "versions": [
+          "M5"
+        ],
+        "generation": "f90"
+      }
+    ]
+  },
+  "bmw-g90-m5-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-g90-m5-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m5",
+        "versions": [
+          "M5"
+        ],
+        "generation": "g90"
+      }
+    ]
+  },
+  "bmw-e60-m5-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-e60-m5-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m5",
+        "versions": [
+          "M5"
+        ],
+        "generation": "e60"
+      }
+    ]
+  },
+  "bmw-f10-m5-valved-exhaust": {
+    "source": "https://valvetronic.com/products/bmw-f10-m5-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m5",
+        "versions": [
+          "M5"
+        ],
+        "generation": "f10"
+      },
+      {
+        "make": "bmw",
+        "model": "m6",
+        "versions": [
+          "M6"
+        ],
+        "generation": "f06"
+      }
+    ]
+  },
+  "bmw-f12-m6-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-f12-m6-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m6",
+        "versions": [
+          "M6"
+        ],
+        "generation": "f12"
+      }
+    ]
+  },
+  "bmw-m3-m4-g8x-midpipe": {
+    "source": "https://valvetronic.com/products/bmw-m3-m4-g8x-midpipe",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m3",
+        "versions": [
+          "M3"
+        ],
+        "generation": "g80"
+      },
+      {
+        "make": "bmw",
+        "model": "m4",
+        "versions": [
+          "M4 Coup\u00e9"
+        ],
+        "generation": "g82"
+      },
+      {
+        "make": "bmw",
+        "model": "m4",
+        "versions": [
+          "M4 Convertible"
+        ],
+        "generation": "g83"
+      }
+    ]
+  },
+  "bmw-e9x-m3-valved-exhaust": {
+    "source": "https://valvetronic.com/products/bmw-e9x-m3-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m3",
+        "versions": [
+          "M3"
+        ],
+        "generation": "e90"
+      },
+      {
+        "make": "bmw",
+        "model": "m3",
+        "versions": [
+          "M3"
+        ],
+        "generation": "e92"
+      },
+      {
+        "make": "bmw",
+        "model": "m3",
+        "versions": [
+          "M3"
+        ],
+        "generation": "e93"
+      }
+    ]
+  },
+  "bmw-e46-m3-valved-sport-exhaust": {
+    "source": "https://valvetronic.com/products/bmw-e46-m3-valved-sport-exhaust",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m3",
+        "versions": [
+          "M3"
+        ],
+        "generation": "e46"
+      }
+    ]
+  },
+  "bmw-f87-m2-n55-exhaust": {
+    "source": "https://valvetronic.com/products/bmw-f87-m2-n55-exhaust",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m2",
+        "versions": [
+          "M2 N55"
+        ],
+        "generation": "f87"
+      }
+    ]
+  },
+  "bmw-g87-m2-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-g87-m2-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m2",
+        "versions": [
+          "M2"
+        ],
+        "generation": "g87"
+      }
+    ]
+  },
+  "bmw-m240i-g42-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-m240i-g42-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m240i",
+        "versions": [
+          "M240i",
+          "M240i xDrive"
+        ],
+        "generation": "g42"
+      }
+    ]
+  },
+  "g20-330i-valved-axleback-exhaust-system": {
+    "source": "https://valvetronic.com/products/g20-330i-valved-axleback-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "330i",
+        "versions": [
+          "330i"
+        ],
+        "generation": "g20"
+      },
+      {
+        "make": "bmw",
+        "model": "430i",
+        "versions": [
+          "430i"
+        ],
+        "generation": "g22"
+      },
+      {
+        "make": "bmw",
+        "model": "430i",
+        "versions": [
+          "430i"
+        ],
+        "generation": "g23"
+      }
+    ]
+  },
+  "bmw-g20-m340i": {
+    "source": "https://valvetronic.com/products/bmw-g20-m340i",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m340i",
+        "versions": [
+          "M340i"
+        ],
+        "generation": "g20"
+      },
+      {
+        "make": "bmw",
+        "model": "m440i",
+        "versions": [
+          "M440i"
+        ],
+        "generation": "g22"
+      }
+    ]
+  },
+  "bmw-g30-530i-540i-valved-sport-exhaust-system-1": {
+    "source": "https://valvetronic.com/products/bmw-g30-530i-540i-valved-sport-exhaust-system-1",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "530i",
+        "versions": [
+          "530i"
+        ],
+        "generation": "g30"
+      },
+      {
+        "make": "bmw",
+        "model": "540i",
+        "versions": [
+          "540i"
+        ],
+        "generation": "g30"
+      }
+    ]
+  },
+  "bmw-g30-m550i-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-g30-m550i-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m550i",
+        "versions": [
+          "M550i"
+        ],
+        "generation": "g30"
+      }
+    ]
+  },
+  "2020-alpina-b8-sport-exhaust-g16": {
+    "source": "https://valvetronic.com/products/2020-alpina-b8-sport-exhaust-g16",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m850i",
+        "versions": [
+          "M850i Gran Coup\u00e9"
+        ],
+        "generation": "g16"
+      },
+      {
+        "make": "bmw",
+        "model": "b8",
+        "versions": [
+          "Alpina B8"
+        ],
+        "generation": "g16"
+      }
+    ]
+  },
+  "bmw-x3-x4-m40i-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-x3-x4-m40i-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "x3",
+        "versions": [
+          "M40i"
+        ],
+        "generation": "g01"
+      },
+      {
+        "make": "bmw",
+        "model": "x4",
+        "versions": [
+          "M40i"
+        ],
+        "generation": "g02"
+      }
+    ]
+  },
+  "bmw-x5-x6-g05-g06-m50i-m60i-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-x5-x6-g05-g06-m50i-m60i-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "x5",
+        "versions": [
+          "M50i",
+          "M60i"
+        ],
+        "generation": "g05"
+      },
+      {
+        "make": "bmw",
+        "model": "x6",
+        "versions": [
+          "M50i",
+          "M60i"
+        ],
+        "generation": "g06"
+      }
+    ]
+  },
+  "bmw-x5-g05-40i-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-x5-g05-40i-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "x5",
+        "versions": [
+          "40i"
+        ],
+        "generation": "g05"
+      },
+      {
+        "make": "bmw",
+        "model": "x6",
+        "versions": [
+          "40i"
+        ],
+        "generation": "g06"
+      }
+    ]
+  },
+  "bmw-x7-g07-40i-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-x7-g07-40i-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "x7",
+        "versions": [
+          "40i"
+        ],
+        "generation": "g07"
+      }
+    ]
+  },
+  "bmw-g29-z4-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-g29-z4-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "z4",
+        "versions": [
+          "M40i"
+        ],
+        "generation": "g29"
+      }
+    ]
+  },
+  "bmw-x5m-x6m-f95-f96-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-x5m-x6m-f95-f96-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "x5m",
+        "versions": [
+          "X5 M"
+        ],
+        "generation": "f95"
+      },
+      {
+        "make": "bmw",
+        "model": "x6m",
+        "versions": [
+          "X6 M"
+        ],
+        "generation": "f96"
+      }
+    ]
+  },
+  "bmw-x5m-x6m-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-x5m-x6m-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "x5m",
+        "versions": [
+          "X5 M"
+        ],
+        "generation": "f85"
+      },
+      {
+        "make": "bmw",
+        "model": "x6m",
+        "versions": [
+          "X6 M"
+        ],
+        "generation": "f86"
+      }
+    ]
+  },
+  "bmw-f91-f92-f93-m8-full-valved-system": {
+    "source": "https://valvetronic.com/products/bmw-f91-f92-f93-m8-full-valved-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "m8",
+        "versions": [
+          "M8"
+        ],
+        "generation": "f91"
+      },
+      {
+        "make": "bmw",
+        "model": "m8",
+        "versions": [
+          "M8"
+        ],
+        "generation": "f92"
+      },
+      {
+        "make": "bmw",
+        "model": "m8",
+        "versions": [
+          "M8"
+        ],
+        "generation": "f93"
+      }
+    ]
+  },
+  "bmw-f-chassis-valved-race-exhaust-f30-f22-f36-f32": {
+    "source": "https://valvetronic.com/products/bmw-f-chassis-valved-race-exhaust-f30-f22-f36-f32",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "335i",
+        "versions": [
+          "335i"
+        ],
+        "generation": "f30"
+      },
+      {
+        "make": "bmw",
+        "model": "m235i",
+        "versions": [
+          "M235I"
+        ],
+        "generation": "f22"
+      },
+      {
+        "make": "bmw",
+        "model": "m240i",
+        "versions": [
+          "M240I"
+        ],
+        "generation": "f22"
+      },
+      {
+        "make": "bmw",
+        "model": "340i",
+        "versions": [
+          "340i"
+        ],
+        "generation": "f30"
+      },
+      {
+        "make": "bmw",
+        "model": "435i",
+        "versions": [
+          "435i"
+        ],
+        "generation": "f32"
+      },
+      {
+        "make": "bmw",
+        "model": "435i",
+        "versions": [
+          "435i"
+        ],
+        "generation": "f33"
+      },
+      {
+        "make": "bmw",
+        "model": "435i",
+        "versions": [
+          "435i"
+        ],
+        "generation": "f36"
+      },
+      {
+        "make": "bmw",
+        "model": "440i",
+        "versions": [
+          "440i"
+        ],
+        "generation": "f32"
+      },
+      {
+        "make": "bmw",
+        "model": "440i",
+        "versions": [
+          "440i"
+        ],
+        "generation": "f33"
+      },
+      {
+        "make": "bmw",
+        "model": "440i",
+        "versions": [
+          "440i"
+        ],
+        "generation": "f36"
+      }
+    ]
+  },
+  "audi-b8-b8-5-s4-s5-valved-exhaust": {
+    "source": "https://valvetronic.com/products/audi-b8-b8-5-s4-s5-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "audi",
+        "model": "s4",
+        "versions": [
+          "S4"
+        ],
+        "generation": "b8"
+      },
+      {
+        "make": "audi",
+        "model": "s4",
+        "versions": [
+          "S4"
+        ],
+        "generation": "b8_5"
+      },
+      {
+        "make": "audi",
+        "model": "s5",
+        "versions": [
+          "S5"
+        ],
+        "generation": "b8"
+      },
+      {
+        "make": "audi",
+        "model": "s5",
+        "versions": [
+          "S5"
+        ],
+        "generation": "b8_5"
+      }
+    ]
+  },
+  "audi-b9-s4-s5-race-valved-exhaust": {
+    "source": "https://valvetronic.com/products/audi-b9-s4-s5-race-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "audi",
+        "model": "s4",
+        "versions": [
+          "S4"
+        ],
+        "generation": "b9"
+      },
+      {
+        "make": "audi",
+        "model": "s5",
+        "versions": [
+          "S5 Coup\u00e9"
+        ],
+        "generation": "b9"
+      }
+    ]
+  },
+  "audi-rs5-b9-valved-exhaust": {
+    "source": "https://valvetronic.com/products/audi-rs5-b9-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "audi",
+        "model": "rs5",
+        "versions": [
+          "Coup\u00e9",
+          "Sportback"
+        ],
+        "generation": "b9"
+      }
+    ]
+  },
+  "audi-rs7-c7-full-exhaust": {
+    "source": "https://valvetronic.com/products/audi-rs7-c7-full-exhaust",
+    "vehicles": [
+      {
+        "make": "audi",
+        "model": "rs6",
+        "versions": [
+          "RS6"
+        ],
+        "generation": "c7"
+      },
+      {
+        "make": "audi",
+        "model": "rs7",
+        "versions": [
+          "RS7"
+        ],
+        "generation": "c7"
+      }
+    ]
+  },
+  "audi-rs6-rs7-c8-valved-catback-exhaust": {
+    "source": "https://valvetronic.com/products/audi-rs6-rs7-c8-valved-catback-exhaust",
+    "vehicles": [
+      {
+        "make": "audi",
+        "model": "rs6",
+        "versions": [
+          "RS6"
+        ],
+        "generation": "c8"
+      },
+      {
+        "make": "audi",
+        "model": "rs7",
+        "versions": [
+          "RS7"
+        ],
+        "generation": "c8"
+      }
+    ]
+  },
+  "audi-ttrs-rs3-valved-exhaust": {
+    "source": "https://valvetronic.com/products/audi-ttrs-rs3-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "audi",
+        "model": "ttrs",
+        "versions": [
+          "TT RS"
+        ],
+        "generation": "8s"
+      }
+    ]
+  },
+  "mercedes-c63-amg-w204-valved-exhaust": {
+    "source": "https://valvetronic.com/products/mercedes-c63-amg-w204-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "c63",
+        "versions": [
+          "C63 AMG",
+          "Black Series"
+        ],
+        "generation": "w204"
+      }
+    ]
+  },
+  "mercedes-c63-c63s-w205-valved-exhaust": {
+    "source": "https://valvetronic.com/products/mercedes-c63-c63s-w205-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "c63",
+        "versions": [
+          "C63 AMG",
+          "C63 S"
+        ],
+        "generation": "w205"
+      }
+    ]
+  },
+  "mercedes-w218-cls63-amg-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/mercedes-w218-cls63-amg-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "cls63",
+        "versions": [
+          "CLS 63 AMG"
+        ],
+        "generation": "w218"
+      }
+    ]
+  },
+  "mercedes-e63-amg-w212": {
+    "source": "https://valvetronic.com/products/mercedes-e63-amg-w212",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "e63",
+        "versions": [
+          "E63 AMG"
+        ],
+        "generation": "w212"
+      }
+    ]
+  },
+  "mercedes-e63-amg-s-w213-valved-exhaust": {
+    "source": "https://valvetronic.com/products/mercedes-e63-amg-s-w213-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "e63",
+        "versions": [
+          "E63 AMG",
+          "E63 S"
+        ],
+        "generation": "w213"
+      }
+    ]
+  },
+  "mercedes-amg-gle63-s-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/mercedes-amg-gle63-s-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "gle63",
+        "versions": [
+          "GLE 63",
+          "GLE 63 S"
+        ],
+        "generation": "c167"
+      },
+      {
+        "make": "mercedes",
+        "model": "gle63",
+        "versions": [
+          "GLE 63",
+          "GLE 63 S"
+        ],
+        "generation": "w167"
+      }
+    ]
+  },
+  "mercedes-amg-w167-c167-gle-63-s-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/mercedes-amg-w167-c167-gle-63-s-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "glc63",
+        "versions": [
+          "GLC 63",
+          "GLC 63 S"
+        ],
+        "generation": "x253"
+      }
+    ]
+  },
+  "mercedes-g63-amg-w463-full-exhaust": {
+    "source": "https://valvetronic.com/products/mercedes-g63-amg-w463-full-exhaust",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "g_class",
+        "versions": [
+          "G500",
+          "G550",
+          "G63"
+        ],
+        "generation": "w463"
+      }
+    ]
+  },
+  "mercedes-benz-g-wagon-463a-464-valved-exhaust": {
+    "source": "https://valvetronic.com/products/mercedes-benz-g-wagon-463a-464-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "mercedes",
+        "model": "g_class",
+        "versions": [
+          "G63",
+          "G63 Squared"
+        ],
+        "generation": "w463a"
+      }
+    ]
+  },
+  "2017-mustang-gt-valved-exhaust-system": {
+    "source": "https://valvetronic.com/products/2017-mustang-gt-valved-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ford",
+        "model": "mustang",
+        "versions": [
+          "GT Coup\u00e9"
+        ],
+        "generation": "s550"
+      }
+    ]
+  },
+  "ford-mustang-gt-s650-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/ford-mustang-gt-s650-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ford",
+        "model": "mustang",
+        "versions": [
+          "GT Coup\u00e9"
+        ],
+        "generation": "s650"
+      }
+    ]
+  },
+  "ferrari-f8-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/ferrari-f8-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "f8",
+        "versions": [
+          "Tributo",
+          "Spider"
+        ]
+      }
+    ]
+  },
+  "ferrari-458-valved-exhaust": {
+    "source": "https://valvetronic.com/products/ferrari-458-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "458",
+        "versions": [
+          "Italia",
+          "Spider"
+        ]
+      }
+    ]
+  },
+  "ferrari-458-speciale-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/ferrari-458-speciale-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "458",
+        "versions": [
+          "Speciale",
+          "Speciale Aperta"
+        ]
+      }
+    ]
+  },
+  "ferrari-488-gtb-valved-exhaust": {
+    "source": "https://valvetronic.com/products/ferrari-488-gtb-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "488",
+        "versions": [
+          "GTB",
+          "Spider",
+          "Pista"
+        ]
+      }
+    ]
+  },
+  "ferrari-296-gtb-gts-sport-exhaust-package": {
+    "source": "https://valvetronic.com/products/ferrari-296-gtb-gts-sport-exhaust-package",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "296",
+        "versions": [
+          "GTB",
+          "GTS"
+        ]
+      }
+    ]
+  },
+  "ferrari-f430-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/ferrari-f430-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "f430",
+        "versions": [
+          "F430"
+        ]
+      }
+    ]
+  },
+  "ferrari-f430-scuderia-16m-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/ferrari-f430-scuderia-16m-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "f430",
+        "versions": [
+          "Scuderia",
+          "Scuderia 16M"
+        ]
+      }
+    ]
+  },
+  "ferrari-gtc4-lusso-valved-exhaust-system": {
+    "source": "https://valvetronic.com/products/ferrari-gtc4-lusso-valved-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "gtc4lusso",
+        "versions": [
+          "V12"
+        ]
+      }
+    ]
+  },
+  "ferrari-f12-berlinetta-valved-exhaust": {
+    "source": "https://valvetronic.com/products/ferrari-f12-berlinetta-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "f12",
+        "versions": [
+          "Berlinetta",
+          "tdf"
+        ]
+      },
+      {
+        "make": "ferrari",
+        "model": "812",
+        "versions": [
+          "Superfast",
+          "GTS"
+        ]
+      }
+    ]
+  },
+  "ferrari-sf90-race-f1-exhaust-system": {
+    "source": "https://valvetronic.com/products/ferrari-sf90-race-f1-exhaust-system",
+    "vehicles": [
+      {
+        "make": "ferrari",
+        "model": "sf90",
+        "versions": [
+          "SF90",
+          "XX Stradale"
+        ]
+      }
+    ]
+  },
+  "lamborghini-huracan-valved-exhaust": {
+    "source": "https://valvetronic.com/products/lamborghini-huracan-valved-exhaust",
+    "vehicles": [
+      {
+        "make": "lamborghini",
+        "model": "huracan",
+        "versions": [
+          "LP580",
+          "LP610"
+        ]
+      }
+    ]
+  },
+  "lamborghini-huracan-performante-evo-sto-tecnica-true-f1-valved-exhaust-system": {
+    "source": "https://valvetronic.com/products/lamborghini-huracan-performante-evo-sto-tecnica-true-f1-valved-exhaust-system",
+    "vehicles": [
+      {
+        "make": "lamborghini",
+        "model": "huracan",
+        "versions": [
+          "Performante",
+          "EVO",
+          "STO",
+          "Tecnica"
+        ]
+      }
+    ]
+  },
+  "lamborghini-aventador-s-sv-exhaus": {
+    "source": "https://valvetronic.com/products/lamborghini-aventador-s-sv-exhaus",
+    "vehicles": [
+      {
+        "make": "lamborghini",
+        "model": "aventador",
+        "versions": [
+          "LP700",
+          "S",
+          "SV"
+        ]
+      }
+    ]
+  },
+  "lamborghini-aventador-svj-exhaust": {
+    "source": "https://valvetronic.com/products/lamborghini-aventador-svj-exhaust",
+    "vehicles": [
+      {
+        "make": "lamborghini",
+        "model": "aventador",
+        "versions": [
+          "SVJ",
+          "Ultimae"
+        ]
+      }
+    ]
+  },
+  "lamborghini-urus-valved-exhuast-system-2018": {
+    "source": "https://valvetronic.com/products/lamborghini-urus-valved-exhuast-system-2018",
+    "vehicles": [
+      {
+        "make": "lamborghini",
+        "model": "urus",
+        "versions": [
+          "Urus",
+          "Urus S",
+          "Performante"
+        ]
+      }
+    ]
+  },
+  "lamborghini-gallardo-lp-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/lamborghini-gallardo-lp-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "lamborghini",
+        "model": "gallardo",
+        "versions": [
+          "LP560",
+          "LP570 Superleggera"
+        ]
+      }
+    ]
+  },
+  "toyota-supra-a90-valved-exhaust-system": {
+    "source": "https://valvetronic.com/products/toyota-supra-a90-valved-exhaust-system",
+    "vehicles": [
+      {
+        "make": "toyota",
+        "model": "supra",
+        "versions": [
+          "Supra"
+        ],
+        "generation": "a90"
+      },
+      {
+        "make": "toyota",
+        "model": "supra",
+        "versions": [
+          "Supra"
+        ],
+        "generation": "a91"
+      }
+    ]
+  },
+  "dodge-charger-challenger-v8-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/dodge-charger-challenger-v8-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "dodge",
+        "model": "challenger",
+        "versions": [
+          "R/T",
+          "Scat Pack",
+          "Hellcat"
+        ]
+      },
+      {
+        "make": "dodge",
+        "model": "charger",
+        "versions": [
+          "R/T",
+          "Scat Pack",
+          "Hellcat"
+        ]
+      }
+    ]
+  },
+  "chevy-corvette-c8-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/chevy-corvette-c8-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "chevrolet",
+        "model": "c8",
+        "versions": [
+          "Stingray with Performance Exhaust",
+          "E-Ray"
+        ],
+        "generation": "c8"
+      }
+    ]
+  },
+  "chevy-corvette-c8-z06-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/chevy-corvette-c8-z06-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "chevrolet",
+        "model": "c8",
+        "versions": [
+          "Z06"
+        ],
+        "generation": "c8"
+      }
+    ]
+  },
+  "bmw-alpina-xb7-x7-m50i-valved-sport-exhaust-system": {
+    "source": "https://valvetronic.com/products/bmw-alpina-xb7-x7-m50i-valved-sport-exhaust-system",
+    "vehicles": [
+      {
+        "make": "bmw",
+        "model": "x7",
+        "generation": "g07",
+        "versions": [
+          "M50i",
+          "M60i"
+        ]
+      },
+      {
+        "make": "bmw",
+        "model": "xb7",
+        "generation": "g07",
+        "versions": [
+          "Alpina XB7"
+        ]
+      }
+    ]
+  }
+}

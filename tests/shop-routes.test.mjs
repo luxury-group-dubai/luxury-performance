@@ -52,3 +52,9 @@ test('CAPRISTO generation and version survive category and sort links', () => {
   assert.equal(url.searchParams.get('category'), 'Exhaust');
   assert.equal(url.searchParams.get('sort'), 'price-up');
 });
+
+test('Valvetronic legacy model aliases resolve to canonical models and retain selections', () => {
+  assert.equal(shopBrandHref('valvetronic', { make: 'bmw', model: 'm240', generation: 'g42', fit: 'g42_m240i' }),
+    '/shop/valvetronic/bmw/m240i?fit=g42_m240i&generation=g42');
+  assert.equal(shopBrandHref('valvetronic', { make: 'mercedes', model: 'g63' }), '/shop/valvetronic/mercedes/g-class');
+});

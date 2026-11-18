@@ -21,8 +21,9 @@ import { brandMakes, brandVehicleName, previewBrandPath } from '../shop/brand-ca
 import { shopBrandHref } from '@/lib/shop/routes';
 import styles from '../novitec-shop/preview.module.css';
 import own from './shop-preview.module.css';
-import { CapristoFitmentPicker } from './capristo-fitment-picker';
-import { capristoFitment, capristoFitmentOptions } from '@/lib/shop/capristo-fitment';
+import { VehicleVersionPicker } from './vehicle-version-picker';
+import { capristoFitmentOptions } from '@/lib/shop/capristo-fitment';
+import { valvetronicFitmentOptions } from '@/lib/shop/valvetronic-fitment';
 
 type Car = { make: string; marque: string; model: string; name: string; count: number; fit?: string; body?: string };
 const matches = (value: string, query: string) => query.toLowerCase().trim().split(/\s+/).every(word => value.toLowerCase().includes(word));
@@ -47,11 +48,14 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
   const techart = brand === 'techart';
   const fit = params.get('fit') || undefined;
   const body = params.get('body') || undefined;
-  const capristo = brand === 'capristo';
-  const capristoVersion = capristo && fit && make && selected ? capristoFitment(fit, make.key, selected.model) : undefined;
-  const capristoGeneration = params.get('generation') || capristoVersion?.generation;
-  const modelProducts = capristo && make && selected ? filterProducts(products, { brand, make: make.key, model: selected.model }) : [];
-  const capristoGenerationLabel = capristo && make && selected ? capristoFitmentOptions(modelProducts, make.key, selected.model).find(option => option.generation === capristoGeneration)?.generationLabel : undefined;
+  const hasVehicleFitments = brand === 'capristo' || brand === 'valvetronic';
+  const modelProducts = hasVehicleFitments && make && selected ? filterProducts(products, { brand, make: make.key, model: selected.model }) : [];
+  const fitmentOptions = make && selected ? brand === 'capristo' ? capristoFitmentOptions(modelProducts, make.key, selected.model)
+    : brand === 'valvetronic' ? valvetronicFitmentOptions(modelProducts, make.key, selected.model) : [] : [];
+  const selectedFitment = fitmentOptions.find(option => option.key === fit);
+  const vehicleGeneration = params.get('generation') || selectedFitment?.generation;
+  const generations = [...new Map(fitmentOptions.filter(option => option.generation).map(option => [option.generation!, option.generationLabel!])).entries()];
+  const generationLabel = fitmentOptions.find(option => option.generation === vehicleGeneration)?.generationLabel;
   const porscheOptions = useMemo(() => techart ? {
     '911': vehicleOptions(filterProducts(products, { brand, make: 'porsche', model: '911' })),
     cayenne: cayenneOptions(filterProducts(products, { brand, make: 'porsche', model: 'cayenne' })),
@@ -60,12 +64,12 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
   const selection = techartSelection({ brand, model: porscheModel, fit, body });
   const validPorsche = porscheModel && porscheOptions?.[porscheModel].some(generation => generation.bodies.some(style => style.key === body && style.choices.some(choice => choice.fit === fit)));
   const active = !choosing && (!techart || validPorsche) ? selected : undefined;
-  const activeName = active && selection?.body ? selection.model === '911' ? vehicleName(selection.fit, selection.body) : cayenneName(selection.fit, selection.body) : active && capristo ? [active.name, capristoGenerationLabel, capristoVersion?.version].filter(Boolean).join(' / ') : active?.name;
+  const activeName = active && selection?.body ? selection.model === '911' ? vehicleName(selection.fit, selection.body) : cayenneName(selection.fit, selection.body) : active && hasVehicleFitments ? [active.name, generationLabel, selectedFitment?.version].filter(Boolean).join(' / ') : active?.name;
   const accessories = params.get('view') === 'accessories';
   const unassigned = products.filter(product => !tagsFor(product, 'make').length);
   const category = params.get('category') || undefined;
   const sort = params.get('sort') || undefined;
-  const filters: Filters = { brand, ...(active ? { make: active.make, model: active.model, body, ...(techart ? { fit, generation: techartGeneration(fit) } : capristo ? { fit, generation: capristoGeneration } : {}) } : {}), category, sort };
+  const filters: Filters = { brand, ...(active ? { make: active.make, model: active.model, body, ...(techart ? { fit, generation: techartGeneration(fit) } : hasVehicleFitments ? { fit, generation: vehicleGeneration } : {}) } : {}), category, sort };
   const candidates = accessories ? unassigned : active ? filterProducts(products, { ...filters, category: undefined, sort: undefined }) : [];
   const scoped = filterBodyProducts(candidates, techart ? selection : undefined);
   const review = techart && selection?.body ? candidates.filter(product => vehicleBodyMatch(product, selection) === 'review') : [];
@@ -75,6 +79,7 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
   });
   const shown = filterProducts(scoped, accessories ? { category, sort } : filters);
   const browsing = !!active || accessories;
+  const generationTabs = hasVehicleFitments && !!active && !accessories && generations.length > 0;
   function go(values: Filters & { choose?: string; view?: string }) {
     const query = shopBrandHref(brand, values);
     setSearch(''); setSearchOpen(false);
@@ -119,10 +124,26 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
           <button className={styles.change} onClick={() => go({ make: active.make, ...(techart ? { model: active.model, fit, body } : {}), choose: '1' })}><RotateCcw size={15} />Change car</button>
         </div>}
       </div>
-      {browsing && <div className={styles.toolbar}><nav className={styles.categories} aria-label="Product categories"><button aria-pressed={!category} onClick={() => go({ ...filters, view: accessories ? 'accessories' : undefined, category: undefined })}>All parts</button>{categories.map(name => <button key={name} aria-pressed={category === name} onClick={() => go({ ...filters, view: accessories ? 'accessories' : undefined, category: name })}>{name}</button>)}</nav><div className={styles.sortControl}><CatalogChoice variant="sort" label="Sort parts" value={sort || ''} options={[["", "Default"], ["price-up", "Price: low to high"], ["price-down", "Price: high to low"], ["name", "Name: A–Z"]]} onChange={value => go({ ...filters, view: accessories ? 'accessories' : undefined, sort: value || undefined })}><ArrowDownWideNarrow size={18} /><span>Sort</span></CatalogChoice></div></div>}
+      {browsing && <div className={styles.toolbar}>
+        {generationTabs && active ? <nav className={`${styles.categories} ${own.generationTabs}`} aria-label="Vehicle generation">
+          <button aria-pressed={!vehicleGeneration} onClick={() => go({ make: active.make, model: active.model, sort })}>All generations</button>
+          {generations.map(([key, name]) => <button key={key} aria-pressed={vehicleGeneration === key}
+            onClick={() => go({ make: active.make, model: active.model, generation: key, sort })}>{name}</button>)}
+        </nav> : categories.length > 1 ? <nav className={styles.categories} aria-label="Product categories">
+          <button aria-pressed={!category} onClick={() => go({ ...filters, view: accessories ? 'accessories' : undefined, category: undefined })}>All parts</button>
+          {categories.map(name => <button key={name} aria-pressed={category === name} onClick={() => go({ ...filters, view: accessories ? 'accessories' : undefined, category: name })}>{name}</button>)}
+        </nav> : null}
+        <div className={`${styles.sortControl} ${own.toolbarChoices}`}>
+          {generationTabs && categories.length > 1 && <CatalogChoice variant="filter" label="Product category" value={category || ''}
+            options={[['', 'All parts'], ...categories.map(name => [name, name] as const)]}
+            onChange={value => go({ ...filters, category: value || undefined })}><span>{category || 'All parts'}</span></CatalogChoice>}
+          <CatalogChoice variant="sort" label="Sort parts" value={sort || ''} options={[["", "Default"], ["price-up", "Price: low to high"], ["price-down", "Price: high to low"], ["name", "Name: A–Z"]]}
+            onChange={value => go({ ...filters, view: accessories ? 'accessories' : undefined, sort: value || undefined })}><ArrowDownWideNarrow size={18} /><span>Sort</span></CatalogChoice>
+        </div>
+      </div>}
     </header>
-    {capristo && active && !accessories && <section className={own.fitmentSection} aria-label="Capristo generation and version">
-      <CapristoFitmentPicker products={modelProducts} make={active.make} model={active.model} generation={capristoGeneration} fit={fit}
+    {hasVehicleFitments && active && !accessories && fitmentOptions.some(option => option.generation === vehicleGeneration) && <section className={own.fitmentSection} aria-label={`${supplier.name} generation and version`}>
+      <VehicleVersionPicker versions={fitmentOptions} brand={supplier.name} generation={vehicleGeneration} fit={fit}
         onChange={(generation, fit) => go({ make: active.make, model: active.model, generation, fit, sort })} />
     </section>}
     {!browsing ? <section className={`${styles.picker}${!porscheModel ? ` ${own.manufacturerPicker}` : ''}`} aria-label="Choose your car"><div className={styles.pickerTitle}><span>{porscheModel ? 'Select your generation, body style and trim' : make ? 'Select a model' : 'Select a manufacturer'}</span>{!!unassigned.length && <button onClick={() => go({ view: 'accessories' })}>Accessories & controls</button>}</div>

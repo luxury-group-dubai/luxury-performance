@@ -37,3 +37,7 @@
 .fitmentOptions button[aria-pressed=true] { background: #171819; border-color: #171819; color: #fff; }
 .fitmentOptions small { font-size: 10px; opacity: .7; }
 @media(max-width:700px) { .fitmentOptions button { flex: 1 1 140px; } }
+
+.generationTabs { flex-wrap: wrap; overflow: visible; gap: 0 24px; }
+.toolbarChoices { display: flex; gap: 16px; margin-left: auto; }
+@media(max-width:700px) { .generationTabs { gap: 0 18px; } .toolbarChoices { gap: 8px; } }
