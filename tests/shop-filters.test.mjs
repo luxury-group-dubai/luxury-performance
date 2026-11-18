@@ -183,3 +183,34 @@ test('changing TECHART generation clears fitment and body, and clearing a legacy
   assert.equal(next.body, undefined);
   assert.equal(updateFilters(next, { model: 'cayenne' }).generation, undefined);
 });
+
+const { capristoFitment, capristoFitmentOptions } = load(resolve(root, 'lib/shop/capristo-fitment.ts'));
+const capristoPart = (id, fits, model = '911') => ({
+  ...programmePart(id), vendor: 'Capristo',
+  tags: ['brand_capristo', 'make_porsche', 'model_' + model, ...fits.map(fit => 'fit_' + fit)],
+});
+test('CAPRISTO filters preserve exact generation, version and OPF requirements', () => {
+  const parts = [
+    capristoPart('carrera', ['992_1_carrera_s']),
+    capristoPart('gt3', ['992_1_gt3', '992_1_gt3_touring']),
+    capristoPart('race', ['992_2_gt3']),
+    capristoPart('opf', ['991_2_carrera_with_opf']),
+    capristoPart('no-opf', ['991_2_carrera_without_opf']),
+  ];
+  const scope = { brand: 'capristo', make: 'porsche', model: '911' };
+  assert.equal(filterProducts(parts, scope).length, 5);
+  assert.deepEqual(filterProducts(parts, { ...scope, generation: '992_1' }).map(p => p.id), ['carrera', 'gt3']);
+  assert.deepEqual(filterProducts(parts, { ...scope, generation: '992_1', fit: '992_1_gt3' }).map(p => p.id), ['gt3']);
+  assert.equal(filterProducts(parts, { ...scope, generation: '992_2', fit: '992_1_gt3' }).length, 0);
+  assert.deepEqual(filterProducts(parts, { ...scope, fit: '991_2_carrera_without_opf' }).map(p => p.id), ['no-opf']);
+});
+test('CAPRISTO options parse generations and exclude unrelated model tags on shared parts', () => {
+  assert.equal(capristoFitment('992_1_gt3_rs', 'porsche', '911').version, 'GT3 RS');
+  assert.equal(capristoFitment('987_2_euro_5', 'porsche', 'boxster').generationLabel, '987.2');
+  assert.equal(capristoFitment('g82_competition', 'bmw', 'm3'), undefined);
+  assert.equal(capristoFitment('rs5_b9_coupe', 'audi', 'rs4'), undefined);
+  assert.equal(capristoFitment('gt63_e_performance_c192', 'mercedes', 'gt63').generation, 'c192');
+  assert.equal(capristoFitment('f8_spider', 'ferrari', 'f8').version, 'Spider');
+  const shared = capristoPart('shared', ['992_1_gt3', '992_1_gt3_rs', '992_1_gt3']);
+  assert.equal(capristoFitmentOptions([shared], 'porsche', '911')[0].count, 1);
+});

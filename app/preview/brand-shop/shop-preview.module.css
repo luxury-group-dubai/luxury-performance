@@ -27,3 +27,13 @@
 .makeCard:focus-visible > svg { opacity:1; }
 @media(max-width:1100px) { .makeGrid { grid-template-columns:repeat(3,minmax(0,1fr)); }.modelGrid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:700px) { .wordmark { width:145px; }.makeGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }.makeCard { min-height:100px; padding:20px; }.makeCard > span { font-size:14px; }.modelGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }.modelCard h2 { font-size:21px; }.changeOnly { margin-top:8px; } }
+
+.fitmentSection { padding: 28px var(--gutter) 32px; }
+.fitmentPicker { display: grid; gap: 24px; }
+.fitmentPicker fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.fitmentPicker legend { margin-bottom: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.fitmentOptions { display: flex; flex-wrap: wrap; gap: 8px; }
+.fitmentOptions button { display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; padding: 12px 16px; border: 1px solid #c7c9ca; background: transparent; color: #252627; font-size: 12px; }
+.fitmentOptions button[aria-pressed=true] { background: #171819; border-color: #171819; color: #fff; }
+.fitmentOptions small { font-size: 10px; opacity: .7; }
+@media(max-width:700px) { .fitmentOptions button { flex: 1 1 140px; } }
