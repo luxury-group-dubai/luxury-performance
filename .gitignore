@@ -1,4 +1,5 @@
 node_modules/
+.luper-data/
 .next/
 .env*
 !.env.example
