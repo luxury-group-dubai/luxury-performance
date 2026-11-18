@@ -1,10 +1,10 @@
 # LXP Luper
 
-**Production paused:** hosted builds show the standalone WhatsApp button, and
-`/api/luper` returns 503 before any catalogue, budget-store or OpenAI request.
-Setting `LUPER_ENABLED=true` does not override this code-level pause. Local
-development retains Luper for continued work. Restore both layout and route gates
-only when the public launch is authorized.
+Hosted builds show Luper only when `LUPER_ENABLED=true`, the OpenAI key, and both
+shared budget-store settings are configured (the native Vercel Upstash variables
+are recognized automatically). Otherwise they show the standalone
+WhatsApp button and reject Luper API calls before contacting any upstream service.
+Local development retains the Luper interface for continued work.
 
 Luper is the website's AI concierge. It answers from `lib/content.ts`,
 `lib/partners.ts` and the existing Shopify catalog, remembers visitor-provided
@@ -110,7 +110,8 @@ running before removing only that lock directory.
   `store: false`; this does not override OpenAI's other data retention policies.
 - Production requires a shared Upstash-compatible Redis REST database with
   atomic `EVAL`, supplied through `LUPER_REDIS_REST_URL` and
-  `LUPER_REDIS_REST_TOKEN`. Use a durable database with eviction disabled. The
+  `LUPER_REDIS_REST_TOKEN`, or the Vercel integration’s `KV_REST_API_URL` and
+  `KV_REST_API_TOKEN`. Use a durable database with eviction disabled. The
   non-expiring `luper:launch:v1:reserved-cents` key must not be deleted or reset.
   Do not use separate budget databases for instances sharing this allowance.
 - Set `LUPER_SITE_ORIGIN` to the exact website origin (no trailing slash), then

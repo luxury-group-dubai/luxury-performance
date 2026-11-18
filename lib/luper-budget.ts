@@ -2,6 +2,7 @@ import { createHmac } from 'node:crypto';
 import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { LUPER_LAUNCH_CENTS } from './luper';
+import { luperRedisConfig } from './luper-availability';
 
 type Decision = 'allowed' | 'rate_limited' | 'budget_exhausted';
 type Ledger = { reservedCents: number; visitors: Record<string, { start: number; count: number }> };
@@ -40,8 +41,7 @@ export async function reserveLuperRequest(request: Request): Promise<Decision> {
     ? request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'shared'
     : 'shared';
   const visitor = createHmac('sha256', process.env.OPENAI_API_KEY!).update(address).digest('hex');
-  const url = process.env.LUPER_REDIS_REST_URL;
-  const token = process.env.LUPER_REDIS_REST_TOKEN;
+  const { url, token } = luperRedisConfig();
   if (url && token) {
     if (new URL(url).protocol !== 'https:') throw new Error('Luper ledger requires HTTPS');
     const response = await fetch(url, {

@@ -671,3 +671,25 @@ test('Valvetronic model aliases still resolve after canonical shop family groupi
     assert.ok(found.directBrowse.some(card => card.href === expected), `${query}: ${JSON.stringify(found.directBrowse)}`);
   }
 });
+
+
+test('production Luper requires its switch, API key and shared budget store together', () => {
+  const { isLuperEnabled } = load('lib/luper-availability.ts');
+  const configured = { NODE_ENV: 'production', LUPER_ENABLED: 'true', OPENAI_API_KEY: 'test-only', LUPER_REDIS_REST_URL: 'https://ledger.test', LUPER_REDIS_REST_TOKEN: 'test-only' };
+  assert.equal(isLuperEnabled(configured), true);
+  for (const key of ['LUPER_ENABLED', 'OPENAI_API_KEY', 'LUPER_REDIS_REST_URL', 'LUPER_REDIS_REST_TOKEN']) {
+    assert.equal(isLuperEnabled({ ...configured, [key]: '' }), false, key);
+  }
+  assert.equal(isLuperEnabled({ ...configured, LUPER_ENABLED: 'false' }), false);
+  assert.equal(isLuperEnabled({ NODE_ENV: 'development', LUPER_ENABLED: 'true', OPENAI_API_KEY: 'test-only' }), true);
+});
+
+
+test('native Vercel Upstash settings enable the same guarded ledger without duplicate secrets', () => {
+  const { isLuperEnabled, luperRedisConfig } = load('lib/luper-availability.ts');
+  const native = { NODE_ENV: 'production', LUPER_ENABLED: 'true', OPENAI_API_KEY: 'test-only', KV_REST_API_URL: 'https://ledger.test', KV_REST_API_TOKEN: 'native-test' };
+  assert.equal(isLuperEnabled(native), true);
+  assert.deepEqual(luperRedisConfig(native), { url: 'https://ledger.test', token: 'native-test' });
+  assert.equal(isLuperEnabled({ ...native, KV_REST_API_TOKEN: '' }), false);
+  assert.equal(isLuperEnabled({ ...native, LUPER_REDIS_REST_URL: 'https://different.test' }), false);
+});

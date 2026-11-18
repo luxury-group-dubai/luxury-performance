@@ -11,6 +11,7 @@ import 'lenis/dist/lenis.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { LuperWidget } from '@/components/luper-widget';
+import { isLuperEnabled } from '@/lib/luper-availability';
 import { WhatsAppWidget } from '@/components/whatsapp-widget';
 import { PageScrollbar } from '@/components/page-scrollbar';
 import './globals.css';
@@ -41,5 +42,5 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         gtag('js', new Date());
       ` }} />
     </head>
-    <body id="top"><script dangerouslySetInnerHTML={{ __html: selectorLogoBootstrap }} /><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><PageScrollbar /><SiteMotion /><main id="main">{children}</main><Footer />{process.env.NODE_ENV === 'development' ? <LuperWidget /> : <WhatsAppWidget />}</div></CartProvider><Analytics /><SpeedInsights /></body></html>;
+    <body id="top"><script dangerouslySetInnerHTML={{ __html: selectorLogoBootstrap }} /><script dangerouslySetInnerHTML={{ __html: introBootstrap }} /><CartProvider><BrandIntro /><div id="site-shell"><Header /><SmoothScroll /><PageScrollbar /><SiteMotion /><main id="main">{children}</main><Footer />{(process.env.NODE_ENV === 'development' || isLuperEnabled()) ? <LuperWidget /> : <WhatsAppWidget />}</div></CartProvider><Analytics /><SpeedInsights /></body></html>;
 }
