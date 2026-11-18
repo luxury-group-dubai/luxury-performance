@@ -1,4 +1,5 @@
 import { luperInstructions } from '@/lib/luper-knowledge';
+import { isLuperEnabled } from '@/lib/luper-availability';
 import { LUPER_MAX_OUTPUT_TOKENS, LUPER_MODEL, parseLuperMessages } from '@/lib/luper';
 import { reserveLuperRequest } from '@/lib/luper-budget';
 import { encodeLuperEvent, luperResponseStream } from '@/lib/luper-stream';
@@ -52,8 +53,7 @@ export async function POST(request: Request) {
   try { body = await boundedBody(request); messages = parseLuperMessages(body.messages); }
   catch { return reply({ error: 'Please shorten your message and try again.' }, 400); }
   if (!messages) return reply({ error: 'Please start a new chat or shorten your message.' }, 400);
-  // Hosted deployments stay paused regardless of keys or the enable flag.
-  if (process.env.NODE_ENV === 'production' || process.env.LUPER_ENABLED !== 'true' || !process.env.OPENAI_API_KEY) return reply({ error: unavailable }, 503);
+  if (!isLuperEnabled()) return reply({ error: unavailable }, 503);
   // Bound knowledge too, so future editorial changes cannot silently raise costs.
   if (Buffer.byteLength(luperInstructions, 'utf8') > 12000) return reply({ error: unavailable }, 503);
   const abort = new AbortController();
