@@ -13,11 +13,15 @@
 }
 .intro-dark .intro-grid > div { max-width: 760px; }
 .intro-dark .intro-copy { display: block; }
+.intro-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 36px; }
+.intro-brand .intro-story { align-self: center; }
+.intro-story { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 48px; padding: 16px 22px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.intro-story:hover { background: var(--accent-hover, #b80016); }
 .intro-dark .intro-copy .arrow-link { margin: 30px 0 0; }
 .intro-dark .intro-lettering {
   width: 100%;
   height: auto;
-  margin-top: 24px;
+  margin-top: 0;
   opacity: .1;
   pointer-events: none;
 }
@@ -26,6 +30,8 @@
   line-height: 1.16;
 }
 @media(max-width:900px){.intro{padding-top:80px;padding-bottom:80px}
+  .intro-brand { margin-top: 30px; }
+  .intro-brand .intro-story { align-self: flex-start; }
   .intro-dark .intro-grid { display: block; }
   .intro-dark .intro-lettering { display: none; }
   #home-welcome-title { font-size: 5.3vw; }
@@ -62,7 +68,7 @@
     }
   }
 
-  .intro-reveal :is(.eyebrow, #home-welcome-title, .intro-body p, .arrow-link) {
+  .intro-reveal :is(.eyebrow, #home-welcome-title, .intro-body p, .intro-story) {
     transition: opacity .65s ease, transform .85s var(--ease-out);
   }
 
@@ -72,7 +78,7 @@
     transition: none;
   }
 
-  .intro-reveal .arrow-link:focus-visible {
+  .intro-reveal .intro-story:focus-visible {
     transition: none;
   }
 }
@@ -82,7 +88,7 @@
     /* Follow the scrolling stack so the lettering can keep rising after the intro pins. */
     .home-intro-stack { view-timeline-name: --home-intro; }
 
-    .intro-dark .intro-lettering {
+    .intro-dark .intro-brand {
       animation: intro-lettering-rise auto linear both;
       animation-timeline: --home-intro;
       animation-range: entry 45% entry 135%;
@@ -90,7 +96,7 @@
 
     @keyframes intro-lettering-rise {
       from { opacity: 0; transform: translateY(clamp(65px, 9vw, 145px)); }
-      to { opacity: .1; transform: none; }
+      to { opacity: 1; transform: none; }
     }
   }
 }

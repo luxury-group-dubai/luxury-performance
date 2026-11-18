@@ -347,7 +347,7 @@ export function PurosangueFilm() {
 
       <div className={styles.controls} data-film-controls>
         <div className={styles.controlTop}>
-          <Link className={styles.enquire} href="/collections/ferrari-purosangue?brand=novitec">Explore NOVITEC Purosangue <ActionArrow size={17} /></Link>
+          <Link className={styles.enquire} href="/shop/novitec/ferrari/purosangue">Explore NOVITEC Purosangue <ActionArrow size={17} /></Link>
         </div>
         <div className={styles.filmProgress} aria-hidden="true"><span /></div>
         <nav className={styles.chapters} aria-label="Transformation chapters">
