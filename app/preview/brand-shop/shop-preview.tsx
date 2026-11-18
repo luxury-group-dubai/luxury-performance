@@ -129,10 +129,10 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
           <button aria-pressed={!vehicleGeneration} onClick={() => go({ make: active.make, model: active.model, sort })}>All generations</button>
           {generations.map(([key, name]) => <button key={key} aria-pressed={vehicleGeneration === key}
             onClick={() => go({ make: active.make, model: active.model, generation: key, sort })}>{name}</button>)}
-        </nav> : <nav className={styles.categories} aria-label="Product categories">
+        </nav> : categories.length > 1 ? <nav className={styles.categories} aria-label="Product categories">
           <button aria-pressed={!category} onClick={() => go({ ...filters, view: accessories ? 'accessories' : undefined, category: undefined })}>All parts</button>
           {categories.map(name => <button key={name} aria-pressed={category === name} onClick={() => go({ ...filters, view: accessories ? 'accessories' : undefined, category: name })}>{name}</button>)}
-        </nav>}
+        </nav> : null}
         <div className={`${styles.sortControl} ${own.toolbarChoices}`}>
           {generationTabs && categories.length > 1 && <CatalogChoice variant="filter" label="Product category" value={category || ''}
             options={[['', 'All parts'], ...categories.map(name => [name, name] as const)]}
