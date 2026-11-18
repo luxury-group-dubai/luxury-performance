@@ -43,3 +43,12 @@ test('stock, vehicle and search legacy links use their production destinations',
   assert.deepEqual(shopPathFilters('/shop/search'), {});
   assert.deepEqual(shopPathFilters('/shop/in-stock'), { view: 'stock' });
 });
+
+test('CAPRISTO generation and version survive category and sort links', () => {
+  const url = new URL(shopBrandHref('capristo', { make: 'porsche', model: '911', generation: '992_1', fit: '992_1_gt3', category: 'Exhaust', sort: 'price-up' }), 'https://example.com');
+  assert.equal(url.pathname, '/shop/capristo/porsche/911');
+  assert.equal(url.searchParams.get('generation'), '992_1');
+  assert.equal(url.searchParams.get('fit'), '992_1_gt3');
+  assert.equal(url.searchParams.get('category'), 'Exhaust');
+  assert.equal(url.searchParams.get('sort'), 'price-up');
+});
