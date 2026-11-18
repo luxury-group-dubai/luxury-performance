@@ -160,8 +160,10 @@ Bare verified range requests return locally without an AI request. The dedicated
 NOVITEC 12Cilindri N-LARGO card opens `/novitec-12cilindri-n-largo#private-enquiry`;
 `1cilindri` is accepted as a spelling correction. That route also bypasses AI.
 
-The 18 November 2026 catalogue snapshot (1,425 products) passed 507 named vehicle,
-version and supplier-route checks across 25 makes and 208 model families. Re-run
+The 18 November 2026 catalogue snapshot (1,425 products) passed 487 named vehicle,
+version and supplier-route checks across 25 makes and 199 model families after
+integrating main’s Capristo/Valvetronic grouping updates. Visitor-facing aliases
+such as G63, C63S, M5CS and M340 still resolve to their canonical shop ranges. Re-run
 against a JSON array of current `CatalogProduct` records with:
 
 ```sh

@@ -14,9 +14,10 @@ function load(relative, overrides = {}, cache = new Map()) {
   if (cache.has(filename)) return cache.get(filename).exports;
   const loaded = { exports: {} };
   cache.set(filename, loaded);
-  const code = ts.transpileModule(readFileSync(filename, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
+  const code = ts.transpileModule(readFileSync(filename, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
   function localRequire(name) {
     if (Object.hasOwn(overrides, name)) return overrides[name];
+    if (name.endsWith('.json')) return JSON.parse(readFileSync(resolve(dirname(filename), name), 'utf8'));
     if (name.startsWith('@/')) return load(`${name.slice(2)}.ts`, overrides, cache);
     if (name.startsWith('.')) return load(resolve(dirname(filename), `${name}.ts`), overrides, cache);
     return require(name);
@@ -327,7 +328,7 @@ test('vehicle coverage comes from actual parts, including aliases but excluding 
     catalogProduct('g63', 'Mercedes G63 exhaust', 'mercedes_benz', 'g63'),
     { ...catalogProduct('toy', 'Jetour T1 scale model', 'jetour', 't1'), vendor: 'Collectibles' },
   ]);
-  assert.deepEqual(vehicles, { mercedes: ['g63'], porsche: ['911'] });
+  assert.deepEqual(vehicles, { mercedes: ['g class', 'g63', 'gclass'], porsche: ['911'] });
   assert.equal(luperVehicleCoverage({ make: 'Jetour', model: 'T1' }, vehicles), 'not_listed');
   assert.equal(luperVehicleCoverage({ make: 'Porsche', model: '944' }, vehicles), 'not_listed');
   assert.equal(luperVehicleCoverage({ make: 'Porsche', model: '911 Carrera' }, vehicles), 'listed');
@@ -654,4 +655,19 @@ test('a changed vehicle does not inherit the previous supplier or hide other bra
   const found = catalog.rankLuperCatalog(products, [{ role: 'user', content: 'NOVITEC 812' }, { role: 'user', content: 'F8' }],
     { ...shopping.emptyLuperProfile(), make: 'Ferrari', model: '812' }, '');
   assert.equal(found.directBrowse[0].href, '/shop/vehicles/ferrari/f8');
+});
+
+
+test('Valvetronic model aliases still resolve after canonical shop family grouping', () => {
+  const cases = [
+    ['mercedes_benz', 'g63', 'Mercedes-Benz G63', '/shop/vehicles/mercedes-benz/g-class'],
+    ['mercedes_benz', 'c63s', 'Mercedes-Benz C63S', '/shop/vehicles/mercedes-benz/c63'],
+    ['bmw', 'm5cs', 'BMW M5CS', '/shop/vehicles/bmw/m5'],
+    ['bmw', 'm340', 'BMW M340', '/shop/vehicles/bmw/m340i'],
+  ];
+  for (const [make, model, query, expected] of cases) {
+    const products = [catalogProduct(model, `${query} exhaust`, make, model)];
+    const found = catalog.rankLuperCatalog(products, [{ role: 'user', content: query }], shopping.emptyLuperProfile(), '');
+    assert.ok(found.directBrowse.some(card => card.href === expected), `${query}: ${JSON.stringify(found.directBrowse)}`);
+  }
 });

@@ -1,6 +1,7 @@
 import { prepareBrandCatalogue } from '@/app/preview/shop/brand-catalogue';
 import { buildVehicleChoices } from '@/app/preview/shop/vehicle-data';
-import { label, suppliers } from './shop/taxonomy';
+import { label, suppliers, supplierOf, tagsFor } from './shop/taxonomy';
+import { valvetronicModelKey } from './shop/valvetronic-models';
 import { shopBrandHref, vehicleBrowseHref } from './shop/routes';
 import { normalizeSearch } from './shop/search';
 import type { CatalogProduct } from './shop/types';
@@ -27,12 +28,25 @@ export function luperVehicleIndex(raw: CatalogProduct[]) {
   if (cached) return cached;
   const products = prepareBrandCatalogue(raw);
   const choices = buildVehicleChoices(products);
+  // Keep visitor-facing names when the shop groups their range under a family.
+  const familyAliases = new Map<string, Set<string>>();
+  for (const [index, product] of raw.entries()) {
+    if (supplierOf(product) !== 'valvetronic') continue;
+    for (const make of tagsFor(products[index], 'make')) for (const model of tagsFor(product, 'model')) {
+      const family = valvetronicModelKey(model);
+      if (family === model) continue;
+      const key = `${make}:${family}`;
+      if (!familyAliases.has(key)) familyAliases.set(key, new Set());
+      familyAliases.get(key)!.add(model);
+    }
+  }
   const destinations: LuperVehicleDestination[] = [];
   for (const [make, models] of Object.entries(choices)) for (const model of models) {
     const add = (choice: VehicleChoice, brand?: string, href?: string) => {
       const brandName = suppliers.find(supplier => supplier.slug === brand)?.name;
       const parentAliases = aliasesFor([model.slug, model.name]);
-      const aliases = aliasesFor([choice.name, `${choice.slug} ${choice.body || ''}`])
+      const aliases = aliasesFor([choice.name, `${choice.slug} ${choice.body || ''}`,
+        ...(!choice.body ? familyAliases.get(`${make}:${choice.slug}`) || [] : [])])
         .filter(alias => !choice.body || !parentAliases.includes(alias));
       const names = aliases.flatMap(alias => [alias, ...vehicleMakeAliases(make).map(name => `${name} ${alias}`)]);
       const phrases = brand ? aliasesFor([brand, brandName || brand]).flatMap(name => names.map(phrase => `${name} ${phrase}`)) : names;
