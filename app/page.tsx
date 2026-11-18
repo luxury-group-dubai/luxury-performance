@@ -1,10 +1,12 @@
 import './home-intro.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
+import { ActionArrow } from '@/components/action-arrow';
 import { HomeHero } from '@/components/home/home-hero';
 import { PartnerMarquee } from '@/components/home/partner-marquee';
 import './home-tokens.css';
-import { ArrowLink, Eyebrow } from '@/components/ui';
+import { Eyebrow } from '@/components/ui';
 import { PurosangueFilm } from '@/components/purosangue/film';
 import { NovitecModels } from '@/components/home/novitec-models';
 import { NovitecFeatureFilm } from '@/components/home/novitec-feature-film';
@@ -44,7 +46,7 @@ export default function Home() {
       <StickyIntro>
         <PartnerMarquee />
         <section className="intro intro-dark section-pad" aria-labelledby="home-welcome-title">
-          <Reveal className="intro-reveal" itemSelector=".eyebrow, #home-welcome-title, .intro-body p, .arrow-link">
+          <Reveal className="intro-reveal" itemSelector=".eyebrow, #home-welcome-title, .intro-body p, .intro-story">
             <Eyebrow dark>Luxury Performance / Dubai</Eyebrow>
             <div className="intro-grid">
               <div>
@@ -54,10 +56,12 @@ export default function Home() {
                     <p>Discover genuine performance parts and upgrades for supercars and luxury vehicles, with products from NOVITEC, TECHART, Valvetronic Designs and other specialist brands.</p>
                     <p>From carbon-fibre body kits and aerodynamics to exhaust systems, forged wheels and suspension, Luxury Performance helps you find the right parts for your car, with guidance on fitment and installation.</p>
                   </div>
-                  <ArrowLink href="/about" light>Our story</ArrowLink>
                 </div>
               </div>
-              <Image className="intro-lettering" src="/brand/lxp-white.svg" alt="" aria-hidden="true" width={1088} height={280} />
+              <div className="intro-brand">
+                <Image className="intro-lettering" src="/brand/lxp-white.svg" alt="" aria-hidden="true" width={1088} height={280} />
+                <Link className="intro-story" href="/about">Our story <ActionArrow /></Link>
+              </div>
             </div>
           </Reveal>
         </section>
