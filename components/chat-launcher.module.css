@@ -1,0 +1,9 @@
+.anchor { position:fixed; right:max(24px,env(safe-area-inset-right)); bottom:calc(24px + env(safe-area-inset-bottom,0px)); z-index:70; }
+.launcher { display:flex; align-items:center; justify-content:center; width:60px; height:60px; padding:0; background:#151515; color:#fff; border:1px solid #ffffff35; border-radius:50%; box-shadow:0 6px 24px #0003,inset 0 1px 0 #ffffff12; }
+.launcher:hover { border-color:#ffffff70; }
+:global(html[data-lxp-intro]) .anchor,:global(body:has(.site-header.menu-is-open)) .anchor,:global(body:has(dialog[open])) .anchor { display:none; }
+@media(max-width:600px) {
+  .anchor { right:max(16px,env(safe-area-inset-right)); bottom:calc(18px + env(safe-area-inset-bottom,0px)); }
+  .launcher { width:56px; height:56px; }
+  .launcher[data-open=true] { visibility:hidden; pointer-events:none; }
+}

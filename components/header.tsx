@@ -17,8 +17,12 @@ import { SocialLinks } from './social-links';
 import { contact } from '@/lib/content';
 import { hasPartnerHeroOverlay } from '@/lib/brand-hero-images';
 import { lockOverlayScroll } from '@/lib/overlay-scroll-lock';
-import { PreviewShopMenu } from './preview-shop-menu';
 import type { PreviewShopTab } from '@/app/preview/shop/navigation';
+
+const PreviewShopMenu = dynamic(() => import('./preview-shop-menu').then(module => module.PreviewShopMenu), {
+  ssr: false,
+  loading: () => <p role="status">Loading shop navigation…</p>,
+});
 
 const VehicleMenu = dynamic(() => import('./vehicle-menu').then(module => module.VehicleMenu), { loading: () => <p role="status">Loading vehicles…</p> });
 
