@@ -58,3 +58,18 @@ test('Valvetronic legacy model aliases resolve to canonical models and retain se
     '/shop/valvetronic/bmw/m240i?fit=g42_m240i&generation=g42');
   assert.equal(shopBrandHref('valvetronic', { make: 'mercedes', model: 'g63' }), '/shop/valvetronic/mercedes/g-class');
 });
+
+test('Valvetronic vehicle links preserve make scopes and untagged range searches', () => {
+  const { valvetronicVehicles, valvetronicVehicleHref } = load(resolve(root, 'lib/valvetronic-vehicles.ts'));
+  for (const vehicle of valvetronicVehicles) {
+    const url = new URL(valvetronicVehicleHref(vehicle), 'https://example.com');
+    assert.equal(shopPathFilters(url.pathname).brand, 'valvetronic');
+    if (vehicle.make) {
+      assert.equal(shopPathFilters(url.pathname).make, vehicle.make);
+      assert.equal(url.search, '');
+    } else {
+      assert.equal(url.pathname, '/shop/valvetronic');
+      assert.equal(url.searchParams.get('q'), vehicle.search);
+    }
+  }
+});

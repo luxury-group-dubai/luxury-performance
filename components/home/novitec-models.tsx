@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -31,7 +31,7 @@ const models: Model[] = [
   { name: 'SF90', make: 'Ferrari', image: additionalModelGalleries['sf90'][0].image, collection: 'ferrari-sf90', preview: additionalModelGalleries['sf90'], previewEffect: 'fade' },
   { name: '12Cilindri', make: 'Ferrari', image: additionalModelGalleries['12cilindri'][0].image, collection: 'ferrari-12cilindri', preview: additionalModelGalleries['12cilindri'], previewEffect: 'fade' },
   { name: 'Urus', make: 'Lamborghini', image: additionalModelGalleries['urus'][0].image, collection: 'lamborghini-urus', preview: additionalModelGalleries['urus'], previewEffect: 'fade' },
-  { name: '812', make: 'Ferrari', image: additionalModelGalleries['812'][0].image, href: '/shop?brand=novitec&make=ferrari&q=Ferrari+812', preview: additionalModelGalleries['812'], previewEffect: 'fade' },
+  { name: '812', make: 'Ferrari', image: additionalModelGalleries['812'][0].image, href: '/shop/novitec/ferrari?q=Ferrari+812', preview: additionalModelGalleries['812'], previewEffect: 'fade' },
   { name: 'F8', make: 'Ferrari', image: additionalModelGalleries['f8'][0].image, collection: 'ferrari-f8', preview: additionalModelGalleries['f8'], previewEffect: 'fade' },
   { name: '750S', make: 'McLaren', image: additionalModelGalleries['750s'][0].image, collection: 'mclaren-750s', preview: additionalModelGalleries['750s'], previewEffect: 'fade' },
   { name: 'Cullinan', make: 'Rolls-Royce', image: additionalModelGalleries['cullinan'][0].image, collection: 'rolls-royce-cullinan', preview: additionalModelGalleries['cullinan'], previewEffect: 'fade' },
@@ -39,6 +39,7 @@ const models: Model[] = [
 ];
 
 export function NovitecModels() {
+  const hintId = useId();
   const rail = useRef<HTMLUListElement>(null);
   const [ends, setEnds] = useState({ start: true, end: false });
   const warmedMedia = useRef(new Set<number>());
@@ -108,13 +109,14 @@ export function NovitecModels() {
         <button type="button" aria-label="Next NOVITEC models" aria-controls="novitec-model-cards" disabled={ends.end} onClick={() => move(1)}><ArrowRight size={20} strokeWidth={1.5} aria-hidden="true"/></button>
       </div>
     </div>
+    <p id={hintId} className="sr-only">Move left or right across the card to preview photos. With the photo link focused, use the left and right arrow keys; Escape returns to the first photo.</p>
     <ul ref={rail} id="novitec-model-cards" className={styles.rail} aria-label="NOVITEC vehicle programmes">
-      <li className={styles.item}><Link href="/shop?brand=novitec" className={`${styles.card} ${styles.all}`} aria-label="Shop all NOVITEC parts" onPointerEnter={() => allowMedia(0)} onFocus={() => allowMedia(0)}>
+      <li className={styles.item}><Link href="/shop/novitec" className={`${styles.card} ${styles.all}`} aria-label="Shop all NOVITEC parts" onPointerEnter={() => allowMedia(0)} onFocus={() => allowMedia(0)}>
         <div className={styles.image}><DeferredModelImage enabled={media.includes(0)} src="/images/novitec-models/all-novitec-purosangue-esteso-original.jpg" alt="Grey NOVITEC Ferrari Purosangue ESTESO outside NOVITEC headquarters" fallback/></div>
         <div className={styles.caption}><div><h3>All NOVITEC</h3><p>Explore all parts</p></div><ArrowUpRight size={20} strokeWidth={1.5} aria-hidden="true"/></div>
       </Link></li>
       {models.map((model, index) => <li key={model.name} className={styles.item}>
-        {model.preview ? <ModelPreviewCard href={model.href || legacyCollectionHref(model.collection || '', { brand: 'novitec' })} name={model.name} make={model.make} images={model.preview} effect={model.previewEffect} mediaReady={media.includes(index + 1)} onMediaIntent={() => allowMedia(index + 1)}/> : <Link href={model.href || legacyCollectionHref(model.collection || '', { brand: 'novitec' })} className={styles.card} aria-label={`Shop NOVITEC for ${model.make} ${model.name}`} onPointerEnter={() => allowMedia(index + 1)} onFocus={() => allowMedia(index + 1)}>
+        {model.preview ? <ModelPreviewCard hintId={hintId} href={model.href || legacyCollectionHref(model.collection || '', { brand: 'novitec' })} name={model.name} make={model.make} images={model.preview} effect={model.previewEffect} mediaReady={media.includes(index + 1)} onMediaIntent={() => allowMedia(index + 1)}/> : <Link href={model.href || legacyCollectionHref(model.collection || '', { brand: 'novitec' })} className={styles.card} aria-label={`Shop NOVITEC for ${model.make} ${model.name}`} onPointerEnter={() => allowMedia(index + 1)} onFocus={() => allowMedia(index + 1)}>
           <div className={styles.image}><DeferredModelImage enabled={media.includes(index + 1)} src={`/images/novitec-models/${model.image}`} alt={`NOVITEC ${model.make} ${model.name}`} fallback/></div>
           <div className={styles.caption}><div><h3>{model.name}</h3><p>{model.make}</p></div><ArrowUpRight size={20} strokeWidth={1.5} aria-hidden="true"/></div>
         </Link>}

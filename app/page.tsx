@@ -21,7 +21,7 @@ const homeTitle = 'Luxury Performance | Auto Parts & Upgrades Dubai';
 
 export const metadata: Metadata = {
   title: { absolute: homeTitle },
-  description: 'Shop NOVITEC, TECHART and Valvetronic Designs performance parts for the UAE & GCC. Exhausts, carbon fibre, forged wheels and fitment support from Dubai.',
+  description: 'Shop exhausts, carbon fibre, wheels and suspension from NOVITEC, TECHART and Valvetronic Designs. Dubai fitment support for the UAE & GCC.',
   alternates: { canonical: '/' },
   openGraph: {
     title: homeTitle,

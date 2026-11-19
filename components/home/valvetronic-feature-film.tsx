@@ -84,7 +84,7 @@ export function ValvetronicFeatureFilm() {
       <h3 id="valvetronic-film-title">Behind<br />the sound.</h3>
       <p className={styles.description}>A quick look at Valvetronic exhausts with Ahmed Amwell.</p>
       <p className={styles.credit}>With Ahmed Amwell</p>
-      <Link href="/shop?brand=valvetronic" className={`${styles.cta} action-secondary`}>Explore Valvetronic exhausts <ActionArrow size={17} strokeWidth={1.5} /></Link>
+      <Link href="/shop/valvetronic" className={`${styles.cta} action-secondary`}>Explore Valvetronic exhausts <ActionArrow size={17} strokeWidth={1.5} /></Link>
     </div>
     <div className={styles.media}>
       <div className={styles.player}>
