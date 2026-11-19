@@ -1,5 +1,6 @@
 import { ActionArrow } from '@/components/action-arrow';
 import { BrandLogo } from './brand-logo';
+import { HomeLink } from './home-link';
 import Link from 'next/link';
 import { contact } from '@/lib/content';
 import { SocialLinks } from './social-links';
@@ -9,7 +10,7 @@ export function Footer() {
   return <footer className="site-footer">
     <div className={styles.main}>
       <div className={styles.identity}>
-        <Link href="/#top" className="footer-brand" aria-label="Luxury Performance home"><BrandLogo /></Link>
+        <HomeLink className="footer-brand" aria-label="Luxury Performance home"><BrandLogo /></HomeLink>
         <p className={styles.motto}>Beyond Ordinary.</p>
       </div>
       <div className={styles.group}>
