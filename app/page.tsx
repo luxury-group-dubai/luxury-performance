@@ -18,15 +18,16 @@ import { Closing } from '@/components/closing';
 import { defaultSocialImage } from '@/lib/social-images';
 
 const homeTitle = 'Luxury Performance | Auto Parts & Upgrades Dubai';
+const homeDescription = 'Shop exhausts, body kits, wheels and suspension from leading brands, including NOVITEC. Dubai fitment support for the UAE & GCC.';
 
 export const metadata: Metadata = {
   title: { absolute: homeTitle },
-  description: 'Shop exhausts, carbon fibre, wheels and suspension from NOVITEC, TECHART and Valvetronic Designs. Dubai fitment support for the UAE & GCC.',
+  description: homeDescription,
   alternates: { canonical: '/' },
   openGraph: {
     title: homeTitle,
     siteName: 'Luxury Performance',
-    description: 'Discover NOVITEC, TECHART and Valvetronic Designs with Luxury Performance. Performance parts and vehicle fitment advice from Dubai for the UAE & GCC.',
+    description: homeDescription,
     images: [defaultSocialImage],
   },
 };
