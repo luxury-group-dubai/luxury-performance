@@ -178,8 +178,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
       if (Math.abs(dx) > 50 && Math.abs(point.clientY - start.y) < Math.abs(dx) * .6) select(((requested ?? active) + (dx < 0 ? 1 : brands.length - 1)) % brands.length);
     }}>
     <div ref={context} className={styles.context}>
-      <h1 data-hero-eyebrow>Luxury Performance</h1>{' '}
-      <span aria-hidden="true">/</span>{' '}Performance parts in Dubai
+      <h1 data-hero-eyebrow>Luxury Performance — Auto Parts Dubai</h1>
     </div>
     <div className={styles.stage}>
       {slides.map((slide, index) => <div key={brands[index].slug} className={styles.layer} data-hero-slide={index} data-active={active === index} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${brands.length}: ${brands[index].name}`} aria-hidden={active !== index} inert={active !== index}>{mounted.includes(index) ? slide : null}</div>)}
