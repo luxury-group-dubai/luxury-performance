@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { HeaderSearch } from './header-search';
 import { CartButton } from './shop/cart-provider';
 import { BrandLogo } from './brand-logo';
+import { HomeLink } from './home-link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight, ChevronDown, X } from 'lucide-react';
 import { inStockShopPath } from '@/lib/shop/taxonomy';
@@ -241,7 +242,7 @@ export function Header() {
         <Link href="/partners" onClick={close} aria-current={pathname === '/partners' ? 'page' : undefined}>PARTNERS</Link>
         <Link href="/about" onClick={close} aria-current={pathname === '/about' ? 'page' : undefined}>ABOUT</Link>
       </nav>
-      <Link inert={open} className="brand" href="/#top" onClick={event => { close(); if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && window.location.pathname === '/') window.scrollTo({ top: 0, behavior: 'instant' }); }} aria-label="Luxury Performance home"><BrandLogo priority wordmark={false}/></Link>
+      <HomeLink inert={open} className="brand" onClick={close} aria-label="Luxury Performance home"><BrandLogo priority wordmark={false}/></HomeLink>
       <div inert={open} className={`header-shop-actions ${styles.actions}`}>
         <div className={styles.utilityActions}>
           <HeaderSearch onOpen={close} preview={previewNavigation}/>

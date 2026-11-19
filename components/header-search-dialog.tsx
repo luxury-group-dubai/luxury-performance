@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight, ArrowUpRight, Search, X } from 'lucide-react';
 import { lockOverlayScroll } from '@/lib/overlay-scroll-lock';
 import { BrandLogo } from './brand-logo';
+import { HomeLink } from './home-link';
 import { inStockShopPath } from '@/lib/shop/taxonomy';
 import { money, type Money, type Photo } from '@/lib/shop/types';
 import { previewShopBrands } from '@/app/preview/shop/navigation';
@@ -80,7 +81,7 @@ export function HeaderSearchDialog({ trigger, onClose, preview = true }: { trigg
 
   return <dialog ref={dialog} className={styles.dialog} aria-labelledby="global-search-title" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); } }} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === dialog.current) close(); }}>
       <div className={styles.content}>
-        <div className={styles.top}><Link href="/#top" onClick={event => { close(); if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && window.location.pathname === '/') window.scrollTo({ top: 0, behavior: 'instant' }); }} aria-label="Luxury Performance home"><BrandLogo wordmark={false}/></Link><button type="button" className={styles.close} onClick={close} aria-label="Close search"><X size={24} strokeWidth={1.2}/></button></div>
+        <div className={styles.top}><HomeLink onClick={close} aria-label="Luxury Performance home"><BrandLogo wordmark={false}/></HomeLink><button type="button" className={styles.close} onClick={close} aria-label="Close search"><X size={24} strokeWidth={1.2}/></button></div>
         <h2 id="global-search-title" className={styles.eyebrow}>Find your next detail.</h2>
         <form action={preview ? previewSearchPath : '/shop'} role="search" onSubmit={submit} className={styles.form}>
           <label htmlFor="global-search-input" className="sr-only">Search parts, brands or vehicles</label>
