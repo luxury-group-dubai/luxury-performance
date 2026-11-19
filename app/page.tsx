@@ -17,7 +17,7 @@ import { StickyIntro } from '@/components/home/sticky-intro';
 import { Closing } from '@/components/closing';
 import { defaultSocialImage } from '@/lib/social-images';
 
-const homeTitle = 'Luxury Performance Dubai | Performance Parts & Upgrades';
+const homeTitle = 'Luxury Performance | Auto Parts & Upgrades Dubai';
 
 export const metadata: Metadata = {
   title: { absolute: homeTitle },
