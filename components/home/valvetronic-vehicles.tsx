@@ -25,7 +25,7 @@ export function ValvetronicVehicles() {
               return <li key={vehicle.mark}>
                 <Link href={valvetronicVehicleHref(vehicle)} prefetch={false} className={styles.brand} data-mark={vehicle.mark} aria-label={`Shop Valvetronic Designs for ${vehicle.name}`}>
                   <span className="sr-only">Shop Valvetronic Designs for {vehicle.name}</span>
-                  <Image src={vehicle.logo} alt="" width={200} height={64} className={`${styles.mark} ${vehicle.monochrome ? styles.monochrome : ''}`} />
+                  <Image src={vehicle.logo} alt={vehicle.name} width={200} height={64} className={`${styles.mark} ${vehicle.monochrome ? styles.monochrome : ''}`} />
                 </Link>
               </li>;
             })}

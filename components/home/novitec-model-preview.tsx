@@ -108,6 +108,7 @@ export function ModelPreviewCard({ href, name, make, images, effect = 'slide', m
   >
     <div className={`${styles.image} ${styles.previewImage}`}>
       <Link href={href} className={styles.previewLink} aria-label={`Shop NOVITEC for ${make} ${name}`} aria-describedby={hintId} onKeyDown={previewKey}>
+        <span className="sr-only">Shop NOVITEC for {make} {name}</span>
         {effect === 'fade' ? (hoverEnabled ? images : images.slice(0, 1)).map((photo, index) => <span key={photo.image} className={styles.previewFadeFrame} data-preview-photo={index} data-active={active === index} aria-hidden={active !== index}>
           <DeferredModelImage enabled={index === 0 ? mediaReady || hoverEnabled : hoverEnabled} src={`/images/novitec-models/${photo.image}`} alt={photo.alt} fallback={index === 0}/>
         </span>) : <>

@@ -31,7 +31,7 @@ const models: Model[] = [
   { name: 'SF90', make: 'Ferrari', image: additionalModelGalleries['sf90'][0].image, collection: 'ferrari-sf90', preview: additionalModelGalleries['sf90'], previewEffect: 'fade' },
   { name: '12Cilindri', make: 'Ferrari', image: additionalModelGalleries['12cilindri'][0].image, collection: 'ferrari-12cilindri', preview: additionalModelGalleries['12cilindri'], previewEffect: 'fade' },
   { name: 'Urus', make: 'Lamborghini', image: additionalModelGalleries['urus'][0].image, collection: 'lamborghini-urus', preview: additionalModelGalleries['urus'], previewEffect: 'fade' },
-  { name: '812', make: 'Ferrari', image: additionalModelGalleries['812'][0].image, href: '/shop/novitec/ferrari?q=Ferrari+812', preview: additionalModelGalleries['812'], previewEffect: 'fade' },
+  { name: '812', make: 'Ferrari', image: additionalModelGalleries['812'][0].image, href: '/shop/novitec/ferrari/812', preview: additionalModelGalleries['812'], previewEffect: 'fade' },
   { name: 'F8', make: 'Ferrari', image: additionalModelGalleries['f8'][0].image, collection: 'ferrari-f8', preview: additionalModelGalleries['f8'], previewEffect: 'fade' },
   { name: '750S', make: 'McLaren', image: additionalModelGalleries['750s'][0].image, collection: 'mclaren-750s', preview: additionalModelGalleries['750s'], previewEffect: 'fade' },
   { name: 'Cullinan', make: 'Rolls-Royce', image: additionalModelGalleries['cullinan'][0].image, collection: 'rolls-royce-cullinan', preview: additionalModelGalleries['cullinan'], previewEffect: 'fade' },
