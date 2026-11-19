@@ -1,3 +1,5 @@
+import { shopBrandHref } from './shop/routes';
+
 export type ValvetronicVehicleBrand = { name: string; mark: string; logo: string; make?: string; search?: string; monochrome?: boolean; lightLogo?: string; lightMonochrome?: boolean };
 
 // Available vehicle ranges checked against LXP Forged's Valvetronic collection.
@@ -27,6 +29,5 @@ export const valvetronicVehicles: readonly ValvetronicVehicleBrand[] = [
 
 /** The three untagged vehicle ranges keep their existing title-search links. */
 export function valvetronicVehicleHref(vehicle: ValvetronicVehicleBrand) {
-  const params = new URLSearchParams({ brand: 'valvetronic', ...(vehicle.make ? { make: vehicle.make } : { q: vehicle.search! }) });
-  return `/shop?${params}`;
+  return shopBrandHref('valvetronic', vehicle.make ? { make: vehicle.make } : { q: vehicle.search! });
 }

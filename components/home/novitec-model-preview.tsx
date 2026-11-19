@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -20,10 +20,9 @@ export function DeferredModelImage({ enabled, src, alt, fallback = false }: { en
   </>;
 }
 
-type Props = { href: string; name: string; make: string; images: readonly ModelPreviewImage[]; effect?: 'slide' | 'fade'; mediaReady: boolean; onMediaIntent: () => void };
+type Props = { href: string; name: string; make: string; images: readonly ModelPreviewImage[]; effect?: 'slide' | 'fade'; mediaReady: boolean; onMediaIntent: () => void; hintId: string };
 
-export function ModelPreviewCard({ href, name, make, images, effect = 'slide', mediaReady, onMediaIntent }: Props) {
-  const hintId = useId();
+export function ModelPreviewCard({ href, name, make, images, effect = 'slide', mediaReady, onMediaIntent, hintId }: Props) {
   const card = useRef<HTMLElement>(null);
   const [preview, setPreview] = useState({ active: 0, previous: 0, hover: 1 });
   const [requested, setRequested] = useState(0);
@@ -125,7 +124,6 @@ export function ModelPreviewCard({ href, name, make, images, effect = 'slide', m
       <button type="button" className={`${styles.previewControl} ${styles.previewPrevious}`} aria-label={`Previous ${name} photo`} onClick={() => show(requested - 1, true)}><ArrowLeft size={18} strokeWidth={1.5} aria-hidden="true"/></button>
       <button type="button" className={`${styles.previewControl} ${styles.previewNext}`} aria-label={`Next ${name} photo`} onClick={() => show(requested + 1, true)}><ArrowRight size={18} strokeWidth={1.5} aria-hidden="true"/></button>
     </div>
-    <p id={hintId} className="sr-only">Move left or right across the card to preview photos. With the photo link focused, use the left and right arrow keys; Escape returns to the first photo.</p>
     <span className="sr-only" role="status" aria-live="polite">{announcement}</span>
     <Link href={href} className={styles.caption} tabIndex={-1}><div><h3>{name}</h3><p>{make}</p></div><ArrowUpRight size={20} strokeWidth={1.5} aria-hidden="true"/></Link>
   </article>;
