@@ -20,6 +20,7 @@ import { useLuperViewTransition } from './use-luper-view-transition';
 import { useLuperMobileKeyboard } from './use-luper-mobile-keyboard';
 import { LuperEnquiryProvider, LuperRecommendations, LuperSelectedOptions, LuperTeamHandoff, useLuperEnquiry } from './luper-shopping';
 import styles from './luper-widget.module.css';
+import launcherStyles from './chat-launcher.module.css';
 
 const starters = [
   { label: 'Exhaust & sound', prompt: 'I would like help choosing an exhaust for my car.' },
@@ -113,9 +114,9 @@ function LuperThread({ mobile }: { mobile: boolean }) {
   </ThreadPrimitive.Root>;
 }
 
-export function LuperWidget() {
+export function LuperWidget({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const runtime = useLocalRuntime(luperAdapter);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initialOpen);
   const [mobile, setMobile] = useState(false);
   const content = useRef<HTMLDivElement>(null);
   const { view, changeView } = useLuperViewTransition(content, open);
@@ -139,8 +140,8 @@ export function LuperWidget() {
 
   return <AssistantRuntimeProvider runtime={runtime}><LuperEnquiryProvider onNavigate={() => setOpen(false)}>
     <AssistantModalPrimitive.Root open={open} onOpenChange={setOpen} unstable_openOnRunStart={false} modal={mobile}>
-      <AssistantModalPrimitive.Anchor className={styles.anchor}>
-        <AssistantModalPrimitive.Trigger className={styles.launcher} data-open={open} aria-label={open ? 'Close chat options' : 'Chat with Luxury Performance'}>
+      <AssistantModalPrimitive.Anchor className={launcherStyles.anchor}>
+        <AssistantModalPrimitive.Trigger className={launcherStyles.launcher} data-open={open} aria-label={open ? 'Close chat options' : 'Chat with Luxury Performance'}>
           {open ? <X size={22}/> : <MessageCircle size={25} strokeWidth={1.8} aria-hidden="true"/>}
         </AssistantModalPrimitive.Trigger>
       </AssistantModalPrimitive.Anchor>
