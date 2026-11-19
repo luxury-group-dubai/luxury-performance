@@ -16,10 +16,10 @@ const artwork: Record<string, { name: string; src: string; width: number; height
   collectibles: { name: 'Collectibles', src: '/brand/collectibles-wordmark-script-white.png', width: 1000, height: 180 },
 };
 
-function CompactValvetronic({ sizes, loading, selector }: { sizes: string; loading: 'eager' | 'lazy'; selector: boolean }) {
+function CompactValvetronic({ sizes, loading, selector, alt }: { alt: string; sizes: string; loading: 'eager' | 'lazy'; selector: boolean }) {
   // Precompressed AVIF variants avoid converting the same logo a second time.
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src="/brand/valvetronic-compact.avif" srcSet="/brand/valvetronic-compact-200.avif 200w, /brand/valvetronic-compact.avif 384w" sizes={sizes} alt="" width={384} height={97} loading={loading} fetchPriority={selector ? 'high' : undefined} decoding="async" />;
+  return <img src="/brand/valvetronic-compact.avif" srcSet="/brand/valvetronic-compact-200.avif 200w, /brand/valvetronic-compact.avif 384w" sizes={sizes} alt={alt} width={384} height={97} loading={loading} fetchPriority={selector ? 'high' : undefined} decoding="async" />;
 }
 
 /** Shared original artwork for the partner strip and both navigation menus. */
@@ -30,17 +30,18 @@ export function BrandArtwork({ brand, labelled = true, className = '', sizes = '
   const selector = variant === 'selector';
   const compactSource = (src: string) => selector && /(?:gintani|liberty-walk-symbol|liberty-walk-lettering|fi-exhaust-lettering|collectibles-wordmark-script-white)\.png$/.test(src) ? src.replace('/brand/', '/brand/selectors/').replace('.png', '.webp') : src;
   const item = { ...original, src: compactSource(original.src) };
+  const alt = labelled ? item.name : '';
   return <span className={`${styles.artwork} ${className}`} data-brand-artwork={brand} role={labelled ? 'img' : undefined} aria-label={labelled ? item.name : undefined}>
     {brand === 'fi-exhaust' || brand === 'liberty-walk' ? <span className={brand === 'fi-exhaust' ? styles.fi : styles.liberty}>
       <Image src={item.src} alt="" width={item.width} height={item.height} sizes={brand === 'fi-exhaust' ? '60px' : '40px'} unoptimized={selector || item.src.endsWith('.svg') || item.src.endsWith('.avif')} loading={loading} fetchPriority={selector ? 'high' : undefined} />
-      <Image src={compactSource(brand === 'fi-exhaust' ? '/brand/fi-exhaust-lettering.png' : '/brand/liberty-walk-lettering.png')} unoptimized={selector} alt="" width={brand === 'fi-exhaust' ? 535 : 1200} height={brand === 'fi-exhaust' ? 73 : 137} sizes={brand === 'fi-exhaust' ? (variant === 'hero' ? '(max-width: 700px) 156px, 303px' : '(max-width: 700px) 110px, 128px') : '(max-width: 700px) 140px, 164px'} quality={variant === 'hero' ? 90 : 75} loading={loading} fetchPriority={selector ? 'high' : undefined} />
-    </span> : brand === 'voltrix' && selector ? <Image src="/brand/selectors/voltrix.webp" alt="" width={400} height={65} unoptimized loading={loading} fetchPriority={selector ? 'high' : undefined} /> : brand === 'voltrix' ? <svg viewBox="0 0 1600 260" aria-hidden="true">
+      <Image src={compactSource(brand === 'fi-exhaust' ? '/brand/fi-exhaust-lettering.png' : '/brand/liberty-walk-lettering.png')} unoptimized={selector} alt={alt} width={brand === 'fi-exhaust' ? 535 : 1200} height={brand === 'fi-exhaust' ? 73 : 137} sizes={brand === 'fi-exhaust' ? (variant === 'hero' ? '(max-width: 700px) 156px, 303px' : '(max-width: 700px) 110px, 128px') : '(max-width: 700px) 140px, 164px'} quality={variant === 'hero' ? 90 : 75} loading={loading} fetchPriority={selector ? 'high' : undefined} />
+    </span> : brand === 'voltrix' && selector ? <Image src="/brand/selectors/voltrix.webp" alt={alt} width={400} height={65} unoptimized loading={loading} fetchPriority={selector ? 'high' : undefined} /> : brand === 'voltrix' ? <svg viewBox="0 0 1600 260" aria-hidden="true">
       <defs><filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -0.2126 -0.7152 -0.0722 1 0" /></filter></defs>
       <image href={item.src} width="1600" height="260" filter={`url(#${filterId})`} />
     </svg> : brand === 'valvetronic' ? (
       variant === 'hero'
-        ? <Image src="/brand/valvetronic.png" alt="" width={1200} height={304} sizes={sizes} quality={90} loading={loading} fetchPriority={selector ? 'high' : undefined} />
-        : <CompactValvetronic sizes={sizes} loading={loading} selector={selector} />
-    ) : <Image src={item.src} alt="" width={item.width} height={item.height} sizes={brand === 'collectibles' ? '160px' : sizes} quality={75} unoptimized={selector || item.src.endsWith('.svg') || item.src.endsWith('.avif')} loading={loading} fetchPriority={selector ? 'high' : undefined} />}
+        ? <Image src="/brand/valvetronic.png" alt={alt} width={1200} height={304} sizes={sizes} quality={90} loading={loading} fetchPriority={selector ? 'high' : undefined} />
+        : <CompactValvetronic alt={alt} sizes={sizes} loading={loading} selector={selector} />
+    ) : <Image src={item.src} alt={alt} width={item.width} height={item.height} sizes={brand === 'collectibles' ? '160px' : sizes} quality={75} unoptimized={selector || item.src.endsWith('.svg') || item.src.endsWith('.avif')} loading={loading} fetchPriority={selector ? 'high' : undefined} />}
   </span>;
 }

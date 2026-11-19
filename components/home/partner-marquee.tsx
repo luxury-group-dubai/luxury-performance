@@ -75,7 +75,7 @@ export function PartnerMarquee() {
                   className={styles.logo}
                   data-brand={partner.slug}
                 >
-                  {!duplicate && <span className="sr-only">{partner.label ?? `Explore ${partner.name}`}</span>}
+                  <span className="sr-only">{partner.label ?? `Explore ${partner.name}`}</span>
                   {logosReady ? <BrandArtwork brand={partner.slug} labelled={!duplicate} /> : <noscript><BrandArtwork brand={partner.slug} labelled={!duplicate} className={styles.noscriptLogo} loading="lazy" /></noscript>}
                 </Link>
               ))}
