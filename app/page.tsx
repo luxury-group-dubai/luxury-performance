@@ -16,6 +16,7 @@ import { Reveal } from '@/components/reveal';
 import { StickyIntro } from '@/components/home/sticky-intro';
 import { Closing } from '@/components/closing';
 import { defaultSocialImage } from '@/lib/social-images';
+import { contact, socialLinks } from '@/lib/content';
 
 const homeTitle = 'Luxury Performance | Auto Parts & Upgrades in Dubai';
 const homeDescription = 'Shop exhausts, body kits, wheels and suspension from leading brands, including NOVITEC. Expert fitment support in Dubai for customers across the UAE & GCC.';
@@ -37,11 +38,40 @@ const websiteSchema = {
   '@type': 'WebSite',
   name: 'Luxury Performance',
   url: 'https://www.luxuryperformance.com/',
+  publisher: { '@id': 'https://www.luxuryperformance.com/#business' },
+};
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoPartsStore',
+  '@id': 'https://www.luxuryperformance.com/#business',
+  name: 'Luxury Performance',
+  url: 'https://www.luxuryperformance.com/',
+  logo: 'https://www.luxuryperformance.com/brand/lxp-winged-black.svg',
+  image: new URL(defaultSocialImage.url, 'https://www.luxuryperformance.com').href,
+  telephone: contact.telephone,
+  email: contact.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '4th Street, Al Quoz Industrial 3',
+    addressLocality: 'Dubai',
+    addressRegion: 'Dubai',
+    addressCountry: 'AE',
+  },
+  openingHoursSpecification: [{
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '10:00',
+    closes: '20:00',
+  }],
+  hasMap: contact.maps,
+  sameAs: socialLinks.filter((social) => social.icon !== 'whatsapp').map((social) => social.href),
 };
 
 export default function Home() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema).replace(/</g, '\\u003c') }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema).replace(/</g, '\\u003c') }} />
     <HomeHero />
     <div className="home-intro-stack">
       <StickyIntro>
