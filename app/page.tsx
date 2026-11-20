@@ -17,8 +17,8 @@ import { StickyIntro } from '@/components/home/sticky-intro';
 import { Closing } from '@/components/closing';
 import { defaultSocialImage } from '@/lib/social-images';
 
-const homeTitle = 'Luxury Performance | Auto Parts & Upgrades Dubai';
-const homeDescription = 'Shop exhausts, body kits, wheels and suspension from leading brands, including NOVITEC. Dubai fitment support for the UAE & GCC.';
+const homeTitle = 'Luxury Performance | Auto Parts & Upgrades in Dubai';
+const homeDescription = 'Shop exhausts, body kits, wheels and suspension from leading brands, including NOVITEC. Expert fitment support in Dubai for customers across the UAE & GCC.';
 
 export const metadata: Metadata = {
   title: { absolute: homeTitle },
