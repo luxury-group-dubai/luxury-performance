@@ -70,7 +70,9 @@ export default async function NovitecModelsForMake({ params }: Props) {
         <div><h1>{copy?.heading || `Choose your ${brand.name}.`}</h1><p>{copy?.introduction || 'Select your model to explore the NOVITEC parts available for your car.'}</p></div>
         <Link href={shopBrandHref('novitec', { make: brand.tag })} className={styles.all}>Shop all {brand.name} parts <ArrowUpRight size={17} aria-hidden="true" /></Link>
       </header>
-      {make === 'ferrari' && <AllocationBanner />}
+    </div>
+    {make === 'ferrari' && <AllocationBanner compact />}
+    <div className={styles.inner}>
       {copy && <h2 className={styles.modelHeading}>Choose your {brand.name} model.</h2>}
       {models.length ? <ul className={styles.grid} aria-label={`${brand.name} models`}>
         {models.map(model => <li key={model}><Link className={styles.card} href={make === 'ferrari' && ['f8', '812', 'sf90', '12cilindri'].includes(model) ? `/partners/novitec/ferrari/${model}` : shopBrandHref('novitec', { make: brand.tag, model })}>

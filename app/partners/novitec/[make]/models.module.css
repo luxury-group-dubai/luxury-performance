@@ -1,5 +1,5 @@
-.page { min-height: 75vh; background: var(--paper) url('/images/concrete-grain.svg') repeat; background-size: 320px 320px; color: #171819; padding: 80px var(--gutter) 100px; }
-.inner { max-width: 1440px; margin: auto; }
+.page { min-height: 75vh; background: var(--paper) url('/images/concrete-grain.svg') repeat; background-size: 320px 320px; color: #171819; padding: 80px 0 100px; }
+.inner { max-width: calc(1440px + 2 * var(--gutter)); margin: auto; padding-inline: var(--gutter); }
 .back { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 11px; color: #656763; }
 .back:hover, .all:hover { color: #000; }
 .heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin: 45px 0 42px; }
