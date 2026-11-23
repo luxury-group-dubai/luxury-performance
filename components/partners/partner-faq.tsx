@@ -54,7 +54,7 @@ const questions = {
   novitec: [
     {
       question: 'Which cars does NOVITEC support?',
-      answer: 'Our NOVITEC range covers Ferrari, Lamborghini, McLaren and Rolls-Royce. Available parts depend on the model, generation and body style.',
+      answer: <>Explore NOVITEC for <Link href="/partners/novitec/ferrari">Ferrari</Link>, <Link href="/partners/novitec/lamborghini">Lamborghini</Link>, <Link href="/partners/novitec/mclaren">McLaren</Link> and <Link href="/partners/novitec/rolls-royce">Rolls-Royce</Link>. Available parts depend on the model, generation and body style. Choose your exact vehicle before ordering.</>,
     },
     {
       question: 'How do I check whether a NOVITEC part fits my car?',
@@ -62,7 +62,7 @@ const questions = {
     },
     {
       question: 'Can I buy a single part or plan a complete build?',
-      answer: 'You can shop for individual aerodynamic parts, exhausts, wheels or suspension. For a complete build, we can help check how the parts fit together on your car.',
+      answer: <>You can order individual NOVITEC <Link href="/shop/novitec?category=Aerodynamics">carbon fibre and body kit components</Link>, <Link href="/shop/novitec?category=Exhaust">exhausts</Link>, <Link href="/shop/novitec?category=Wheels">wheels</Link> or <Link href="/shop/novitec?category=Suspension">suspension</Link>. For a complete build, our Dubai team can check component compatibility and discuss the fitting requirements. Parts and finishes vary by vehicle.</>,
     },
     {
       question: 'Can you help with NOVITEC installation in Dubai?',

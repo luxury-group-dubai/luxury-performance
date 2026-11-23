@@ -2,9 +2,10 @@ export type Partner = {
   slug: string; name: string; label: string; headline: string; intro: string;
   detail: string; image: string; imageAlt: string; focus: string; vehicleHeading: string;
   supplier?: string; stockOnly?: boolean;
+  seo?: { title: string; description: string };
 };
 export const partners: Partner[] = [
-  { slug: 'novitec', name: 'NOVITEC', label: 'Performance. In every detail.', headline: 'An unmistakable presence.',
+  { slug: 'novitec', name: 'NOVITEC', seo: { title: 'NOVITEC Dubai — Body Kits, Exhausts & Wheels', description: 'Explore NOVITEC body kits, carbon fibre parts, exhausts, forged wheels and suspension in Dubai. Find parts for Ferrari, Lamborghini, McLaren and Rolls-Royce.' }, label: 'Performance. In every detail.', headline: 'An unmistakable presence.',
     intro: 'Carbon, sound, stance. Bring every element of your car into one considered specification.',
     detail: 'Explore NOVITEC by marque, then find the aerodynamic components, exhausts, wheels and suspension options available for your car. Luxury Performance helps you bring the details together, from fitment to installation in Dubai.',
     image: '/images/ferrari.webp', imageAlt: 'Ferrari performance programme', focus: 'Aerodynamics / Exhaust / Wheels / Suspension', vehicleHeading: 'Start with your marque.', supplier: 'novitec' },
