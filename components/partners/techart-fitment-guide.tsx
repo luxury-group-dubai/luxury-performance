@@ -5,7 +5,7 @@ export function TechartFitmentGuide() {
   return <section className={styles.guide} aria-labelledby="techart-fitment-title">
     <h2 id="techart-fitment-title">Built around your Porsche.</h2>
     <div>
-      <p>Start with an individual carbon detail or plan a specification across bodywork, wheels, exhaust, suspension and interior. The TECHART range differs by model and generation. Choose your exact Porsche above to explore the listed parts and prices in our shop.</p>
+      <p>Start with an individual carbon detail or plan a specification across bodywork, wheels, exhaust, suspension and interior. The TECHART range differs by model and generation. Choose your model above, then select its generation, body style and trim in the shop to explore matching parts and prices.</p>
       <h3>TECHART for the Porsche 911.</h3>
       <p>Match the generation, body style and trim to your car. Carrera, Turbo, GT3, GT3 RS and S/T parts should not be assumed interchangeable, even within the same generation. Check the product notes and any factory equipment requirements.</p>
       <h3>TECHART for the Porsche Cayenne.</h3>

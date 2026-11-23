@@ -78,6 +78,8 @@ export function techartRedirect(pathname: string, search: URLSearchParams) {
   } else return;
   if (filters.model && !['911', 'cayenne'].includes(filters.model)) return;
   const normalized = normalizeTechartRoute(filters);
+  if (normalized.generation && techartGenerationKey(normalized.model, normalized.generation) !== normalized.generation) return;
+  if (normalized.body && !(normalized.model === 'cayenne' ? ['suv', 'coupe'] : ['coupe', 'cabriolet', 'targa']).includes(normalized.body)) return;
   const targetPath = techartPath(normalized, query.choose === '1');
   const migratedKeys = ['brand', 'make', 'model', 'generation', 'fit', 'body', 'choose'];
   if (targetPath === pathname && !migratedKeys.some(key => search.has(key))) return;
