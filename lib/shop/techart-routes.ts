@@ -56,3 +56,32 @@ export function parseTechartPath(model: string, tail: string[]): Pick<Filters, '
     : trim === 'gt3-touring' ? 'gt3_gt3_touring' : trim?.replaceAll('-', '_');
   return { generation, body, fit: trimKey ? `${generation}_${trimKey}` : undefined };
 }
+
+// Resolve legacy fitment URLs before rendering/streaming starts so their
+// migration is a real HTTP 308, including requests made by browsers.
+export function techartRedirect(pathname: string, search: URLSearchParams) {
+  const query = Object.fromEntries(search) as Filters & { choose?: string };
+  const segments = pathname.split('/').filter(Boolean);
+  let filters: Filters;
+  if (pathname === '/partners/techart') {
+    if (!query.model && !query.fit && !query.generation) return;
+    filters = { ...query, brand: 'techart', make: 'porsche', model: query.model || '911' };
+  } else if (pathname === '/shop' && query.brand === 'techart' && !query.q) {
+    filters = query;
+  } else if (segments[0] === 'shop' && segments[1] === 'techart') {
+    if (segments.length > 7 || segments[2] && segments[2] !== 'porsche') return;
+    const model = segments[3];
+    const selection = model ? parseTechartPath(model, segments.slice(4)) : {};
+    if (!selection) return;
+    filters = { ...query, brand: 'techart', make: 'porsche', model,
+      ...Object.fromEntries(Object.entries(selection).filter(([, value]) => value !== undefined)) };
+  } else return;
+  if (filters.model && !['911', 'cayenne'].includes(filters.model)) return;
+  const normalized = normalizeTechartRoute(filters);
+  const targetPath = techartPath(normalized, query.choose === '1');
+  const migratedKeys = ['brand', 'make', 'model', 'generation', 'fit', 'body', 'choose'];
+  if (targetPath === pathname && !migratedKeys.some(key => search.has(key))) return;
+  const extras = new URLSearchParams(search);
+  for (const key of migratedKeys) extras.delete(key);
+  return targetPath + (extras.size ? `?${extras}` : '');
+}

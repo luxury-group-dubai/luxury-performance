@@ -142,3 +142,14 @@ test('Cayenne Turbo GT remains a distinct trim under the Coupé body', () => {
   assert.equal(bodies.length,1); assert.equal(bodies[0].name,'Coupé');
   assert.deepEqual(bodies[0].choices.map(item=>item.fit),['e3_2_cayenne','e3_2_turbo_gt']);
 });
+
+test('legacy TECHART migrations retain category, sort and tracking values without a redirect loop', () => {
+  const { techartRedirect } = load(resolve(root,'lib/shop/techart-routes.ts'));
+  const target=techartRedirect('/shop/techart/porsche/911/coupe',new URLSearchParams('fit=992_2_carrera_t&category=Exhaust&sort=price-up&utm_source=google'));
+  assert.equal(target,'/shop/techart/porsche/911/992-2/coupe/carrera-t?category=Exhaust&sort=price-up&utm_source=google');
+  const next=new URL(target,'https://example.com');
+  assert.equal(techartRedirect(next.pathname,next.searchParams),undefined);
+  assert.equal(techartRedirect('/partners/techart',new URLSearchParams('model=cayenne')),'/shop/techart/porsche/cayenne');
+  assert.equal(techartRedirect('/partners/techart',new URLSearchParams()),undefined);
+  assert.equal(techartRedirect('/shop',new URLSearchParams('brand=capristo&make=ferrari')),undefined);
+});
