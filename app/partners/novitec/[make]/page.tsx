@@ -1,3 +1,4 @@
+import { PartnerBreadcrumbs } from '@/components/partner-breadcrumbs';
 import { AllocationBanner } from '@/components/nlargo/allocation-banner';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -65,7 +66,7 @@ export default async function NovitecModelsForMake({ params }: Props) {
   const models = [...new Set(products.flatMap(product => tagsFor(product, 'model')).map(model => make === 'ferrari' && ['812_gts', '812_superfast'].includes(model) ? '812' : model))].sort((a, b) => modelLabel(a).localeCompare(modelLabel(b), 'en', { numeric: true }));
   return <div className={styles.page}>
     <div className={styles.inner}>
-      <nav className={styles.breadcrumbs} aria-label="Breadcrumb"><Link href="/partners">PARTNERS</Link><span aria-hidden="true">/</span><Link href="/partners/novitec">NOVITEC</Link><span aria-hidden="true">/</span><span aria-current="page">{brand.name}</span></nav>
+      <PartnerBreadcrumbs partner={{ slug: 'novitec', name: 'NOVITEC' }} marque={brand.name} />
       <header className={`${styles.heading} ${copy ? styles.localHeading : ''}`}>
         <div><h1>{copy?.heading || `Choose your ${brand.name}.`}</h1><p>{copy?.introduction || 'Select your model to explore the NOVITEC parts available for your car.'}</p></div>
         <Link href={shopBrandHref('novitec', { make: brand.tag })} className={styles.all}>Shop all {brand.name} parts <ArrowUpRight size={17} aria-hidden="true" /></Link>
