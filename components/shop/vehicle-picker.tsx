@@ -71,7 +71,7 @@ function PorscheTrimName({ name, model }: { name: string; model: PickerProps['mo
   </span>;
 }
 
-export function VehiclePicker({ model, options, shopPath, initialFit, initialBody, modelChoices, showBroadCollections = true, cardStyle = 'panel', imagePlaceholders = {} }: PickerProps) {
+export function VehiclePicker({ model, options, shopPath, initialFit, initialBody, modelChoices, showBroadCollections = false, cardStyle = 'plain', imagePlaceholders = {} }: PickerProps) {
   const cayenne = model === 'cayenne';
   const modelName = cayenne ? 'Cayenne' : '911';
   const initialGeneration = options.find(item => initialFit?.startsWith(`${item.key}_`));

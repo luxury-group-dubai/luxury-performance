@@ -12,8 +12,6 @@
 .modelWordmark[data-model="911"] { width:132px; }
 .makeCard > svg { position:absolute; right:14px; bottom:14px; opacity:0; }
 .modelGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:end; gap:24px 32px; }
-.modelSwitch { display:inline-flex; align-items:center; min-height:44px; padding:10px 0; margin-right:24px; background:none; color:#777; font-size:12px; }
-.modelSwitch[aria-pressed=true], .modelSwitch[aria-current=page] { color:#171819; text-decoration:underline; text-underline-offset:8px; }
 .modelCard { border:0; padding:20px 0; }
 .modelCard > div { margin-top:0; }
 .changeOnly { align-self:flex-end; position:relative; min-width:120px; height:44px; }

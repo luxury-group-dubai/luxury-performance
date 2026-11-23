@@ -19,6 +19,7 @@ import { HeroNewsprintFilter } from '@/components/hero-newsprint-filter';
 import newsprint from '@/components/hero-newsprint.module.css';
 import { BrandArtwork } from '@/components/brand-artwork';
 import { CayenneSelector, VehicleSelector } from '@/components/shop/vehicle-selector';
+import pickerStyles from '@/components/shop/vehicle-selector.module.css';
 import { is911Fit } from '@/lib/shop/techart-fitment';
 import { NovitecStories } from '@/components/novitec-stories/novitec-stories';
 import { NovitecFeed } from '@/components/novitec-feed/novitec-feed';
@@ -186,7 +187,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   const initialBody = typeof query.body === 'string' ? query.body : undefined;
   const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={shopBrandHref(p.supplier!, { [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
   const vehicleHeading = compactNovitec ? <h2>Choose your marque.</h2> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Explore TECHART body kits, wheels, exhausts and interior upgrades in Dubai. Choose your Porsche model and generation to find compatible parts.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
-  const techartModels = <nav className={styles.modelChoices} aria-label="Porsche models">
+  const techartModels = <nav className={pickerStyles.modelChoices} aria-label="Porsche models">
     {vehicles.map(vehicle => {
       if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
       if (vehicle === '911' || vehicle === 'cayenne') {
