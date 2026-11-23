@@ -158,3 +158,14 @@ test('direct shop visits and reloads open the catalogue immediately and preserve
   }
   assert.equal(page({ storage }).dataset.lxpIntro, 'tracing');
 });
+
+test('news pages open immediately without consuming the homepage entrance', () => {
+  const storage = new Map();
+  for (const pathname of ['/news', '/news/', '/news/novitec-ferrari-12cilindri-n-largo']) {
+    const result = page({ pathname, storage, reload: true });
+    assert.deepEqual(result.dataset, {});
+    assert.equal(result.timers.length, 0);
+    assert.equal(storage.size, 0);
+  }
+  assert.equal(page({ storage }).dataset.lxpIntro, 'tracing');
+});
