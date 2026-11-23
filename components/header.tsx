@@ -28,7 +28,7 @@ const VehicleMenu = dynamic(() => import('./vehicle-menu').then(module => module
 
 type ShopMenu = PreviewShopTab;
 const menus = [{ key: 'brands' as const, label: 'By brand' }, { key: 'vehicles' as const, label: 'By vehicle' }];
-const links = [{ name: 'HOME', href: '/' }, { name: 'PARTNERS', href: '/partners' }, { name: 'ABOUT', href: '/about' }, { name: 'CONTACT', href: '/contact' }];
+const links = [{ name: 'HOME', href: '/' }, { name: 'PARTNERS', href: '/partners' }, { name: 'ABOUT', href: '/about' }, { name: 'NEWS', href: '/news' }, { name: 'CONTACT', href: '/contact' }];
 function BrandMenu({ close }: { close: () => void }) {
   return <>
     <MenuCards items={brandMenu} close={close} logoOnly />

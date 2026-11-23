@@ -28,6 +28,7 @@ export function Footer() {
         <span className={styles.label}>Discover</span>
         <Link href="/partners">PARTNERS</Link>
         <Link href="/about">ABOUT</Link>
+        <Link href="/news">NEWS</Link>
         <Link href="/contact">CONTACT</Link>
         <Link href="/shop" className={`${styles.store} action-secondary`}>Online store <ActionArrow size={13} /></Link>
       </nav>
