@@ -181,11 +181,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   const initialFit = typeof query.fit === 'string' && is911Fit(query.fit) ? query.fit : undefined;
   const initialBody = typeof query.body === 'string' ? query.body : undefined;
   const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={shopBrandHref(p.supplier!, { [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
-  const vehicleHeading = compactNovitec ? <>
-    <h2>NOVITEC parts in Dubai.</h2>
-    <p>Explore carbon fibre body kits, exhaust systems, forged wheels and suspension for Ferrari, Lamborghini, McLaren and Rolls-Royce. Our Dubai team helps you choose compatible parts and discuss installation options.</p>
-    <p>Start with your marque, or <Link href="/shop/novitec">browse all NOVITEC parts</Link>.</p>
-  </> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Explore TECHART body kits, wheels, exhausts and interior upgrades in Dubai. Choose your Porsche model and generation to find compatible parts.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
+  const vehicleHeading = compactNovitec ? <h2>Choose your marque.</h2> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Explore TECHART body kits, wheels, exhausts and interior upgrades in Dubai. Choose your Porsche model and generation to find compatible parts.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
   const techartModels = <nav className={styles.modelChoices} aria-label="Porsche models">
     {vehicles.map(vehicle => {
       if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
@@ -196,7 +192,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     })}
   </nav>;
   const vehicleSection = vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
-    <header id={compactNovitec ? 'discover' : undefined}>{!compactNovitec && !centeredIntro && !vehicleFirst && <Eyebrow number="02">Your starting point</Eyebrow>}{vehicleHeading}</header>
+    <header>{!compactNovitec && !centeredIntro && !vehicleFirst && <Eyebrow number="02">Your starting point</Eyebrow>}{vehicleHeading}</header>
     {vehicleFirst ? <>
       {techartModel === 'cayenne'
         ? <CayenneSelector products={products} fit={typeof query.fit === 'string' ? query.fit : undefined} body={initialBody} modelChoices={techartModels} />
@@ -206,7 +202,13 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
 
   const collectionSection = showCategories && p.slug !== 'capristo' && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={shopBrandHref(p.supplier!, { category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;
 
-  const introduction = p.slug === 'capristo' ? <section id="discover" className={styles.capristoIntroduction} aria-labelledby="capristo-intro-title">
+  const introduction = p.slug === 'novitec' ? <section id="discover" className={styles.novitecIntroduction} aria-labelledby="novitec-intro-title">
+    <h2 id="novitec-intro-title">NOVITEC.<br />In Dubai.</h2>
+    <div>
+      <p>Carbon fibre body kits, exhaust systems, forged wheels and suspension for Ferrari, Lamborghini, McLaren and Rolls-Royce. Our Dubai team helps you choose compatible NOVITEC parts and discuss installation options.</p>
+      <ArrowLink href="/shop/novitec">Shop NOVITEC parts</ArrowLink>
+    </div>
+  </section> : p.slug === 'capristo' ? <section id="discover" className={styles.capristoIntroduction} aria-labelledby="capristo-intro-title">
     <div className={styles.capristoIntroImage}><Image src="/images/partners/capristo-revuelto-instagram.jpg" alt="Capristo Lamborghini Revuelto exhaust system" fill sizes="(max-width: 700px) 100vw, 50vw" quality={90} /></div>
     <div className={styles.capristoIntroCopy}><h2 id="capristo-intro-title">Sound, shaped<br />by hand.</h2><p>Explore CAPRISTO exhaust systems and carbon fibre parts in Dubai. Choose your vehicle below, then check the generation, version and fitting requirements for your chosen components. Our team can help confirm availability and installation options.</p><ArrowLink href={shop}>Explore Capristo parts</ArrowLink></div>
   </section> : !compactNovitec && p.slug !== 'techart' && <section id="discover" className={`${styles.introduction} ${centeredIntro ? styles.centeredIntroduction : ''}`}>
@@ -256,8 +258,8 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   return <>
     {p.slug === 'techart' && <TechartPageMotion />}
     {vehicleFirst && vehicleSection}
-    {introduction}
     {p.slug === 'novitec' && <AllocationBanner />}
+    {introduction}
     {!vehicleFirst && !capristoBrowsing && vehicleSection}
     {p.slug === 'techart' ? <TechartRangePicker options={techartRange.map(option => ({
       ...option,
