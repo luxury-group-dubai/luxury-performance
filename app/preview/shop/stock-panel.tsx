@@ -12,6 +12,7 @@ import { categoryOf, label, supplierOf, suppliers, tagsFor } from '@/lib/shop/ta
 import { isUsedPart, wheelGroupSize, wheelGroupUnit } from '@/lib/shop/used-parts';
 import { money, type CatalogProduct } from '@/lib/shop/types';
 import { stockBrowseHref } from '@/lib/shop/routes';
+import type { StockProduct } from './stock-data';
 import styles from './stock-panel.module.css';
 
 const groups = [{ key: 'all', name: 'All stock' }, { key: 'used', name: 'Used OEM parts' }, { key: 'urban', name: 'URBAN kits' }];
@@ -30,7 +31,7 @@ const stockMakes = (product: CatalogProduct) => {
 };
 const brandName = (value: string) => suppliers.find(supplier => supplier.slug === value)?.name ?? label(value);
 
-export function StockPanel({ products, usedProducts, failed }: { products: CatalogProduct[]; usedProducts: CatalogProduct[]; failed: boolean }) {
+export function StockPanel({ products, usedProducts, failed }: { products: StockProduct[]; usedProducts: StockProduct[]; failed: boolean }) {
   const router = useRouter();
   const params = useSearchParams();
   const group = groups.some(item => item.key === params.get('stock_group')) ? params.get('stock_group')! : 'all';
@@ -87,7 +88,7 @@ export function StockPanel({ products, usedProducts, failed }: { products: Catal
         <p>Contact our team for vehicle compatibility, included components and photographs.</p>
         <Link href="/contact?programme=URBAN%20Automotive">Enquire about the kits <ArrowUpRight size={16} aria-hidden="true" /></Link>
       </div> : shown.length ? <>
-        <div className={styles.grid}>{shown.slice(0, visible).map(product => <Link className={`shop-product-card ${styles.card}`} key={product.id} href={`/products/${product.handle}`}>
+        <div className={styles.grid}>{shown.slice(0, visible).map(product => <Link className={`shop-product-card ${styles.card}`} key={product.id} href={`/products/${product.handle}?variant=${product.stockedVariantId}`}>
           <div className="shop-product-image">{product.featuredImage ? <Image src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} width={600} height={600} sizes="(max-width:700px) 44vw, (max-width:1100px) 29vw, 22vw" /> : <span>{product.vendor}</span>}<span className="shop-product-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span></div>
           <h3>{product.title}</h3><p className="shop-price">{wheelGroupSize(product) ? `${money(product.priceRange.minVariantPrice)} / ${wheelGroupUnit(wheelGroupSize(product)!)}` : `From ${money(product.priceRange.minVariantPrice)}`}</p>
         </Link>)}</div>
