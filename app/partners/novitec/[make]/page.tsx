@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { getCatalog } from '@/lib/shop/storefront';
 import { label, supplierOf, tagsFor } from '@/lib/shop/taxonomy';
 import styles from './models.module.css';
@@ -65,9 +65,9 @@ export default async function NovitecModelsForMake({ params }: Props) {
   const models = [...new Set(products.flatMap(product => tagsFor(product, 'model')).map(model => make === 'ferrari' && ['812_gts', '812_superfast'].includes(model) ? '812' : model))].sort((a, b) => modelLabel(a).localeCompare(modelLabel(b), 'en', { numeric: true }));
   return <div className={styles.page}>
     <div className={styles.inner}>
-      <Link href="/partners/novitec#vehicles" className={styles.back}><ArrowLeft size={16} aria-hidden="true" /> All marques</Link>
+      <nav className={styles.breadcrumbs} aria-label="Breadcrumb"><Link href="/partners">PARTNERS</Link><span aria-hidden="true">/</span><Link href="/partners/novitec">NOVITEC</Link><span aria-hidden="true">/</span><span aria-current="page">{brand.name}</span></nav>
       <header className={`${styles.heading} ${copy ? styles.localHeading : ''}`}>
-        <div><p className={styles.eyebrow}>NOVITEC / {brand.name}</p><h1>{copy?.heading || `Choose your ${brand.name}.`}</h1><p>{copy?.introduction || 'Select your model to explore the NOVITEC parts available for your car.'}</p></div>
+        <div><h1>{copy?.heading || `Choose your ${brand.name}.`}</h1><p>{copy?.introduction || 'Select your model to explore the NOVITEC parts available for your car.'}</p></div>
         <Link href={shopBrandHref('novitec', { make: brand.tag })} className={styles.all}>Shop all {brand.name} parts <ArrowUpRight size={17} aria-hidden="true" /></Link>
       </header>
       {make === 'ferrari' && <AllocationBanner />}

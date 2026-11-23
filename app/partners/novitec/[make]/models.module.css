@@ -39,3 +39,10 @@
 .news h3 { font-size: 21px; line-height: 1.4; margin: 0 0 12px; }
 .range a:focus-visible, .news a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 @media(max-width:700px) { .localHeading h1 { font-size: clamp(30px, 8vw, 38px); }.range { grid-template-columns: 1fr; gap: 24px; padding-top: 40px; margin-top: 40px; }.news { padding-top: 40px; }.news > div { grid-template-columns: 1fr; gap: 28px; } }
+
+.breadcrumbs { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; min-height: 44px; color: #62625d; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.breadcrumbs a { display: inline-flex; align-items: center; min-height: 44px; }
+.breadcrumbs [aria-current="page"] { color: #171819; }
+.breadcrumbs a:hover { color: #171819; text-decoration: underline; text-underline-offset: 4px; }
+.breadcrumbs a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+@media(max-width:700px) { .breadcrumbs { gap: 6px; font-size: 10px; } }
