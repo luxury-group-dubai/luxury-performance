@@ -593,13 +593,13 @@ test('retired collection links cannot reappear through old chat metadata or What
 
 test('legacy collection destinations redirect to the current shop without external targets', () => {
   const { legacyCollectionHref } = load('lib/shop/legacy-collections.ts');
-  assert.equal(legacyCollectionHref('aerodynamic-styling'), '/shop');
+  assert.equal(legacyCollectionHref('aerodynamic-styling'), '/shop/search?q=Aerodynamics');
   assert.equal(legacyCollectionHref('used-parts'), '/shop/in-stock');
   assert.equal(legacyCollectionHref('brand-techart'), '/shop/techart');
   assert.equal(legacyCollectionHref('ferrari-f8', { brand: 'novitec' }), '/shop/novitec/ferrari/f8');
   assert.equal(legacyCollectionHref('rolls-royce-cullinan', { brand: ['novitec'] }), '/shop/novitec/rolls-royce/cullinan');
   assert.equal(legacyCollectionHref('ferrari-purosangue'), '/shop/vehicles/ferrari/purosangue');
-  assert.equal(legacyCollectionHref('unknown', { brand: '//evil.test' }), '/shop');
+  assert.equal(legacyCollectionHref('unknown', { brand: '//evil.test' }), null);
 });
 
 

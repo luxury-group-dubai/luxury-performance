@@ -10,7 +10,7 @@ const questions = {
     },
     {
       question: 'How do I confirm fitment?',
-      answer: 'Use the enquiry link on your chosen system. Tell us your model year, exact trim and any changes to your current exhaust so we can check fitment and what the system includes.',
+      answer: <>Check the <Link href="/shop/gintani">Gintani product listing</Link> for your vehicle. Tell our Dubai team your model year, exact trim and any changes to your current exhaust so we can check fitment and what the system includes.</>,
     },
     {
       question: 'Can I choose a valved exhaust?',
@@ -25,10 +25,32 @@ const questions = {
       answer: 'Some systems are intended for closed-course use. Tell us where and how you plan to use the car so we can confirm the manufacturer’s intended use for the exact system.',
     },
   ],
+  capristo: [
+    {
+      question: 'Where can I buy CAPRISTO exhausts in Dubai?',
+      answer: <>Browse our <Link href="/shop/capristo">CAPRISTO catalogue</Link> to see exhaust systems, carbon fibre components and the other parts listed for your vehicle. Our Dubai team can help confirm compatibility, price and availability before you order.</>,
+    },
+    {
+      question: 'How do I find the right CAPRISTO system for my car?',
+      answer: 'Choose your vehicle make and model, then select the generation and version where available. Check the listing for engine, body style and fitment notes. Share your model year and existing modifications if you need help confirming compatibility.',
+    },
+    {
+      question: 'Can I order carbon fibre parts as well as an exhaust?',
+      answer: <>Explore <Link href="/shop/capristo?category=Aerodynamics">CAPRISTO aerodynamic components</Link> alongside the <Link href="/shop/capristo?category=Exhaust">exhaust range</Link>. Carbon parts and finishes vary by model; check the supplied components and fitting requirements on each listing.</>,
+    },
+    {
+      question: 'Can you help with CAPRISTO installation in Dubai?',
+      answer: 'Tell us your vehicle details and the components you are considering. We can discuss fitting requirements, installation options and timing before you place your order.',
+    },
+    {
+      question: 'Are CAPRISTO parts in stock or special order?',
+      answer: 'Check the product listing for stock status. Availability depends on the exact part and specification. Ask our team to confirm current lead times for supplier orders before ordering for a particular date.',
+    },
+  ],
   techart: [
     {
       question: 'Which Porsche models can I find TECHART parts for?',
-      answer: 'Start with the vehicle selector above to see the models and generations in our catalogue. Availability varies by variant, body style and the type of upgrade you’re considering.',
+      answer: <>Browse TECHART parts for the <Link href="/shop/techart/porsche/911">Porsche 911</Link> and <Link href="/shop/techart/porsche/cayenne">Cayenne</Link>, then select the correct generation and body style. Availability varies by variant and the upgrade you’re considering.</>,
     },
     {
       question: 'How do I confirm a TECHART part fits my Porsche?',
@@ -76,7 +98,7 @@ const questions = {
   valvetronic: [
     {
       question: 'Which Valvetronic exhaust fits my car?',
-      answer: 'Fitment depends on your exact model, year, engine and existing exhaust setup. Send us those details and any modifications so we can help confirm the right system.',
+      answer: <>Start with the <Link href="/shop/valvetronic">Valvetronic Designs catalogue</Link> and select your vehicle make and model. Fitment depends on your exact year, engine and existing exhaust setup. Send our Dubai team those details and any modifications so we can confirm the right system.</>,
     },
     {
       question: 'How do I control the exhaust valves?',

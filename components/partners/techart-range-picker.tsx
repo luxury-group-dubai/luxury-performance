@@ -28,7 +28,7 @@ export function TechartRangePicker({ options }: { options: TechartRangeOption[] 
   return <section id="departments" className={styles.section} aria-labelledby="techart-range-title">
     <header className={styles.heading}>
       <div><h2 id="techart-range-title">The product range.</h2></div>
-      <ArrowLink href="/shop?brand=techart" light>All TECHART parts</ArrowLink>
+      <ArrowLink href="/shop/techart" light>All TECHART parts</ArrowLink>
     </header>
 
     <div className={styles.choices} role="group" aria-label="Choose a TECHART product category" onKeyDown={moveSelection}>

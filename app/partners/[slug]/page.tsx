@@ -11,7 +11,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { partners, type Partner } from '@/lib/partners';
 import { getCatalog } from '@/lib/shop/storefront';
 import { shopBrandHref } from '@/lib/shop/routes';
-import { categoryOf, filterProducts, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
+import { categoryOf, filterProducts, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
 import { money, type CatalogProduct } from '@/lib/shop/types';
 import { ArrowLink, Eyebrow } from '@/components/ui';
 import { HeroNewsprintFilter } from '@/components/hero-newsprint-filter';
@@ -63,7 +63,7 @@ function CapristoVehicleLogos({ vehicles }: { vehicles: string[] }) {
       const name = label(make);
 
       return <li key={make} data-make={make}>
-        <Link href={filterUrl('/shop', { brand: 'capristo', make })} prefetch={false} aria-label={`Shop Capristo for ${name}`}>
+        <Link href={shopBrandHref('capristo', { make })} prefetch={false} aria-label={`Shop Capristo for ${name}`}>
           {artwork ? <Image
             src={artwork.logo}
             alt=""
@@ -84,14 +84,14 @@ const novitecWordmarks: Record<string, string> = {
   rolls_royce: '/brand/navigation/wordmarks/rolls-royce.svg',
 };
 const feedLooks: { name: string; model: string; codes: string[]; fallback: string }[] = [
-  { name: 'Ferrari Purosangue', model: 'purosangue', codes: ['F4 666 22', 'F1 666 17', 'F6 666 28', 'F6 666 52'], fallback: '/shop?brand=novitec&make=ferrari&model=purosangue' },
-  { name: 'Lamborghini Revuelto', model: 'revuelto', codes: ['L1 444 10', 'L1 444 13', 'L1 444 40', 'L1 444 80'], fallback: '/shop?brand=novitec&make=lamborghini&model=revuelto' },
+  { name: 'Ferrari Purosangue', model: 'purosangue', codes: ['F4 666 22', 'F1 666 17', 'F6 666 28', 'F6 666 52'], fallback: '/shop/novitec/ferrari/purosangue' },
+  { name: 'Lamborghini Revuelto', model: 'revuelto', codes: ['L1 444 10', 'L1 444 13', 'L1 444 40', 'L1 444 80'], fallback: '/shop/novitec/lamborghini/revuelto' },
   { name: 'Ferrari SF90', model: 'sf90', codes: ['F6 090 26', 'F1 090 50', 'F6 090 35', 'F6 090 51'], fallback: '/partners/novitec/ferrari/sf90' },
   { name: 'Ferrari 12Cilindri', model: '12cilindri', codes: [], fallback: '/shop/novitec/ferrari/12cilindri' },
-  { name: 'Lamborghini Urus', model: 'urus', codes: [], fallback: '/shop?brand=novitec&make=lamborghini&model=urus' },
+  { name: 'Lamborghini Urus', model: 'urus', codes: [], fallback: '/shop/novitec/lamborghini/urus' },
   { name: 'Ferrari 812', model: '812', codes: ['F4 812 70', 'F6 812 26', 'F6 812 25', 'F6 812 27'], fallback: '/partners/novitec/ferrari/812' },
   { name: 'Ferrari F8', model: 'f8', codes: [], fallback: '/shop/novitec/ferrari/f8' },
-  { name: 'McLaren 750S', model: '750s', codes: ['C4 750 92', 'C5 750 10', 'C6 750 67', 'C6 750 61'], fallback: '/shop?brand=novitec&make=mclaren&model=750s' },
+  { name: 'McLaren 750S', model: '750s', codes: ['C4 750 92', 'C5 750 10', 'C6 750 67', 'C6 750 61'], fallback: '/shop/novitec/mclaren/750s' },
   { name: 'Rolls-Royce Cullinan', model: 'cullinan', codes: [], fallback: '/shop/novitec/rolls-royce/cullinan' },
   { name: 'Rolls-Royce Spectre', model: 'spectre', codes: [], fallback: '/shop/novitec/rolls-royce/spectre' },
 ];
@@ -147,7 +147,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
       </picture>
       <div className={styles.heroShade}/>
       <div className={styles.heroContent}>
-        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.slug === 'novitec' ? 'NOVITEC performance parts in Dubai' : p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" variant="hero" /></h1></div>
+        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.seo?.heading || (p.slug === 'novitec' ? 'NOVITEC performance parts in Dubai' : p.name)}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" variant="hero" /></h1></div>
         <div className={styles.heroFoot}>
           <ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>
         </div>
@@ -163,7 +163,7 @@ type PartnerDataProps = { partner: Partner; productsPromise: Promise<CatalogProd
 
 async function PartnerContent({ partner: p, productsPromise, searchParams }: PartnerDataProps & Pick<Props, 'searchParams'>) {
   const [products, query] = await Promise.all([productsPromise, searchParams]);
-  const shop = filterUrl('/shop', { brand: p.supplier });
+  const shop = p.supplier ? shopBrandHref(p.supplier) : `/contact?programme=${encodeURIComponent(p.name)}`;
   const enquiry = `/contact?programme=${encodeURIComponent(p.name)}`;
   const vehicleType = p.slug === 'techart' ? 'model' : 'make';
   const vehicles = [...new Set(products.flatMap(item => tagsFor(item, vehicleType)))].sort();
@@ -180,19 +180,19 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   const centeredIntro = p.slug === 'valvetronic';
   const initialFit = typeof query.fit === 'string' && is911Fit(query.fit) ? query.fit : undefined;
   const initialBody = typeof query.body === 'string' ? query.body : undefined;
-  const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
+  const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={shopBrandHref(p.supplier!, { [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
   const vehicleHeading = compactNovitec ? <>
     <h2>NOVITEC parts in Dubai.</h2>
     <p>Explore carbon fibre body kits, exhaust systems, forged wheels and suspension for Ferrari, Lamborghini, McLaren and Rolls-Royce. Our Dubai team helps you choose compatible parts and discuss installation options.</p>
     <p>Start with your marque, or <Link href="/shop/novitec">browse all NOVITEC parts</Link>.</p>
-  </> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Choose your model and generation to explore TECHART parts for your Porsche.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
+  </> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Explore TECHART body kits, wheels, exhausts and interior upgrades in Dubai. Choose your Porsche model and generation to find compatible parts.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
   const techartModels = <nav className={styles.modelChoices} aria-label="Porsche models">
     {vehicles.map(vehicle => {
       if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
       if (vehicle === '911' || vehicle === 'cayenne') {
         return <Link key={vehicle} href={vehicle === '911' ? '/partners/techart#vehicles' : '/partners/techart?model=cayenne#vehicles'}>{label(vehicle)}</Link>;
       }
-      return <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>;
+      return <Link key={vehicle} href={shopBrandHref(p.supplier!, { make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>;
     })}
   </nav>;
   const vehicleSection = vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
@@ -201,14 +201,14 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
       {techartModel === 'cayenne'
         ? <CayenneSelector products={products} fit={typeof query.fit === 'string' ? query.fit : undefined} body={initialBody} modelChoices={techartModels} />
         : <VehicleSelector products={products.filter(product => tagsFor(product, 'model').includes('911'))} fit={initialFit} body={initialBody} modelChoices={techartModels} />}
-    </> : compactNovitec ? <div className={styles.novitecWordmarks} aria-label="Explore NOVITEC by vehicle brand">{vehicles.map(vehicle => <Link key={vehicle} href={novitecWordmarks[vehicle] ? `/partners/novitec/${vehicle.replace(/_/g, '-')}` : filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })} aria-label={`Explore NOVITEC for ${label(vehicle)}`} data-make={vehicle}>{novitecWordmarks[vehicle] ? <Image src={novitecWordmarks[vehicle]} alt="" width={240} height={70} /> : <span>{label(vehicle)}</span>}</Link>)}</div> : vehicleLinks}
+    </> : compactNovitec ? <div className={styles.novitecWordmarks} aria-label="Explore NOVITEC by vehicle brand">{vehicles.map(vehicle => <Link key={vehicle} href={novitecWordmarks[vehicle] ? `/partners/novitec/${vehicle.replace(/_/g, '-')}` : shopBrandHref(p.supplier!, { [vehicleType]: vehicle })} aria-label={`Explore NOVITEC for ${label(vehicle)}`} data-make={vehicle}>{novitecWordmarks[vehicle] ? <Image src={novitecWordmarks[vehicle]} alt="" width={240} height={70} /> : <span>{label(vehicle)}</span>}</Link>)}</div> : vehicleLinks}
   </section>;
 
-  const collectionSection = showCategories && p.slug !== 'capristo' && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={filterUrl('/shop', { brand: p.supplier, category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;
+  const collectionSection = showCategories && p.slug !== 'capristo' && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={shopBrandHref(p.supplier!, { category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;
 
   const introduction = p.slug === 'capristo' ? <section id="discover" className={styles.capristoIntroduction} aria-labelledby="capristo-intro-title">
     <div className={styles.capristoIntroImage}><Image src="/images/partners/capristo-revuelto-instagram.jpg" alt="Capristo Lamborghini Revuelto exhaust system" fill sizes="(max-width: 700px) 100vw, 50vw" quality={90} /></div>
-    <div className={styles.capristoIntroCopy}><h2 id="capristo-intro-title">Sound, shaped<br />by hand.</h2><p>Capristo creates exhaust systems with a sound and finish all their own. Designed, hand-welded and polished in Sundern, Germany, each system is made to bring out the character of the car it’s built for.</p><ArrowLink href={shop}>Explore Capristo parts</ArrowLink></div>
+    <div className={styles.capristoIntroCopy}><h2 id="capristo-intro-title">Sound, shaped<br />by hand.</h2><p>Explore CAPRISTO exhaust systems and carbon fibre parts in Dubai. Choose your vehicle below, then check the generation, version and fitting requirements for your chosen components. Our team can help confirm availability and installation options.</p><ArrowLink href={shop}>Explore Capristo parts</ArrowLink></div>
   </section> : !compactNovitec && p.slug !== 'techart' && <section id="discover" className={`${styles.introduction} ${centeredIntro ? styles.centeredIntroduction : ''}`}>
     {!centeredIntro && p.slug !== 'techart' && <Eyebrow number={vehicleFirst ? "02" : "01"}>{p.stockOnly ? 'From our stock' : `The ${p.name} approach`}</Eyebrow>}
     <div><h2>{p.intro}</h2><p>{p.detail}</p>{p.stockOnly && <span className={styles.conditionNote}>Limited stock · 2 kits</span>}{p.supplier && !products.length && <p>No parts are currently listed online. <Link href={enquiry}>Ask our team about current availability.</Link></p>}</div>
@@ -242,7 +242,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
               )}
             </div>
             <div className={styles.capristoCategoryCopy}>
-              <ArrowLink href={filterUrl('/shop', { brand: p.supplier, category })}>Shop {category.toLowerCase()}</ArrowLink>
+              <ArrowLink href={shopBrandHref(p.supplier!, { category })}>Shop {category.toLowerCase()}</ArrowLink>
               <p>{items.length} {items.length === 1 ? 'part' : 'parts'}</p>
             </div>
           </article>;
@@ -262,7 +262,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
     {p.slug === 'techart' ? <TechartRangePicker options={techartRange.map(option => ({
       ...option,
       count: filterProducts(products, option.filters).length,
-      href: filterUrl('/shop', { brand: 'techart', ...option.filters }),
+      href: shopBrandHref('techart', option.filters),
     })).filter(option => option.count > 0)} /> : capristoBrowsing || (p.slug !== 'novitec' && collectionSection)}
     {p.slug === 'novitec' && <NovitecFeed looks={feedLooks.map(({ codes, model, ...look }) => {
       const album = novitecFeedAlbums[model];
@@ -305,7 +305,7 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
       })}</div>
     </section>}
     {p.slug === 'valvetronic' && <ValvetronicSoundGallery />}
-    {(p.slug === 'novitec' || p.slug === 'valvetronic' || p.slug === 'techart') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
+    {(p.slug === 'novitec' || p.slug === 'valvetronic' || p.slug === 'techart' || p.slug === 'capristo') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
     {p.slug !== 'capristo' && <section className={styles.support}><div><Eyebrow dark>Luxury Performance / Dubai</Eyebrow><h2>Your car.<br/>Your next chapter.</h2></div><div><p>{p.stockOnly ? 'Need a closer look at one of the kits? Ask us about its condition, included parts and fitment.' : 'From the first component to a complete specification, our team can help with compatibility, product choices and installation.'}</p><ArrowLink href={enquiry} light>Discuss your {p.slug === 'fi-exhaust' ? 'exhaust' : 'specification'}</ArrowLink></div></section>}
   </>;
 }

@@ -2,22 +2,22 @@ export type Partner = {
   slug: string; name: string; label: string; headline: string; intro: string;
   detail: string; image: string; imageAlt: string; focus: string; vehicleHeading: string;
   supplier?: string; stockOnly?: boolean;
-  seo?: { title: string; description: string };
+  seo?: { title: string; description: string; heading?: string };
 };
 export const partners: Partner[] = [
   { slug: 'novitec', name: 'NOVITEC', seo: { title: 'NOVITEC Dubai — Body Kits, Exhausts & Wheels', description: 'Explore NOVITEC body kits, carbon fibre parts, exhausts, forged wheels and suspension in Dubai. Find parts for Ferrari, Lamborghini, McLaren and Rolls-Royce.' }, label: 'Performance. In every detail.', headline: 'An unmistakable presence.',
     intro: 'Carbon, sound, stance. Bring every element of your car into one considered specification.',
     detail: 'Explore NOVITEC by marque, then find the aerodynamic components, exhausts, wheels and suspension options available for your car. Luxury Performance helps you bring the details together, from fitment to installation in Dubai.',
     image: '/images/ferrari.webp', imageAlt: 'Ferrari performance programme', focus: 'Aerodynamics / Exhaust / Wheels / Suspension', vehicleHeading: 'Start with your marque.', supplier: 'novitec' },
-  { slug: 'techart', name: 'TECHART', label: 'Porsche. With personality.', headline: 'Precision meets individuality.',
+  { slug: 'techart', name: 'TECHART', seo: { title: 'TECHART Dubai — Porsche Body Kits, Wheels & Upgrades', description: 'Explore TECHART Porsche body kits, wheels, exhausts and interior upgrades in Dubai. Find parts by model and generation, with help confirming fitment.', heading: 'TECHART Porsche parts in Dubai' }, label: 'Porsche. With personality.', headline: 'Precision meets individuality.',
     intro: 'A more personal Porsche, from the first detail to the complete expression.',
     detail: 'Explore the TECHART collection around your Porsche model. Choose a model first, then narrow the catalogue to the correct generation and fitment. Exterior, interior, wheels and performance: a specification that belongs together.',
     image: '/images/porsche.webp', imageAlt: 'Porsche performance programme', focus: 'Exterior / Wheels / Performance / Interior', vehicleHeading: 'Find your Porsche.', supplier: 'techart' },
-  { slug: 'valvetronic', name: 'Valvetronic Designs', label: 'Give your drive a voice.', headline: 'Character you can hear.',
+  { slug: 'valvetronic', name: 'Valvetronic Designs', seo: { title: 'Valvetronic Designs Dubai — Valved Exhaust Systems', description: 'Shop Valvetronic Designs exhaust systems and components in Dubai. Find your vehicle, compare sound clips and ask our team about fitment and installation.', heading: 'Valvetronic Designs exhausts in Dubai' }, label: 'Give your drive a voice.', headline: 'Character you can hear.',
     intro: 'Find the exhaust that feels like your car. Only more expressive.',
-    detail: 'Explore valved exhaust systems, downpipes and components, with fitment and installation support in Dubai.',
+    detail: 'Explore Valvetronic Designs valved exhaust systems, downpipes and components in Dubai. Choose your vehicle to find compatible options, compare sound clips and ask our team about fitting requirements and installation.',
     image: '/images/lamborghini.webp', imageAlt: 'Valvetronic exhaust collection', focus: 'Valved systems / Downpipes / Exhaust components', vehicleHeading: 'Find your vehicle.', supplier: 'valvetronic' },
-  { slug: 'capristo', name: 'CAPRISTO', label: 'Performance and sound.', headline: 'Built to be heard.',
+  { slug: 'capristo', name: 'CAPRISTO', seo: { title: 'CAPRISTO Dubai — Exhaust Systems & Carbon Fibre Parts', description: 'Explore CAPRISTO exhaust systems and carbon fibre parts in Dubai. Choose your vehicle, generation and version, then confirm fitment and availability.', heading: 'CAPRISTO exhausts and carbon fibre parts in Dubai' }, label: 'Performance and sound.', headline: 'Built to be heard.',
     intro: 'A more expressive drive, down to the details.',
     detail: 'Explore CAPRISTO exhaust systems, carbon components and performance parts for a wide range of vehicles. Our Dubai team can help you find the right components and confirm fitment for your car.',
     image: '/images/ferrari.webp', imageAlt: 'Rear detail of a Ferrari', focus: 'Exhaust / Carbon / Performance', vehicleHeading: 'Find your vehicle.', supplier: 'capristo' },
@@ -25,7 +25,7 @@ export const partners: Partner[] = [
     intro: 'Explore a more expressive sound, specified around the way you drive.',
     detail: 'Start with your vehicle and the sound you have in mind. Our team will help identify the FI Exhaust options for your model, discuss finishes and confirm compatibility before preparing your specification.',
     image: '/images/partners/fi-exhaust-m-performance.webp', imageAlt: 'FI Exhaust M-Performance carbon fibre exhaust tips and rear diffuser', focus: 'Valved exhaust / Sound / Vehicle-specific fitment', vehicleHeading: 'Explore the programme.' },
-  { slug: 'gintani', name: 'Gintani', label: 'Vehicle-specific exhaust systems.', headline: 'Gintani exhaust systems.',
+  { slug: 'gintani', name: 'Gintani', seo: { title: 'Gintani Dubai — Ferrari & Lamborghini Exhausts', description: 'Explore Gintani exhaust systems for Lamborghini, Ferrari, McLaren and Porsche in Dubai. Compare vehicle-specific systems and ask our team about fitment.', heading: 'Gintani exhaust systems in Dubai' }, label: 'Vehicle-specific exhaust systems.', headline: 'Gintani exhaust systems.',
     intro: 'Explore Gintani exhaust systems for Lamborghini, Ferrari, McLaren and Porsche.',
     detail: 'Tell our Dubai team what you drive and the sound you’re after. We’ll help confirm fitment, configuration and availability.',
     image: '/images/partners/gintani/hero.webp', imageAlt: '', focus: 'Exhaust systems', vehicleHeading: 'Find your vehicle.', supplier: 'gintani' },
