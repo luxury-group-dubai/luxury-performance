@@ -73,3 +73,25 @@ test('Valvetronic vehicle links preserve make scopes and untagged range searches
     }
   }
 });
+
+const { legacyCollectionHref } = load(resolve(root, 'lib/shop/legacy-collections.ts'));
+test('retired Shopify collection aliases keep vehicle and body context', () => {
+  assert.equal(legacyCollectionHref('f8-spider-copy-1'), '/shop/vehicles/ferrari/f8/spider');
+  assert.equal(legacyCollectionHref('812-gts-copy'), '/shop/vehicles/ferrari/812/gts');
+  assert.equal(legacyCollectionHref('ferrari-812-copy-1'), '/shop/vehicles/ferrari/812');
+  assert.equal(legacyCollectionHref('750s-coupe-copy'), '/shop/vehicles/mclaren/750s');
+  assert.equal(legacyCollectionHref('urus-performante'), '/shop/vehicles/lamborghini/urus/performante');
+  assert.equal(legacyCollectionHref('car-rolls-royce-1'), '/shop/vehicles/rolls-royce');
+});
+test('retired brand and category collections lead to relevant current ranges', () => {
+  assert.equal(legacyCollectionHref('techart-porsche-911'), '/shop/techart/porsche/911');
+  assert.equal(legacyCollectionHref('valvetronic-mercedes-amg'), '/shop/valvetronic/mercedes');
+  assert.equal(legacyCollectionHref('valvetronic-aston-martin'), '/shop/valvetronic/aston-martin');
+  assert.equal(legacyCollectionHref('rev-arts-scale-cars-copy'), '/shop/collectibles?category=Model+Cars');
+  assert.equal(legacyCollectionHref('category-exhaust'), '/shop/search?q=Exhaust');
+  assert.equal(legacyCollectionHref('ferrari-f8-copy', { brand: 'novitec' }), '/shop/novitec/ferrari/f8');
+});
+test('collections without a current equivalent do not redirect to unrelated shop content', () => {
+  for (const handle of ['brand-abt', 'brand-liberty-walk', 'does-not-exist', '__proto__', 'constructor']) assert.equal(legacyCollectionHref(handle), null);
+  assert.equal(legacyCollectionHref('unknown', { brand: '//evil.test' }), null);
+});
