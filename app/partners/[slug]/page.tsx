@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { partners, type Partner } from '@/lib/partners';
 import { getCatalog } from '@/lib/shop/storefront';
+import { shopBrandHref } from '@/lib/shop/routes';
 import { categoryOf, filterProducts, filterUrl, label, supplierOf, tagsFor, suppliers } from '@/lib/shop/taxonomy';
 import { money, type CatalogProduct } from '@/lib/shop/types';
 import { ArrowLink, Eyebrow } from '@/components/ui';
@@ -123,7 +124,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   const productsPromise = p.supplier && p.slug !== 'gintani'
     ? getCatalog().then(products => products.filter(item => supplierOf(item) === p.supplier))
     : Promise.resolve([]);
-  const shop = p.supplier ? filterUrl('/shop', { brand: p.supplier }) : `/contact?programme=${encodeURIComponent(p.name)}`;
+  const shop = p.supplier ? shopBrandHref(p.supplier) : `/contact?programme=${encodeURIComponent(p.name)}`;
   const heroAsset = p.slug === 'novitec' ? novitecNlargoHero : partnerHeroImages[p.slug];
   const mobileHero = heroAsset ? getImageProps({ ...heroAsset.mobile, alt: '', sizes: '100vw', quality: p.slug === 'novitec' ? 95 : 60 }).props : null;
   const overlaysHeader = hasPartnerHeroOverlay(p.slug);
@@ -147,13 +148,9 @@ export default async function PartnerPage({ params, searchParams }: Props) {
       <div className={styles.heroShade}/>
       <div className={styles.heroContent}>
         <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.slug === 'novitec' ? 'NOVITEC performance parts in Dubai' : p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" variant="hero" /></h1></div>
-        <div className={styles.heroFoot}>{p.slug === 'gintani' ? (
-          <a href="#gintani-range" className="arrow-link action-secondary light">
-            <span>Explore exhaust systems</span><span className="arrow-disc"><ActionArrow size={19} strokeWidth={1.5} /></span>
-          </a>
-        ) : <Suspense fallback={<ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>}>
-          <PartnerHeroAction partner={p} productsPromise={productsPromise} />
-        </Suspense>}</div>
+        <div className={styles.heroFoot}>
+          <ArrowLink href={shop} light>{p.supplier ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : 'Discuss your exhaust'}</ArrowLink>
+        </div>
       </div>
     </section>
     {p.slug === 'gintani' ? <GintaniRange /> : <Suspense fallback={<div style={{ minHeight: '100svh' }} aria-busy="true" aria-label="Loading partner collection" />}>
@@ -163,16 +160,6 @@ export default async function PartnerPage({ params, searchParams }: Props) {
 }
 
 type PartnerDataProps = { partner: Partner; productsPromise: Promise<CatalogProduct[]> };
-
-async function PartnerHeroAction({ partner: p, productsPromise }: PartnerDataProps) {
-  const products = await productsPromise;
-  const vehicles = [...new Set(products.flatMap(item => tagsFor(item, p.slug === 'techart' ? 'model' : 'make')))];
-  const vehicleFirst = p.slug === 'techart' && (vehicles.includes('911') || vehicles.includes('cayenne'));
-  const compactNovitec = p.slug === 'novitec' && vehicles.length > 0;
-  const shop = filterUrl('/shop', { brand: p.supplier });
-  const enquiry = `/contact?programme=${encodeURIComponent(p.name)}`;
-  return <ArrowLink href={vehicleFirst || compactNovitec ? "#vehicles" : products.length ? shop : enquiry} light>{vehicleFirst ? 'Choose your Porsche' : compactNovitec ? 'Choose your vehicle' : products.length ? `Shop ${p.stockOnly ? 'URBAN kits' : p.name}` : p.slug === 'fi-exhaust' ? 'Discuss your exhaust' : 'Ask about availability'}</ArrowLink>;
-}
 
 async function PartnerContent({ partner: p, productsPromise, searchParams }: PartnerDataProps & Pick<Props, 'searchParams'>) {
   const [products, query] = await Promise.all([productsPromise, searchParams]);
