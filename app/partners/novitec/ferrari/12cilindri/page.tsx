@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { PartnerBreadcrumbs } from '@/components/partner-breadcrumbs';
 import { shopBrandHref } from '@/lib/shop/routes';
 import { nlargoPath } from '@/lib/nlargo-allocation';
 import models from '../../[make]/models.module.css';
@@ -36,8 +37,8 @@ const versions = [
 
 export default function Novitec12CilindriVersions() {
   return <div className={models.page}><div className={models.inner}>
-    <Link href="/partners/novitec/ferrari" className={models.back}><ArrowLeft size={16} aria-hidden="true" /> All Ferrari models</Link>
-    <header className={models.heading}><div><p className={models.eyebrow}>NOVITEC / Ferrari / 12Cilindri</p><h1>Choose your 12Cilindri.</h1><p>Explore the Coupé, Spider or N-LARGO.</p></div></header>
+    <PartnerBreadcrumbs partner={{ slug: 'novitec', name: 'NOVITEC' }} marque="Ferrari" model="12Cilindri" />
+    <header className={models.heading}><div><h1>Choose your 12Cilindri.</h1><p>Explore the Coupé, Spider or N-LARGO.</p></div></header>
     <ul className={`${models.grid} ${styles.grid}`} aria-label="Ferrari 12Cilindri versions">
       {versions.map(version => <li key={version.name}><Link className={models.card} href={version.href}>
         <span className={models.picture}><Image src={version.image} alt={`Ferrari ${version.name} by NOVITEC`} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 45vw, 30vw" quality={90} className={models.image} /></span>

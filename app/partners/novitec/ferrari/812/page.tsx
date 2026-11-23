@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { PartnerBreadcrumbs } from '@/components/partner-breadcrumbs';
 import { filterUrl } from '@/lib/shop/taxonomy';
 import styles from '../../[make]/models.module.css';
 
@@ -19,8 +20,8 @@ const versions = [
 
 export default function Novitec812() {
   return <div className={styles.page}><div className={styles.inner}>
-    <Link href="/partners/novitec/ferrari" className={styles.back}><ArrowLeft size={16} aria-hidden="true" /> All Ferrari models</Link>
-    <header className={styles.heading}><div><p className={styles.eyebrow}>NOVITEC / Ferrari / 812</p><h1>Choose your 812.</h1><p>Select your version to explore NOVITEC parts listed for your car.</p></div>
+    <PartnerBreadcrumbs partner={{ slug: 'novitec', name: 'NOVITEC' }} marque="Ferrari" model="812" />
+    <header className={styles.heading}><div><h1>Choose your 812.</h1><p>Select your version to explore NOVITEC parts listed for your car.</p></div>
 
     </header>
     <ul className={styles.grid} aria-label="Ferrari 812 versions">{versions.map(version => <li key={version.key}>
