@@ -154,7 +154,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
         </div>
       </div>
     </section>
-    {p.slug === 'novitec' && <AllocationBanner />}
+    {p.slug === 'novitec' && <AllocationBanner compact />}
     <div className={styles.partnerTrail}><PartnerBreadcrumbs partner={p} /></div>
     {p.slug === 'gintani' ? <GintaniRange /> : <Suspense fallback={<div style={{ minHeight: '100svh' }} aria-busy="true" aria-label="Loading partner collection" />}>
       <PartnerContent partner={p} productsPromise={productsPromise} searchParams={searchParams} />
