@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = partners.find(p => p.slug === slug);
   if (!p) return { title: 'Partner not found' };
   const heroAsset = p.slug === 'novitec' ? novitecNlargoHero : partnerHeroImages[p.slug];
-  return { title: `${p.name} in Dubai`, description: p.intro + ' ' + p.detail, alternates: { canonical: `/partners/${p.slug}` }, robots: { index: process.env.SHOP_SEO_LIVE === 'true', follow: true }, openGraph: { title: `${p.name} | Luxury Performance`, description: p.intro, images: [{ url: heroAsset?.image || p.image, alt: heroAsset?.alt || p.imageAlt }] } };
+  return { title: p.seo?.title || `${p.name} in Dubai`, description: p.seo?.description || p.intro + ' ' + p.detail, alternates: { canonical: `/partners/${p.slug}` }, robots: { index: process.env.SHOP_SEO_LIVE === 'true', follow: true }, openGraph: { title: p.seo?.title || `${p.name} | Luxury Performance`, description: p.seo?.description || p.intro, images: [{ url: heroAsset?.image || p.image, alt: heroAsset?.alt || p.imageAlt }] } };
 }
 export default async function PartnerPage({ params, searchParams }: Props) {
   const { slug } = await params;
@@ -146,7 +146,7 @@ export default async function PartnerPage({ params, searchParams }: Props) {
       </picture>
       <div className={styles.heroShade}/>
       <div className={styles.heroContent}>
-        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" variant="hero" /></h1></div>
+        <div className={styles.heroBody}><h1 id="partner-title" className={styles.brandHeading}><span className="sr-only">{p.slug === 'novitec' ? 'NOVITEC performance parts in Dubai' : p.name}</span><BrandArtwork brand={p.slug} labelled={false} className={styles.heroBrand} sizes="(max-width: 700px) 250px, 480px" variant="hero" /></h1></div>
         <div className={styles.heroFoot}>{p.slug === 'gintani' ? (
           <a href="#gintani-range" className="arrow-link action-secondary light">
             <span>Explore exhaust systems</span><span className="arrow-disc"><ActionArrow size={19} strokeWidth={1.5} /></span>
@@ -194,7 +194,11 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   const initialFit = typeof query.fit === 'string' && is911Fit(query.fit) ? query.fit : undefined;
   const initialBody = typeof query.body === 'string' ? query.body : undefined;
   const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={filterUrl('/shop', { brand: p.supplier, [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
-  const vehicleHeading = <><h2>{p.vehicleHeading}</h2><p>{compactNovitec ? 'NOVITEC aerodynamics, exhausts, wheels and suspension, with fitment and installation support in Dubai.' : vehicleFirst ? 'Choose your model and generation to explore TECHART parts for your Porsche.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
+  const vehicleHeading = compactNovitec ? <>
+    <h2>NOVITEC parts in Dubai.</h2>
+    <p>Explore carbon fibre body kits, exhaust systems, forged wheels and suspension for Ferrari, Lamborghini, McLaren and Rolls-Royce. Our Dubai team helps you choose compatible parts and discuss installation options.</p>
+    <p>Start with your marque, or <Link href="/shop/novitec">browse all NOVITEC parts</Link>.</p>
+  </> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Choose your model and generation to explore TECHART parts for your Porsche.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
   const techartModels = <nav className={styles.modelChoices} aria-label="Porsche models">
     {vehicles.map(vehicle => {
       if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
