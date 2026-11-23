@@ -11,10 +11,12 @@ import { prepareBrandCatalogue, previewBrands } from '../../preview/shop/brand-c
 import { buildVehicleChoices } from '../../preview/shop/vehicle-data';
 import { Catalog } from '@/components/shop/catalog';
 import { ShopEntryPage } from '../entry-page';
+import { techartShopMetadata } from '@/lib/shop/techart-seo';
 type Props = { params: Promise<{ path: string[] }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { path } = await params;
   const scope = shopPathFilters('/shop/' + path.join('/'));
+  if (scope.brand === 'techart' && (!scope.make || scope.make === 'porsche')) return techartShopMetadata(scope, await searchParams, process.env.SHOP_SEO_LIVE === 'true');
   const brand = suppliers.find(item => item.slug === scope.brand);
   const name = [brand?.name, scope.make && label(scope.make), scope.model && label(scope.model), scope.body && label(scope.body)].filter(Boolean).join(' ');
   const title = scope.view === 'stock' ? 'In Stock' : scope.view === 'vehicles' ? `Shop by Vehicle${name ? ` — ${name}` : ''}` : `${name} Parts`;
