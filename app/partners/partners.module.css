@@ -413,3 +413,5 @@
 /* Preserve the N-LARGO studio photograph; shade only behind the hero text. */
 .fullBleedHero[data-brand="novitec"] .heroShade { background: linear-gradient(180deg,#0005,transparent 35%),linear-gradient(0deg,#0009,transparent 45%); }
 @media (max-width:700px) { .fullBleedHero[data-brand="novitec"] { min-height: min(62svh,132vw); } }
+
+.partnerTrail { padding: 16px var(--gutter) 0; background: var(--paper) url('/images/concrete-grain.svg') repeat; background-size: 320px; }

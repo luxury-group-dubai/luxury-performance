@@ -1,0 +1,6 @@
+.trail { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; min-height: 44px; color: #62625d; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.trail a { display: inline-flex; align-items: center; min-height: 44px; }
+.trail [aria-current="page"] { color: #171819; }
+.trail a:hover { color: #171819; text-decoration: underline; text-underline-offset: 4px; }
+.trail a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+@media(max-width:700px) { .trail { gap: 6px; font-size: 10px; } }

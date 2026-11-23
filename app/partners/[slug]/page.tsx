@@ -1,3 +1,4 @@
+import { PartnerBreadcrumbs } from '@/components/partner-breadcrumbs';
 import { AllocationBanner } from '@/components/nlargo/allocation-banner';
 /* eslint-disable @next/next/no-img-element */
 import { ActionArrow } from '@/components/action-arrow';
@@ -153,6 +154,8 @@ export default async function PartnerPage({ params, searchParams }: Props) {
         </div>
       </div>
     </section>
+    {p.slug === 'novitec' && <AllocationBanner compact view="rear" />}
+    <div className={styles.partnerTrail}><PartnerBreadcrumbs partner={p} /></div>
     {p.slug === 'gintani' ? <GintaniRange /> : <Suspense fallback={<div style={{ minHeight: '100svh' }} aria-busy="true" aria-label="Loading partner collection" />}>
       <PartnerContent partner={p} productsPromise={productsPromise} searchParams={searchParams} />
     </Suspense>}
@@ -258,7 +261,6 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   return <>
     {p.slug === 'techart' && <TechartPageMotion />}
     {vehicleFirst && vehicleSection}
-    {p.slug === 'novitec' && <AllocationBanner />}
     {introduction}
     {!vehicleFirst && !capristoBrowsing && vehicleSection}
     {p.slug === 'techart' ? <TechartRangePicker options={techartRange.map(option => ({

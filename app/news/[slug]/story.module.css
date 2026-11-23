@@ -8,3 +8,6 @@
 .galleryImage:first-child, .galleryImage:last-child { grid-column: 1 / -1; aspect-ratio: 2; }
 .galleryImage img { object-fit: cover; }
 @media (max-width: 700px) { .gallery { padding-bottom: 65px; } .gallery h2 { font-size: 36px; margin-bottom: 24px; } .galleryGrid { gap: 8px; } .galleryImage:first-child, .galleryImage:last-child { aspect-ratio: 1.5; } .galleryImage:not(:first-child):not(:last-child) { aspect-ratio: 1; } }
+.related { display:flex;flex-wrap:wrap;gap:12px 32px;padding:0 var(--gutter) 48px; }
+.related a { display:inline-flex;align-items:center;min-height:44px;font-size:13px;text-decoration:underline;text-underline-offset:4px; }
+.related a:focus-visible { outline:2px solid currentColor;outline-offset:4px; }
