@@ -32,7 +32,7 @@ test('legacy model links retain their exact NOVITEC version', () => {
 });
 test('TECHART trim filters survive the clean vehicle URL', () => {
   const target = shopBrandHref('techart', { make: 'porsche', model: '911', body: 'targa', fit: '992_2_carrera_targa_gts' });
-  assert.equal(target, '/shop/techart/porsche/911/targa?fit=992_2_carrera_targa_gts');
+  assert.equal(target, '/shop/techart/porsche/911/992-2/targa/carrera-4-gts');
 });
 test('stock, vehicle and search legacy links use their production destinations', () => {
   assert.equal(legacyShopHref({ view: 'vehicles', make: 'ferrari', model: '12cilindri', body: 'spider' }), '/shop/vehicles/ferrari/12cilindri/spider');
@@ -94,4 +94,51 @@ test('retired brand and category collections lead to relevant current ranges', (
 test('collections without a current equivalent do not redirect to unrelated shop content', () => {
   for (const handle of ['brand-abt', 'brand-liberty-walk', 'does-not-exist', '__proto__', 'constructor']) assert.equal(legacyCollectionHref(handle), null);
   assert.equal(legacyCollectionHref('unknown', { brand: '//evil.test' }), null);
+});
+
+const { parseTechartPath } = load(resolve(root, 'lib/shop/techart-routes.ts'));
+const { techartStep, techartBodies } = load(resolve(root, 'lib/shop/techart-steps.ts'));
+test('TECHART links express each selection step without fit query parameters', () => {
+  const base = { make: 'porsche', model: '911' };
+  assert.equal(shopBrandHref('techart', base), '/shop/techart/porsche/911');
+  assert.equal(shopBrandHref('techart', { ...base, generation: '992_2' }), '/shop/techart/porsche/911/992-2');
+  assert.equal(shopBrandHref('techart', { ...base, generation: '992_2', body: 'coupe' }), '/shop/techart/porsche/911/992-2/coupe');
+  const full = shopBrandHref('techart', { ...base, fit: '992_2_carrera_t', body: 'coupe', category: 'Exhaust', sort: 'price-up' });
+  assert.equal(full, '/shop/techart/porsche/911/992-2/coupe/carrera-t?category=Exhaust&sort=price-up');
+  assert.deepEqual(shopPathFilters(full.split('?')[0]), { brand: 'techart', make: 'porsche', model: '911', generation: '992_2', body: 'coupe', fit: '992_2_carrera_t' });
+});
+test('TECHART GT3, Touring, RS, S/T, Targa and Cayenne hybrid fit keys round-trip', () => {
+  for (const [model, fit, body] of [
+    ['911','991_1_gt3_gt3_touring','coupe'], ['911','991_2_gt3_with_wing','coupe'],
+    ['911','992_1_gt3_gt3_touring','coupe'], ['911','992_1_gt3_rs','coupe'], ['911','992_1_st','coupe'],
+    ['911','992_2_carrera_4_gts','targa'], ['cayenne','e3_2_s_e_hybrid','suv'], ['cayenne','e3_1_turbo_gt','coupe'],
+  ]) {
+    const url = shopBrandHref('techart', { make:'porsche', model, fit, body });
+    const parsed = shopPathFilters(url);
+    assert.equal(parsed.fit, fit, url); assert.equal(parsed.body, body, url);
+  }
+  assert.equal(parseTechartPath('911', ['e3-2','coupe','s']), undefined);
+  assert.equal(parseTechartPath('cayenne', ['992-2','suv','s']), undefined);
+  assert.equal(parseTechartPath('911', ['992-2','suv']), undefined);
+});
+
+test('TECHART step validation rejects unavailable choices and skips single options', () => {
+  const choice = { fit:'992_2_gt3_with_wing', name:'GT3', count:24, image:{src:'/car.webp',width:800,height:270} };
+  const options = [{key:'992_2',name:'992.2',bodies:[{key:'coupe',name:'Coupé',choices:[choice]}]}];
+  const base = {brand:'techart',make:'porsche',model:'911'};
+  assert.equal(techartStep(options,base).next.generation,'992_2');
+  assert.equal(techartStep(options,{...base,generation:'992_2'}).next.body,'coupe');
+  assert.equal(techartStep(options,{...base,generation:'992_2',body:'coupe'}).next.fit,choice.fit);
+  assert.equal(techartStep(options,{...base,body:'coupe',fit:choice.fit}).choice.fit,choice.fit);
+  assert.equal(techartStep(options,{...base,generation:'991_1'}).invalid,true);
+  assert.equal(techartStep(options,{...base,generation:'992_2',body:'targa'}).invalid,true);
+  assert.equal(techartStep(options,{...base,body:'coupe',fit:'992_2_carrera_t'}).invalid,true);
+});
+test('Cayenne Turbo GT remains a distinct trim under the Coupé body', () => {
+  const bodies = techartBodies({ key:'e3_2',name:'E3.2', bodies:[
+    {key:'coupe',name:'Coupé',choices:[{fit:'e3_2_cayenne',name:'Cayenne',count:20}]},
+    {key:'coupe',name:'Turbo GT',choices:[{fit:'e3_2_turbo_gt',name:'Turbo GT',count:21}]},
+  ]});
+  assert.equal(bodies.length,1); assert.equal(bodies[0].name,'Coupé');
+  assert.deepEqual(bodies[0].choices.map(item=>item.fit),['e3_2_cayenne','e3_2_turbo_gt']);
 });

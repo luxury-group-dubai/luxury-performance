@@ -1,6 +1,7 @@
 import type { Filters } from './taxonomy';
 import { normalizeNovitecFilters } from './novitec-variants';
 import { valvetronicModelKey } from './valvetronic-models';
+import { normalizeTechartRoute, parseTechartPath, techartPath } from './techart-routes';
 
 export type ShopRouteFilters = Filters & { choose?: string; view?: string; stock_group?: string; show?: string };
 const slug = (value: string) => encodeURIComponent(value.replaceAll('_', '-'));
@@ -13,6 +14,7 @@ function extras(path: string, filters: ShopRouteFilters, omit: string[] = []) {
 }
 export function shopBrandHref(brand: string, values: ShopRouteFilters = {}) {
   const filters = normalizeNovitecFilters({ ...values, brand, ...(brand === 'valvetronic' && values.model ? { model: valvetronicModelKey(values.model) } : {}) });
+  if (brand === 'techart' && (!filters.make || filters.make === 'porsche')) return extras(techartPath(normalizeTechartRoute(filters), values.choose === '1'), filters, ['fit', 'generation', 'choose']);
   const path = ['/shop', slug(brand), ...(filters.make ? [slug(filters.make)] : []), ...(filters.make && filters.model ? [slug(filters.model)] : []), ...(filters.make && filters.model && filters.body ? [slug(filters.body)] : [])].join('/');
   return extras(path, { ...values, ...filters });
 }
@@ -30,6 +32,10 @@ export function shopPathFilters(pathname: string): ShopRouteFilters {
   if (segments[1] === 'vehicles') return { view: 'vehicles', make: key(segments[2]), model: key(segments[3]), body: key(segments[4]) };
   if (segments[1] === 'in-stock') return { view: 'stock' };
   if (segments[1] === 'search') return {};
+  if (segments[1] === 'techart' && segments[2] === 'porsche' && segments[3]) {
+    const selection = parseTechartPath(segments[3], segments.slice(4));
+    return { brand: 'techart', make: 'porsche', model: key(segments[3]), ...(selection ?? { generation: 'invalid' }) };
+  }
   return { brand: key(segments[1]), make: key(segments[2]), model: key(segments[3]), body: key(segments[4]) };
 }
 export function legacyShopHref(values: ShopRouteFilters) {

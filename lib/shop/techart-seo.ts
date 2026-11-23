@@ -22,7 +22,7 @@ export function techartShopMetadata(scope: ShopRouteFilters, query: Record<strin
   const copy = scope.model === '911' || scope.model === 'cayenne' ? models[scope.model] : brand;
   const canonical = `/shop/techart${scope.model ? `/porsche/${scope.model}` : ''}`;
   const selectionKeys = ['q', 'category', 'sort', 'choose', 'fit', 'generation', 'view', 'stock_group', 'show', 'page'];
-  const selection = !!scope.body || (!!scope.make && !scope.model) || selectionKeys.some(key => Boolean(query[key]));
+  const selection = !!scope.generation || !!scope.fit || !!scope.body || (!!scope.make && !scope.model) || selectionKeys.some(key => Boolean(query[key]));
   return {
     title: copy.title,
     description: copy.description,

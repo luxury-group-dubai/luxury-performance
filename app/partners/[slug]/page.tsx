@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import Image, { getImageProps } from 'next/image';
 import { hasPartnerHeroOverlay, partnerHeroImages } from '@/lib/brand-hero-images';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { partners, type Partner } from '@/lib/partners';
 import { getCatalog } from '@/lib/shop/storefront';
@@ -18,9 +18,9 @@ import { ArrowLink, Eyebrow } from '@/components/ui';
 import { HeroNewsprintFilter } from '@/components/hero-newsprint-filter';
 import newsprint from '@/components/hero-newsprint.module.css';
 import { BrandArtwork } from '@/components/brand-artwork';
-import { CayenneSelector, VehicleSelector } from '@/components/shop/vehicle-selector';
-import pickerStyles from '@/components/shop/vehicle-selector.module.css';
-import { is911Fit } from '@/lib/shop/techart-fitment';
+import { TechartStepPicker } from '@/components/shop/techart-step-picker';
+import { vehicleOptions } from '@/lib/shop/techart-fitment';
+import { cayenneOptions } from '@/lib/shop/techart-cayenne';
 import { NovitecStories } from '@/components/novitec-stories/novitec-stories';
 import { NovitecFeed } from '@/components/novitec-feed/novitec-feed';
 import { novitecFeedAlbums } from '@/lib/novitec-feed-albums';
@@ -123,6 +123,13 @@ export default async function PartnerPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const p = partners.find(partner => partner.slug === slug);
   if (!p) notFound();
+  if (p.slug === 'techart') {
+    const query = Object.fromEntries(Object.entries(await searchParams).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value]));
+    if (query.model || query.fit || query.generation) {
+      if (query.model && query.model !== '911' && query.model !== 'cayenne') notFound();
+      permanentRedirect(shopBrandHref('techart', { ...query, make: 'porsche', model: query.model || '911' }));
+    }
+  }
 
   const productsPromise = p.supplier && p.slug !== 'gintani'
     ? getCatalog().then(products => products.filter(item => supplierOf(item) === p.supplier))
@@ -159,15 +166,15 @@ export default async function PartnerPage({ params, searchParams }: Props) {
     {p.slug === 'novitec' && <AllocationBanner compact view="rear" />}
     <div className={styles.partnerTrail}><PartnerBreadcrumbs partner={p} /></div>
     {p.slug === 'gintani' ? <GintaniRange /> : <Suspense fallback={<div style={{ minHeight: '100svh' }} aria-busy="true" aria-label="Loading partner collection" />}>
-      <PartnerContent partner={p} productsPromise={productsPromise} searchParams={searchParams} />
+      <PartnerContent partner={p} productsPromise={productsPromise} />
     </Suspense>}
   </div>;
 }
 
 type PartnerDataProps = { partner: Partner; productsPromise: Promise<CatalogProduct[]> };
 
-async function PartnerContent({ partner: p, productsPromise, searchParams }: PartnerDataProps & Pick<Props, 'searchParams'>) {
-  const [products, query] = await Promise.all([productsPromise, searchParams]);
+async function PartnerContent({ partner: p, productsPromise }: PartnerDataProps) {
+  const products = await productsPromise;
   const shop = p.supplier ? shopBrandHref(p.supplier) : `/contact?programme=${encodeURIComponent(p.name)}`;
   const enquiry = `/contact?programme=${encodeURIComponent(p.name)}`;
   const vehicleType = p.slug === 'techart' ? 'model' : 'make';
@@ -180,29 +187,16 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
   const selections = [...categories.flatMap(c => products.find(item => categoryOf(item) === c) || []), ...products];
   const featured = [...new Map(selections.map(item => [item.id, item])).values()].slice(0, 4);
   const vehicleFirst = p.slug === 'techart' && (vehicles.includes('911') || vehicles.includes('cayenne'));
-  const techartModel = vehicles.includes('cayenne') && (query.model === 'cayenne' || !vehicles.includes('911')) ? 'cayenne' : '911';
   const compactNovitec = p.slug === 'novitec' && vehicles.length > 0;
   const centeredIntro = p.slug === 'valvetronic';
-  const initialFit = typeof query.fit === 'string' && is911Fit(query.fit) ? query.fit : undefined;
-  const initialBody = typeof query.body === 'string' ? query.body : undefined;
   const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={shopBrandHref(p.supplier!, { [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
-  const vehicleHeading = compactNovitec ? <h2>Choose your marque.</h2> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Explore TECHART body kits, wheels, exhausts and interior upgrades in Dubai. Choose your Porsche model and generation to find compatible parts.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
-  const techartModels = <nav className={pickerStyles.modelChoices} aria-label="Porsche models">
-    {vehicles.map(vehicle => {
-      if (vehicle === techartModel) return <span key={vehicle} aria-current="true">{label(vehicle)}</span>;
-      if (vehicle === '911' || vehicle === 'cayenne') {
-        return <Link key={vehicle} href={vehicle === '911' ? '/partners/techart#vehicles' : '/partners/techart?model=cayenne#vehicles'}>{label(vehicle)}</Link>;
-      }
-      return <Link key={vehicle} href={shopBrandHref(p.supplier!, { make: 'porsche', model: vehicle })}>{label(vehicle)} <ArrowUpRight size={14} /></Link>;
-    })}
-  </nav>;
+  const vehicleHeading = compactNovitec ? <h2>Choose your marque.</h2> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Choose your model, then select the generation, body style and trim in the shop.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
   const vehicleSection = vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
     <header>{!compactNovitec && !centeredIntro && !vehicleFirst && <Eyebrow number="02">Your starting point</Eyebrow>}{vehicleHeading}</header>
-    {vehicleFirst ? <>
-      {techartModel === 'cayenne'
-        ? <CayenneSelector products={products} fit={typeof query.fit === 'string' ? query.fit : undefined} body={initialBody} modelChoices={techartModels} />
-        : <VehicleSelector products={products.filter(product => tagsFor(product, 'model').includes('911'))} fit={initialFit} body={initialBody} modelChoices={techartModels} />}
-    </> : compactNovitec ? <div className={styles.novitecWordmarks} aria-label="Explore NOVITEC by vehicle brand">{vehicles.map(vehicle => <Link key={vehicle} href={novitecWordmarks[vehicle] ? `/partners/novitec/${vehicle.replace(/_/g, '-')}` : shopBrandHref(p.supplier!, { [vehicleType]: vehicle })} aria-label={`Explore NOVITEC for ${label(vehicle)}`} data-make={vehicle}>{novitecWordmarks[vehicle] ? <Image src={novitecWordmarks[vehicle]} alt="" width={240} height={70} /> : <span>{label(vehicle)}</span>}</Link>)}</div> : vehicleLinks}
+    {vehicleFirst ? <TechartStepPicker headingLevel={3} options={{
+      '911': vehicleOptions(filterProducts(products, { brand: 'techart', make: 'porsche', model: '911' })),
+      cayenne: cayenneOptions(filterProducts(products, { brand: 'techart', make: 'porsche', model: 'cayenne' })),
+    }} /> : compactNovitec ? <div className={styles.novitecWordmarks} aria-label="Explore NOVITEC by vehicle brand">{vehicles.map(vehicle => <Link key={vehicle} href={novitecWordmarks[vehicle] ? `/partners/novitec/${vehicle.replace(/_/g, '-')}` : shopBrandHref(p.supplier!, { [vehicleType]: vehicle })} aria-label={`Explore NOVITEC for ${label(vehicle)}`} data-make={vehicle}>{novitecWordmarks[vehicle] ? <Image src={novitecWordmarks[vehicle]} alt="" width={240} height={70} /> : <span>{label(vehicle)}</span>}</Link>)}</div> : vehicleLinks}
   </section>;
 
   const collectionSection = showCategories && p.slug !== 'capristo' && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={shopBrandHref(p.supplier!, { category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;

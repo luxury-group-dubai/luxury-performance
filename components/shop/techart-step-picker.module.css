@@ -1,0 +1,13 @@
+.picker { min-width:0; }
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px 28px; }
+.card { display:block; min-width:0; color:#171819; padding-bottom:22px; border-bottom:1px solid #d4d3d0; }
+.image { display:flex; align-items:center; justify-content:center; aspect-ratio:2.5; }
+.image > span { width:100%; }
+.caption { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:18px; }
+.caption h2, .caption h3 { font-size:clamp(21px,2.1vw,30px); line-height:1.15; }
+.caption svg { flex-shrink:0; }
+.card p { margin-top:10px; color:#62625d; font-size:12px; }
+.note { margin-top:28px; color:#62625d; font-size:11px; line-height:1.7; }
+.card:hover .caption svg { color:var(--accent); }
+@media(max-width:1100px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:700px) { .grid { gap:26px 16px; }.caption { gap:8px; margin-top:12px; }.caption h2, .caption h3 { font-size:20px; }.caption svg { width:16px; } }
