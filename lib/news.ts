@@ -3,6 +3,7 @@ import { novitecStories } from './novitec-stories';
 export type NewsArticle = {
   slug: string;
   brand: string;
+  marque?: string;
   title: string;
   summary: string;
   description: string;
@@ -23,6 +24,7 @@ export type NewsArticle = {
 export const newsArticles: readonly NewsArticle[] = novitecStories.map(story => ({
   slug: `novitec-${story.marque.toLowerCase()}-${story.slug}`,
   brand: 'NOVITEC',
+  marque: story.marque,
   title: `NOVITEC ${story.marque} ${story.model}`,
   summary: story.summary,
   description: story.description,
