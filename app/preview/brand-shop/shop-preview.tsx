@@ -21,8 +21,6 @@ import { brandMakes, brandVehicleName, previewBrandPath } from '../shop/brand-ca
 import { shopBrandHref } from '@/lib/shop/routes';
 import styles from '../novitec-shop/preview.module.css';
 import own from './shop-preview.module.css';
-import { TechartGuide } from '@/components/shop/techart-guide';
-import { techartShopCopy } from '@/lib/shop/techart-seo';
 import { VehicleVersionPicker } from './vehicle-version-picker';
 import { capristoFitmentOptions } from '@/lib/shop/capristo-fitment';
 import { valvetronicFitmentOptions } from '@/lib/shop/valvetronic-fitment';
@@ -63,7 +61,6 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
     cayenne: cayenneOptions(filterProducts(products, { brand, make: 'porsche', model: 'cayenne' })),
   } : undefined, [techart, brand, products]);
   const porscheModel = techart && (selected?.model === '911' || selected?.model === 'cayenne') ? selected.model : undefined;
-  const techartCopy = techart ? techartShopCopy(porscheModel) : undefined;
   const selection = techartSelection({ brand, model: porscheModel, fit, body });
   const validPorsche = porscheModel && porscheOptions?.[porscheModel].some(generation => generation.bodies.some(style => style.key === body && style.choices.some(choice => choice.fit === fit)));
   const active = !choosing && (!techart || validPorsche) ? selected : undefined;
@@ -121,7 +118,7 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
         </div>
       </div>
       <nav className={styles.breadcrumbs} aria-label="Vehicle selection"><Link href="/shop">SHOP</Link><span aria-hidden="true">/</span>{techart ? <Link href={shopBrandHref(brand)}>{supplier.name}</Link> : <button onClick={() => go({})}>{supplier.name}</button>}{!accessories && make && <><span aria-hidden="true">/</span>{techart ? <Link href={shopBrandHref(brand)}>{make.name}</Link> : <button onClick={() => go({ make: make.key, choose: '1' })}>{make.name}</button>}</>}{porscheModel && !accessories && <><span aria-hidden="true">/</span><Link href={shopBrandHref(brand, { make: 'porsche', model: porscheModel })}>{selected?.name}</Link></>}{active && !accessories && <><span aria-hidden="true">/</span><span aria-current="page">{activeName}</span></>}{accessories && <><span aria-hidden="true">/</span><span aria-current="page">Accessories & controls</span></>}</nav>
-      <div className={styles.heroContent}><div><h1>{accessories ? 'Accessories & controls.' : active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{activeName}</span></> : techartCopy ? <><span className={styles.vehicleMarque}>TECHART in Dubai </span><span>{techartCopy.heading}</span></> : porscheModel ? `Choose your ${selected?.name}.` : make ? `Choose your ${make.name}.` : 'Start with your car.'}</h1>{!browsing && <p>{techartCopy?.introduction || 'Find the parts and possibilities for your model.'}</p>}</div>
+      <div className={styles.heroContent}><div><h1>{accessories ? 'Accessories & controls.' : active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{activeName}</span></> : porscheModel ? `Choose your ${selected?.name}.` : make ? `Choose your ${make.name}.` : 'Start with your car.'}</h1>{!browsing && <p>Find the parts and possibilities for your model.</p>}</div>
         {active && !accessories && <div className={profile ? styles.selectedCar : own.changeOnly}>
           {profile && <div className={styles.selectedArtwork} data-tall={['urus', 'cullinan', 'purosangue', 'cayenne'].includes(active.model) ? 'true' : undefined}>{cover && <Image className={`${styles.selectedImage} ${styles.selectedShadow}`} src={cover} alt="" aria-hidden="true" width={1116} height={598} sizes="(max-width:700px) 85vw, 40vw" />}<Image className={styles.selectedImage} src={profile.src} alt={`${active.marque} ${activeName}`} width={porscheProfile?.width ?? 1116} height={porscheProfile?.height ?? 598} sizes="(max-width:700px) 85vw, 40vw" /></div>}
           <button className={styles.change} onClick={() => go({ make: active.make, ...(techart ? { model: active.model, fit, body } : {}), choose: '1' })}><RotateCcw size={15} />Change car</button>
@@ -162,6 +159,5 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
       {!!review.length && <details className={own.fitmentReview}><summary>Fitment confirmation needed ({review.length})</summary><p>These parts need a compatibility check for your selected Porsche. Contact our team before ordering.</p><ul>{review.map(product => <li key={product.id}><Link href={`/products/${product.handle}`}>{product.title.replace(/^TECHART\s*[-–]\s*/i, '')}<ArrowUpRight size={15} aria-hidden="true" /></Link></li>)}</ul></details>}
       <Link className={styles.help} href={`/contact?programme=${encodeURIComponent(supplier.name)}`}>Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>
     </section>}
-    {techart && <TechartGuide model={porscheModel} />}
   </div>;
 }

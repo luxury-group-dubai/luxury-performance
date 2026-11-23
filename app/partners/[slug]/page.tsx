@@ -34,6 +34,7 @@ import { valvetronicVehicles } from '@/lib/valvetronic-vehicles';
 import { TechartPageMotion } from '@/components/partners/techart-page-motion';
 import { TechartRangePicker } from '@/components/partners/techart-range-picker';
 import { techartRange } from '@/lib/techart-range';
+import { TechartFitmentGuide } from '@/components/partners/techart-fitment-guide';
 import styles from '../partners.module.css';
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
 
@@ -205,11 +206,13 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
 
   const collectionSection = showCategories && p.slug !== 'capristo' && <section id="departments" className={styles.departments}><div className={styles.sectionHeading}><div>{p.slug !== 'novitec' && <Eyebrow>The collection</Eyebrow>}<h2>{p.slug === 'novitec' ? 'The collection' : 'Details that define it.'}</h2></div><ArrowLink href={shop}>View all parts</ArrowLink></div><div className={styles.categoryGrid}>{categories.map((category, i) => { const items = products.filter(item => categoryOf(item) === category); const image = items.find(item => item.featuredImage)?.featuredImage; return <Link key={category} className={styles.categoryCard} href={shopBrandHref(p.supplier!, { category })}><div className={styles.categoryImage}>{image && <img src={`${image.url}${image.url.includes('?') ? '&' : '?'}width=700`} alt={image.altText || `${p.name} ${category}`} loading="lazy"/>}<span>{String(i + 1).padStart(2, '0')}</span></div><div><h3>{category}</h3><ArrowUpRight size={20}/></div><p>{items.length} {items.length === 1 ? 'part' : 'parts'}{p.stockOnly ? ' · limited stock' : ''}</p></Link>; })}</div></section>;
 
-  const introduction = p.slug === 'novitec' ? <section id="discover" className={styles.novitecIntroduction} aria-labelledby="novitec-intro-title">
-    <h2 id="novitec-intro-title">NOVITEC.<br />In Dubai.</h2>
+  const introduction = p.slug === 'novitec' || p.slug === 'techart' ? <section id="discover" className={styles.brandIntroduction} aria-labelledby={`${p.slug}-intro-title`}>
+    <h2 id={`${p.slug}-intro-title`}>{p.name}.<br />In Dubai.</h2>
     <div>
-      <p>Carbon fibre body kits, exhaust systems, forged wheels and suspension for Ferrari, Lamborghini, McLaren and Rolls-Royce. Our Dubai team helps you choose compatible NOVITEC parts and discuss installation options.</p>
-      <ArrowLink href="/shop/novitec">Shop NOVITEC parts</ArrowLink>
+      <p>{p.slug === 'novitec'
+        ? 'Carbon fibre body kits, exhaust systems, forged wheels and suspension for Ferrari, Lamborghini, McLaren and Rolls-Royce. Our Dubai team helps you choose compatible NOVITEC parts and discuss installation options.'
+        : 'Body kits, carbon fibre parts, wheels, exhausts, suspension and interior upgrades for your Porsche 911 or Cayenne. Our Dubai team helps you choose compatible TECHART parts and discuss installation options.'}</p>
+      <ArrowLink href={shop}>Shop {p.name} parts</ArrowLink>
     </div>
   </section> : p.slug === 'capristo' ? <section id="discover" className={styles.capristoIntroduction} aria-labelledby="capristo-intro-title">
     <div className={styles.capristoIntroImage}><Image src="/images/partners/capristo-revuelto-instagram.jpg" alt="Capristo Lamborghini Revuelto exhaust system" fill sizes="(max-width: 700px) 100vw, 50vw" quality={90} /></div>
@@ -260,9 +263,10 @@ async function PartnerContent({ partner: p, productsPromise, searchParams }: Par
 
   return <>
     {p.slug === 'techart' && <TechartPageMotion />}
-    {vehicleFirst && vehicleSection}
     {introduction}
+    {vehicleFirst && vehicleSection}
     {!vehicleFirst && !capristoBrowsing && vehicleSection}
+    {p.slug === 'techart' && <TechartFitmentGuide />}
     {p.slug === 'techart' ? <TechartRangePicker options={techartRange.map(option => ({
       ...option,
       count: filterProducts(products, option.filters).length,
