@@ -82,7 +82,8 @@ export function VehiclePicker({ model, options, shopPath, initialFit, initialBod
   const generation = options.find(item => item.key === generationKey) || options[0];
   const body = generation.bodies.find(item => item.name === bodyName) || generation.bodies[0];
   const shopQuery = new URLSearchParams({ brand: 'techart', make: 'porsche', model });
-  const modelShop = `${shopPath}?${shopQuery}`;
+  const productionShop = shopPath === '/shop' || shopPath.startsWith('/shop/');
+  const modelShop = productionShop ? shopBrandHref('techart', { make: 'porsche', model }) : `${shopPath}?${shopQuery}`;
 
   return <div className={`${styles.selector}${cardStyle === 'plain' ? ` ${styles.plainCards}` : ''}`}>
     <aside className={styles.filters} aria-label="Vehicle filters">
@@ -102,7 +103,7 @@ export function VehiclePicker({ model, options, shopPath, initialFit, initialBod
           const title = choice.name === modelName ? modelName : `${modelName} ${choice.name}`;
           const count = `${choice.count} ${choice.count === 1 ? 'part' : 'parts'}`;
           const bodyLabel = body.key === 'targa' || body.name === choice.name ? '' : ` ${body.name}`;
-          return <Link className={`${styles.card} ${styles.trimCard}`} key={choice.fit} href={shopPath.startsWith("/shop/") ? shopBrandHref("techart", { make: "porsche", model, fit: choice.fit, body: body.key }) : `${modelShop}&fit=${choice.fit}&body=${body.key}`} aria-label={`Shop ${count} for ${title} ${generation.name}${bodyLabel}`}>
+          return <Link className={`${styles.card} ${styles.trimCard}`} key={choice.fit} href={productionShop ? shopBrandHref("techart", { make: "porsche", model, fit: choice.fit, body: body.key }) : `${modelShop}&fit=${choice.fit}&body=${body.key}`} aria-label={`Shop ${count} for ${title} ${generation.name}${bodyLabel}`}>
             <div className={styles.image}>{imagePlaceholders[choice.image.src] ? <SelectorCarImage {...choice.image} placeholder={imagePlaceholders[choice.image.src]} optimized={false} /> : <img {...choice.image} alt="" loading="lazy" />}</div>
             <div className={styles.trimCaption}><div><PorscheTrimName name={choice.name} model={model} /><small>{count}</small></div><ArrowUpRight size={18} aria-hidden="true" /></div>
           </Link>;
@@ -115,7 +116,7 @@ export function VehiclePicker({ model, options, shopPath, initialFit, initialBod
       </p>
     </> : <p className={styles.note}>No parts are currently listed for this generation. <Link href="/contact">Ask us about your Porsche.</Link></p>}
     {cayenne && showBroadCollections && <nav className={styles.cayenneLinks} aria-label="Browse Cayenne parts">
-      {body && <Link className={styles.change} href={`${modelShop}&fit=${generation.key}`}>Shop all {generation.name} parts</Link>}
+      {body && <Link className={styles.change} href={productionShop ? shopBrandHref('techart', { make: 'porsche', model, fit: generation.key }) : `${modelShop}&fit=${generation.key}`}>Shop all {generation.name} parts</Link>}
       <Link className={styles.change} href={modelShop}>All Cayenne parts</Link>
     </nav>}
     </div>
