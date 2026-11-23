@@ -9,7 +9,7 @@ import { previewShopBrands as brandMenu } from './navigation';
 import { MenuLogo } from '@/components/shop-menu-cards';
 import { ManufacturerLogo } from '@/components/shop/manufacturer-logo';
 import { label } from '@/lib/shop/taxonomy';
-import type { CatalogProduct } from '@/lib/shop/types';
+import type { StockProduct } from './stock-data';
 import { StockPanel } from './stock-panel';
 import { vehicleChoiceHref, vehicleStepHref, type VehicleChoices } from './vehicle-navigation';
 import { stockBrowseHref, vehicleBrowseHref } from '@/lib/shop/routes';
@@ -20,7 +20,7 @@ const makeKey = (item: { key: string }) => item.key;
 
 const shopTabs = [{ key: 'brands', name: 'By brand' }, { key: 'vehicles', name: 'By vehicle' }, { key: 'stock', name: 'In stock' }];
 
-export function ShopEntryPreview({ models, stockProducts, usedStockProducts, stockFailed }: { models: VehicleChoices; stockProducts: CatalogProduct[]; usedStockProducts: CatalogProduct[]; stockFailed: boolean }) {
+export function ShopEntryPreview({ models, stockProducts, usedStockProducts, stockFailed }: { models: VehicleChoices; stockProducts: StockProduct[]; usedStockProducts: StockProduct[]; stockFailed: boolean }) {
   const router = useRouter();
   const params = useSearchParams();
   const view = shopTabs.some(tab => tab.key === params.get('view')) ? params.get('view')! : 'brands';
