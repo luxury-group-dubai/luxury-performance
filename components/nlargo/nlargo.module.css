@@ -165,3 +165,7 @@
 .compactArtwork { position: absolute; inset-block: 0; left: 51%; width: 360px; pointer-events: none; mix-blend-mode: multiply; opacity: .72; mask-image: linear-gradient(90deg, transparent, #000 22%, #000 70%, transparent); }
 .compactArtwork img { object-fit: cover; object-position: 50% 56%; filter: grayscale(1) contrast(1.15); }
 @media(max-width:700px) { .compactArtwork { left: auto; right: -60px; width: 260px; opacity: .55; mask-image: linear-gradient(90deg, transparent, #000 45%, #000 75%, transparent); }.compactArtwork img { object-position: 50% 60%; } }
+
+.rearArtwork { width: 340px; }
+.rearArtwork img { object-position: 50% 54%; }
+@media(max-width:700px) { .rearArtwork { width: 260px; }.rearArtwork img { object-position: 50% 54%; } }
