@@ -4,7 +4,7 @@ export const purosangueShopCopy = {
   make: 'ferrari', model: 'purosangue',
   title: 'NOVITEC Ferrari Purosangue Parts Dubai — Carbon & Exhausts',
   description: 'Shop NOVITEC Ferrari Purosangue parts in Dubai: exhaust systems, carbon bodywork, forged wheels and suspension. Check finishes, fitment and availability.',
-  introduction: 'Shop NOVITEC exhausts, carbon bodywork, forged wheels and suspension for the Ferrari Purosangue, with fitment and ordering support from Dubai.',
+  introduction: 'NOVITEC exhausts, carbon bodywork, forged wheels and suspension for your Ferrari Purosangue. Supplied from Dubai, with help choosing the right parts.',
   heading: 'Choose your Purosangue specification.',
   range: 'Compare exhaust configurations, wheel designs and carbon components in the catalogue above. The Purosangue range includes both individual upgrades and ESTESO components. Read each listing for the supplied parts, material and finish; an individual component should not be assumed to include a complete conversion.',
   fitment: 'Some parts are intended for the ESTESO widebody specification rather than the standard body. Match bodywork, wheel and spacer requirements before combining components. For exhausts, check the listed valve-control configuration and any required supporting modules against your car and the system you are ordering.',

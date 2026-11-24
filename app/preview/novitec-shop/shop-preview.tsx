@@ -95,7 +95,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         {model && <><span aria-hidden="true">/</span><button onClick={() => go({ make: make!.tag, model, choose: '1' })}>{novitecModelName(model)}</button></>}
         {active?.body && <><span aria-hidden="true">/</span><span aria-current="page">{active.name}</span></>}
       </nav>
-      <div className={styles.heroContent}><div><h1>{active ? <><span className={styles.vehicleMarque}>{modelCopy ? `NOVITEC ${active.marque}` : active.marque}</span><span>{active.name}{modelCopy ? ' parts' : ''}</span></> : heading}</h1>{modelCopy ? <p>{modelCopy.introduction}</p> : !active && <p>Find the parts and possibilities for your exact model.</p>}
+      <div className={styles.heroContent}><div><h1>{active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{active.name}</span></> : heading}</h1>{modelCopy ? <p>{modelCopy.introduction}</p> : !active && <p>Find the parts and possibilities for your exact model.</p>}
       </div>{active && <div className={styles.selectedCar}>
         {active.image && <div className={styles.selectedArtwork} data-tall={active.model === 'urus' || active.model === 'cullinan' || active.model === 'purosangue' ? 'true' : undefined}>{active.cover && <Image className={`${styles.selectedImage} ${styles.selectedShadow}`} src={active.cover} alt="" aria-hidden="true" width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" />}<Image className={styles.selectedImage} src={active.image} alt={active.name} width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" /></div>}
         <button className={styles.change} onClick={() => go({ ...scope(active), choose: '1' })}><RotateCcw size={15} /> Change car</button>
