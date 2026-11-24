@@ -39,3 +39,5 @@
 .generationTabs { flex-wrap: wrap; overflow: visible; gap: 0 24px; }
 .toolbarChoices { display: flex; gap: 16px; margin-left: auto; }
 @media(max-width:700px) { .generationTabs { gap: 0 18px; } .toolbarChoices { gap: 8px; } }
+
+.modelLandingCar { padding-bottom:0; }
