@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
-import { filterUrl } from '@/lib/shop/taxonomy';
+import { ArrowUpRight } from 'lucide-react';
+import { PartnerBreadcrumbs } from '@/components/partner-breadcrumbs';
+import { shopBrandHref } from '@/lib/shop/routes';
 import { nlargoPath } from '@/lib/nlargo-allocation';
 import models from '../../[make]/models.module.css';
 import styles from './versions.module.css';
@@ -22,22 +23,22 @@ const versions = [
   },
   {
     name: '12Cilindri Spider', image: '/images/novitec-models/12cilindri-spider-side.jpg',
-    href: '/contact?' + new URLSearchParams({ programme: 'NOVITEC 12Cilindri Spider', vehicle: 'Ferrari 12Cilindri Spider' }).toString(),
-    action: 'Enquire about Spider upgrades',
-    description: 'Speak with our team about NOVITEC options and fitment for your Spider.',
+    href: shopBrandHref('novitec', { make: 'ferrari', model: '12cilindri', body: 'spider' }),
+    action: 'Explore Spider parts',
+    description: 'Browse the NOVITEC parts catalogue for the Ferrari 12Cilindri Spider.',
   },
   {
-    name: '12Cilindri', image: '/images/novitec-models/12cilindri-coupe-side.jpg',
-    href: filterUrl('/shop', { brand: 'novitec', make: 'ferrari', model: '12cilindri' }),
-    action: 'Explore 12Cilindri parts',
+    name: '12Cilindri Coupé', image: '/images/novitec-models/12cilindri-coupe-side.jpg',
+    href: shopBrandHref('novitec', { make: 'ferrari', model: '12cilindri', body: 'coupe' }),
+    action: 'Explore Coupé parts',
     description: 'Browse the NOVITEC parts catalogue for the Ferrari 12Cilindri Coupé.',
   },
 ];
 
 export default function Novitec12CilindriVersions() {
   return <div className={models.page}><div className={models.inner}>
-    <Link href="/partners/novitec/ferrari" className={models.back}><ArrowLeft size={16} aria-hidden="true" /> All Ferrari models</Link>
-    <header className={models.heading}><div><p className={models.eyebrow}>NOVITEC / Ferrari / 12Cilindri</p><h1>Choose your 12Cilindri.</h1><p>Explore the Coupé, Spider or N-LARGO.</p></div></header>
+    <PartnerBreadcrumbs partner={{ slug: 'novitec', name: 'NOVITEC' }} marque="Ferrari" model="12Cilindri" />
+    <header className={models.heading}><div><h1>Choose your 12Cilindri.</h1><p>Explore the Coupé, Spider or N-LARGO.</p></div></header>
     <ul className={`${models.grid} ${styles.grid}`} aria-label="Ferrari 12Cilindri versions">
       {versions.map(version => <li key={version.name}><Link className={models.card} href={version.href}>
         <span className={models.picture}><Image src={version.image} alt={`Ferrari ${version.name} by NOVITEC`} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 45vw, 30vw" quality={90} className={models.image} /></span>

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { PartnerBreadcrumbs } from '@/components/partner-breadcrumbs';
 import { filterUrl } from '@/lib/shop/taxonomy';
 import styles from '../../[make]/models.module.css';
 
@@ -19,8 +20,8 @@ const versions = [
 
 export default function NovitecSF90() {
   return <div className={styles.page}><div className={styles.inner}>
-    <Link href="/partners/novitec/ferrari" className={styles.back}><ArrowLeft size={16} aria-hidden="true" /> All Ferrari models</Link>
-    <header className={styles.heading}><div><p className={styles.eyebrow}>NOVITEC / Ferrari / SF90</p><h1>Choose your SF90.</h1><p>Select your version to explore NOVITEC parts listed for your car.</p></div>
+    <PartnerBreadcrumbs partner={{ slug: 'novitec', name: 'NOVITEC' }} marque="Ferrari" model="SF90" />
+    <header className={styles.heading}><div><h1>Choose your SF90.</h1><p>Select your version to explore NOVITEC parts listed for your car.</p></div>
       <Link href={filterUrl('/shop', { brand: 'novitec', make: 'ferrari', model: 'sf90' })} className={styles.all}>Shop all SF90 parts <ArrowUpRight size={17} aria-hidden="true" /></Link>
     </header>
     <ul className={styles.grid} aria-label="Ferrari SF90 versions">{versions.map(version => <li key={version.key}>
