@@ -20,10 +20,12 @@ export function techartStep(options: VehicleGeneration[], input: Filters) {
   const generation = options.find(item => item.key === filters.generation);
   const bodies = generation ? techartBodies(generation) : [];
   const body = bodies.find(item => item.key === filters.body);
-  const variants = generation ? [...new Map(bodies.flatMap(style => style.choices.map(item => ({
+  // Preserve the first body profile (911 Coupé / Cayenne SUV); later body
+  // alternatives must not overwrite the representative variant image.
+  const variants = generation ? bodies.flatMap(style => style.choices.map(item => ({
     ...item, key: `${item.fit}${style.key === 'targa' ? ':targa' : ''}`,
     body: style.key === 'targa' ? 'targa' : undefined,
-  }))).map(item => [item.key, item])).values()] : [];
+  }))).filter((item, index, all) => all.findIndex(candidate => candidate.key === item.key) === index) : [];
   const variant = variants.find(item => item.fit === filters.fit && (filters.body === 'targa' ? item.body === 'targa' : !item.body));
   const availableBodies = filters.fit ? bodies.filter(style => style.key !== 'targa' && style.choices.some(item => item.fit === filters.fit)) : [];
   const choice = body?.choices.find(item => item.fit === filters.fit);

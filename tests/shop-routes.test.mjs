@@ -160,12 +160,14 @@ test('legacy TECHART migrations retain category, sort and tracking values withou
   const targa={...carrera,name:'Targa 4S'};
   const options=[{key:'992_2',name:'992.2',bodies:[
     {key:'coupe',name:'Coupé',choices:[carrera]},
-    {key:'cabriolet',name:'Cabriolet',choices:[carrera]},
+    {key:'cabriolet',name:'Cabriolet',choices:[{...carrera,image:{...image,src:'/cabriolet.webp'}}]},
     {key:'targa',name:'Targa',choices:[targa]},
   ]}];
   const base={brand:'techart',model:'911',generation:'992_2'};
   const state=techartStep(options,base);
   assert.deepEqual(state.variants.map(v=>v.name),['Carrera 4S','Targa 4S']);
+  assert.equal(state.variants[0].image.src,'/car.webp');
+  assert.equal(techartStep(options,{...base,fit:carrera.fit,body:'cabriolet'}).choice.image.src,'/cabriolet.webp');
   assert.equal(state.next,undefined);
   assert.deepEqual(techartStep(options,{...base,fit:carrera.fit}).availableBodies.map(b=>b.key),['coupe','cabriolet']);
   assert.equal(techartStep(options,{...base,fit:carrera.fit}).next,undefined);
