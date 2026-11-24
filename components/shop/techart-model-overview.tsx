@@ -28,7 +28,7 @@ export function TechartGenerationLinks({ model, options }: { model:'911'|'cayenn
 export function TechartModelRange({ model, products }: {model:'911'|'cayenne';products:CatalogProduct[]}) {
   const matching=filterProducts(products,{brand:'techart',make:'porsche',model});
   const examples=['Aerodynamics','Wheels','Exhaust'].flatMap(category=>{
-    const product=matching.find(item=>categoryOf(item)===category && item.featuredImage);
+    const product=matching.find(item=>categoryOf(item)===category && item.featuredImage && !/shared model image/i.test(item.featuredImage.altText || '') && (category !== 'Wheels' || /(?:formula|forged|wheel set)/i.test(item.title)));
     return product?[{category,product}]:[];
   });
   if(!examples.length) return null;
