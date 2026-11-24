@@ -2,7 +2,7 @@ import type { ShopRouteFilters } from './routes';
 
 export const purosangueShopCopy = {
   make: 'ferrari', model: 'purosangue',
-  title: 'NOVITEC Ferrari Purosangue Parts Dubai — Carbon & Exhausts',
+  title: 'NOVITEC Ferrari Purosangue Parts Dubai',
   description: 'Shop NOVITEC Ferrari Purosangue parts in Dubai: exhaust systems, carbon bodywork, forged wheels and suspension. Check finishes, fitment and availability.',
   introduction: 'NOVITEC exhausts, carbon bodywork, forged wheels and suspension for your Ferrari Purosangue. Supplied from Dubai, with help choosing the right parts.',
   heading: 'Choose your Purosangue specification.',
