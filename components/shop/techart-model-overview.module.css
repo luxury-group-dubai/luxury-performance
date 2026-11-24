@@ -11,7 +11,7 @@
 .heading { display:flex; justify-content:space-between; align-items:start; gap:32px; margin-bottom:28px; }
 .heading h2 { font-size:clamp(26px,3vw,40px); line-height:1.15; }
 .heading p { max-width:460px; color:#595955; font-size:12px; line-height:1.8; }
-.products { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; }
+.products { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px; }
 .products>a { min-width:0; }
 .image { position:relative; background:#fff; aspect-ratio:1.5; }
 .image img { object-fit:contain; padding:22px; }
