@@ -60,8 +60,8 @@ export function novitecModelShopCopy(input: ShopRouteFilters) {
     description:`Shop NOVITEC ${vehicle} parts in Dubai. Explore ${parts}, with help checking fitment, finishes and availability.`,
     introduction:`NOVITEC ${parts} for your ${vehicle}. Supplied from Dubai, with help choosing the right parts.`,
     heading:`Choose your ${name} specification.`,
-    range:version ? `Browse the NOVITEC ${vehicle} catalogue above. ${profile.range}` : profile.range,
-    fitmentHeading:profile.fitmentHeading,
+    range:version ? `Explore NOVITEC ${parts} for the ${vehicle}. Compare the finishes, configurations and supplied components listed for your selected version before planning several upgrades together.` : profile.range,
+    fitmentHeading:version ? `Confirm your ${name} fitment.` : profile.fitmentHeading,
     fitment:versionNotes[`${scope.model}/${scope.body}`] || profile.fitment,
     ordering:purosangueShopCopy.ordering,
   };

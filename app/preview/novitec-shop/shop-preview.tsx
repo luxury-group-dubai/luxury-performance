@@ -135,7 +135,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         return <section className={styles.productSection} key={name}><h2>{name} <sup>{items.length}</sup></h2><div className={styles.productGrid}>{items.map(product => <Link key={product.id} className={`shop-product-card ${styles.productCard}`} href={productHref(product.handle, shopBrandHref('novitec', filters))}><div className="shop-product-image">{product.featuredImage && <Image src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} width={600} height={600} sizes="(max-width:700px) 44vw, (max-width:1100px) 29vw, 22vw" />}<span className="shop-product-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span></div><h3>{product.title}</h3><p className="shop-price">From {money(product.priceRange.minVariantPrice)}</p></Link>)}</div></section>;
       })}
       {!shown.length && <p>No parts in this collection. <button onClick={() => go(scope(active))}>View all parts for your car</button></p>}
-      <Link className={styles.help} href="/contact">Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>
+      {(!modelCopy || category || sort) && <Link className={styles.help} href="/contact">Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>}
     </section>}
       {modelCopy && !category && !sort && <section className={`${styles.modelGuide} ${styles.guideShell}`} aria-labelledby="novitec-model-guide-title">
         <h2 id="novitec-model-guide-title">{modelCopy.heading}</h2>
