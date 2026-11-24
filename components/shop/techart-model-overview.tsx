@@ -9,7 +9,7 @@ import styles from './techart-model-overview.module.css';
 
 // Calendar-year introductions, not universal model-year or fitment boundaries.
 // Sources: Porsche Newsroom's 991/992 history and 2015, 2017, 2023, 2024 launch releases.
-const introductions: Record<string, string> = { '991_1':'2011', '991_2':'2015', '992_1':'2018', '992_2':'2024', e3_1:'2017', e3_2:'2023' };
+export const techartGenerationIntroductions: Record<string, string> = { '991_1':'2011', '991_2':'2015', '992_1':'2018', '992_2':'2024', e3_1:'2017', e3_2:'2023' };
 
 export function TechartGenerationLinks({ model, options }: { model:'911'|'cayenne'; options:VehicleGeneration[] }) {
   return <div className={styles.selection}>
@@ -17,7 +17,7 @@ export function TechartGenerationLinks({ model, options }: { model:'911'|'cayenn
     <nav className={styles.generations} aria-label="Choose your generation">
       {[...options].reverse().map(generation=><Link key={generation.key} href={shopBrandHref('techart',{make:'porsche',model,generation:generation.key})}>
         <span>{generation.name}<ArrowUpRight size={15} aria-hidden="true"/></span>
-        {introductions[generation.key] && <small>Introduced {introductions[generation.key]}</small>}
+        {techartGenerationIntroductions[generation.key] && <small>Introduced {techartGenerationIntroductions[generation.key]}</small>}
       </Link>)}
     </nav>
     <p className={styles.note}>Dates vary by variant and market.</p>

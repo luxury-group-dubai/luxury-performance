@@ -6,6 +6,7 @@ import { techartStep } from '@/lib/shop/techart-steps';
 import { shopBrandHref } from '@/lib/shop/routes';
 import placeholders from '@/lib/generated/porsche-selector-placeholders.json';
 import { SelectorCarImage } from './selector-car-image';
+import { techartGenerationIntroductions } from './techart-model-overview';
 import styles from './techart-step-picker.module.css';
 
 export type TechartOptions = Record<'911' | 'cayenne', VehicleGeneration[]>;
@@ -32,8 +33,10 @@ export function TechartStepPicker({ options, model, generation, body, fit, headi
             <div className={styles.generations}>
               {[...options[key]].reverse().map(item => <Link className={styles.generation} key={item.key} href={shopBrandHref('techart', { make: 'porsche', model: key, generation: item.key })}>
                 <span className={styles.caption}><span>{item.name}</span><ArrowUpRight size={16} aria-hidden="true" /></span>
+                {techartGenerationIntroductions[item.key] && <small className={styles.introduced}>Introduced {techartGenerationIntroductions[item.key]}</small>}
               </Link>)}
             </div>
+            <p className={styles.generationNote}>Dates vary by variant and market.</p>
           </div>
         </details>;
       })}

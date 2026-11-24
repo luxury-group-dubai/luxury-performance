@@ -171,6 +171,5 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
       {!!review.length && <details className={own.fitmentReview}><summary>Fitment confirmation needed ({review.length})</summary><p>These parts need a compatibility check for your selected Porsche. Contact our team before ordering.</p><ul>{review.map(product => <li key={product.id}><Link href={productHref(product.handle, shopBrandHref(brand, filters))}>{product.title.replace(/^TECHART\s*[-–]\s*/i, '')}<ArrowUpRight size={15} aria-hidden="true" /></Link></li>)}</ul></details>}
       <Link className={styles.help} href={`/contact?programme=${encodeURIComponent(supplier.name)}`}>Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>
     </section>}
-    {techart && !porscheModel && !browsing && <TechartModelRange products={products}/>}
   </div>;
 }
