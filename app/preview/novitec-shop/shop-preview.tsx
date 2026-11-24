@@ -12,6 +12,7 @@ import { categoryOf, filterProducts, type Filters } from '@/lib/shop/taxonomy';
 import { novitecMakes, novitecModelCover, novitecModelKeys, novitecModelName, novitecProductsForMake, novitecShopProfile } from '@/lib/shop/novitec-models';
 import { novitecVariantFamilies } from '@/lib/shop/novitec-variants';
 import { compareProgrammeCategories, prepareNovitecShop } from '@/lib/shop/novitec-programme';
+import { novitecModelShopCopy } from '@/lib/shop/novitec-model-seo';
 import { nlargoPath } from '@/lib/nlargo-allocation';
 import { CatalogChoice } from '@/components/shop/catalog-choice';
 import { MenuLogo } from '@/components/shop-menu-cards';
@@ -52,6 +53,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
   const category = params.get('category') || undefined;
   const sort = params.get('sort') || undefined;
   const filters: Filters = active ? { ...scope(active), category, sort } : { brand: 'novitec' };
+  const modelCopy = make && model ? novitecModelShopCopy({ brand:'novitec',make:make.tag,model,body:params.get('body') || undefined }) : undefined;
   const prepared = active ? prepareNovitecShop(filterProducts(products, scope(active)), scope(active)) : [];
   const categories = [...new Set(prepared.map(categoryOf))].sort(compareProgrammeCategories);
   const shown = filterProducts(prepared, filters);
@@ -93,7 +95,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         {model && <><span aria-hidden="true">/</span><button onClick={() => go({ make: make!.tag, model, choose: '1' })}>{novitecModelName(model)}</button></>}
         {active?.body && <><span aria-hidden="true">/</span><span aria-current="page">{active.name}</span></>}
       </nav>
-      <div className={styles.heroContent}><div><h1>{active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{active.name}</span></> : heading}</h1>{!active && <p>Find the parts and possibilities for your exact model.</p>}
+      <div className={styles.heroContent}><div><h1>{modelCopy ? <><span className={styles.vehicleMarque}>{modelCopy.marque}</span><span>{active?.name || modelCopy.name}</span></> : active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{active.name}</span></> : heading}</h1>{modelCopy ? <p>{modelCopy.introduction}</p> : !active && <p>Find the parts and possibilities for your exact model.</p>}
       </div>{active && <div className={styles.selectedCar}>
         {active.image && <div className={styles.selectedArtwork} data-tall={active.model === 'urus' || active.model === 'cullinan' || active.model === 'purosangue' ? 'true' : undefined}>{active.cover && <Image className={`${styles.selectedImage} ${styles.selectedShadow}`} src={active.cover} alt="" aria-hidden="true" width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" />}<Image className={styles.selectedImage} src={active.image} alt={active.name} width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" /></div>}
         <button className={styles.change} onClick={() => go({ ...scope(active), choose: '1' })}><RotateCcw size={15} /> Change car</button>
@@ -119,10 +121,10 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         }) : !model ? models.map(key => {
           const versions = cars.filter(car => car.make === make.tag && car.model === key);
           const first = versions[0];
-          return <button className={styles.carCard} key={key} onClick={() => versions.length === 1 ? chooseCar(first) : go({ make: make.tag, model: key })}>
+          return <Link className={styles.carCard} key={key} href={shopBrandHref('novitec', versions.length === 1 ? scope(first) : { make:make.tag,model:key })}>
             <div className={styles.carPicture}>{first.cover && <SelectorCarImage src={key === '12cilindri' ? '/images/novitec-models/12cilindri-nlargo-side.jpg' : first.cover} placeholder={placeholders[key === '12cilindri' ? '/images/novitec-models/12cilindri-nlargo-side.jpg' : first.cover]} width={1116} height={598} sizes="(max-width:700px) 90vw, 40vw" />}</div><div className={styles.carLabel}><div><small>{make.name}</small><h2>{novitecModelName(key)}</h2><p>{versions.length > 1 ? `${versions.length + (key === '12cilindri' ? 1 : 0)} versions` : `${first.count} parts`}</p></div><ArrowUpRight size={21} /></div>
-          </button>;
-        }) : <>{variants.map(car => <button className={styles.carCard} key={car.name} onClick={() => chooseCar(car)}><div className={styles.carPicture}>{car.cover && <SelectorCarImage src={car.cover} placeholder={placeholders[car.cover]} width={1116} height={598} sizes="(max-width:700px) 90vw, 40vw" />}</div><div className={styles.carLabel}><div><small>{car.marque}</small><h2>{car.name}</h2><p>{car.count} parts</p></div><ArrowUpRight size={21} /></div></button>)}
+          </Link>;
+        }) : <>{variants.map(car => <Link className={styles.carCard} key={car.name} href={shopBrandHref('novitec', scope(car))}><div className={styles.carPicture}>{car.cover && <SelectorCarImage src={car.cover} placeholder={placeholders[car.cover]} width={1116} height={598} sizes="(max-width:700px) 90vw, 40vw" />}</div><div className={styles.carLabel}><div><small>{car.marque}</small><h2>{car.name}</h2><p>{car.count} parts</p></div><ArrowUpRight size={21} /></div></Link>)}
           {make.tag === 'ferrari' && model === '12cilindri' && <Link className={`${styles.carCard} ${styles.project}`} href={nlargoPath}><span className={styles.newTag}>NEW</span><div className={styles.carPicture}><SelectorCarImage src="/images/novitec-models/12cilindri-nlargo-side.jpg" placeholder={placeholders['/images/novitec-models/12cilindri-nlargo-side.jpg']} width={1116} height={598} sizes="(max-width:700px) 90vw, 40vw" /></div><div className={styles.carLabel}><div><small>Exclusive project</small><h2>12Cilindri N-LARGO</h2><p>Explore the conversion allocation</p></div><ArrowUpRight size={21} /></div></Link>}
         </>}
       </div>
@@ -133,7 +135,13 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         return <section className={styles.productSection} key={name}><h2>{name} <sup>{items.length}</sup></h2><div className={styles.productGrid}>{items.map(product => <Link key={product.id} className={`shop-product-card ${styles.productCard}`} href={productHref(product.handle, shopBrandHref('novitec', filters))}><div className="shop-product-image">{product.featuredImage && <Image src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} width={600} height={600} sizes="(max-width:700px) 44vw, (max-width:1100px) 29vw, 22vw" />}<span className="shop-product-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span></div><h3>{product.title}</h3><p className="shop-price">From {money(product.priceRange.minVariantPrice)}</p></Link>)}</div></section>;
       })}
       {!shown.length && <p>No parts in this collection. <button onClick={() => go(scope(active))}>View all parts for your car</button></p>}
-      <Link className={styles.help} href="/contact">Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>
+      {(!modelCopy || category || sort) && <Link className={styles.help} href="/contact">Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>}
     </section>}
+      {modelCopy && !category && !sort && <section className={`${styles.modelGuide} ${styles.guideShell}`} aria-labelledby="novitec-model-guide-title">
+        <h2 id="novitec-model-guide-title">{modelCopy.heading}</h2>
+        <div><p>{modelCopy.range}</p><h3>{modelCopy.fitmentHeading}</h3><p>{modelCopy.fitment}</p><h3>Ordering NOVITEC {modelCopy.name} parts in Dubai.</h3><p>{modelCopy.ordering}</p>
+          <nav aria-label={`More about NOVITEC ${modelCopy.marque} parts`}><Link href={`/partners/novitec/${modelCopy.make.replaceAll('_','-')}`}>Explore NOVITEC for {modelCopy.marque}</Link><Link href="/partners/novitec">About the NOVITEC range</Link><Link href={`/contact?${new URLSearchParams({programme:`NOVITEC ${modelCopy.marque} ${modelCopy.name}`})}`}>Discuss your {modelCopy.name} specification</Link></nav>
+        </div>
+      </section>}
   </div>;
 }
