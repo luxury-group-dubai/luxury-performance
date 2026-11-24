@@ -214,5 +214,35 @@ test('Purosangue model SEO has its own canonical and indexable live page',()=>{
  }
  assert.equal(novitecModelShopMetadata(scope,{},false).robots.index,false);
  assert.equal(novitecModelShopMetadata({...scope,make:'lamborghini'}, {},true),undefined);
- assert.equal(novitecModelShopMetadata({...scope,model:'f8'}, {},true),undefined);
+ assert.equal(novitecModelShopMetadata({...scope,model:'unsupported'}, {},true),undefined);
+});
+
+test('every NOVITEC model and version has distinct metadata and its own canonical',()=>{
+ const {novitecVariantFamilies}=load(resolve(root,'lib/shop/novitec-variants.ts'));
+ const {novitecModelShopCopy}=load(resolve(root,'lib/shop/novitec-model-seo.ts'));
+ const makes={ferrari:['purosangue','12cilindri','812','f8','sf90'],lamborghini:['revuelto','urus'],mclaren:['750s','senna'],rolls_royce:['cullinan','spectre']};
+ const titles=new Set();let count=0;
+ for(const [make,models] of Object.entries(makes)) for(const model of models) {
+  const bodies=[undefined,...(novitecVariantFamilies[make]?.[model] || []).map(v=>v.key)];
+  for(const body of bodies) {
+   const scope={brand:'novitec',make,model,body};
+   const copy=novitecModelShopCopy(scope);
+   const metadata=novitecModelShopMetadata(scope,{},true);
+   const canonical=shopBrandHref('novitec',scope);
+   assert.ok(copy?.introduction,canonical);assert.ok(copy?.fitment,canonical);
+   assert.equal(metadata.alternates.canonical,canonical);
+   assert.equal(metadata.robots.index,true,canonical);
+   assert.equal(titles.has(metadata.title),false,metadata.title);titles.add(metadata.title);count++;
+   const filtered=novitecModelShopMetadata(scope,{category:'Wheels',sort:'price-up'},true);
+   assert.equal(filtered.robots.index,false);assert.equal(filtered.alternates.canonical,canonical);
+   assert.equal(novitecModelShopMetadata(scope,{},false).robots.index,false);
+  }
+ }
+ assert.equal(count,24);
+ const spectre=novitecModelShopCopy({brand:'novitec',make:'rolls_royce',model:'spectre'});
+ assert.doesNotMatch(spectre.introduction+spectre.description,/exhaust/i);
+ const senna=novitecModelShopCopy({brand:'novitec',make:'mclaren',model:'senna'});
+ assert.doesNotMatch(senna.introduction,/suspension|bodywork/);
+ assert.equal(novitecModelShopMetadata({brand:'novitec',make:'ferrari',model:'f8',body:'gts'},{},true),undefined);
+ assert.equal(novitecModelShopMetadata({brand:'techart',make:'ferrari',model:'f8'},{},true),undefined);
 });
