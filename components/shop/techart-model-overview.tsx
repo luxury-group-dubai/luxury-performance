@@ -25,7 +25,7 @@ export function TechartGenerationLinks({ model, options }: { model:'911'|'cayenn
   </div>;
 }
 
-export function TechartModelRange({ model, products }: {model:'911'|'cayenne';products:CatalogProduct[]}) {
+export function TechartModelRange({ model, products }: {model?:'911'|'cayenne';products:CatalogProduct[]}) {
   const matching=filterProducts(products,{brand:'techart',make:'porsche',model});
   const examples=['Aerodynamics','Wheels','Exhaust'].flatMap(category=>{
     const product=matching.find(item=>categoryOf(item)===category && item.featuredImage && !/shared model image/i.test(item.featuredImage.altText || '') && (category !== 'Wheels' || /(?:formula|forged|wheel set)/i.test(item.title)));
@@ -33,7 +33,7 @@ export function TechartModelRange({ model, products }: {model:'911'|'cayenne';pr
   });
   if(!examples.length) return null;
   return <section className={styles.range} aria-labelledby="techart-model-range-title">
-    <div className={styles.heading}><h2 id="techart-model-range-title">Make it your {model==='911'?'911':'Cayenne'}.</h2><p>A few examples from the TECHART range. Choose your generation and variant above to confirm the right fit for your car.</p></div>
+    <div className={styles.heading}><h2 id="techart-model-range-title">Make it your {model==='911'?'911':model==='cayenne'?'Cayenne':'Porsche'}.</h2><p>A few examples from the TECHART range. Choose your {model ? 'generation and variant' : 'model, generation and variant'} above to confirm the right fit for your car.</p></div>
     <div className={styles.products}>{examples.map(({category,product})=><Link key={product.id} href={productHref(product.handle,shopBrandHref('techart',{make:'porsche',model}))}>
       <div className={styles.image}><Image src={product.featuredImage!.url} alt={product.featuredImage!.altText||product.title} fill sizes="(max-width:700px) 85vw, 29vw" loading="lazy"/></div>
       <div className={styles.caption}><span>{category==='Aerodynamics'?'Carbon & aerodynamics':category}</span><ArrowUpRight size={17} aria-hidden="true"/></div>
