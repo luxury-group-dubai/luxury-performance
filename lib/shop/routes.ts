@@ -45,3 +45,9 @@ export function legacyShopHref(values: ShopRouteFilters) {
   if (values.make || values.view === 'vehicles') return vehicleBrowseHref(values.make, values.model, values.body);
   return '/shop';
 }
+
+// Navigation context does not change the product's canonical URL.
+export function productHref(handle: string, from?: string) {
+  const path = `/products/${handle}`;
+  return from?.startsWith('/shop/') ? `${path}?${new URLSearchParams({ from })}` : path;
+}

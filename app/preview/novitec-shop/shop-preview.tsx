@@ -19,7 +19,7 @@ import { SelectorCarImage } from '@/components/shop/selector-car-image';
 import carPlaceholders from '@/lib/generated/novitec-selector-placeholders.json';
 const placeholders: Record<string, string> = carPlaceholders;
 import { vehicleMenu } from '@/lib/shop-navigation';
-import { shopBrandHref } from '@/lib/shop/routes';
+import { shopBrandHref, productHref } from '@/lib/shop/routes';
 import styles from './preview.module.css';
 import selectorStyles from '../brand-shop/shop-preview.module.css';
 
@@ -81,7 +81,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         {searchOpen && !!search.trim() && <div id="novitec-preview-search" className={styles.suggestions}>
           {!!vehicleResults.length && <section><h2>Cars</h2>{vehicleResults.map(car => <button key={`${car.make}-${car.model}-${car.body}`} onClick={() => chooseCar(car)}><span>{car.marque} {car.name}<small>{car.count} parts</small></span><ArrowUpRight size={15} /></button>)}</section>}
           {!!collectionResults.length && <section><h2>Collections</h2>{collectionResults.map(({ car, name }) => <button key={`${car.make}-${car.model}-${car.body}-${name}`} onClick={() => chooseCar(car, name)}><span>{car.name} — {name}<small>{car.marque} · NOVITEC collection</small></span><ArrowUpRight size={15} /></button>)}</section>}
-          {!!partResults.length && <section><h2>Parts</h2>{partResults.map(product => <Link key={product.id} href={`/products/${product.handle}`}><span>{product.title}</span><ArrowUpRight size={15} /></Link>)}</section>}
+          {!!partResults.length && <section><h2>Parts</h2>{partResults.map(product => <Link key={product.id} href={productHref(product.handle, shopBrandHref('novitec', filters))}><span>{product.title}</span><ArrowUpRight size={15} /></Link>)}</section>}
           {!vehicleResults.length && !collectionResults.length && !partResults.length && <p>No matches. Try a model such as “12Cilindri” or “F8 exhaust”.</p>}
         </div>}
       </div>
@@ -130,7 +130,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
 
       {categories.filter(name => !category || name === category).map(name => {
         const items = shown.filter(product => categoryOf(product) === name);
-        return <section className={styles.productSection} key={name}><h2>{name} <sup>{items.length}</sup></h2><div className={styles.productGrid}>{items.map(product => <Link key={product.id} className={`shop-product-card ${styles.productCard}`} href={`/products/${product.handle}`}><div className="shop-product-image">{product.featuredImage && <Image src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} width={600} height={600} sizes="(max-width:700px) 44vw, (max-width:1100px) 29vw, 22vw" />}<span className="shop-product-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span></div><h3>{product.title}</h3><p className="shop-price">From {money(product.priceRange.minVariantPrice)}</p></Link>)}</div></section>;
+        return <section className={styles.productSection} key={name}><h2>{name} <sup>{items.length}</sup></h2><div className={styles.productGrid}>{items.map(product => <Link key={product.id} className={`shop-product-card ${styles.productCard}`} href={productHref(product.handle, shopBrandHref('novitec', filters))}><div className="shop-product-image">{product.featuredImage && <Image src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} width={600} height={600} sizes="(max-width:700px) 44vw, (max-width:1100px) 29vw, 22vw" />}<span className="shop-product-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span></div><h3>{product.title}</h3><p className="shop-price">From {money(product.priceRange.minVariantPrice)}</p></Link>)}</div></section>;
       })}
       {!shown.length && <p>No parts in this collection. <button onClick={() => go(scope(active))}>View all parts for your car</button></p>}
       <Link className={styles.help} href="/contact">Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>
