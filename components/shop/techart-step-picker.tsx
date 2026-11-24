@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import type { Filters } from '@/lib/shop/taxonomy';
 import type { VehicleGeneration, VehicleProfile } from '@/lib/shop/techart-fitment';
 import { techartStep } from '@/lib/shop/techart-steps';
@@ -25,11 +25,10 @@ export function TechartStepPicker({ options, model, generation, body, fit, headi
         return <details key={key} className={styles.model} name="techart-model">
           <summary className={styles.card}>
             <div className={styles.image}>{image && <SelectorCarImage {...image} placeholder={(placeholders as Record<string, string>)[image.src] || image.src} optimized={false} />}</div>
-            <div className={styles.caption}><Heading>Porsche {key === '911' ? '911' : 'Cayenne'}</Heading><ArrowUpRight size={18} aria-hidden="true" /></div>
+            <div className={styles.caption}><Heading>Porsche {key === '911' ? '911' : 'Cayenne'}</Heading><ChevronDown size={20} aria-hidden="true" /></div>
             <p>Choose generation</p>
           </summary>
           <div className={styles.expanded}>
-            <p className={styles.prompt}>Select your generation</p>
             <div className={styles.generations}>
               {[...options[key]].reverse().map(item => <Link className={styles.generation} key={item.key} href={shopBrandHref('techart', { make: 'porsche', model: key, generation: item.key })}>
                 <span className={styles.caption}><span>{item.name}</span><ArrowUpRight size={16} aria-hidden="true" /></span>

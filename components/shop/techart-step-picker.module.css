@@ -24,10 +24,9 @@
 .model summary { list-style:none; cursor:pointer; }
 .model summary::-webkit-details-marker { display:none; }
 .model summary:focus-visible { outline:2px solid currentColor; outline-offset:6px; }
-.model[open] summary .caption svg { transform:rotate(90deg); }
+.model[open] summary .caption svg { transform:rotate(180deg); }
 .model summary .caption svg { transition:transform 180ms ease; }
 .expanded { padding-top:24px; }
-.prompt { margin:0 0 16px; color:#62625d; font-size:12px; }
 .expanded .generation { min-width:0; padding:14px 18px; }
 .expanded .caption { gap:20px; font-size:18px; font-weight:700; }
 @media(max-width:700px) { .modelGrid { grid-template-columns:1fr; gap:28px; } }
