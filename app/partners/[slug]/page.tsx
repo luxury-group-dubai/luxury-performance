@@ -190,7 +190,7 @@ async function PartnerContent({ partner: p, productsPromise }: PartnerDataProps)
   const compactNovitec = p.slug === 'novitec' && vehicles.length > 0;
   const centeredIntro = p.slug === 'valvetronic';
   const vehicleLinks = centeredIntro ? <ValvetronicVehicleLogos /> : p.slug === 'capristo' ? <CapristoVehicleLogos vehicles={vehicles} /> : <div className={styles.vehicleLinks}>{vehicles.map(vehicle => <Link key={vehicle} href={shopBrandHref(p.supplier!, { [vehicleType]: vehicle })}><span>{label(vehicle)}</span><ArrowUpRight size={19}/></Link>)}</div>;
-  const vehicleHeading = compactNovitec ? <h2>Choose your marque.</h2> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Choose your model, then select the generation, variant and body style in the shop.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
+  const vehicleHeading = compactNovitec ? <h2>Choose your marque.</h2> : <><h2>{p.vehicleHeading}</h2><p>{vehicleFirst ? 'Choose your model and generation below, then select your variant in the shop.' : 'Choose a marque to explore the parts available for your vehicle.'}</p></>;
   const vehicleSection = vehicles.length > 0 && <section id="vehicles" className={`${styles.vehicles} ${vehicleFirst ? styles.vehicleFirst : ''} ${compactNovitec ? styles.novitecVehicles : ''}`}>
     <header>{!compactNovitec && !centeredIntro && !vehicleFirst && <Eyebrow number="02">Your starting point</Eyebrow>}{vehicleHeading}</header>
     {vehicleFirst ? <TechartStepPicker headingLevel={3} options={{
