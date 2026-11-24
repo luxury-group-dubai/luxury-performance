@@ -49,6 +49,10 @@ const questions = {
   ],
   techart: [
     {
+      question: 'Where can I buy TECHART Porsche parts in Dubai?',
+      answer: <>Explore the <Link href="/shop/techart">TECHART shop at Luxury Performance</Link> for Porsche bodywork, carbon fibre parts, wheels, exhausts, suspension and interior upgrades. Start with your 911 or Cayenne, then select its generation, body style and trim. Our Dubai team can help confirm part numbers, availability and installation options.</>,
+    },
+    {
       question: 'Which Porsche models can I find TECHART parts for?',
       answer: <>Browse TECHART parts for the <Link href="/shop/techart/porsche/911">Porsche 911</Link> and <Link href="/shop/techart/porsche/cayenne">Cayenne</Link>, then select the correct generation and body style. Availability varies by variant and the upgrade you’re considering.</>,
     },

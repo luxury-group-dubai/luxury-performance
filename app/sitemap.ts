@@ -20,7 +20,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const model of models) for (const choice of model.variants ?? [model]) for (const brand of choice.brands) {
         const path = brand.href.split('?')[0];
         const segments = path.split('/');
-        for (let length = 3; length <= segments.length; length++) shopRoutes.add(segments.slice(0, length).join('/'));
+        for (let length = 3; length <= segments.length; length++) {
+          // TECHART indexes its brand and model destinations, not duplicate make/body selectors.
+          if (segments[2] === 'techart' && length !== 3 && length !== 5) continue;
+          shopRoutes.add(segments.slice(0, length).join('/'));
+        }
       }
     }
     routes.push(...shopRoutes);

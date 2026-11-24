@@ -6,20 +6,21 @@ import { cayenneImage, cayenneName, cayenneOptions, isCayenneBody, isCayenneFit 
 import { isBodyStyle, vehicleImage, vehicleName, vehicleOptions, type TechartSelection } from '@/lib/shop/techart-fitment';
 import { filterProducts } from '@/lib/shop/taxonomy';
 import { VehiclePicker } from './vehicle-picker';
+import porschePlaceholders from '@/lib/generated/porsche-selector-placeholders.json';
 import styles from './vehicle-selector.module.css';
 
 export function VehicleSelector({ products, fit, body, shopPath = '/shop', modelChoices }: { products: CatalogProduct[]; fit?: string; body?: string; shopPath?: string; modelChoices?: ReactNode }) {
   const legacyTarga = fit?.endsWith('_carrera_targa_gts');
   const initialBody = legacyTarga ? 'targa' : isBodyStyle(body) ? body : undefined;
   const initialFit = legacyTarga ? fit?.replace(/_carrera_targa_gts$/, '_carrera_4_gts') : fit;
-  return <VehiclePicker key={`${initialFit}:${initialBody}`} model="911" options={vehicleOptions(products)} initialFit={initialFit} initialBody={initialBody} shopPath={shopPath} modelChoices={modelChoices} />;
+  return <VehiclePicker key={`${initialFit}:${initialBody}`} model="911" options={vehicleOptions(products)} initialFit={initialFit} initialBody={initialBody} shopPath={shopPath} modelChoices={modelChoices} imagePlaceholders={porschePlaceholders} />;
 }
 
 export function CayenneSelector({ products, fit, body, modelChoices }: { products: CatalogProduct[]; fit?: string; body?: string; modelChoices?: ReactNode }) {
   const initialFit = isCayenneFit(fit) ? fit : undefined;
   const initialBody = isCayenneBody(body) ? body : undefined;
   const cayennes = filterProducts(products, { brand: 'techart', make: 'porsche', model: 'cayenne' });
-  return <VehiclePicker key={`${initialFit}:${initialBody}`} model="cayenne" options={cayenneOptions(cayennes)} initialFit={initialFit} initialBody={initialBody} shopPath="/shop" modelChoices={modelChoices} />;
+  return <VehiclePicker key={`${initialFit}:${initialBody}`} model="cayenne" options={cayenneOptions(cayennes)} initialFit={initialFit} initialBody={initialBody} shopPath="/shop" modelChoices={modelChoices} imagePlaceholders={porschePlaceholders} />;
 }
 
 export function SelectedVehicle({ selection, compact = false }: { selection: TechartSelection; compact?: boolean }) {

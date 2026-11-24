@@ -2,6 +2,10 @@
 .filters { padding-bottom: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
 .results, .models { min-width: 0; }
 .models > nav { padding: 0; margin: 0; border: 0; }
+.modelChoices { display:flex; flex-wrap:wrap; align-items:center; gap:0 24px; }
+.modelChoices > a, .modelChoices > span { display:inline-flex; align-items:center; min-height:44px; padding:10px 0; color:#777; font-size:12px; }
+.modelChoices > [aria-current] { color:#171819; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:8px; }
+.modelChoices > a:hover { color:#171819; }
 .control { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 16px; align-items: start; margin-bottom: 16px; }
 .label { padding-top: 15px; font-size: 10px; line-height: 1.4; letter-spacing: .07em; color: #73736b; text-transform: uppercase; }
 .pills { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }

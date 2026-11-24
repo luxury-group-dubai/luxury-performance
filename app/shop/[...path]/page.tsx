@@ -11,10 +11,17 @@ import { prepareBrandCatalogue, previewBrands } from '../../preview/shop/brand-c
 import { buildVehicleChoices } from '../../preview/shop/vehicle-data';
 import { Catalog } from '@/components/shop/catalog';
 import { ShopEntryPage } from '../entry-page';
+import { vehicleOptions } from '@/lib/shop/techart-fitment';
+import { cayenneOptions } from '@/lib/shop/techart-cayenne';
+import { filterProducts } from '@/lib/shop/taxonomy';
+import { normalizeTechartRoute } from '@/lib/shop/techart-routes';
+import { techartStep } from '@/lib/shop/techart-steps';
+import { techartShopMetadata } from '@/lib/shop/techart-seo';
 type Props = { params: Promise<{ path: string[] }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { path } = await params;
   const scope = shopPathFilters('/shop/' + path.join('/'));
+  if (scope.brand === 'techart' && (!scope.make || scope.make === 'porsche')) return techartShopMetadata(scope, await searchParams, process.env.SHOP_SEO_LIVE === 'true');
   const brand = suppliers.find(item => item.slug === scope.brand);
   const name = [brand?.name, scope.make && label(scope.make), scope.model && label(scope.model), scope.body && label(scope.body)].filter(Boolean).join(' ');
   const title = scope.view === 'stock' ? 'In Stock' : scope.view === 'vehicles' ? `Shop by Vehicle${name ? ` — ${name}` : ''}` : `${name} Parts`;
@@ -23,9 +30,10 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 }
 export default async function Page({ params, searchParams }: Props) {
   const { path } = await params;
-  if (path.length > 4 || path.some(part => !/^[a-z0-9_-]+$/.test(part))) notFound();
+  if (path.length > (path[0] === 'techart' ? 6 : 4) || path.some(part => !/^[a-z0-9_-]+$/.test(part))) notFound();
   const pathname = '/shop/' + path.join('/');
   const scope = shopPathFilters(pathname);
+  if (scope.brand === 'techart' && (scope.generation === 'invalid' || scope.make && scope.make !== 'porsche')) notFound();
   const query = Object.fromEntries(Object.entries(await searchParams).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value]));
   if (scope.view === 'stock') {
     if (path.length !== 1) notFound();
@@ -44,9 +52,17 @@ export default async function Page({ params, searchParams }: Props) {
   const brand = suppliers.find(item => item.slug === scope.brand);
   if (!brand) notFound();
   if (scope.brand === 'novitec' && scope.make === 'ferrari' && scope.model === '12cilindri' && scope.body === 'n_largo') permanentRedirect(nlargoPath);
-  const filters = { ...query, ...Object.fromEntries(Object.entries(scope).filter(([, value]) => value !== undefined)) };
+  const filters = normalizeTechartRoute({ ...query, ...Object.fromEntries(Object.entries(scope).filter(([, value]) => value !== undefined)) });
+  if (brand.slug === 'techart' && filters.model) {
+    if (filters.model !== '911' && filters.model !== 'cayenne') notFound();
+    const matching = filterProducts(catalog, { brand: 'techart', make: 'porsche', model: filters.model });
+    const options = filters.model === '911' ? vehicleOptions(matching) : cayenneOptions(matching);
+    const step = techartStep(options, filters);
+    if (step.invalid) notFound();
+    if (step.next) permanentRedirect(shopBrandHref('techart', step.next));
+  }
   const canonical = shopBrandHref(brand.slug, filters);
-  if (canonical.split('?')[0] !== pathname) permanentRedirect(canonical);
+  if (canonical.split('?')[0] !== pathname || brand.slug === 'techart' && ['fit', 'generation', 'body', 'choose', 'model', 'make'].some(key => !!query[key])) permanentRedirect(canonical);
   const products = catalog.filter(product => supplierOf(product) === brand.slug);
   if (scope.make && !products.some(product => tagsFor(product, 'make').includes(scope.make!))) notFound();
   if (scope.model && !choices[scope.make!]?.some(item => item.slug === scope.model) && !products.some(product => tagsFor(product, 'model').includes(scope.model!))) notFound();
