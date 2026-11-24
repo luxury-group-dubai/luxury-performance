@@ -85,3 +85,11 @@
 .productCard :global(.shop-product-image) + h3 { margin-top:16px; -webkit-line-clamp:2; }
 
 .selectedArtwork[data-tall="true"] { aspect-ratio:2.4; }
+
+.modelGuide { display:grid; grid-template-columns:1fr 1.3fr; gap:clamp(28px,5vw,80px); border-top:1px solid #d5d4d0; margin-top:64px; padding-top:40px; }
+.modelGuide h2 { font-size:clamp(26px,3vw,40px); line-height:1.12; }
+.modelGuide p { color:#555550; font-size:13px; line-height:1.8; }
+.modelGuide h3 { font-size:16px; line-height:1.4; margin:24px 0 10px; }
+.modelGuide nav { display:flex; flex-wrap:wrap; gap:16px 24px; margin-top:24px; font-size:12px; }
+.modelGuide a { text-decoration:underline; text-underline-offset:4px; }
+@media(max-width:700px) { .modelGuide { grid-template-columns:1fr; margin-top:40px; padding-top:28px; gap:24px; } }

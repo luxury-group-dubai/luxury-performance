@@ -84,7 +84,7 @@ export default async function NovitecModelsForMake({ params }: Props) {
       {copy && <section className={styles.range} aria-labelledby="range-title">
         <h2 id="range-title">{copy.rangeHeading}</h2>
         <div><p>{copy.range}</p><h3>Confirm the right fit.</h3><p>{copy.fitment}</p><h3>Plan your upgrades in Dubai.</h3><p>{copy.advice}</p>
-          <div className={styles.relatedLinks}><Link href={shopBrandHref('novitec', { make: brand.tag })}>Shop NOVITEC {brand.name} parts</Link><Link href={`/contact?${new URLSearchParams({ programme: `NOVITEC ${brand.name}` })}`}>Discuss your {brand.name} specification</Link><Link href="/partners/novitec">Explore the full NOVITEC range</Link></div>
+          <div className={styles.relatedLinks}>{make === 'ferrari' && <Link href="/shop/novitec/ferrari/purosangue">Shop NOVITEC Ferrari Purosangue parts</Link>}<Link href={shopBrandHref('novitec', { make: brand.tag })}>Shop NOVITEC {brand.name} parts</Link><Link href={`/contact?${new URLSearchParams({ programme: `NOVITEC ${brand.name}` })}`}>Discuss your {brand.name} specification</Link><Link href="/partners/novitec">Explore the full NOVITEC range</Link></div>
         </div>
       </section>}
       {copy && relatedNews.length > 0 && <section className={styles.news} aria-labelledby="marque-news-title"><h2 id="marque-news-title">NOVITEC {brand.name} news.</h2><div>{relatedNews.map(article => <article key={article.slug}><h3><Link href={`/news/${article.slug}`}>{article.title}</Link></h3><p>{article.summary}</p></article>)}</div></section>}

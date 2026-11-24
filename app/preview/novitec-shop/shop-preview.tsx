@@ -12,6 +12,7 @@ import { categoryOf, filterProducts, type Filters } from '@/lib/shop/taxonomy';
 import { novitecMakes, novitecModelCover, novitecModelKeys, novitecModelName, novitecProductsForMake, novitecShopProfile } from '@/lib/shop/novitec-models';
 import { novitecVariantFamilies } from '@/lib/shop/novitec-variants';
 import { compareProgrammeCategories, prepareNovitecShop } from '@/lib/shop/novitec-programme';
+import { novitecModelShopCopy } from '@/lib/shop/novitec-model-seo';
 import { nlargoPath } from '@/lib/nlargo-allocation';
 import { CatalogChoice } from '@/components/shop/catalog-choice';
 import { MenuLogo } from '@/components/shop-menu-cards';
@@ -52,6 +53,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
   const category = params.get('category') || undefined;
   const sort = params.get('sort') || undefined;
   const filters: Filters = active ? { ...scope(active), category, sort } : { brand: 'novitec' };
+  const modelCopy = active ? novitecModelShopCopy(scope(active)) : undefined;
   const prepared = active ? prepareNovitecShop(filterProducts(products, scope(active)), scope(active)) : [];
   const categories = [...new Set(prepared.map(categoryOf))].sort(compareProgrammeCategories);
   const shown = filterProducts(prepared, filters);
@@ -93,7 +95,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         {model && <><span aria-hidden="true">/</span><button onClick={() => go({ make: make!.tag, model, choose: '1' })}>{novitecModelName(model)}</button></>}
         {active?.body && <><span aria-hidden="true">/</span><span aria-current="page">{active.name}</span></>}
       </nav>
-      <div className={styles.heroContent}><div><h1>{active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{active.name}</span></> : heading}</h1>{!active && <p>Find the parts and possibilities for your exact model.</p>}
+      <div className={styles.heroContent}><div><h1>{active ? <><span className={styles.vehicleMarque}>{modelCopy ? `NOVITEC ${active.marque}` : active.marque}</span><span>{active.name}{modelCopy ? ' parts' : ''}</span></> : heading}</h1>{modelCopy ? <p>{modelCopy.introduction}</p> : !active && <p>Find the parts and possibilities for your exact model.</p>}
       </div>{active && <div className={styles.selectedCar}>
         {active.image && <div className={styles.selectedArtwork} data-tall={active.model === 'urus' || active.model === 'cullinan' || active.model === 'purosangue' ? 'true' : undefined}>{active.cover && <Image className={`${styles.selectedImage} ${styles.selectedShadow}`} src={active.cover} alt="" aria-hidden="true" width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" />}<Image className={styles.selectedImage} src={active.image} alt={active.name} width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" /></div>}
         <button className={styles.change} onClick={() => go({ ...scope(active), choose: '1' })}><RotateCcw size={15} /> Change car</button>
@@ -133,6 +135,12 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
         return <section className={styles.productSection} key={name}><h2>{name} <sup>{items.length}</sup></h2><div className={styles.productGrid}>{items.map(product => <Link key={product.id} className={`shop-product-card ${styles.productCard}`} href={productHref(product.handle, shopBrandHref('novitec', filters))}><div className="shop-product-image">{product.featuredImage && <Image src={product.featuredImage.url} alt={product.featuredImage.altText || product.title} width={600} height={600} sizes="(max-width:700px) 44vw, (max-width:1100px) 29vw, 22vw" />}<span className="shop-product-arrow"><ArrowUpRight size={18} aria-hidden="true" /></span></div><h3>{product.title}</h3><p className="shop-price">From {money(product.priceRange.minVariantPrice)}</p></Link>)}</div></section>;
       })}
       {!shown.length && <p>No parts in this collection. <button onClick={() => go(scope(active))}>View all parts for your car</button></p>}
+      {modelCopy && !category && !sort && <section className={styles.modelGuide} aria-labelledby="novitec-model-guide-title">
+        <h2 id="novitec-model-guide-title">{modelCopy.heading}</h2>
+        <div><p>{modelCopy.range}</p><h3>Standard body or ESTESO?</h3><p>{modelCopy.fitment}</p><h3>Ordering NOVITEC Purosangue parts in Dubai.</h3><p>{modelCopy.ordering}</p>
+          <nav aria-label="More about NOVITEC Ferrari parts"><Link href="/partners/novitec/ferrari">Explore NOVITEC for Ferrari</Link><Link href="/partners/novitec">About the NOVITEC range</Link><Link href="/contact?programme=NOVITEC+Ferrari+Purosangue">Discuss your Purosangue specification</Link></nav>
+        </div>
+      </section>}
       <Link className={styles.help} href="/contact">Need help choosing parts for your car? Speak to our team <ArrowUpRight size={16} /></Link>
     </section>}
   </div>;

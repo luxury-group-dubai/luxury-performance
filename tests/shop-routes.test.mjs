@@ -198,3 +198,21 @@ test('multi-model products do not invent a vehicle on direct visits',()=>{
 test('direct product back links use the broad model shop',()=>{
   assert.equal(productBackLink(hood).href,'/shop/techart/porsche/cayenne');
 });
+
+const {novitecModelShopMetadata}=load(resolve(root,'lib/shop/novitec-model-seo.ts'));
+test('Purosangue model SEO has its own canonical and indexable live page',()=>{
+ const scope={brand:'novitec',make:'ferrari',model:'purosangue'};
+ const metadata=novitecModelShopMetadata(scope,{},true);
+ assert.match(metadata.title,/NOVITEC Ferrari Purosangue.*Dubai/);
+ assert.equal(metadata.alternates.canonical,'/shop/novitec/ferrari/purosangue');
+ assert.equal(metadata.robots.index,true);
+ assert.equal(novitecModelShopMetadata(scope,{utm_source:'instagram'},true).robots.index,true);
+ for(const query of [{category:'Wheels'},{sort:'price-up'},{q:'exhaust'},{choose:'1'},{category:['Suspension']}]) {
+  const filtered=novitecModelShopMetadata(scope,query,true);
+  assert.equal(filtered.robots.index,false);
+  assert.equal(filtered.alternates.canonical,metadata.alternates.canonical);
+ }
+ assert.equal(novitecModelShopMetadata(scope,{},false).robots.index,false);
+ assert.equal(novitecModelShopMetadata({...scope,make:'lamborghini'}, {},true),undefined);
+ assert.equal(novitecModelShopMetadata({...scope,model:'f8'}, {},true),undefined);
+});
