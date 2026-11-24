@@ -12,3 +12,9 @@
 .card:hover .caption svg { color:var(--accent); }
 @media(max-width:1100px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:700px) { .grid { gap:26px 16px; }.caption { gap:8px; margin-top:12px; }.caption h2, .caption h3 { font-size:20px; }.caption svg { width:16px; } }
+
+.generations { display:flex; flex-wrap:wrap; gap:12px; }
+.generation { display:block; border:1px solid #a6a6a0; padding:18px 24px; color:#171819; min-width:140px; }
+.generation .caption { margin:0; gap:28px; }
+.generation .caption h2, .generation .caption h3 { font-size:22px; }
+.generation:hover { background:#171819; color:#fff; }

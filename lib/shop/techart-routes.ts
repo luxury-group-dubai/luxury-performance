@@ -34,10 +34,11 @@ export function techartPath(filters: Filters, choosing = false) {
 
   if (values.model && values.generation) {
     path += `/${values.generation.replaceAll('_', '-')}`;
-    if (values.body) {
-      path += `/${values.body}`;
-      if (values.fit && !choosing) path += `/${techartTrimSlug(values.fit)}`;
-    }
+    if (values.fit && !choosing) {
+      const trim = techartTrimSlug(values.fit);
+      path += `/${values.body === 'targa' ? trim.replace(/^carrera/, 'targa') : trim}`;
+      if (values.body && values.body !== 'targa') path += `/${values.body}`;
+    } else if (values.body) path += `/${values.body}`;
   }
   return path;
 }
@@ -49,9 +50,14 @@ export function parseTechartPath(model: string, tail: string[]): Pick<Filters, '
   if (tail.length > 3 || !/^(?:99[12]-[12]|e3-[12])$/.test(tail[0])) return undefined;
   const generation = tail[0].replaceAll('-', '_');
   if ((model === 'cayenne') !== generation.startsWith('e3_')) return undefined;
-  const body = tail[1];
-  if (body && !(model === 'cayenne' ? ['suv', 'coupe'] : ['coupe', 'cabriolet', 'targa']).includes(body)) return undefined;
-  const trim = tail[2];
+  const bodyKeys = model === 'cayenne' ? ['suv', 'coupe'] : ['coupe', 'cabriolet', 'targa'];
+  if (['coupe', 'cabriolet', 'targa', 'suv'].includes(tail[1]) && !bodyKeys.includes(tail[1])) return undefined;
+  const legacy = bodyKeys.includes(tail[1]);
+  const targa = tail[1]?.startsWith('targa-');
+  const body = targa ? 'targa' : legacy ? tail[1] : tail[2];
+  if (body && !bodyKeys.includes(body)) return undefined;
+  const trim = legacy ? tail[2] : targa ? tail[1].replace(/^targa/, 'carrera') : tail[1];
+  if (trim && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(trim)) return undefined;
   const trimKey = trim === 'gt3' ? generation === '991_1' ? 'gt3_gt3_touring' : 'gt3_with_wing'
     : trim === 'gt3-touring' ? 'gt3_gt3_touring' : trim?.replaceAll('-', '_');
   return { generation, body, fit: trimKey ? `${generation}_${trimKey}` : undefined };

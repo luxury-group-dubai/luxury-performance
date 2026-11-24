@@ -3,11 +3,11 @@ import type { ShopRouteFilters } from './routes';
 const models = {
   '911': {
     title: 'TECHART Porsche 911 Dubai — Body Kits, Wheels & Exhausts',
-    description: 'Shop TECHART Porsche 911 parts in Dubai. Select your generation, body style and trim for carbon fibre, body kits, wheels, exhausts and suspension.',
+    description: 'Shop TECHART Porsche 911 parts in Dubai. Select your generation, variant and body style for carbon fibre, body kits, wheels, exhausts and suspension.',
   },
   cayenne: {
     title: 'TECHART Porsche Cayenne Dubai — Body Kits & Wheels',
-    description: 'Explore TECHART Porsche Cayenne parts in Dubai. Choose your generation, SUV or Coupé and trim for bodywork, wheels, exhausts and suspension upgrades.',
+    description: 'Explore TECHART Porsche Cayenne parts in Dubai. Choose your generation, variant and SUV or Coupé body style for bodywork, wheels, exhausts and suspension upgrades.',
   },
 };
 

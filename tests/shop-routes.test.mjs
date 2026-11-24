@@ -32,7 +32,7 @@ test('legacy model links retain their exact NOVITEC version', () => {
 });
 test('TECHART trim filters survive the clean vehicle URL', () => {
   const target = shopBrandHref('techart', { make: 'porsche', model: '911', body: 'targa', fit: '992_2_carrera_targa_gts' });
-  assert.equal(target, '/shop/techart/porsche/911/992-2/targa/carrera-4-gts');
+  assert.equal(target, '/shop/techart/porsche/911/992-2/targa-4-gts');
 });
 test('stock, vehicle and search legacy links use their production destinations', () => {
   assert.equal(legacyShopHref({ view: 'vehicles', make: 'ferrari', model: '12cilindri', body: 'spider' }), '/shop/vehicles/ferrari/12cilindri/spider');
@@ -104,7 +104,7 @@ test('TECHART links express each selection step without fit query parameters', (
   assert.equal(shopBrandHref('techart', { ...base, generation: '992_2' }), '/shop/techart/porsche/911/992-2');
   assert.equal(shopBrandHref('techart', { ...base, generation: '992_2', body: 'coupe' }), '/shop/techart/porsche/911/992-2/coupe');
   const full = shopBrandHref('techart', { ...base, fit: '992_2_carrera_t', body: 'coupe', category: 'Exhaust', sort: 'price-up' });
-  assert.equal(full, '/shop/techart/porsche/911/992-2/coupe/carrera-t?category=Exhaust&sort=price-up');
+  assert.equal(full, '/shop/techart/porsche/911/992-2/carrera-t/coupe?category=Exhaust&sort=price-up');
   assert.deepEqual(shopPathFilters(full.split('?')[0]), { brand: 'techart', make: 'porsche', model: '911', generation: '992_2', body: 'coupe', fit: '992_2_carrera_t' });
 });
 test('TECHART GT3, Touring, RS, S/T, Targa and Cayenne hybrid fit keys round-trip', () => {
@@ -127,7 +127,7 @@ test('TECHART step validation rejects unavailable choices and skips single optio
   const options = [{key:'992_2',name:'992.2',bodies:[{key:'coupe',name:'Coupé',choices:[choice]}]}];
   const base = {brand:'techart',make:'porsche',model:'911'};
   assert.equal(techartStep(options,base).next.generation,'992_2');
-  assert.equal(techartStep(options,{...base,generation:'992_2'}).next.body,'coupe');
+  assert.equal(techartStep(options,{...base,generation:'992_2'}).next.fit,choice.fit);
   assert.equal(techartStep(options,{...base,generation:'992_2',body:'coupe'}).next.fit,choice.fit);
   assert.equal(techartStep(options,{...base,body:'coupe',fit:choice.fit}).choice.fit,choice.fit);
   assert.equal(techartStep(options,{...base,generation:'991_1'}).invalid,true);
@@ -146,10 +146,30 @@ test('Cayenne Turbo GT remains a distinct trim under the Coupé body', () => {
 test('legacy TECHART migrations retain category, sort and tracking values without a redirect loop', () => {
   const { techartRedirect } = load(resolve(root,'lib/shop/techart-routes.ts'));
   const target=techartRedirect('/shop/techart/porsche/911/coupe',new URLSearchParams('fit=992_2_carrera_t&category=Exhaust&sort=price-up&utm_source=google'));
-  assert.equal(target,'/shop/techart/porsche/911/992-2/coupe/carrera-t?category=Exhaust&sort=price-up&utm_source=google');
+  assert.equal(target,'/shop/techart/porsche/911/992-2/carrera-t/coupe?category=Exhaust&sort=price-up&utm_source=google');
   const next=new URL(target,'https://example.com');
   assert.equal(techartRedirect(next.pathname,next.searchParams),undefined);
   assert.equal(techartRedirect('/partners/techart',new URLSearchParams('model=cayenne')),'/shop/techart/porsche/cayenne');
   assert.equal(techartRedirect('/partners/techart',new URLSearchParams()),undefined);
   assert.equal(techartRedirect('/shop',new URLSearchParams('brand=capristo&make=ferrari')),undefined);
+});
+
+ test('Carrera and Targa share the variant step but retain separate body fitments', () => {
+  const image={src:'/car.webp',width:800,height:270};
+  const carrera={fit:'992_2_carrera_4s',name:'Carrera 4S',count:10,image};
+  const targa={...carrera,name:'Targa 4S'};
+  const options=[{key:'992_2',name:'992.2',bodies:[
+    {key:'coupe',name:'Coupé',choices:[carrera]},
+    {key:'cabriolet',name:'Cabriolet',choices:[carrera]},
+    {key:'targa',name:'Targa',choices:[targa]},
+  ]}];
+  const base={brand:'techart',model:'911',generation:'992_2'};
+  const state=techartStep(options,base);
+  assert.deepEqual(state.variants.map(v=>v.name),['Carrera 4S','Targa 4S']);
+  assert.equal(state.next,undefined);
+  assert.deepEqual(techartStep(options,{...base,fit:carrera.fit}).availableBodies.map(b=>b.key),['coupe','cabriolet']);
+  assert.equal(techartStep(options,{...base,fit:carrera.fit}).next,undefined);
+  assert.equal(techartStep(options,{...base,fit:carrera.fit,body:'targa'}).choice.name,'Targa 4S');
+  assert.equal(shopBrandHref('techart',{...base,fit:carrera.fit}),'/shop/techart/porsche/911/992-2/carrera-4s');
+  assert.equal(shopBrandHref('techart',{...base,fit:carrera.fit,body:'targa'}),'/shop/techart/porsche/911/992-2/targa-4s');
 });
