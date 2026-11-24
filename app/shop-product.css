@@ -14,3 +14,8 @@
 .shop-product-crumb:last-child { flex:0 1 auto; }
 .shop-product-crumb [aria-current="page"] { overflow-wrap:anywhere; }
 @media(max-width:700px) { .shop-product-crumb { gap:8px; } }
+
+.shop-product-navigation { align-items:flex-start; flex-direction:column; gap:14px; }
+.shop-product-back { display:inline-flex; align-items:center; gap:9px; min-height:28px; font-size:11px; color:#272727; }
+.shop-product-trail { display:flex; flex-wrap:wrap; align-items:center; gap:13px; text-transform:uppercase; }
+@media(max-width:700px) { .shop-product-trail { gap:8px; } }

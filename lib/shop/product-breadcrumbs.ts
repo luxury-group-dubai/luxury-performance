@@ -1,15 +1,13 @@
 import type { CatalogProduct } from './types';
-import { filterProducts, label, supplierOf, suppliers, tagsFor, techartFitmentLabel, type Filters } from './taxonomy';
+import { filterProducts, label, supplierOf, suppliers, tagsFor, type Filters } from './taxonomy';
 import { shopBrandHref, shopPathFilters } from './routes';
 import { techartSelection, vehicleBodyMatch } from './techart-fitment';
-import { capristoProductFitments } from './capristo-fitment';
-import { valvetronicProductFitments } from './valvetronic-fitment';
 
 export type ProductCrumb = { label: string; href?: string };
 
 // Treat incoming navigation context as a suggestion, never as fitment evidence.
 function matchingContext(product: CatalogProduct, from?: string): Filters | undefined {
-  if (!from || from.length > 1800 || !from.startsWith('/shop/') || /[\\\\#]/.test(from)) return;
+  if (typeof from !== 'string' || !from || from.length > 1800 || !from.startsWith('/shop/') || /[\\\\#]/.test(from)) return;
   const url = new URL(from, 'https://www.luxuryperformance.com');
   const scope = shopPathFilters(url.pathname);
   if (scope.brand !== supplierOf(product) || scope.view || !scope.model || !scope.make) return;
@@ -30,12 +28,14 @@ export function productBreadcrumbs(product: CatalogProduct, from?: string): Prod
     const base = { make: filters.make, model: filters.model };
     if (brand !== 'techart') crumbs.push({ label: label(filters.make), href: shopBrandHref(brand, { make: filters.make }) });
     crumbs.push({ label: label(filters.model), href: shopBrandHref(brand, base) });
-    const generation = filters.generation;
-    const fitment = filters.fit && ['capristo', 'valvetronic'].includes(brand) ? (brand === 'capristo' ? capristoProductFitments : valvetronicProductFitments)(product, filters.make, filters.model).find(item => item.key === filters.fit) : undefined;
-    if (generation) crumbs.push({ label: fitment?.generationLabel || generation.replaceAll('_', '.').toUpperCase(), href: shopBrandHref(brand, { ...base, generation }) });
-    if (filters.fit) crumbs.push({ label: brand === 'techart' ? filters.body === 'targa' ? techartFitmentLabel(filters.fit).replace(/^Carrera /, 'Targa ') : techartFitmentLabel(filters.fit) : fitment?.version || label(filters.fit), href: shopBrandHref(brand, { ...base, generation, fit: filters.fit, ...(filters.body === 'targa' ? { body: 'targa' } : {}) }) });
-    if (filters.body && filters.body !== 'targa') crumbs.push({ label: filters.body === 'coupe' ? 'Coupé' : label(filters.body), href: shopBrandHref(brand, filters) });
+
   }
-  crumbs.push({ label: product.title });
   return crumbs;
+}
+
+export function productBackLink(product: CatalogProduct, from?: string): ProductCrumb {
+  const context = matchingContext(product, from);
+  const crumbs = productBreadcrumbs(product, from);
+  const destination = crumbs.at(-1)!;
+  return { label: `Back to ${destination.label === 'SHOP' ? 'shop' : destination.label + ' parts'}`, href: context ? shopBrandHref(supplierOf(product), context) : destination.href };
 }

@@ -176,21 +176,25 @@ test('legacy TECHART migrations retain category, sort and tracking values withou
   assert.equal(shopBrandHref('techart',{...base,fit:carrera.fit,body:'targa'}),'/shop/techart/porsche/911/992-2/targa-4s');
 });
 
-const { productBreadcrumbs } = load(resolve(root,'lib/shop/product-breadcrumbs.ts'));
+const { productBreadcrumbs, productBackLink } = load(resolve(root,'lib/shop/product-breadcrumbs.ts'));
 const hood = {handle:'techart-aero-engine-hood-for-porsche-cayenne-e3-2',title:'TECHART Aero Engine Hood',vendor:'TECHART',productType:'Aerodynamics',tags:['car_make_porsche','car_model_cayenne','fit_e3_2_turbo_e_hybrid'],priceRange:{minVariantPrice:{amount:'100',currencyCode:'AED'}}};
 test('product breadcrumbs preserve verified vehicle context and exact final shop filters',()=>{
   const from='/shop/techart/porsche/cayenne/e3-2/turbo-e-hybrid/suv?category=Aerodynamics&sort=price-up';
   const crumbs=productBreadcrumbs(hood,from);
-  assert.deepEqual(crumbs.map(c=>c.label),['SHOP','TECHART','Cayenne','E3.2','Turbo E-Hybrid','SUV',hood.title]);
-  assert.equal(crumbs.at(-2).href,from);
-  assert.equal(crumbs.at(-1).href,undefined);
+  assert.deepEqual(crumbs.map(c=>c.label),['SHOP','TECHART','Cayenne']);
+  assert.equal(productBackLink(hood,from).href,from);
+  assert.equal(productBackLink(hood,from).label,'Back to Cayenne parts');
 });
 test('direct, unrelated and untrusted product contexts use broader breadcrumbs',()=>{
-  const expected=['SHOP','TECHART','Cayenne',hood.title];
+  const expected=['SHOP','TECHART','Cayenne'];
   for (const from of [undefined,'https://evil.example/shop/techart/porsche/cayenne','//evil.example/shop/techart','/shop/techart/porsche/911/992-2/carrera/coupe','/shop/techart/porsche/cayenne/e3-1/turbo/suv','/shop/capristo/porsche/cayenne','/shop/techart/porsche/cayenne/e3-2/invalid/suv']) {
     assert.deepEqual(productBreadcrumbs(hood,from).map(c=>c.label),expected,from);
   }
 });
 test('multi-model products do not invent a vehicle on direct visits',()=>{
-  assert.deepEqual(productBreadcrumbs({...hood,tags:[...hood.tags,'car_model_911']}).map(c=>c.label),['SHOP','TECHART',hood.title]);
+  assert.deepEqual(productBreadcrumbs({...hood,tags:[...hood.tags,'car_model_911']}).map(c=>c.label),['SHOP','TECHART']);
+});
+
+test('direct product back links use the broad model shop',()=>{
+  assert.equal(productBackLink(hood).href,'/shop/techart/porsche/cayenne');
 });

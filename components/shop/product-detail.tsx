@@ -5,7 +5,7 @@ import '@/app/shop-product.css';
 import { galleryImageSources } from '@/lib/shop/gallery-images';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, ArrowLeft } from 'lucide-react';
 import type { Product, InstallationService } from '@/lib/shop/types';
 import { money } from '@/lib/shop/types';
 import { supplierOf, categoryOf, tagsFor, fitLabel } from '@/lib/shop/taxonomy';
@@ -30,7 +30,7 @@ const galleryImageSizes = [
   'calc(50vw - 118px)',
 ].join(', ');
 
-export function ProductDetail({product,breadcrumbs,initialVariant,installations,videos,preview=false,previewPath,previewLabel='Used parts preview'}:{product:Product;breadcrumbs?:ProductCrumb[];initialVariant?:string;installations:Record<string,InstallationService>;videos:string[];preview?:boolean;previewPath?:string;previewLabel?:string}){
+export function ProductDetail({product,breadcrumbs,backLink,initialVariant,installations,videos,preview=false,previewPath,previewLabel='Used parts preview'}:{product:Product;breadcrumbs?:ProductCrumb[];backLink?:ProductCrumb;initialVariant?:string;installations:Record<string,InstallationService>;videos:string[];preview?:boolean;previewPath?:string;previewLabel?:string}){
  const previewHome = previewPath ?? '/shop/in-stock';
  const initial=product.variants.nodes.find(v=>v.id.split('/').pop()===initialVariant)||product.variants.nodes.find(v=>v.availableForSale)||product.variants.nodes[0];
  const images = [...new Map([...product.images.nodes, ...product.variants.nodes.flatMap(v => v.image ? [v.image] : [])].map(image => [image.url, image])).values()];
@@ -42,7 +42,7 @@ export function ProductDetail({product,breadcrumbs,initialVariant,installations,
  const installation=installations[variantId];
  const fits=tagsFor(product,'fit');
  const mobileGallery = photo ? galleryImageSources(photo, mobileGalleryWidths, 576, 65).srcSet : undefined;
- return <div className="shop-page shop-product-page">{!preview && breadcrumbs ? <nav className="shop-topline" aria-label="Breadcrumb">{breadcrumbs.map((item,index)=><span className="shop-product-crumb" key={index}>{index>0&&<span aria-hidden="true">/</span>}{item.href?<Link href={item.href}>{item.label}</Link>:<span aria-current="page">{item.label}</span>}</span>)}</nav> : <div className="shop-topline"><Link href={preview?previewHome:"/shop"}>{preview?previewLabel:"The collection"}</Link><span>/</span><Link href={preview?previewHome:partnerForSupplier(supplierOf(product)) ? `/partners/${supplierOf(product)}` : `/shop?brand=${supplierOf(product)}`}>{product.vendor}</Link><span>/</span><span>{categoryOf(product)}</span></div>}<div className="shop-product-layout"><section className="shop-gallery" aria-label="Product images"><div className="shop-main-image">{photo?<picture>
+ return <div className="shop-page shop-product-page">{!preview && breadcrumbs ? <div className="shop-topline shop-product-navigation">{backLink?.href&&<Link className="shop-product-back" href={backLink.href}><ArrowLeft size={14} aria-hidden="true"/>{backLink.label}</Link>}<nav className="shop-product-trail" aria-label="Breadcrumb">{breadcrumbs.map((item,index)=><span className="shop-product-crumb" key={index}>{index>0&&<span aria-hidden="true">/</span>}{item.href?<Link href={item.href}>{item.label}</Link>:<span aria-current="page">{item.label}</span>}</span>)}</nav></div> : <div className="shop-topline"><Link href={preview?previewHome:"/shop"}>{preview?previewLabel:"The collection"}</Link><span>/</span><Link href={preview?previewHome:partnerForSupplier(supplierOf(product)) ? `/partners/${supplierOf(product)}` : `/shop?brand=${supplierOf(product)}`}>{product.vendor}</Link><span>/</span><span>{categoryOf(product)}</span></div>}<div className="shop-product-layout"><section className="shop-gallery" aria-label="Product images"><div className="shop-main-image">{photo?<picture>
    {mobileGallery && <source media="(max-width: 700px)" sizes={mobileGallerySize} srcSet={mobileGallery} />}
    <img
    {...galleryImageSources(photo, galleryImageWidths, 960)}
