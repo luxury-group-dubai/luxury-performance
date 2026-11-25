@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Divisions Barlow Condensed';
+  src: url('./fonts/barlow-condensed-latin-800.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
 .archive {
   --archive-inset: clamp(60px, 7vw, 110px);
   --year-size: clamp(44px, 4vw, 80px);
@@ -11,27 +19,41 @@
   --rail-gap: clamp(16px, 1.65vw, 32px);
   --dot-size: 16px;
   --chapter-gap: clamp(40px, 5vw, 80px);
-  padding: clamp(32px, 4vw, 64px) var(--gutter) var(--archive-inset);
+  padding: 0 var(--gutter) var(--archive-inset);
   background: var(--paper);
   color: var(--ink);
   border-block: 1px solid var(--line);
 }
 
 .intro {
+  position: relative;
+  isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 51%;
-  gap: calc(2 * var(--rail-gap));
-  align-items: end;
-  margin-bottom: clamp(28px, 3vw, 48px);
+  align-content: center;
+  justify-items: center;
+  gap: 16px;
+  min-height: clamp(260px, 26vw, 400px);
+  margin: 0 calc(-1 * var(--gutter)) clamp(28px, 3vw, 48px);
+  padding: 32px var(--gutter);
+  background: #242522;
+  color: white;
+  text-align: center;
 }
-.intro h2 { font-size: clamp(34px, 4.2vw, 72px); line-height: .98; letter-spacing: -.055em; }
+.introPhoto { z-index: -2; object-fit: cover; object-position: center 60%; }
+.intro::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(12 12 12 / .35), rgb(12 12 12 / .54) 62%, rgb(12 12 12 / .66));
+}
+.intro h2 { font-size: clamp(60px, 10.8vw, 172px); line-height: .87; }
+.intro h2 span { font-family: 'Divisions Barlow Condensed', var(--font-sans); font-weight: 800; letter-spacing: -.025em; }
 .intro p {
-  max-width: 43ch;
-  margin: 0;
-  color: #454741;
-  font-size: clamp(16px, 1.4vw, 20px);
-  line-height: 1.5;
-  text-wrap: pretty;
+  max-width: 50ch;
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.45;
+  text-wrap: balance;
 }
 .archive > nav { display: none; }
 
@@ -72,7 +94,7 @@
   scroll-margin-top: calc(var(--story-top) - var(--site-header-height) - 16px);
 }
 .chapterContent { display: contents; }
-.chapter:not(:last-child) .photo { margin-bottom: var(--chapter-gap); }
+.chapter:not(:last-child) .gallery { margin-bottom: var(--chapter-gap); }
 /* Each item releases at its own full height, including its reading gap. */
 .year, .story { position: sticky; }
 .chapter:not(:last-child) .year { padding-bottom: 8px; }
@@ -89,13 +111,21 @@
 .story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
 .story p { max-width: 42ch; margin: 14px 0 0; color: #51534f; font-size: 14px; line-height: 1.65; }
 .story :global(.arrow-link) { margin-top: 18px; }
-.photo {
+.gallery {
   position: relative;
-  aspect-ratio: 1.14;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 35%;
+  gap: clamp(5px, .65vw, 12px);
+}
+.photo, .detail {
+  position: relative;
   overflow: hidden;
   background: #292a28;
 }
-.photo img { object-fit: cover; }
+.photo { grid-column: 1 / -1; aspect-ratio: 1.48; }
+.photo img, .detail img { object-fit: cover; }
+.mark { display: block; width: 100%; height: auto; }
+.photo + .mark { position: absolute; bottom: 0; right: 0; width: 27%; }
 
 @media (min-width: 761px) and (max-width: 1100px) {
   .archive { --year-size: clamp(31px, 3.7vw, 42px); --rail-gap: 12px; }
@@ -107,10 +137,10 @@
     --dot-size: 12px;
     --clear-top: calc(var(--site-header-height) + 58px);
     --intro-top: var(--clear-top);
-    padding-block: 32px 52px;
+    padding-bottom: 52px;
   }
-  .intro { grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
-  .intro h2 { font-size: clamp(32px, 8.5vw, 50px); }
+  .intro { min-height: clamp(205px, 45vw, 255px); gap: 12px; margin-bottom: 8px; }
+  .intro h2 { font-size: clamp(48px, 12vw, 82px); }
   .archive > nav {
     position: sticky;
     z-index: 2;
@@ -153,7 +183,7 @@
   .chapter { grid-template-columns: var(--year-column) minmax(0, 1fr); }
   .chapterContent { display: flow-root; }
   .story { z-index: 1; background: var(--paper); }
-  .chapter:last-child .photo { margin-top: 14px; }
+  .chapter:last-child .gallery { margin-top: 14px; }
   .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
 }
 @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {

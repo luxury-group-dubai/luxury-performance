@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><rect width="600" height="600" fill="#F26822"/><g color="#FFFFFF" transform="translate(300 300) scale(0.6870229007633588) translate(-407.5 -90)"><defs><clipPath id="lsr-stem-cap"><path d="M0 72 H900 V180 H0 Z"/></clipPath><clipPath id="lsr-cap"><path d="M0 0 H900 V180 H0 Z"/></clipPath></defs><g clip-path="url(#lsr-cap)" fill="none" stroke="#FFFFFF" stroke-width="36" stroke-linecap="butt" stroke-linejoin="miter">
+ <path d="M144 18 H198 L111.6 162 H286.834293"/>
+ <path d="M558 18 H365.931415 A148.299424 148.299424 0 0 0 238.765707 90 H414 A148.299424 148.299424 0 0 1 286.834293 162 H111.6"/>
+ <path d="M541.165707 18 H703.165707 A148.299424 148.299424 0 0 1 576 90 H497.965707"/>
+ <path clip-path="url(#lsr-stem-cap)" d="M541.165707 18 L433.165707 198"/>
+ <path d="M497.965707 90 H638 A36 36 0 0 1 668.869745 107.478153 L723.182854 198"/></g><path fill="#FFFFFF" d="M90 0 L101.113108 18.521847 A36 36 0 0 0 131.982854 36 H145 V0 Z"/></g></svg>
