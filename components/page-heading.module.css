@@ -1,6 +1,6 @@
-.heading { display:flex; justify-content:space-between; align-items:flex-end; gap:48px; padding:48px var(--gutter) 46px; background:#141516; color:#f6f5f2; }
+.heading { display:flex; justify-content:space-between; align-items:flex-end; gap:48px; padding:48px var(--gutter) 46px; background:var(--paper); color:var(--ink); }
 .heading h1 { margin:0; font-size:clamp(48px,6vw,88px); line-height:1; letter-spacing:-.055em; }
-.heading p { max-width:420px; padding-bottom:5px; font-size:13px; line-height:1.75; color:#b2b4b5; }
+.heading p { max-width:420px; padding-bottom:5px; font-size:13px; line-height:1.75; color:#62625d; }
 @media(max-width:700px) {
   .heading { display:block; padding:30px var(--gutter) 32px; }
   .heading h1 { font-size:44px; }

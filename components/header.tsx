@@ -76,10 +76,10 @@ export function Header() {
   const pathname = usePathname();
   const previewNavigation = true;
   const isShopRoute = pathname === '/shop' || pathname.startsWith('/shop/');
-  const shopSurface = isShopRoute || pathname.startsWith('/preview/');
   const isShop = isShopRoute || pathname === '/studio/capristo';
   const partnerSlug = /^\/partners\/([^/]+)$/.exec(pathname)?.[1];
   const overlaysHero = pathname === '/' || pathname === '/novitec-12cilindri-n-largo' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
+  const solidSurface = !overlaysHero;
   const header = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -213,7 +213,7 @@ export function Header() {
   }, [open]);
   return <>
     <a href="#main" className="skip-link">Skip to content</a>
-    <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${shopSurface ? styles.previewHeader : ''} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
+    <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${solidSurface ? styles.previewHeader : ''} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
       <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => { setOpen(!open); closeShop(); setMobileSection('brands'); }}><span aria-hidden="true"><i/><i/></span></button>
       <nav aria-label="Main navigation" inert={open} className={`desktop-nav ${styles.desktop}`}>
         <div className={styles.menuGroup}>
