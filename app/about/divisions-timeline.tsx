@@ -56,7 +56,7 @@ export function DivisionsTimeline() {
           <p>It started with supercar rentals in Dubai. Here’s how the group grew into six divisions.</p>
         </header>
       </div>
-      <ChapterNav label="Divisions timeline" chapters={chapters} />
+      <ChapterNav label="Divisions timeline" chapters={chapters} activeAt="var(--pin-top)" />
       <DivisionTrack>
         {divisions.map(({ period, slug, image = slug, name, alt, story, href, link }) => (
           <li id={'division-' + slug} key={slug} className={styles.chapter}>

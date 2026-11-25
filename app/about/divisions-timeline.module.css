@@ -3,6 +3,8 @@
   --year-size: clamp(44px, 4vw, 80px);
   --year-column: calc(3 * var(--year-size));
   --year-center: calc(.475 * var(--year-size));
+  --handoff-space: calc(.95 * var(--year-size) + 8px);
+  --landing-inset: var(--archive-inset);
   --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--archive-inset));
   --rail-gap: clamp(16px, 1.65vw, 32px);
   --dot-size: 16px;
@@ -55,12 +57,13 @@
   align-items: start;
   column-gap: clamp(32px, 4.4vw, 90px);
   min-height: var(--caption-height, 0px);
+  scroll-margin-top: calc(var(--landing-inset) - var(--site-header-height) - 16px);
 }
 .chapter:not(:last-child) .photo { margin-bottom: var(--chapter-gap); }
 .pin { position: sticky; top: var(--pin-top); z-index: 1; }
 /* Clip the outgoing copy at the incoming chapter edge. The last caption
    keeps its height so it and the marker leave the track together. */
-.track[data-measured] .chapter:not(:last-child) .pin { height: 0; }
+.track[data-measured] .chapter:not(:last-child) .pin { height: var(--handoff-space); }
 .caption {
   display: grid;
   grid-template-columns: var(--year-column) minmax(0, 1fr);
@@ -99,7 +102,8 @@
     --year-size: clamp(23px, 6vw, 34px);
     --rail-gap: 11px;
     --dot-size: 12px;
-    --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + 58px);
+    --landing-inset: 58px;
+    --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--landing-inset));
     padding-block: 52px;
   }
   .opening { padding-bottom: 20px; }
@@ -144,10 +148,10 @@
     height: 1px;
     overflow: hidden;
   }
-  .chapter { display: flow-root; scroll-margin-top: 50px; }
+  .chapter { display: flow-root; }
   .caption { background: var(--paper); padding-bottom: 14px; }
   .photo { margin-left: calc(var(--year-column) + 2 * var(--rail-gap)); }
-  .track[data-measured] .chapter:not(:last-child) .photo { margin-top: var(--caption-height); }
+  .track[data-measured] .chapter:not(:last-child) .photo { margin-top: calc(var(--caption-height) - var(--handoff-space)); }
   .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
 }
 @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
