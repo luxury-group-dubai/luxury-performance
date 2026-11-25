@@ -29,9 +29,6 @@ export const partners: Partner[] = [
     intro: 'Explore Gintani exhaust systems for Lamborghini, Ferrari, McLaren and Porsche.',
     detail: 'Tell our Dubai team what you drive and the sound you’re after. We’ll help confirm fitment, configuration and availability.',
     image: '/images/partners/gintani/hero.webp', imageAlt: '', focus: 'Exhaust systems', vehicleHeading: 'Find your vehicle.', supplier: 'gintani' },
-  { slug: 'urban', name: 'URBAN Automotive', label: 'Distinctive by design.', headline: 'A different presence.',
-    intro: 'Two URBAN kits from our own stock.',
-    detail: 'A limited selection of URBAN kits from our own inventory, separate from our dealer partner ranges. Check each kit’s listing for condition, included components and vehicle compatibility, or ask our team for a closer look.',
-    image: '/images/wheel.webp', imageAlt: 'Wheel detail', focus: 'Limited stock / 2 kits', vehicleHeading: 'Find your vehicle.', supplier: 'urban', stockOnly: true },
+
 ];
 export const partnerForSupplier = (supplier: string) => partners.find(p => p.supplier === supplier);

@@ -3,6 +3,28 @@ import Link from 'next/link';
 import styles from './partner-faq.module.css';
 
 const questions = {
+  'fi-exhaust': [
+    {
+      question: 'How do I order an FI Exhaust system in Dubai?',
+      answer: <>Send our team an <Link href="/contact?programme=FI%20Exhaust">FI Exhaust enquiry</Link> with your vehicle model, year, engine and the sound you have in mind. We can help identify the available system and confirm its configuration, price and availability.</>,
+    },
+    {
+      question: 'How do I confirm an FI Exhaust system fits my car?',
+      answer: 'Share your exact model, year, engine, body style and any existing exhaust modifications. We’ll check the fitting requirements and supplied components for the system you’re considering before you order.',
+    },
+    {
+      question: 'How are the exhaust valves controlled?',
+      answer: 'The control setup depends on the vehicle and system. Ask us to confirm how the valves operate, which controls are included and whether additional components are needed for your car.',
+    },
+    {
+      question: 'Can you help with FI Exhaust installation in Dubai?',
+      answer: 'Yes. Tell us which system you’re considering and what is already fitted to your car. Our team can discuss compatibility, installation options and timing with you.',
+    },
+    {
+      question: 'How do I check FI Exhaust pricing and lead times?',
+      answer: 'Ask our team for a quotation for your exact vehicle and configuration. We’ll confirm current availability, the supplied components and the delivery estimate before you place an order.',
+    },
+  ],
   gintani: [
     {
       question: 'Which cars does Gintani make exhausts for?',
@@ -18,7 +40,7 @@ const questions = {
     },
     {
       question: 'How do I get pricing and a lead time?',
-      answer: 'Send a fitment enquiry for the system you’re considering. Our Dubai team can confirm the configuration, current price, availability and installation options before you order.',
+      answer: <>Check the <Link href="/shop/gintani">Gintani shop</Link> for the price, available configurations and stock status of your system. For supplier orders or a specific delivery date, ask our Dubai team to confirm the current lead time and installation options before ordering.</>,
     },
     {
       question: 'Can I use a Gintani exhaust on the road?',
