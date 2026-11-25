@@ -86,6 +86,7 @@
 .chapter:not(:last-child) .story { padding-bottom: 24px; }
 .year {
   top: var(--pin-top);
+  justify-self: end;
   text-align: end;
   font-size: var(--year-size);
   font-weight: 700;
