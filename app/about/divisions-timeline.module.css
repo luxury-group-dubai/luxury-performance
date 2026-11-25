@@ -91,7 +91,7 @@
   scroll-margin-top: calc(var(--story-top) - var(--site-header-height) - 16px);
 }
 .chapterContent { display: contents; }
-.chapter:not(:last-child) .gallery { margin-bottom: var(--chapter-gap); }
+.chapter:not(:last-child) .mediaColumn { margin-bottom: var(--chapter-gap); }
 /* Each item releases at its own full height, including its reading gap. */
 .year, .story { position: sticky; }
 .chapter:not(:last-child) .year { padding-bottom: 8px; }
@@ -113,7 +113,16 @@
 }
 .story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
 .story p { max-width: 42ch; margin: 14px 0 0; color: #51534f; font-size: 14px; line-height: 1.65; }
-.story :global(.arrow-link) { margin-top: 18px; }
+.mediaColumn {
+  display: grid;
+  min-width: 0;
+  gap: clamp(8px, .9vw, 14px);
+}
+.galleryLink {
+  justify-self: end;
+  max-width: 100%;
+  min-height: 44px;
+}
 .gallery {
   position: relative;
   display: grid;
@@ -252,7 +261,7 @@
   }
   .chapterContent { display: flow-root; }
   .story { margin-inline: 0; z-index: 1; background: var(--paper); }
-  .chapter:last-child .gallery { margin-top: 14px; }
+  .chapter:last-child .mediaColumn { margin-top: 14px; }
   .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
 }
 @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {

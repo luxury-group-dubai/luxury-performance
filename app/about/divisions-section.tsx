@@ -50,7 +50,7 @@ export function DivisionsSection({ children }: { children: ReactNode }) {
     const midpoints = new Map<Element, number>();
     const observer = new ResizeObserver(entries => {
       for (const { target, contentRect } of entries) {
-        // Use the copy and link, excluding the padding reserved for the next story.
+        // Center the heading and paragraph, excluding the gap before the next story.
         const midpoint = contentRect.height / 2;
         midpoints.set(target, midpoint);
         target.closest('li')?.style.setProperty('--story-midpoint', `${midpoint}px`);

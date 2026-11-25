@@ -92,24 +92,26 @@ export function DivisionsTimeline() {
                 <div className={styles.story}>
                   <h3>{name}</h3>
                   <p>{story}</p>
-                  {href && <ArrowLink href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>
-                <div className={styles.gallery}>
-                  {photos.map(photo => (
-                    <div key={photo.src} className={styles.photo}>
-                      <Image src={photo.src} alt={photo.alt} fill
-                        sizes="(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
+                <div className={styles.mediaColumn}>
+                  <div className={styles.gallery}>
+                    {photos.map(photo => (
+                      <div key={photo.src} className={styles.photo}>
+                        <Image src={photo.src} alt={photo.alt} fill
+                          sizes="(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
+                      </div>
+                    ))}
+                    {detail && <div className={styles.detail}>
+                      <Image src={detail.src} alt={detail.alt} fill sizes="(max-width: 760px) 45vw, (max-width: 1686px) 28vw, 485px" />
+                    </div>}
+                    <div className={styles.mark} data-division-mark={mark} aria-hidden="true"
+                      style={{ '--wordmark': `url("/images/divisions/marks/${mark}.svg")` } as CSSProperties}>
+                      <span className={styles.lettering} />
+                      <Image className={styles.wings} src={`/images/divisions/marks/${mark}-winged-gold.svg`}
+                        alt="" width={934} height={364} />
                     </div>
-                  ))}
-                  {detail && <div className={styles.detail}>
-                    <Image src={detail.src} alt={detail.alt} fill sizes="(max-width: 760px) 45vw, (max-width: 1686px) 28vw, 485px" />
-                  </div>}
-                  <div className={styles.mark} data-division-mark={mark} aria-hidden="true"
-                    style={{ '--wordmark': `url("/images/divisions/marks/${mark}.svg")` } as CSSProperties}>
-                    <span className={styles.lettering} />
-                    <Image className={styles.wings} src={`/images/divisions/marks/${mark}-winged-gold.svg`}
-                      alt="" width={934} height={364} />
                   </div>
+                  {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>
               </div>
             </li>
