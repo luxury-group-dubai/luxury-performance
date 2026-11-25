@@ -57,7 +57,7 @@ export function DivisionsTimeline() {
   return (
     <DivisionsSection>
       <header className={styles.intro}>
-        <Image className={styles.introPhoto} src="/images/divisions/group-forecourt.webp" alt="" fill sizes="100vw" />
+        <Image className={styles.introPhoto} src="/images/divisions/forecourt-sunset.webp" alt="" fill sizes="100vw" />
         <h2 id="divisions-title">Our divisions.</h2>
       </header>
       <ChapterNav label="Divisions timeline" chapters={chapters} activeAt="var(--pin-top)" />

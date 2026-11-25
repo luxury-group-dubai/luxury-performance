@@ -30,7 +30,7 @@
   color: white;
   text-align: center;
 }
-.introPhoto { z-index: -2; object-fit: cover; object-position: center 60%; }
+.introPhoto { z-index: -2; object-fit: cover; object-position: center 52%; }
 .intro::before {
   content: '';
   position: absolute;
