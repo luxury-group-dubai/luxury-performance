@@ -47,18 +47,27 @@
     top: var(--site-header-height);
   }
   @supports (animation-timeline: scroll()) {
+    .about-hero-title,
     .about-hero-title span {
-      --drift-x: min(8vw, 140px);
-      animation: about-hero-parallax auto linear both;
+      animation: about-hero-drift auto linear both;
       animation-timeline: scroll(root block);
       animation-range: 0px calc(100svh - var(--site-header-height));
     }
+    .about-hero-title {
+      animation-name: about-hero-rise;
+      animation-timing-function: ease-out;
+    }
+    .about-hero-title span { --drift-x: min(8vw, 140px); }
     .about-hero-title span:last-child {
       --drift-x: max(-5vw, -100px);
     }
-    @keyframes about-hero-parallax {
-      from { transform: translate(0, 0); }
-      to { transform: translate(var(--drift-x), -28svh); }
+    @keyframes about-hero-rise {
+      from { translate: 0 0; }
+      to { translate: 0 -30svh; }
+    }
+    @keyframes about-hero-drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(var(--drift-x)); }
     }
   }
 }
