@@ -27,15 +27,19 @@
 .about-hero-title {
   position: relative;
   z-index: 1;
-  margin: 0;
+  display: grid;
+  justify-self: stretch;
+  justify-items: start;
+  margin: 0 var(--gutter);
   color: white;
-  text-align: center;
   font-size: min(10.5vw, 12svh, 142px);
   line-height: .97;
 }
 .about-hero-title span {
-  display: block;
   white-space: nowrap;
+}
+.about-hero-title span:last-child {
+  justify-self: end;
 }
 @media (prefers-reduced-motion: no-preference) {
   .interior-hero {
@@ -43,14 +47,18 @@
     top: var(--site-header-height);
   }
   @supports (animation-timeline: scroll()) {
-    .about-hero-title {
-      animation: about-hero-rise auto linear both;
+    .about-hero-title span {
+      --drift-x: min(8vw, 140px);
+      animation: about-hero-parallax auto linear both;
       animation-timeline: scroll(root block);
       animation-range: 0px calc(100svh - var(--site-header-height));
     }
-    @keyframes about-hero-rise {
-      from { transform: translateY(0); }
-      to { transform: translateY(-32svh); }
+    .about-hero-title span:last-child {
+      --drift-x: max(-5vw, -100px);
+    }
+    @keyframes about-hero-parallax {
+      from { transform: translate(0, 0); }
+      to { transform: translate(var(--drift-x), -32svh); }
     }
   }
 }
