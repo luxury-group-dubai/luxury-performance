@@ -26,7 +26,8 @@
   position: absolute;
   inset-inline: var(--gutter);
   /* Position the title within the area below the overlaid navigation. */
-  top: calc(35% + .65 * var(--site-header-height));
+  --title-center: calc(35svh + .65 * var(--site-header-height));
+  top: var(--title-center);
   transform: translateY(-50%);
   z-index: 1;
   display: grid;
@@ -56,7 +57,7 @@
     }
     .about-hero-title {
       animation-name: about-hero-rise;
-      animation-timing-function: ease-out;
+      animation-range: 0px 100svh;
     }
     .about-hero-title span { --drift-x: min(8vw, 140px); }
     .about-hero-title span:last-child {
@@ -64,7 +65,7 @@
     }
     @keyframes about-hero-rise {
       from { translate: 0 0; }
-      to { translate: 0 -30svh; }
+      to { translate: 0 calc(0px - var(--title-center) - 50%); }
     }
     @keyframes about-hero-drift {
       from { transform: translateX(0); }
