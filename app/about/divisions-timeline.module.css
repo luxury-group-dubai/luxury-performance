@@ -3,8 +3,11 @@
   --year-size: clamp(44px, 4vw, 80px);
   --year-column: calc(3 * var(--year-size));
   --year-center: calc(.475 * var(--year-size));
-  /* Keep the timeline anchored while the site header slides in and out. */
-  --pin-top: calc(var(--site-header-height) + var(--archive-inset));
+  --intro-top: calc(var(--site-header-height) + var(--archive-inset));
+  --clear-top: calc(var(--site-header-height) + 12px);
+  /* One anchor for the whole timeline, with room for the tallest story above it. */
+  --marker-top: max(calc(var(--intro-top) + var(--year-center)), calc(var(--clear-top) + var(--tallest-midpoint, 0px)));
+  --pin-top: calc(var(--marker-top) - var(--year-center));
   --rail-gap: clamp(16px, 1.65vw, 32px);
   --dot-size: 16px;
   --chapter-gap: clamp(40px, 5vw, 80px);
@@ -34,7 +37,7 @@
 .marker {
   position: sticky;
   display: block;
-  top: calc(var(--pin-top) + var(--year-center));
+  top: var(--marker-top);
   height: 0;
 }
 .marker::before {
@@ -49,26 +52,28 @@
 
 .chapters { list-style: none; margin: 0; padding: 0; }
 .chapter {
+  --story-top: calc(var(--marker-top) - var(--story-midpoint, var(--year-center)));
   display: grid;
   grid-template-columns: var(--year-column) minmax(0, 1fr) 51%;
   align-items: start;
   column-gap: calc(2 * var(--rail-gap));
-  scroll-margin-top: calc(var(--pin-top) - var(--site-header-height) - 16px);
+  scroll-margin-top: calc(var(--story-top) - var(--site-header-height) - 16px);
 }
 .chapterContent { display: contents; }
 .chapter:not(:last-child) .photo { margin-bottom: var(--chapter-gap); }
 /* Each item releases at its own full height, including its reading gap. */
-.year, .story { position: sticky; top: var(--pin-top); }
+.year, .story { position: sticky; }
 .chapter:not(:last-child) .year { padding-bottom: 8px; }
 .chapter:not(:last-child) .story { padding-bottom: 24px; }
 .year {
+  top: var(--pin-top);
   font-size: var(--year-size);
   font-weight: 700;
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: -.06em;
   line-height: .95;
 }
-.story { font-size: 1rem; }
+.story { top: var(--story-top); font-size: 1rem; }
 .story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
 .story p { max-width: 42ch; margin: 14px 0 0; }
 .story :global(.arrow-link) { margin-top: 18px; }
@@ -83,7 +88,7 @@
 @media (min-width: 761px) and (min-height: 681px) and (prefers-reduced-motion: no-preference) {
   /* The first image enters from the fold as the section heading gives way. */
   .opening { min-height: calc(100svh - var(--archive-inset)); }
-  .intro { position: sticky; top: var(--pin-top); }
+  .intro { position: sticky; top: var(--intro-top); }
 }
 @media (min-width: 761px) and (max-width: 1100px) {
   .archive { --year-size: clamp(31px, 3.7vw, 42px); --rail-gap: 12px; }
@@ -93,7 +98,8 @@
     --year-size: clamp(23px, 6vw, 34px);
     --rail-gap: 11px;
     --dot-size: 12px;
-    --pin-top: calc(var(--site-header-height) + 58px);
+    --clear-top: calc(var(--site-header-height) + 58px);
+    --intro-top: var(--clear-top);
     padding-block: 52px;
   }
   .opening { padding-bottom: 20px; }

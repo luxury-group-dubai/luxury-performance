@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { ChapterNav } from '@/components/chapter-nav';
 import { ArrowLink } from '@/components/ui';
+import { DivisionsSection } from './divisions-section';
 import styles from './divisions-timeline.module.css';
 
 const divisions = [
@@ -48,7 +49,7 @@ const chapters = divisions.map(({ period, slug, label }) => ({
 
 export function DivisionsTimeline() {
   return (
-    <section id="our-divisions" aria-labelledby="divisions-title" className={styles.archive}>
+    <DivisionsSection>
       <div className={styles.opening}>
         <header className={styles.intro}>
           <h2 id="divisions-title">Our divisions.</h2>
@@ -79,6 +80,6 @@ export function DivisionsTimeline() {
           ))}
         </ol>
       </div>
-    </section>
+    </DivisionsSection>
   );
 }
