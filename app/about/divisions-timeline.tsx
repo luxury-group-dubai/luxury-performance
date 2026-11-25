@@ -29,6 +29,7 @@ const divisions = [
   },
   {
     period: '2026', label: 'Gallery', name: 'Luxury Car Gallery',
+    image: 'car-gallery-valhalla',
     story: 'Luxury Car Gallery brought vehicle sales to the group’s Al Quoz showroom. Buyers can explore new and pre-owned cars, and owners can offer theirs on consignment.',
     alt: 'Purple Aston Martin Valhalla with both doors raised beneath the Luxury Car Gallery wordmark',
     href: 'https://www.dubicars.com/dealers/dubai-luxury-car-gallery-auto-trading-3413', link: 'Browse the gallery',
@@ -56,7 +57,7 @@ export function DivisionsTimeline() {
       </div>
       <ChapterNav label="Divisions timeline" chapters={chapters} />
       <ol className={styles.chapters}>
-        {divisions.map(({ period, slug, name, alt, story, href, link }) => (
+        {divisions.map(({ period, slug, image = slug, name, alt, story, href, link }) => (
           <li id={'division-' + slug} key={slug} className={styles.chapter}>
             <div className={styles.caption}>
               <div className={styles.year}>
@@ -69,7 +70,7 @@ export function DivisionsTimeline() {
               </div>
             </div>
             <div className={styles.photo}>
-              <Image src={'/images/divisions/' + slug + '.webp'} alt={alt} fill
+              <Image src={'/images/divisions/' + image + '.webp'} alt={alt} fill
                 sizes="(max-width: 650px) calc(100vw - 48px), (max-width: 760px) 90vw, (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
             </div>
           </li>
