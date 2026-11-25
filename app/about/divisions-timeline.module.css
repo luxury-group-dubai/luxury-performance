@@ -15,7 +15,6 @@
   top: calc(var(--divisions-header-offset, var(--site-header-height)) + 24px);
 }
 
-.intro :global(.eyebrow) { margin-bottom: 20px; }
 .intro h2 { max-width: 9ch; font-size: clamp(40px, 4.8vw, 74px); line-height: .96; }
 .intro p, .caption p { color: #51534f; font-size: 14px; line-height: 1.65; }
 .intro p { max-width: 32ch; margin-top: 22px; }

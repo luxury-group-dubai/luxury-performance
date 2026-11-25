@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ChapterNav } from '@/components/chapter-nav';
-import { ArrowLink, Eyebrow } from '@/components/ui';
+import { ArrowLink } from '@/components/ui';
 import styles from './divisions-timeline.module.css';
 
 const divisions = [
@@ -44,7 +44,6 @@ export function DivisionsTimeline() {
     <section id="our-divisions" aria-labelledby="divisions-title" className={styles.archive}>
       <div className={styles.index}>
         <header className={styles.intro}>
-          <Eyebrow number="02">The Luxury Group Dubai</Eyebrow>
           <h2 id="divisions-title">Our divisions.</h2>
           <p>It started with supercar rentals in Dubai. Here’s how the group grew into five divisions.</p>
         </header>
