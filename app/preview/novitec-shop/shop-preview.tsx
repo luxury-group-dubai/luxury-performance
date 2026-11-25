@@ -4,6 +4,7 @@ import { useShopParams as useSearchParams } from '@/components/shop/use-shop-par
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BrandPartnerLink } from '@/components/shop/brand-partner-link';
 import { useRouter } from 'next/navigation';
 import { ArrowUpRight, ArrowDownWideNarrow, Search, X, RotateCcw } from 'lucide-react';
 import type { CatalogProduct } from '@/lib/shop/types';
@@ -77,7 +78,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
 
   return <div className={`${styles.page}${!make ? ` ${styles.manufacturerPage}` : ''}`}>
     <header className={`${styles.hero}${active ? ` ${styles.heroWithToolbar}` : ''}`}>
-      <div className={styles.topline}><Image src="/brand/novitec.svg" alt="NOVITEC" width={185} height={43} className={styles.wordmark} />
+      <div className={styles.topline}><BrandPartnerLink brand="novitec"><Image src="/brand/novitec.svg" alt="NOVITEC" width={185} height={43} className={styles.wordmark} /></BrandPartnerLink>
       <div className={styles.searchWrap} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setSearchOpen(false); }}>
         <div className={styles.searchField}><Search size={18} /><input aria-label="Search NOVITEC cars, collections and parts" placeholder="Search a car, collection or part…" value={search} onFocus={() => setSearchOpen(true)} onChange={event => { setSearch(event.target.value); setSearchOpen(true); }} onKeyDown={event => { if (event.key === 'Escape') setSearchOpen(false); }} aria-controls="novitec-preview-search" />{search && <button aria-label="Clear search" onClick={() => setSearch('')}><X size={17} /></button>}</div>
         {searchOpen && !!search.trim() && <div id="novitec-preview-search" className={styles.suggestions}>

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowUpRight, ArrowDownWideNarrow, Search, X, RotateCcw } from 'lucide-react';
 import { BrandArtwork } from '@/components/brand-artwork';
+import { BrandPartnerLink } from '@/components/shop/brand-partner-link';
 import { ManufacturerLogo } from '@/components/shop/manufacturer-logo';
 import { CatalogChoice } from '@/components/shop/catalog-choice';
 import { TechartGenerationLinks, TechartModelRange } from '@/components/shop/techart-model-overview';
@@ -109,7 +110,7 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
   return <div className={`${styles.page} ${own.page}`}>
     <header className={`${styles.hero}${browsing ? ` ${styles.heroWithToolbar}` : ''}`}>
       <div className={styles.topline}>
-        <BrandArtwork brand={brand} className={own.wordmark} sizes="180px" />
+        <BrandPartnerLink brand={brand}><BrandArtwork brand={brand} className={own.wordmark} sizes="180px" /></BrandPartnerLink>
         <div className={styles.searchWrap} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setSearchOpen(false); }}>
           <div className={styles.searchField}><Search size={18} aria-hidden="true" /><input aria-label={`Search ${supplier.name} cars, collections and parts`} placeholder="Search a car, collection or part…" value={search} onChange={event => { setSearch(event.target.value); setSearchOpen(true); }} onFocus={() => setSearchOpen(true)} onKeyDown={event => { if (event.key === 'Escape') setSearchOpen(false); }} aria-controls="brand-preview-search" />{search && <button aria-label="Clear search" onClick={() => setSearch('')}><X size={17} /></button>}</div>
           {searchOpen && search.trim() && <div className={styles.suggestions} id="brand-preview-search">
