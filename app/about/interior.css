@@ -3,9 +3,15 @@
 }
 .interior-hero {
   position: relative;
+  display: grid;
+  place-items: center;
   min-height: calc(100svh - var(--site-header-height));
   overflow: hidden;
   background: #252b30;
+}
+.interior-hero picture {
+  position: absolute;
+  inset: 0;
 }
 .interior-hero img {
   object-fit: cover;
@@ -15,25 +21,21 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgb(12 20 27 / 64%), rgb(12 20 27 / 50%) 26%, transparent 58%);
+  background: linear-gradient(to bottom, rgb(12 20 27 / 30%), rgb(12 20 27 / 56%) 32%, rgb(12 20 27 / 52%) 59%, transparent 90%);
   pointer-events: none;
 }
 .about-hero-title {
   position: relative;
   z-index: 1;
   margin: 0;
-  padding: clamp(18px, 4svh, 56px) var(--gutter) 0;
   color: white;
   text-align: center;
-  font-size: min(7vw, 11svh, 132px);
+  font-size: min(10.5vw, 12svh, 142px);
   line-height: .97;
 }
 .about-hero-title span {
   display: block;
   white-space: nowrap;
-}
-@media (max-aspect-ratio: 4/5) {
-  .about-hero-title { padding-top: 9svh; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .interior-hero {
@@ -41,16 +43,14 @@
     top: var(--site-header-height);
   }
   @supports (animation-timeline: scroll()) {
-    .about-hero-title span {
-      --travel: min(8vw, 140px);
-      animation: about-hero-drift auto linear both;
+    .about-hero-title {
+      animation: about-hero-rise auto linear both;
       animation-timeline: scroll(root block);
       animation-range: 0px calc(100svh - var(--site-header-height));
     }
-    .about-hero-title span:last-child { --travel: max(-5vw, -100px); }
-    @keyframes about-hero-drift {
-      from { transform: translateX(0); }
-      to { transform: translateX(var(--travel)); }
+    @keyframes about-hero-rise {
+      from { transform: translateY(0); }
+      to { transform: translateY(-32svh); }
     }
   }
 }
