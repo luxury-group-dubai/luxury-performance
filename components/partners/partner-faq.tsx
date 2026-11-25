@@ -25,28 +25,6 @@ const questions = {
       answer: 'Ask our team for a quotation for your exact vehicle and configuration. We’ll confirm current availability, the supplied components and the delivery estimate before you place an order.',
     },
   ],
-  urban: [
-    {
-      question: 'Which URBAN Automotive parts are available?',
-      answer: <>Our <Link href="/shop/urban">URBAN selection</Link> is limited to kits from our own inventory, separate from our dealer partner ranges. Check the current listings for the available vehicles, components and prices.</>,
-    },
-    {
-      question: 'Are the URBAN kits new or used?',
-      answer: 'Check each listing for its condition and included components. Ask our team for additional photos and details of any wear, repairs or missing fittings before ordering.',
-    },
-    {
-      question: 'How do I check whether an URBAN kit fits my car?',
-      answer: 'Match the listing to your vehicle model, year, generation and body style. Share any existing modifications so our team can help confirm compatibility and fitting requirements.',
-    },
-    {
-      question: 'What is included with an URBAN kit?',
-      answer: 'The supplied components depend on the individual listing. Ask us to confirm the panels, trims, fittings and any additional items needed for installation. Photos of a completed vehicle may show parts outside the listed kit.',
-    },
-    {
-      question: 'Can you help with installation or a closer inspection in Dubai?',
-      answer: <>Contact our team about the <Link href="/shop/urban">kit you’re considering</Link>. We can discuss its condition, arrange a closer look and confirm installation options and any preparation required.</>,
-    },
-  ],
   gintani: [
     {
       question: 'Which cars does Gintani make exhausts for?',

@@ -308,7 +308,7 @@ async function PartnerContent({ partner: p, productsPromise }: PartnerDataProps)
       })}</div>
     </section>}
     {p.slug === 'valvetronic' && <ValvetronicSoundGallery />}
-    {(p.slug === 'novitec' || p.slug === 'valvetronic' || p.slug === 'techart' || p.slug === 'capristo' || p.slug === 'fi-exhaust' || p.slug === 'urban') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
+    {(p.slug === 'novitec' || p.slug === 'valvetronic' || p.slug === 'techart' || p.slug === 'capristo' || p.slug === 'fi-exhaust') && <PartnerFaq brand={p.slug} enquiry={enquiry} />}
     {p.slug !== 'capristo' && <section className={styles.support}><div><Eyebrow dark>Luxury Performance / Dubai</Eyebrow><h2>Your car.<br/>Your next chapter.</h2></div><div><p>{p.stockOnly ? 'Need a closer look at one of the kits? Ask us about its condition, included parts and fitment.' : 'From the first component to a complete specification, our team can help with compatibility, product choices and installation.'}</p><ArrowLink href={enquiry} light>Discuss your {p.slug === 'fi-exhaust' ? 'exhaust' : 'specification'}</ArrowLink></div></section>}
   </>;
 }

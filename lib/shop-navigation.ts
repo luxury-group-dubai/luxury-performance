@@ -22,5 +22,5 @@ export const vehicleMenu: ShopMenuItem[] = [
   { name: 'Audi', href: '/shop?make=audi', wordmark: 'audi.svg', logoClass: 'audiWordmark' },
 ];
 
-export const limitedStock: ShopMenuItem = { name: 'URBAN Automotive', href: '/partners/urban#top', artwork: 'urban', note: 'Limited stock · 2 kits' };
+export const limitedStock: ShopMenuItem = { name: 'URBAN Automotive', href: '/shop/in-stock?stock_group=urban', artwork: 'urban', note: 'Limited stock · 2 kits' };
 export type VehicleModels = Record<string, { slug: string; name: string }[]>;
