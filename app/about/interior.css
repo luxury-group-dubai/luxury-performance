@@ -1,14 +1,35 @@
 .interior-hero {
   position: relative;
-  height: clamp(640px, 86svh, 1080px);
+  min-height: clamp(640px, 86svh, 1080px);
   overflow: hidden;
+  background: #b7d4ed;
 }
 .interior-hero img {
   object-fit: cover;
-  object-position: center 67%;
+  object-position: center 54%;
   transition: transform 1.4s var(--ease-out);
 }
-.image-bottom-label{position:absolute;bottom:30px;left:var(--gutter);font-size:9px;letter-spacing:.15em;color:#fff;text-transform:uppercase;text-shadow:0 1px 5px #000}
+.about-hero-copy {
+  position: relative;
+  padding: clamp(28px, 4vw, 64px) var(--gutter);
+  color: var(--ink);
+}
+.about-hero-caption {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.about-hero-copy > header {
+  padding: 0;
+  background: transparent;
+}
+.about-hero-copy header p {
+  color: var(--ink);
+  font-weight: 500;
+}
 @media (max-width: 900px) {
-  .interior-hero { height: clamp(460px, 80svh, 900px); }
+  .interior-hero { min-height: clamp(460px, 80svh, 900px); }
 }

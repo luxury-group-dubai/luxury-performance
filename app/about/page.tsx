@@ -10,6 +10,8 @@ import { contact } from '@/lib/content';
 import { defaultSocialImage } from '@/lib/social-images';
 import { DivisionsTimeline } from './divisions-timeline';
 import { PageHeading } from '@/components/page-heading';
+import showroomPhoto from '@/public/images/headquarters-forecourt.webp';
+import showroomPortrait from '@/public/images/headquarters-forecourt-portrait.webp';
 const title = 'About Luxury Performance | Our Story';
 const description = 'Meet Luxury Performance in Al Quoz, Dubai. Explore the people and approach behind our exhausts, body kits, carbon fibre parts, wheels and suspension upgrades.';
 export const metadata: Metadata = {
@@ -19,17 +21,20 @@ export const metadata: Metadata = {
 };
 export default function About() {
   const { props: portrait } = getImageProps({
-    src: '/images/headquarters-forecourt-portrait.webp', width: 832, height: 1024,
+    src: showroomPortrait,
     sizes: 'max(100vw, 65svh)', alt: '',
   });
-  return <><div className="about-story"><PageHeading title="About." description="Auto parts and upgrades, supplied from Dubai. Built around your car, with guidance on fitment, availability and installation options." />
+  return <><div className="about-story">
   <div className="interior-hero">
     <picture>
       <source media="(max-width: 900px) and (max-aspect-ratio: 4/5)" srcSet={portrait.srcSet} sizes={portrait.sizes} />
-      <Image src="/images/headquarters-forecourt.webp" alt="Supercars lined up outside The Luxury Group showroom in Al Quoz, Dubai"
+      <Image src={showroomPhoto} alt="Supercars lined up outside The Luxury Group showroom in Al Quoz, Dubai"
         fill loading="eager" fetchPriority="high" sizes="(max-width: 900px) max(100vw, 120svh), 100vw" />
     </picture>
-    <span className="image-bottom-label">One home. A world of automotive possibility.</span>
+    <div className="about-hero-copy">
+      <span className="about-hero-caption">One home. A world of automotive possibility.</span>
+      <PageHeading title="About." description="Auto parts and upgrades, supplied from Dubai. Built around your car, with guidance on fitment, availability and installation options." />
+    </div>
   </div>
   <section className="about-manifesto section-pad"><Image src="/brand/lxp-winged-black.svg" width={1868} height={728} sizes="185px" alt="Luxury Performance wing emblem" className="about-emblem" /><Reveal><h2>Built around cars.<br /><span className="text-muted">Driven by people.</span></h2><p><Link className="about-home-link" href="/">Luxury Performance</Link> is the automotive performance division of The Luxury Group Dubai. From our base in Al Quoz, we help owners, collectors and specialist workshops choose parts and upgrades for their vehicles.</p><p>Our <Link className="about-home-link" href="/shop">shop</Link> brings together exhaust systems, body kits, carbon fibre parts, wheels and suspension. Explore <Link className="about-home-link" href="/partners">our partner brands</Link>, including NOVITEC, TECHART, Valvetronic Designs, CAPRISTO, FI Exhaust and Gintani. Available components and configurations depend on your exact vehicle.</p><p>Whether you’re choosing one component or planning a wider build, we help check compatibility, supplied components and finishes, explain stock status and lead times, and discuss installation options. The starting point is your car and what you want to change.</p><ArrowLink href="/contact">Talk to our team</ArrowLink></Reveal></section>
   <DivisionsTimeline /></div>
