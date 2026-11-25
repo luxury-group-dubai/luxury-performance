@@ -19,7 +19,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgb(12 20 27 / 30%), rgb(12 20 27 / 56%) 32%, rgb(12 20 27 / 52%) 59%, transparent 90%);
+  background: linear-gradient(to bottom, rgb(8 10 12 / 76%), rgb(8 10 12 / 72%) 48%, rgb(8 10 12 / 62%));
   pointer-events: none;
 }
 .about-hero-title {
