@@ -42,25 +42,27 @@ const chapters = divisions.map(({ year, label }) => ({
 export function DivisionsTimeline() {
   return (
     <section id="our-divisions" aria-labelledby="divisions-title" className={styles.archive}>
-      <div className={styles.index}>
+      <div className={styles.opening}>
         <header className={styles.intro}>
           <h2 id="divisions-title">Our divisions.</h2>
           <p>It started with supercar rentals in Dubai. Here’s how the group grew into five divisions.</p>
         </header>
-        <ChapterNav label="Divisions by founding year" chapters={chapters} />
       </div>
+      <ChapterNav label="Divisions by founding year" chapters={chapters} />
       <ol className={styles.chapters}>
         {divisions.map(({ year, name, alt, story, href, link }) => (
           <li id={'division-' + year} key={year} className={styles.chapter}>
+            <div className={styles.caption}>
+              <time dateTime={year} className={styles.year}>{year}</time>
+              <div className={styles.story}>
+                <h3>{name}</h3>
+                <p>{story}</p>
+                {href && <ArrowLink href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
+              </div>
+            </div>
             <div className={styles.photo}>
               <Image src={'/images/divisions/' + year + '.webp'} alt={alt} fill
-                sizes="(max-width: 760px) 100vw, (max-width: 1650px) 58vw, 960px" />
-              <time dateTime={year} className={styles.year}>{year}</time>
-            </div>
-            <div className={styles.caption}>
-              <h3>{name}</h3>
-              <p>{story}</p>
-              {href && <ArrowLink href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
+                sizes="(max-width: 650px) calc(100vw - 48px), (max-width: 760px) 90vw, (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
             </div>
           </li>
         ))}
