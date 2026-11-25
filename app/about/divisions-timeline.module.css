@@ -51,6 +51,9 @@
   bottom: var(--year-center);
   width: 1px;
   background: #b9bab4;
+  color: var(--accent, #e2001a);
+  /* Clip the progress line to the timeline while keeping the full dot visible at each end. */
+  clip-path: inset(calc(var(--dot-size) / -2));
   pointer-events: none;
 }
 .marker {
@@ -65,8 +68,15 @@
   width: var(--dot-size);
   height: var(--dot-size);
   border-radius: 50%;
-  background: var(--accent, #e2001a);
+  background: currentColor;
   transform: translate(calc(.5px - 50%), -50%);
+}
+.marker::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 100lvh;
+  background: currentColor;
 }
 
 .chapters { list-style: none; margin: 0; padding: 0; }
