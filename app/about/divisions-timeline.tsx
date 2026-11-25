@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { ChapterNav } from '@/components/chapter-nav';
 import { ArrowLink } from '@/components/ui';
+import { DivisionTrack } from './division-track';
 import styles from './divisions-timeline.module.css';
 
 const divisions = [
@@ -56,26 +57,28 @@ export function DivisionsTimeline() {
         </header>
       </div>
       <ChapterNav label="Divisions timeline" chapters={chapters} />
-      <ol className={styles.chapters}>
+      <DivisionTrack>
         {divisions.map(({ period, slug, image = slug, name, alt, story, href, link }) => (
           <li id={'division-' + slug} key={slug} className={styles.chapter}>
-            <div className={styles.caption}>
-              <div className={styles.year}>
-                {period === 'Today' ? period : <time dateTime={period}>{period}</time>}
-              </div>
-              <div className={styles.story}>
-                <h3>{name}</h3>
-                <p>{story}</p>
-                {href && <ArrowLink href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
+            <div className={styles.pin}>
+              <div className={styles.caption}>
+                <div className={styles.year}>
+                  {period === 'Today' ? period : <time dateTime={period}>{period}</time>}
+                </div>
+                <div className={styles.story}>
+                  <h3>{name}</h3>
+                  <p>{story}</p>
+                  {href && <ArrowLink href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
+                </div>
               </div>
             </div>
             <div className={styles.photo}>
               <Image src={'/images/divisions/' + image + '.webp'} alt={alt} fill
-                sizes="(max-width: 650px) calc(100vw - 48px), (max-width: 760px) 90vw, (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
+                sizes="(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
             </div>
           </li>
         ))}
-      </ol>
+      </DivisionTrack>
     </section>
   );
 }

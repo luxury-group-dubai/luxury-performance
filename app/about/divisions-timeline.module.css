@@ -1,9 +1,12 @@
 .archive {
   --archive-inset: clamp(60px, 7vw, 110px);
-  --year-column: 4.5ch;
+  --year-size: clamp(44px, 4vw, 80px);
+  --year-column: calc(3 * var(--year-size));
+  --year-center: calc(.475 * var(--year-size));
+  --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--archive-inset));
   --rail-gap: clamp(16px, 1.65vw, 32px);
   --dot-size: 16px;
-  --marker-gutter: calc(var(--dot-size) + var(--rail-gap));
+  --chapter-gap: clamp(40px, 5vw, 80px);
   padding: var(--archive-inset) var(--gutter);
   background: var(--paper);
   color: var(--ink);
@@ -16,64 +19,61 @@
 .intro p { max-width: 32ch; margin-top: 22px; }
 .archive > nav { display: none; }
 
-.chapters { position: relative; overflow: clip; list-style: none; margin: 0; padding: 0; }
-.chapters::before {
-  content: '';
+.track { position: relative; isolation: isolate; }
+.rail {
   position: absolute;
-  inset-block: 0;
-  left: calc(var(--dot-size) / 2);
+  z-index: 2;
+  left: calc(var(--year-column) + var(--rail-gap));
+  top: var(--year-center);
+  bottom: max(0px, calc(var(--last-caption-height, 0px) - var(--year-center)));
   width: 1px;
-  transform: translateX(-50%);
   background: #b9bab4;
   pointer-events: none;
 }
+.marker {
+  position: sticky;
+  display: block;
+  top: calc(var(--pin-top) + var(--year-center));
+  height: 0;
+}
+.marker::before {
+  content: '';
+  display: block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: var(--accent, #e2001a);
+  transform: translate(calc(.5px - 50%), -50%);
+}
+
+.chapters { list-style: none; margin: 0; padding: 0; }
 .chapter {
+  position: relative;
+  overflow: clip;
   display: grid;
   grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
   align-items: start;
   column-gap: clamp(32px, 4.4vw, 90px);
-  padding-left: var(--marker-gutter);
+  min-height: var(--caption-height, 0px);
 }
-.chapter + .chapter { margin-top: clamp(40px, 5vw, 80px); }
+.chapter:not(:last-child) .photo { margin-bottom: var(--chapter-gap); }
+.pin { position: sticky; top: var(--pin-top); z-index: 1; }
+/* Clip the outgoing copy at the incoming chapter edge. The last caption
+   keeps its height so it and the marker leave the track together. */
+.track[data-measured] .chapter:not(:last-child) .pin { height: 0; }
 .caption {
   display: grid;
   grid-template-columns: var(--year-column) minmax(0, 1fr);
   align-items: start;
-  column-gap: var(--rail-gap);
-  font-size: clamp(44px, 4vw, 80px);
+  column-gap: calc(2 * var(--rail-gap));
 }
 .year {
-  position: relative;
+  font-size: var(--year-size);
   font-weight: 700;
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: -.06em;
   line-height: .95;
 }
-.year::before {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  left: calc(0px - var(--marker-gutter));
-  top: 50%;
-  transform: translateY(-50%);
-  width: var(--dot-size);
-  height: var(--dot-size);
-  border-radius: 50%;
-  background: var(--accent, #e2001a);
-}
-/* Trim the shared line at the moving first and last dots. */
-.chapter:first-child .year::after, .chapter:last-child .year::after {
-  content: '';
-  position: absolute;
-  left: calc(var(--dot-size) / 2 - var(--marker-gutter));
-  transform: translateX(-50%);
-  width: 3px;
-  height: 150vmax;
-  background: var(--paper);
-  pointer-events: none;
-}
-.chapter:first-child .year::after { bottom: 50%; }
-.chapter:last-child .year::after { top: 50%; }
 .story { font-size: 1rem; }
 .story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
 .story p { max-width: 42ch; margin: 14px 0 0; }
@@ -89,13 +89,19 @@
 @media (min-width: 761px) and (min-height: 681px) and (prefers-reduced-motion: no-preference) {
   /* The first image enters from the fold as the section heading gives way. */
   .opening { min-height: calc(100svh - var(--archive-inset)); }
-  .intro, .caption { position: sticky; top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--archive-inset)); }
+  .intro { position: sticky; top: var(--pin-top); }
 }
 @media (min-width: 761px) and (max-width: 1100px) {
-  .caption { grid-template-columns: 1fr; gap: 20px; }
+  .archive { --year-size: clamp(31px, 3.7vw, 42px); --rail-gap: 12px; }
 }
 @media (max-width: 760px) {
-  .archive { --dot-size: 12px; --rail-gap: 10px; padding-block: 52px; }
+  .archive {
+    --year-size: clamp(23px, 6vw, 34px);
+    --rail-gap: 11px;
+    --dot-size: 12px;
+    --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + 58px);
+    padding-block: 52px;
+  }
   .opening { padding-bottom: 20px; }
   .intro h2 { max-width: none; }
   .intro p { margin-top: 16px; }
@@ -138,9 +144,10 @@
     height: 1px;
     overflow: hidden;
   }
-  .chapter { grid-template-columns: 1fr; gap: 20px; scroll-margin-top: 50px; }
-  .photo { grid-row: 1; }
-  .caption { font-size: clamp(27px, 7.5vw, 40px); }
+  .chapter { display: flow-root; scroll-margin-top: 50px; }
+  .caption { background: var(--paper); padding-bottom: 14px; }
+  .photo { margin-left: calc(var(--year-column) + 2 * var(--rail-gap)); }
+  .track[data-measured] .chapter:not(:last-child) .photo { margin-top: var(--caption-height); }
   .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
 }
 @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
