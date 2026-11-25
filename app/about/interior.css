@@ -5,30 +5,52 @@
   position: relative;
   min-height: calc(100svh - var(--site-header-height));
   overflow: hidden;
-  background: var(--paper);
+  background: #252b30;
 }
 .interior-hero img {
   object-fit: cover;
   object-position: center 54%;
-  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 8%), rgb(0 0 0 / 37%) 12%, rgb(0 0 0 / 84%) 24%, black 32%);
-  transition: transform 1.4s var(--ease-out);
 }
-.about-hero-copy {
+.interior-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgb(12 20 27 / 64%), rgb(12 20 27 / 50%) 26%, transparent 58%);
+  pointer-events: none;
+}
+.about-hero-title {
   position: relative;
-  padding: clamp(28px, 4vw, 64px) var(--gutter);
-  color: var(--ink);
+  z-index: 1;
+  margin: 0;
+  padding: clamp(18px, 4svh, 56px) var(--gutter) 0;
+  color: white;
+  text-align: center;
+  font-size: min(7vw, 11svh, 132px);
+  line-height: .97;
 }
-.about-hero-copy > header {
-  padding: 0;
-  background: transparent;
+.about-hero-title span {
+  display: block;
+  white-space: nowrap;
 }
-.about-hero-copy header p {
-  color: var(--ink);
-  font-weight: 500;
+@media (max-aspect-ratio: 4/5) {
+  .about-hero-title { padding-top: 9svh; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .interior-hero {
     position: sticky;
     top: var(--site-header-height);
+  }
+  @supports (animation-timeline: scroll()) {
+    .about-hero-title span {
+      --travel: min(8vw, 140px);
+      animation: about-hero-drift auto linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px calc(100svh - var(--site-header-height));
+    }
+    .about-hero-title span:last-child { --travel: max(-8vw, -140px); }
+    @keyframes about-hero-drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(var(--travel)); }
+    }
   }
 }

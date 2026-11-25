@@ -9,7 +9,6 @@ import { Reveal } from '@/components/reveal';
 import { contact } from '@/lib/content';
 import { defaultSocialImage } from '@/lib/social-images';
 import { DivisionsTimeline } from './divisions-timeline';
-import { PageHeading } from '@/components/page-heading';
 import showroomPhoto from '@/public/images/headquarters-forecourt.webp';
 import showroomPortrait from '@/public/images/headquarters-forecourt-portrait.webp';
 const title = 'About Luxury Performance | Our Story';
@@ -32,9 +31,10 @@ export default function About() {
       <Image src={showroomPhoto} alt="Supercars lined up outside The Luxury Group showroom in Al Quoz, Dubai"
         fill quality={90} loading="eager" fetchPriority="high" sizes="max(100vw, calc(150svh - 150px))" />
     </picture>
-    <div className="about-hero-copy">
-      <PageHeading title="About." description="Auto parts and upgrades, supplied from Dubai. Built around your car, with guidance on fitment, availability and installation options." />
-    </div>
+    <h1 className="about-hero-title">
+      <span>About</span>{' '}
+      <span>Luxury Performance</span>
+    </h1>
   </div>
   <section className="about-manifesto section-pad"><Image src="/brand/lxp-winged-black.svg" width={1868} height={728} sizes="185px" alt="Luxury Performance wing emblem" className="about-emblem" /><Reveal><h2>Built around cars.<br /><span className="text-muted">Driven by people.</span></h2><p><Link className="about-home-link" href="/">Luxury Performance</Link> is the automotive performance division of The Luxury Group Dubai. From our base in Al Quoz, we help owners, collectors and specialist workshops choose parts and upgrades for their vehicles.</p><p>Our <Link className="about-home-link" href="/shop">shop</Link> brings together exhaust systems, body kits, carbon fibre parts, wheels and suspension. Explore <Link className="about-home-link" href="/partners">our partner brands</Link>, including NOVITEC, TECHART, Valvetronic Designs, CAPRISTO, FI Exhaust and Gintani. Available components and configurations depend on your exact vehicle.</p><p>Whether you’re choosing one component or planning a wider build, we help check compatibility, supplied components and finishes, explain stock status and lead times, and discuss installation options. The starting point is your car and what you want to change.</p><ArrowLink href="/contact">Talk to our team</ArrowLink></Reveal></section>
   </div>
