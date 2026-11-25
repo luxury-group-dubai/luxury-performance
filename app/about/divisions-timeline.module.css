@@ -12,7 +12,7 @@
 .index {
   align-self: start;
   position: sticky;
-  top: calc(var(--site-header-height) + 24px);
+  top: calc(var(--divisions-header-offset, var(--site-header-height)) + 24px);
 }
 
 .intro :global(.eyebrow) { margin-bottom: 20px; }
@@ -92,7 +92,7 @@
   .intro p { margin-top: 16px; }
   .index nav {
     position: sticky;
-    top: var(--site-header-height);
+    top: var(--divisions-header-offset, var(--site-header-height));
     z-index: 2;
     display: flex;
     margin: 20px 0 12px;
@@ -130,4 +130,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .index nav a::before { transition: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .index, .index nav { transition: top .22s ease-out; }
 }

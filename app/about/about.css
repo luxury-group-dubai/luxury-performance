@@ -9,3 +9,13 @@
 .about-manifesto .about-emblem{width:185px;height:auto;object-fit:contain;filter:none;mix-blend-mode:normal}
 
 .about-home-link { text-decoration: underline; text-underline-offset: .18em; }
+
+.site-header[data-divisions-header="hidden"]:not(.menu-is-open):not(:has(:focus-visible, [aria-expanded="true"])) {
+  top: calc(0px - var(--site-header-height));
+  & ~ main { --divisions-header-offset: 0px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-header[data-divisions-header] {
+    transition: top .22s ease-out, box-shadow .45s;
+  }
+}

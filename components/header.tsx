@@ -131,19 +131,33 @@ export function Header() {
   useEffect(() => cancelHoverClose, [cancelHoverClose]);
   useEffect(() => {
     let frame = 0;
+    let directionAnchor = window.scrollY;
+    const nav = header.current;
+    if (!nav) return;
     const update = () => {
       frame = 0;
-      const nav = header.current;
-      if (!nav) return;
       // Read layout before changing classes or custom properties.
       const y = window.scrollY;
       const hero = overlaysHero ? document.querySelector('[data-header-hero], [data-home-hero]') : null;
       const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
       const headerHeight = nav.offsetHeight;
+      const divisions = pathname === '/about'
+        ? document.getElementById('our-divisions')?.getBoundingClientRect()
+        : undefined;
       const partnerBrowsing = pathname === '/partners/capristo' || pathname === '/partners/gintani'
         ? document.querySelector('[data-partner-browsing]')?.getBoundingClientRect()
         : undefined;
       const heroFade = Math.min(1, Math.max(0, (heroBottom - headerHeight) / 180));
+      if (divisions) {
+        const inside = divisions.top <= headerHeight && divisions.bottom > headerHeight;
+        const distance = y - directionAnchor;
+        // Ignore small reversals from trackpads and touch scrolling.
+        if (!inside || Math.abs(distance) >= 10 || !nav.dataset.divisionsHeader) {
+          const state = inside && distance >= 10 ? 'hidden' : 'visible';
+          if (nav.dataset.divisionsHeader !== state) nav.dataset.divisionsHeader = state;
+          directionAnchor = y;
+        }
+      }
       nav.style.setProperty('--glass-progress', String(Math.min(1, Math.max(0, y / 160))));
       nav.classList.toggle('is-scrolled', y > 32);
       nav.classList.toggle('is-past-hero', !hero || heroBottom <= headerHeight);
@@ -163,7 +177,12 @@ export function Header() {
       header.current?.classList.remove('is-scrolled', 'is-past-hero', 'is-over-partner-browsing');
     }
     window.addEventListener('scroll', scroll, { passive: true }); window.addEventListener('resize', scroll);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', scroll); window.removeEventListener('resize', scroll); };
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', scroll);
+      window.removeEventListener('resize', scroll);
+      delete nav.dataset.divisionsHeader;
+    };
   }, [pathname, overlaysHero]);
   useEffect(() => {
     const nav = header.current;
