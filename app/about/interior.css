@@ -2,11 +2,12 @@
   position: relative;
   min-height: clamp(640px, 86svh, 1080px);
   overflow: hidden;
-  background: #b7d4ed;
+  background: var(--paper);
 }
 .interior-hero img {
   object-fit: cover;
   object-position: center 54%;
+  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 8%), rgb(0 0 0 / 37%) 12%, rgb(0 0 0 / 84%) 24%, black 32%);
   transition: transform 1.4s var(--ease-out);
 }
 .about-hero-copy {
