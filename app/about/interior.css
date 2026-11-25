@@ -3,7 +3,7 @@
 }
 .interior-hero {
   position: relative;
-  min-height: calc(100svh - var(--site-header-height));
+  min-height: 100svh;
   overflow: hidden;
   background: #252b30;
 }
@@ -25,7 +25,8 @@
 .about-hero-title {
   position: absolute;
   inset-inline: var(--gutter);
-  top: 35%;
+  /* Position the title within the area below the overlaid navigation. */
+  top: calc(35% + .65 * var(--site-header-height));
   transform: translateY(-50%);
   z-index: 1;
   display: grid;
@@ -44,7 +45,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .interior-hero {
     position: sticky;
-    top: var(--site-header-height);
+    top: 0;
   }
   @supports (animation-timeline: scroll()) {
     .about-hero-title,

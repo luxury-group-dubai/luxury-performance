@@ -78,7 +78,7 @@ export function Header() {
   const isShopRoute = pathname === '/shop' || pathname.startsWith('/shop/');
   const isShop = isShopRoute || pathname === '/studio/capristo';
   const partnerSlug = /^\/partners\/([^/]+)$/.exec(pathname)?.[1];
-  const overlaysHero = pathname === '/' || pathname === '/novitec-12cilindri-n-largo' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
+  const overlaysHero = pathname === '/' || pathname === '/about' || pathname === '/novitec-12cilindri-n-largo' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
   const solidSurface = !overlaysHero;
   const header = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -139,7 +139,9 @@ export function Header() {
       // Read layout before changing classes or custom properties.
       const y = window.scrollY;
       const hero = overlaysHero ? document.querySelector('[data-header-hero], [data-home-hero]') : null;
-      const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
+      // A pinned hero ends where the following section covers it.
+      const edge = hero?.getAttribute('data-header-hero') === 'end' ? 'top' : 'bottom';
+      const heroBottom = hero?.getBoundingClientRect()[edge] ?? 0;
       const headerHeight = nav.offsetHeight;
       const divisions = pathname === '/about'
         ? document.getElementById('our-divisions')?.getBoundingClientRect()
