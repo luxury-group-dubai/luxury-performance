@@ -3,6 +3,50 @@ import Link from 'next/link';
 import styles from './partner-faq.module.css';
 
 const questions = {
+  'fi-exhaust': [
+    {
+      question: 'How do I order an FI Exhaust system in Dubai?',
+      answer: <>Send our team an <Link href="/contact?programme=FI%20Exhaust">FI Exhaust enquiry</Link> with your vehicle model, year, engine and the sound you have in mind. We can help identify the available system and confirm its configuration, price and availability.</>,
+    },
+    {
+      question: 'How do I confirm an FI Exhaust system fits my car?',
+      answer: 'Share your exact model, year, engine, body style and any existing exhaust modifications. We’ll check the fitting requirements and supplied components for the system you’re considering before you order.',
+    },
+    {
+      question: 'How are the exhaust valves controlled?',
+      answer: 'The control setup depends on the vehicle and system. Ask us to confirm how the valves operate, which controls are included and whether additional components are needed for your car.',
+    },
+    {
+      question: 'Can you help with FI Exhaust installation in Dubai?',
+      answer: 'Yes. Tell us which system you’re considering and what is already fitted to your car. Our team can discuss compatibility, installation options and timing with you.',
+    },
+    {
+      question: 'How do I check FI Exhaust pricing and lead times?',
+      answer: 'Ask our team for a quotation for your exact vehicle and configuration. We’ll confirm current availability, the supplied components and the delivery estimate before you place an order.',
+    },
+  ],
+  urban: [
+    {
+      question: 'Which URBAN Automotive parts are available?',
+      answer: <>Our <Link href="/shop/urban">URBAN selection</Link> is limited to kits from our own inventory, separate from our dealer partner ranges. Check the current listings for the available vehicles, components and prices.</>,
+    },
+    {
+      question: 'Are the URBAN kits new or used?',
+      answer: 'Check each listing for its condition and included components. Ask our team for additional photos and details of any wear, repairs or missing fittings before ordering.',
+    },
+    {
+      question: 'How do I check whether an URBAN kit fits my car?',
+      answer: 'Match the listing to your vehicle model, year, generation and body style. Share any existing modifications so our team can help confirm compatibility and fitting requirements.',
+    },
+    {
+      question: 'What is included with an URBAN kit?',
+      answer: 'The supplied components depend on the individual listing. Ask us to confirm the panels, trims, fittings and any additional items needed for installation. Photos of a completed vehicle may show parts outside the listed kit.',
+    },
+    {
+      question: 'Can you help with installation or a closer inspection in Dubai?',
+      answer: <>Contact our team about the <Link href="/shop/urban">kit you’re considering</Link>. We can discuss its condition, arrange a closer look and confirm installation options and any preparation required.</>,
+    },
+  ],
   gintani: [
     {
       question: 'Which cars does Gintani make exhausts for?',
@@ -18,7 +62,7 @@ const questions = {
     },
     {
       question: 'How do I get pricing and a lead time?',
-      answer: 'Send a fitment enquiry for the system you’re considering. Our Dubai team can confirm the configuration, current price, availability and installation options before you order.',
+      answer: <>Check the <Link href="/shop/gintani">Gintani shop</Link> for the price, available configurations and stock status of your system. For supplier orders or a specific delivery date, ask our Dubai team to confirm the current lead time and installation options before ordering.</>,
     },
     {
       question: 'Can I use a Gintani exhaust on the road?',
