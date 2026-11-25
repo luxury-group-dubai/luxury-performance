@@ -47,7 +47,7 @@
       animation-timeline: scroll(root block);
       animation-range: 0px calc(100svh - var(--site-header-height));
     }
-    .about-hero-title span:last-child { --travel: max(-8vw, -140px); }
+    .about-hero-title span:last-child { --travel: max(-5vw, -100px); }
     @keyframes about-hero-drift {
       from { transform: translateX(0); }
       to { transform: translateX(var(--travel)); }
