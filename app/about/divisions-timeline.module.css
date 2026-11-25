@@ -1,9 +1,10 @@
 .archive {
   --archive-paper: #f7f7f4;
+  --archive-inset: clamp(60px, 7vw, 110px);
   display: grid;
   grid-template-columns: minmax(230px, .78fr) minmax(0, 1.6fr);
   gap: clamp(42px, 7vw, 120px);
-  padding: clamp(60px, 7vw, 110px) var(--gutter);
+  padding: var(--archive-inset) var(--gutter);
   background: var(--archive-paper);
   color: var(--ink);
   border-block: 1px solid var(--line);
@@ -12,7 +13,7 @@
 .index {
   align-self: start;
   position: sticky;
-  top: calc(var(--divisions-header-offset, var(--site-header-height)) + 24px);
+  top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--archive-inset));
 }
 
 .intro h2 { max-width: 9ch; font-size: clamp(40px, 4.8vw, 74px); line-height: .96; }
