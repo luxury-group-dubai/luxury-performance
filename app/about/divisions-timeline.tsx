@@ -50,12 +50,10 @@ const chapters = divisions.map(({ period, slug, label }) => ({
 export function DivisionsTimeline() {
   return (
     <DivisionsSection>
-      <div className={styles.opening}>
-        <header className={styles.intro}>
-          <h2 id="divisions-title">Behind LXP.</h2>
-          <p>Luxury Performance is the parts division of The Luxury Group Dubai. Our five sister divisions rent, source and sell cars, provide chauffeurs and run the workshop in Al Quoz.</p>
-        </header>
-      </div>
+      <header className={styles.intro}>
+        <h2 id="divisions-title">Our divisions.</h2>
+        <p>It started with supercar rentals in Dubai. Here’s how the group grew into six divisions.</p>
+      </header>
       <ChapterNav label="Divisions timeline" chapters={chapters} activeAt="var(--pin-top)" />
       <div className={styles.track}>
         <div aria-hidden="true" className={styles.rail}><span className={styles.marker} /></div>
