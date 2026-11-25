@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import type { CSSProperties } from 'react';
 import { ChapterNav } from '@/components/chapter-nav';
 import { ArrowLink } from '@/components/ui';
 import { DivisionsSection } from './divisions-section';
@@ -44,7 +43,7 @@ const divisions = [
     additionalPhoto: { src: '/images/divisions/gallery-revuelto-rear.webp', alt: 'Rear view of the gallery’s matte-black Lamborghini Revuelto against a white backdrop' },
     image: 'car-gallery-valhalla',
     story: 'Luxury Car Gallery brought vehicle sales to the group’s Al Quoz showroom. Buyers can explore new and pre-owned cars, and owners can offer theirs on consignment.',
-    alt: 'Purple Aston Martin Valhalla with both doors raised beneath the Luxury Car Gallery wordmark',
+    alt: 'Aston Martin Valhalla photographed head-on with both doors raised',
     href: 'https://www.dubicars.com/dealers/dubai-luxury-car-gallery-auto-trading-3413', link: 'Browse the gallery',
   },
   {
@@ -58,6 +57,7 @@ const divisions = [
   const slug = division.period.toLowerCase();
   const photos = [{ src: '/images/divisions/' + (division.image ?? slug) + '.webp', alt: division.alt }];
   if (division.additionalPhoto) photos.push(division.additionalPhoto);
+  photos.push(division.detail);
   return { ...division, slug, photos };
 });
 
@@ -83,7 +83,7 @@ export function DivisionsTimeline() {
       <div className={styles.track}>
         <div aria-hidden="true" className={styles.rail}><span className={styles.marker} /></div>
         <ol className={styles.chapters}>
-          {divisions.map(({ period, slug, photos, mark, detail, name, story, href, link }) => (
+          {divisions.map(({ period, slug, photos, mark, name, story, href, link }) => (
             <li id={'division-' + slug} key={slug} className={styles.chapter}>
               <div className={styles.year}>
                 {slug === 'today' ? period : <time dateTime={period}>{period}</time>}
@@ -95,21 +95,14 @@ export function DivisionsTimeline() {
                 </div>
                 <div className={styles.mediaColumn}>
                   <div className={styles.gallery}>
-                    {photos.map(photo => (
-                      <div key={photo.src} className={styles.photo}>
-                        <Image src={photo.src} alt={photo.alt} fill
+                    {photos.map((photo, index) => (
+                      <div key={photo.src} className={styles.photo} data-division={index === 0 ? mark : undefined}>
+                        <Image className={styles.photoImage} src={photo.src} alt={photo.alt} fill
                           sizes="(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
+                        {index === 0 && <Image className={styles.coverLogo} src={`/images/divisions/marks/${mark}.svg`}
+                          width={600} height={600} alt="" />}
                       </div>
                     ))}
-                    {detail && <div className={styles.detail}>
-                      <Image src={detail.src} alt={detail.alt} fill sizes="(max-width: 760px) 45vw, (max-width: 1686px) 28vw, 485px" />
-                    </div>}
-                    <div className={styles.mark} data-division-mark={mark} aria-hidden="true"
-                      style={{ '--wordmark': `url("/images/divisions/marks/${mark}.svg")` } as CSSProperties}>
-                      <span className={styles.lettering} />
-                      <Image className={styles.wings} src={`/images/divisions/marks/${mark}-winged-gold.svg`}
-                        alt="" width={934} height={364} />
-                    </div>
                   </div>
                   {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>

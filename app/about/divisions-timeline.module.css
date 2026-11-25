@@ -124,83 +124,41 @@
   min-height: 44px;
 }
 .gallery {
-  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 35%;
   gap: clamp(5px, .65vw, 12px);
 }
-.photo, .detail {
+.photo {
   position: relative;
   overflow: hidden;
+  aspect-ratio: 1.48;
   background: #292a28;
 }
-.photo { grid-column: 1 / -1; aspect-ratio: 1.48; }
-.photo img, .detail img { object-fit: cover; }
-.mark {
-  --brand-paper: #000;
-  --brand-ink: #fff;
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-  overflow: hidden;
-  background-color: var(--brand-paper);
-  color: var(--brand-ink);
+.photo:last-child { aspect-ratio: 1.85; }
+.photoImage { object-fit: cover; }
+.photo[data-division] { isolation: isolate; }
+.photo[data-division="lsr"] { background-color: #f26822; }
+.photo[data-division="lcs"] { background-color: #38214c; }
+.photo[data-division="slc"] { background-color: #07afba; }
+.photo[data-division="lac"] { background-color: #ffcd00; --photo-opacity: .40; }
+.photo[data-division="lcg"] { background-color: #000; --photo-opacity: .48; }
+.photo[data-division="lxp"] { background-color: #d71920; }
+.photo[data-division] .photoImage {
+  filter: grayscale(1);
+  mix-blend-mode: luminosity;
+  opacity: var(--photo-opacity, .58);
 }
-.mark[data-division-mark="lsr"] { --brand-paper: #f26822; }
-.mark[data-division-mark="lcs"] { --brand-paper: #38214c; }
-.mark[data-division-mark="slc"] { --brand-paper: #07afba; }
-.mark[data-division-mark="lac"] { --brand-paper: #ffcd00; --brand-ink: #25282b; }
-.mark[data-division-mark="lxp"] { --brand-paper: #d71920; }
-.lettering {
+.photo[data-division="lcg"] .photoImage {
+  /* Frame the Valhalla beneath the wordmark printed into the source photograph. */
+  transform: scale(1.32);
+  transform-origin: center bottom;
+}
+.coverLogo {
   position: absolute;
   inset: 0;
-  background: currentColor;
-  mask: var(--wordmark) center / contain no-repeat;
-}
-.wings { display: block; width: 86%; height: auto; opacity: 0; }
-.photo + .mark { position: absolute; bottom: 0; right: 0; width: 27%; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .mark { animation-name: markPaper; animation-timing-function: steps(1, end); }
-  .lettering { animation-name: markLettering; animation-timing-function: ease-out; }
-  .wings { animation-name: unfoldWings; animation-timing-function: ease-in-out; }
-  @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
-    .mark { view-timeline-name: --division-logo; view-timeline-inset: 0; }
-    .mark, .lettering, .wings {
-      animation-timeline: --division-logo;
-      animation-duration: auto;
-      animation-fill-mode: both;
-    }
-  }
-  .archive[data-scrub-marks] :is(.mark, .lettering, .wings) {
-    animation-duration: 1s;
-    animation-delay: var(--mark-seek);
-    animation-play-state: paused;
-    animation-fill-mode: both;
-  }
-}
-/* The tile enters at 0%. Reach gold while it is still comfortably in view. */
-@keyframes markPaper {
-  0% { background-color: var(--brand-paper); color: var(--brand-ink); }
-  23% { background-color: #fff; color: #111; }
-  33%, 100% { background-color: #080808; color: #fff; }
-}
-@keyframes markLettering {
-  0%, 4% { clip-path: inset(0 100% 0 0); }
-  12%, 39% { clip-path: inset(0); opacity: 1; }
-  44%, 100% { clip-path: inset(0); opacity: 0; }
-}
-@keyframes unfoldWings {
-  0%, 41% { clip-path: inset(0 50%); opacity: 0; filter: brightness(0) invert(1); }
-  49%, 54% { clip-path: inset(0); opacity: 1; filter: brightness(0) invert(1); }
-  62%, 100% { clip-path: inset(0); opacity: 1; filter: brightness(1) invert(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mark { background: #080808; }
-  .lettering { display: none; }
-  .wings { opacity: 1; }
+  width: min(56%, 350px);
+  height: auto;
+  margin: auto;
+  pointer-events: none;
 }
 
 @media (min-width: 761px) and (max-width: 1100px) {
