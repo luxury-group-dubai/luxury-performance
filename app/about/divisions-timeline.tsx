@@ -22,6 +22,8 @@ const divisions = [
   {
     period: '2022', label: 'Sourcing', name: 'Source Luxury Cars',
     mark: 'slc',
+    additionalPhoto: { src: '/images/divisions/sourcing-purosangue-transporter.webp', alt: 'Black Ferrari Purosangue secured inside a curtain-sided transporter' },
+    detail: { src: '/images/divisions/sourcing-ferrari-enclosed.webp', alt: 'Red Ferrari inside an illuminated enclosed transporter at night' },
     story: 'When a collector’s search led overseas, Source Luxury Cars found and imported the car. The team focused on rare supercars and limited-production models, primarily from Europe.',
     alt: 'A black supercar outside a yellow DHL cargo building',
     href: 'https://sourceluxurycars.com', link: 'Explore sourcing',
@@ -47,7 +49,12 @@ const divisions = [
     alt: 'A pair of gold NOVITEC exhaust tips set into red bodywork',
     href: '/partners', link: 'Meet our partners',
   },
-].map(division => ({ ...division, slug: division.period.toLowerCase() }));
+].map(division => {
+  const slug = division.period.toLowerCase();
+  const photos = [{ src: '/images/divisions/' + (division.image ?? slug) + '.webp', alt: division.alt }];
+  if (division.additionalPhoto) photos.push(division.additionalPhoto);
+  return { ...division, slug, photos };
+});
 
 const chapters = divisions.map(({ period, slug, label }) => ({
   id: 'division-' + slug, title: period, detail: label,
@@ -63,7 +70,7 @@ export function DivisionsTimeline() {
           alt=""
           fill
           quality={90}
-          sizes="(max-aspect-ratio: 17/15) 113.34svh, 100vw"
+          sizes="(max-aspect-ratio: 4/3) 133.34svh, 100vw"
         />
         <h2 id="divisions-title">Our divisions.</h2>
       </header>
@@ -71,7 +78,7 @@ export function DivisionsTimeline() {
       <div className={styles.track}>
         <div aria-hidden="true" className={styles.rail}><span className={styles.marker} /></div>
         <ol className={styles.chapters}>
-          {divisions.map(({ period, slug, image = slug, mark, detail, name, alt, story, href, link }) => (
+          {divisions.map(({ period, slug, photos, mark, detail, name, story, href, link }) => (
             <li id={'division-' + slug} key={slug} className={styles.chapter}>
               <div className={styles.year}>
                 {slug === 'today' ? period : <time dateTime={period}>{period}</time>}
@@ -83,10 +90,12 @@ export function DivisionsTimeline() {
                   {href && <ArrowLink href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>
                 <div className={styles.gallery}>
-                  <div className={styles.photo}>
-                    <Image src={'/images/divisions/' + image + '.webp'} alt={alt} fill
-                      sizes="(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
-                  </div>
+                  {photos.map(photo => (
+                    <div key={photo.src} className={styles.photo}>
+                      <Image src={photo.src} alt={photo.alt} fill
+                        sizes="(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
+                    </div>
+                  ))}
                   {detail && <div className={styles.detail}>
                     <Image src={detail.src} alt={detail.alt} fill sizes="(max-width: 760px) 45vw, (max-width: 1686px) 28vw, 485px" />
                   </div>}

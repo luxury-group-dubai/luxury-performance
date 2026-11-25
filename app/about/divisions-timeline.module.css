@@ -24,8 +24,8 @@
   display: grid;
   align-content: center;
   justify-items: center;
-  min-height: 85svh;
-  margin: 0 calc(-1 * var(--gutter)) clamp(28px, 3vw, 48px);
+  min-height: 100svh;
+  margin: 0 calc(-1 * var(--gutter)) clamp(64px, 7vw, 112px);
   padding: 32px var(--gutter);
   background: #242522;
   color: white;
@@ -125,13 +125,13 @@
     --intro-top: var(--clear-top);
     padding-bottom: 52px;
   }
-  .intro { margin-bottom: 8px; }
+  .intro { margin-bottom: 16px; }
   .archive > nav {
     position: sticky;
     z-index: 2;
     top: var(--divisions-header-offset, var(--site-header-height));
     display: flex;
-    margin-bottom: 12px;
+    margin-bottom: clamp(32px, 7vw, 48px);
     background: var(--paper);
   }
   .archive > nav a {
