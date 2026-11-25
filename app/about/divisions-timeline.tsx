@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { ChapterNav } from '@/components/chapter-nav';
 import { ArrowLink } from '@/components/ui';
+import { partnerCardImages } from '@/lib/brand-hero-images';
 import { DivisionsSection } from './divisions-section';
 import styles from './divisions-timeline.module.css';
 
@@ -50,7 +51,8 @@ const divisions = [
   },
   {
     period: 'TODAY', label: 'Performance', name: 'Luxury Performance',
-    mark: 'lxp', detail: { src: '/images/home/techart-gtstreet-r-wheel.webp', alt: 'Red TECHART wheel and yellow brake caliper on a silver GTstreet R' },
+    mark: 'lxp', detail: { src: '/images/home/techart-gtstreet-r-wheel.webp', alt: 'Red TECHART wheel and yellow brake caliper on a silver GTstreet R', aspectRatio: 1.85 },
+    partnerPhotos: ['valvetronic', 'capristo', 'gintani'],
     image: '/images/nlargo/hero-front-red.webp',
     story: 'Today, we bring that workshop experience to owners choosing their next upgrade. At LXP, we help you find the exhaust, wheels or carbon fibre parts that fit your car.',
     alt: 'Front view of the NOVITEC Ferrari 12Cilindri N-LARGO under red studio lights',
@@ -61,6 +63,10 @@ const divisions = [
   const photos: DivisionPhoto[] = [{ src: division.image ?? `/images/divisions/${slug}.webp`, alt: division.alt }];
   if (division.additionalPhoto) photos.push(division.additionalPhoto);
   photos.push(division.detail);
+  for (const partner of division.partnerPhotos ?? []) {
+    const artwork = partnerCardImages[partner];
+    if (artwork) photos.push({ src: artwork.image, alt: artwork.alt });
+  }
   return { ...division, slug, photos };
 });
 
