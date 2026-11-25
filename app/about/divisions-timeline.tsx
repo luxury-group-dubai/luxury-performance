@@ -41,7 +41,7 @@ const divisions = [
     period: '2026', label: 'Gallery', name: 'Luxury Car Gallery',
     mark: 'lcg', detail: { src: '/images/divisions/valhalla-mirror.webp', alt: 'Yellow mirror against the purple Aston Martin Valhalla bodywork' },
     additionalPhoto: { src: '/images/divisions/gallery-revuelto-rear.webp', alt: 'Rear view of the gallery’s matte-black Lamborghini Revuelto against a white backdrop' },
-    image: 'car-gallery-valhalla',
+    image: '/images/divisions/car-gallery-valhalla.webp',
     story: 'Luxury Car Gallery brought vehicle sales to the group’s Al Quoz showroom. Buyers can explore new and pre-owned cars, and owners can offer theirs on consignment.',
     alt: 'Aston Martin Valhalla photographed head-on with both doors raised',
     href: 'https://www.dubicars.com/dealers/dubai-luxury-car-gallery-auto-trading-3413', link: 'Browse the gallery',
@@ -49,13 +49,14 @@ const divisions = [
   {
     period: 'TODAY', label: 'Performance', name: 'Luxury Performance',
     mark: 'lxp', detail: { src: '/images/home/techart-gtstreet-r-wheel.webp', alt: 'Red TECHART wheel and yellow brake caliper on a silver GTstreet R' },
+    image: '/images/nlargo/hero-front-red.webp',
     story: 'Today, we bring that workshop experience to owners choosing their next upgrade. At LXP, we help you find the exhaust, wheels or carbon fibre parts that fit your car.',
-    alt: 'A pair of gold NOVITEC exhaust tips set into red bodywork',
+    alt: 'Front view of the NOVITEC Ferrari 12Cilindri N-LARGO under red studio lights',
     href: '/partners', link: 'Meet our partners',
   },
 ].map(division => {
   const slug = division.period.toLowerCase();
-  const photos = [{ src: '/images/divisions/' + (division.image ?? slug) + '.webp', alt: division.alt }];
+  const photos = [{ src: division.image ?? `/images/divisions/${slug}.webp`, alt: division.alt }];
   if (division.additionalPhoto) photos.push(division.additionalPhoto);
   photos.push(division.detail);
   return { ...division, slug, photos };

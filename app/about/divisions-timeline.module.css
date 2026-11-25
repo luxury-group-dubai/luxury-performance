@@ -147,6 +147,12 @@
   mix-blend-mode: luminosity;
   opacity: var(--photo-opacity, .58);
 }
+.photo[data-division="lxp"] .photoImage {
+  /* The N-LARGO studio photograph already carries the red lighting. */
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .92;
+}
 .photo[data-division="lcg"] .photoImage {
   /* Frame the Valhalla beneath the wordmark printed into the source photograph. */
   transform: scale(1.32);
