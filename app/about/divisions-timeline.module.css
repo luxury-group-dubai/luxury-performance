@@ -3,7 +3,6 @@
   --year-size: clamp(44px, 4vw, 80px);
   --year-column: calc(3 * var(--year-size));
   --year-center: calc(.475 * var(--year-size));
-  --handoff-space: calc(.95 * var(--year-size) + 8px);
   --landing-inset: var(--archive-inset);
   --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--archive-inset));
   --rail-gap: clamp(16px, 1.65vw, 32px);
@@ -27,7 +26,7 @@
   z-index: 2;
   left: calc(var(--year-column) + var(--rail-gap));
   top: var(--year-center);
-  bottom: max(0px, calc(var(--last-caption-height, 0px) - var(--year-center)));
+  bottom: var(--year-center);
   width: 1px;
   background: #b9bab4;
   pointer-events: none;
@@ -50,26 +49,18 @@
 
 .chapters { list-style: none; margin: 0; padding: 0; }
 .chapter {
-  position: relative;
-  overflow: clip;
   display: grid;
-  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
-  align-items: start;
-  column-gap: clamp(32px, 4.4vw, 90px);
-  min-height: var(--caption-height, 0px);
-  scroll-margin-top: calc(var(--landing-inset) - var(--site-header-height) - 16px);
-}
-.chapter:not(:last-child) .photo { margin-bottom: var(--chapter-gap); }
-.pin { position: sticky; top: var(--pin-top); z-index: 1; }
-/* Clip the outgoing copy at the incoming chapter edge. The last caption
-   keeps its height so it and the marker leave the track together. */
-.track[data-measured] .chapter:not(:last-child) .pin { height: var(--handoff-space); }
-.caption {
-  display: grid;
-  grid-template-columns: var(--year-column) minmax(0, 1fr);
+  grid-template-columns: var(--year-column) minmax(0, 1fr) 51%;
   align-items: start;
   column-gap: calc(2 * var(--rail-gap));
+  scroll-margin-top: calc(var(--landing-inset) - var(--site-header-height) - 16px);
 }
+.chapterContent { display: contents; }
+.chapter:not(:last-child) .photo { margin-bottom: var(--chapter-gap); }
+/* Each item releases at its own full height, including its reading gap. */
+.year, .story { position: sticky; top: var(--pin-top); }
+.chapter:not(:last-child) .year { padding-bottom: 8px; }
+.chapter:not(:last-child) .story { padding-bottom: 24px; }
 .year {
   font-size: var(--year-size);
   font-weight: 700;
@@ -148,10 +139,10 @@
     height: 1px;
     overflow: hidden;
   }
-  .chapter { display: flow-root; }
-  .caption { background: var(--paper); padding-bottom: 14px; }
-  .photo { margin-left: calc(var(--year-column) + 2 * var(--rail-gap)); }
-  .track[data-measured] .chapter:not(:last-child) .photo { margin-top: calc(var(--caption-height) - var(--handoff-space)); }
+  .chapter { grid-template-columns: var(--year-column) minmax(0, 1fr); }
+  .chapterContent { display: flow-root; }
+  .story { z-index: 1; background: var(--paper); }
+  .chapter:last-child .photo { margin-top: 14px; }
   .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
 }
 @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
