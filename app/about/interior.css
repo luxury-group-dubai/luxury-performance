@@ -18,14 +18,6 @@
   padding: clamp(28px, 4vw, 64px) var(--gutter);
   color: var(--ink);
 }
-.about-hero-caption {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
 .about-hero-copy > header {
   padding: 0;
   background: transparent;

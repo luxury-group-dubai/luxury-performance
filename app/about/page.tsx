@@ -33,7 +33,6 @@ export default function About() {
         fill quality={90} loading="eager" fetchPriority="high" sizes="max(100vw, calc(150svh - 150px))" />
     </picture>
     <div className="about-hero-copy">
-      <span className="about-hero-caption">One home. A world of automotive possibility.</span>
       <PageHeading title="About." description="Auto parts and upgrades, supplied from Dubai. Built around your car, with guidance on fitment, availability and installation options." />
     </div>
   </div>

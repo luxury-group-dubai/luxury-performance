@@ -41,7 +41,7 @@ const divisions = [
     href: 'https://www.dubicars.com/dealers/dubai-luxury-car-gallery-auto-trading-3413', link: 'Browse the gallery',
   },
   {
-    period: 'Today', label: 'Performance', name: 'Luxury Performance',
+    period: 'TODAY', label: 'Performance', name: 'Luxury Performance',
     mark: 'lxp', detail: { src: '/images/home/techart-gtstreet-r-wheel.webp', alt: 'Red TECHART wheel and yellow brake caliper on a silver GTstreet R' },
     story: 'Today, we bring that workshop experience to owners choosing their next upgrade. At LXP, we help you find the exhaust, wheels or carbon fibre parts that fit your car.',
     alt: 'A pair of gold NOVITEC exhaust tips set into red bodywork',
@@ -74,7 +74,7 @@ export function DivisionsTimeline() {
           {divisions.map(({ period, slug, image = slug, mark, detail, name, alt, story, href, link }) => (
             <li id={'division-' + slug} key={slug} className={styles.chapter}>
               <div className={styles.year}>
-                {period === 'Today' ? period : <time dateTime={period}>{period}</time>}
+                {slug === 'today' ? period : <time dateTime={period}>{period}</time>}
               </div>
               <div className={styles.chapterContent}>
                 <div className={styles.story}>
