@@ -10,3 +10,5 @@
 .form-subheading,.form-disclaimer{font-size:11px}
 .field input,.field textarea{font-size:14px}
 @media(max-width:700px){.contact-info>p{font-size:12px}.field input,.field textarea{font-size:16px}.form-disclaimer{font-size:10px}}
+
+.contact-info>p a{text-decoration:underline;text-underline-offset:.18em}
