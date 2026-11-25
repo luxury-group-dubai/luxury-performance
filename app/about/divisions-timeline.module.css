@@ -23,7 +23,7 @@
   display: grid;
   align-content: center;
   justify-items: center;
-  min-height: min(74vw, clamp(320px, 38vw, 600px), 62svh);
+  min-height: 85svh;
   margin: 0 calc(-1 * var(--gutter)) clamp(28px, 3vw, 48px);
   padding: 32px var(--gutter);
   background: #242522;
