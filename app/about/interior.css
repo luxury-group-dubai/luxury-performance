@@ -58,7 +58,7 @@
     }
     @keyframes about-hero-parallax {
       from { transform: translate(0, 0); }
-      to { transform: translate(var(--drift-x), -32svh); }
+      to { transform: translate(var(--drift-x), -12svh); }
     }
   }
 }
