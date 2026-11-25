@@ -18,9 +18,16 @@
 }
 
 .opening { padding-bottom: var(--archive-inset); }
-.intro h2 { max-width: 9ch; font-size: clamp(40px, 4.8vw, 74px); line-height: .96; }
-.intro p, .story p { color: #51534f; font-size: 14px; line-height: 1.65; }
-.intro p { max-width: 32ch; margin-top: 22px; }
+.intro { width: 49%; }
+.intro h2 { font-size: clamp(48px, 6.3vw, 96px); line-height: .98; letter-spacing: -.055em; }
+.intro p {
+  max-width: 43ch;
+  margin-top: .95em;
+  color: #454741;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
 .archive > nav { display: none; }
 
 .track { position: relative; isolation: isolate; }
@@ -75,7 +82,7 @@
 }
 .story { top: var(--story-top); font-size: 1rem; }
 .story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
-.story p { max-width: 42ch; margin: 14px 0 0; }
+.story p { max-width: 42ch; margin: 14px 0 0; color: #51534f; font-size: 14px; line-height: 1.65; }
 .story :global(.arrow-link) { margin-top: 18px; }
 .photo {
   position: relative;
@@ -103,8 +110,8 @@
     padding-block: 52px;
   }
   .opening { padding-bottom: 20px; }
-  .intro h2 { max-width: none; }
-  .intro p { margin-top: 16px; }
+  .intro { width: auto; }
+  .intro h2 { font-size: clamp(34px, 10vw, 54px); }
   .archive > nav {
     position: sticky;
     z-index: 2;

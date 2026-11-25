@@ -52,8 +52,8 @@ export function DivisionsTimeline() {
     <DivisionsSection>
       <div className={styles.opening}>
         <header className={styles.intro}>
-          <h2 id="divisions-title">Our divisions.</h2>
-          <p>It started with supercar rentals in Dubai. Here’s how the group grew into six divisions.</p>
+          <h2 id="divisions-title">Behind LXP.</h2>
+          <p>Luxury Performance is the parts division of The Luxury Group Dubai. Our five sister divisions rent, source and sell cars, provide chauffeurs and run the workshop in Al Quoz.</p>
         </header>
       </div>
       <ChapterNav label="Divisions timeline" chapters={chapters} activeAt="var(--pin-top)" />
