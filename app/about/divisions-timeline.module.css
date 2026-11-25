@@ -111,7 +111,7 @@
   margin-inline: calc(2 * var(--rail-gap)) clamp(24px, 3vw, 56px);
   font-size: 1rem;
 }
-.story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
+.story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; text-transform: uppercase; }
 .story p { max-width: 42ch; margin: 14px 0 0; color: #51534f; font-size: 14px; line-height: 1.65; }
 .mediaColumn {
   display: grid;
@@ -125,15 +125,18 @@
 }
 .gallery {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(5px, .65vw, 12px);
 }
 .photo {
+  grid-column: 1 / -1;
   position: relative;
   overflow: hidden;
   aspect-ratio: 1.48;
   background: #292a28;
 }
 .photo:last-child { aspect-ratio: 1.85; }
+.photo.paired { grid-column: span 1; aspect-ratio: 4 / 5; }
 .photoImage { object-fit: cover; }
 .photo[data-division] { isolation: isolate; }
 .photo[data-division="lsr"] { background-color: #f26822; }
