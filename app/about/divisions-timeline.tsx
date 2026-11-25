@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import { ChapterNav } from '@/components/chapter-nav';
 import { ArrowLink } from '@/components/ui';
 import { DivisionsSection } from './divisions-section';
@@ -8,6 +9,7 @@ const divisions = [
   {
     period: '2019', label: 'Rentals', name: 'Luxury Supercar Rentals',
     mark: 'lsr', detail: { src: '/images/divisions/rental-revuelto.webp', alt: 'Red Revuelto from the rental fleet with its doors raised in the desert' },
+    additionalPhoto: { src: '/images/divisions/rental-lamborghini-road.webp', alt: 'Red Lamborghini from the rental fleet facing the camera on a palm-lined road' },
     story: 'The group began with a fleet of supercars for hire in Dubai. Drivers could get behind the wheel of a Ferrari, Lamborghini or McLaren for the day.',
     alt: 'Three supercars lined up in the desert beneath a sunset sky',
     href: 'https://luxurysupercarsdubai.com', link: 'Explore rentals',
@@ -15,6 +17,7 @@ const divisions = [
   {
     period: '2021', label: 'Chauffeur', name: 'Luxury Chauffeur Services',
     mark: 'lcs', detail: { src: '/images/divisions/chauffeur-cabin.webp', alt: 'Cream leather passenger seats in a chauffeur vehicle' },
+    additionalPhoto: { src: '/images/divisions/chauffeur-at-the-wheel.webp', alt: 'View from the rear seat of a chauffeur driving a Rolls-Royce with tan leather seats' },
     story: 'Two years later, the group took the wheel. A dedicated chauffeur team began driving executives, visiting artists and diplomatic guests across the UAE.',
     alt: 'A chauffeur between a black SUV and saloon, with the Burj Khalifa in the distance',
     href: 'https://luxurychauffeurdubai.com', link: 'Chauffeur services',
@@ -31,12 +34,14 @@ const divisions = [
   {
     period: '2025', label: 'Auto care', name: 'Luxury Auto Care',
     mark: 'lac', detail: { src: '/images/workshop.webp', alt: 'Rear of a Porsche on a workshop lift with its wheels removed' },
+    additionalPhoto: { src: '/images/divisions/auto-care-technicians.webp', alt: 'Two Luxury Auto Care technicians working under an open bonnet in the Al Quoz workshop' },
     story: 'The group opened its own workshop in Al Quoz. Paintwork, upholstery, protective film and mechanical work came together under one roof, alongside performance parts installation.',
     alt: 'A red supercar with its engine cover raised beside an orange sports car inside the workshop',
   },
   {
     period: '2026', label: 'Gallery', name: 'Luxury Car Gallery',
     mark: 'lcg', detail: { src: '/images/divisions/valhalla-mirror.webp', alt: 'Yellow mirror against the purple Aston Martin Valhalla bodywork' },
+    additionalPhoto: { src: '/images/divisions/gallery-revuelto-rear.webp', alt: 'Rear view of the gallery’s matte-black Lamborghini Revuelto against a white backdrop' },
     image: 'car-gallery-valhalla',
     story: 'Luxury Car Gallery brought vehicle sales to the group’s Al Quoz showroom. Buyers can explore new and pre-owned cars, and owners can offer theirs on consignment.',
     alt: 'Purple Aston Martin Valhalla with both doors raised beneath the Luxury Car Gallery wordmark',
@@ -99,7 +104,12 @@ export function DivisionsTimeline() {
                   {detail && <div className={styles.detail}>
                     <Image src={detail.src} alt={detail.alt} fill sizes="(max-width: 760px) 45vw, (max-width: 1686px) 28vw, 485px" />
                   </div>}
-                  <Image className={styles.mark} src={'/images/divisions/' + mark + '.svg'} alt="" width={600} height={600} />
+                  <div className={styles.mark} data-division-mark={mark} aria-hidden="true"
+                    style={{ '--wordmark': `url("/images/divisions/marks/${mark}.svg")` } as CSSProperties}>
+                    <span className={styles.lettering} />
+                    <Image className={styles.wings} src={`/images/divisions/marks/${mark}-winged-gold.svg`}
+                      alt="" width={934} height={364} />
+                  </div>
                 </div>
               </div>
             </li>

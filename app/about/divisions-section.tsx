@@ -8,6 +8,21 @@ export function DivisionsSection({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const section = ref.current;
+    if (!section || !window.IntersectionObserver) return;
+
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.intersectionRatio < 0.35) continue;
+        entry.target.setAttribute('data-played', '');
+        observer.unobserve(entry.target);
+      }
+    }, { threshold: 0.35 });
+    section.querySelectorAll('[data-division-mark]').forEach(tile => observer.observe(tile));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const section = ref.current;
     if (!section || !window.ResizeObserver) return;
 
     const midpoints = new Map<Element, number>();
