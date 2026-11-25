@@ -4,6 +4,8 @@ import { ArrowLink } from '@/components/ui';
 import { DivisionsSection } from './divisions-section';
 import styles from './divisions-timeline.module.css';
 
+type DivisionPhoto = { src: string; alt: string; aspectRatio?: number };
+
 const divisions = [
   {
     period: '2019', label: 'Rentals', name: 'Luxury Supercar Rentals',
@@ -15,7 +17,7 @@ const divisions = [
   },
   {
     period: '2021', label: 'Chauffeur', name: 'Luxury Chauffeur Services',
-    mark: 'lcs', detail: { src: '/images/divisions/chauffeur-cabin.webp', alt: 'Cream leather passenger seats in a chauffeur vehicle' },
+    mark: 'lcs', detail: { src: '/images/divisions/chauffeur-opening-door.webp', alt: 'A suited chauffeur holding open the door of a black Rolls-Royce', aspectRatio: 1 },
     additionalPhoto: { src: '/images/divisions/chauffeur-at-the-wheel.webp', alt: 'View from the rear seat of a chauffeur driving a Rolls-Royce with tan leather seats' },
     story: 'Two years later, the group took the wheel. A dedicated chauffeur team began driving executives, visiting artists and diplomatic guests across the UAE.',
     alt: 'A chauffeur between a black SUV and saloon, with the Burj Khalifa in the distance',
@@ -56,7 +58,7 @@ const divisions = [
   },
 ].map(division => {
   const slug = division.period.toLowerCase();
-  const photos = [{ src: division.image ?? `/images/divisions/${slug}.webp`, alt: division.alt }];
+  const photos: DivisionPhoto[] = [{ src: division.image ?? `/images/divisions/${slug}.webp`, alt: division.alt }];
   if (division.additionalPhoto) photos.push(division.additionalPhoto);
   photos.push(division.detail);
   return { ...division, slug, photos };
@@ -97,7 +99,8 @@ export function DivisionsTimeline() {
                 <div className={styles.mediaColumn}>
                   <div className={styles.gallery}>
                     {photos.map((photo, index) => (
-                      <div key={photo.src} className={styles.photo} data-division={index === 0 ? mark : undefined}>
+                      <div key={photo.src} className={styles.photo} style={{ aspectRatio: photo.aspectRatio }}
+                        data-division={index === 0 ? mark : undefined}>
                         <Image className={styles.photoImage} src={photo.src} alt={photo.alt} fill
                           sizes="(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px" />
                         {index === 0 && <Image className={styles.coverLogo} src={`/images/divisions/marks/${mark}.svg`}
