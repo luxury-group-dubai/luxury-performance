@@ -1,6 +1,9 @@
+.about-opening {
+  isolation: isolate;
+}
 .interior-hero {
   position: relative;
-  min-height: clamp(640px, 86svh, 1080px);
+  min-height: calc(100svh - var(--site-header-height));
   overflow: hidden;
   background: var(--paper);
 }
@@ -31,6 +34,9 @@
   color: var(--ink);
   font-weight: 500;
 }
-@media (max-width: 900px) {
-  .interior-hero { min-height: clamp(460px, 80svh, 900px); }
+@media (prefers-reduced-motion: no-preference) {
+  .interior-hero {
+    position: sticky;
+    top: var(--site-header-height);
+  }
 }

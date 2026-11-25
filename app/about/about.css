@@ -1,4 +1,9 @@
 .about-story { --paper: #f7f7f4; background: var(--paper); }
+.about-manifesto {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+}
 
 .about-manifesto{display:grid;grid-template-columns:1fr 2fr;gap:10%}.about-manifesto h2{font-size:clamp(34px,4vw,64px)}.about-manifesto p{font-size:12px;color:#6b6b63;max-width:530px;margin-top:30px}.about-manifesto .arrow-link{margin-top:30px}.about-location{display:grid;grid-template-columns:1.1fr 1fr;gap:8%;align-items:center}.about-location-image{position:relative;aspect-ratio:1;overflow:hidden}.about-location-image img{object-fit:cover}.about-location h2{font-size:clamp(35px,4vw,62px)}.about-location p{font-size:12px;color:#73736a;margin-top:25px;margin-bottom:30px}.about-location .location-details{font-size:10px;line-height:2;padding:23px 0;border-top:1px solid var(--line);margin-bottom:20px}
 @media(max-width:1100px){.about-manifesto{gap:7%}}
