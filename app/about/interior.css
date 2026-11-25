@@ -3,8 +3,6 @@
 }
 .interior-hero {
   position: relative;
-  display: grid;
-  place-items: center;
   min-height: calc(100svh - var(--site-header-height));
   overflow: hidden;
   background: #252b30;
@@ -25,12 +23,14 @@
   pointer-events: none;
 }
 .about-hero-title {
-  position: relative;
+  position: absolute;
+  inset-inline: var(--gutter);
+  top: 35%;
+  transform: translateY(-50%);
   z-index: 1;
   display: grid;
-  justify-self: stretch;
   justify-items: start;
-  margin: 0 var(--gutter);
+  margin: 0;
   color: white;
   font-size: min(10.5vw, 12svh, 142px);
   line-height: .97;
