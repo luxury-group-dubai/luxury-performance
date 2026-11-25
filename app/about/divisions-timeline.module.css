@@ -23,7 +23,7 @@
   display: grid;
   align-content: center;
   justify-items: center;
-  min-height: clamp(260px, 26vw, 400px);
+  min-height: min(74vw, clamp(320px, 38vw, 600px), 62svh);
   margin: 0 calc(-1 * var(--gutter)) clamp(28px, 3vw, 48px);
   padding: 32px var(--gutter);
   background: #242522;
@@ -123,7 +123,7 @@
     --intro-top: var(--clear-top);
     padding-bottom: 52px;
   }
-  .intro { min-height: clamp(205px, 45vw, 255px); margin-bottom: 8px; }
+  .intro { margin-bottom: 8px; }
   .archive > nav {
     position: sticky;
     z-index: 2;
