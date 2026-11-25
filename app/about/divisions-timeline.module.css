@@ -50,6 +50,10 @@
 .index nav a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 .chapters { list-style: none; margin: 0; padding: 0; min-width: 0; }
+@media (min-width: 761px) and (min-height: 681px) and (prefers-reduced-motion: no-preference) {
+  /* The section already supplies the top inset. Put the first photo at the fold. */
+  .chapters { padding-block-start: calc(100svh - var(--archive-inset)); }
+}
 .chapter:not(:last-child) { padding-bottom: clamp(44px, 6vw, 90px); }
 .photo {
   position: relative;
