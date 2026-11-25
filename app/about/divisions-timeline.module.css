@@ -8,8 +8,9 @@
   /* One anchor for the whole timeline, with room for the tallest story above it. */
   --marker-top: max(calc(var(--intro-top) + var(--year-center)), calc(var(--clear-top) + var(--tallest-midpoint, 0px)));
   --pin-top: calc(var(--marker-top) - var(--year-center));
-  --rail-gap: clamp(16px, 1.65vw, 32px);
   --dot-size: 16px;
+  --dot-clearance: clamp(12px, 1vw, 20px);
+  --rail-gap: calc(var(--dot-size) / 2 + var(--dot-clearance));
   --chapter-gap: clamp(40px, 5vw, 80px);
   padding: 0 var(--gutter) var(--archive-inset);
   background: var(--paper);
@@ -45,7 +46,7 @@
 .rail {
   position: absolute;
   z-index: 2;
-  left: calc(var(--year-column) + var(--rail-gap));
+  left: calc(var(--year-column) + var(--rail-gap) - .5px);
   top: var(--year-center);
   bottom: var(--year-center);
   width: 1px;
@@ -85,6 +86,7 @@
 .chapter:not(:last-child) .story { padding-bottom: 24px; }
 .year {
   top: var(--pin-top);
+  text-align: end;
   font-size: var(--year-size);
   font-weight: 700;
   font-variant-numeric: lining-nums tabular-nums;
@@ -112,12 +114,11 @@
 .photo + .mark { position: absolute; bottom: 0; right: 0; width: 27%; }
 
 @media (min-width: 761px) and (max-width: 1100px) {
-  .archive { --year-size: clamp(31px, 3.7vw, 42px); --rail-gap: 12px; }
+  .archive { --year-size: clamp(31px, 3.7vw, 42px); }
 }
 @media (max-width: 760px) {
   .archive {
     --year-size: clamp(23px, 6vw, 34px);
-    --rail-gap: 11px;
     --dot-size: 12px;
     --clear-top: calc(var(--site-header-height) + 58px);
     --intro-top: var(--clear-top);
