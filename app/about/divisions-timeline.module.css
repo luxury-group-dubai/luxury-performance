@@ -2,6 +2,8 @@
   --archive-inset: clamp(60px, 7vw, 110px);
   --year-column: 4.5ch;
   --rail-gap: clamp(16px, 1.65vw, 32px);
+  --dot-size: 16px;
+  --marker-gutter: calc(var(--dot-size) + var(--rail-gap));
   padding: var(--archive-inset) var(--gutter);
   background: var(--paper);
   color: var(--ink);
@@ -14,43 +16,65 @@
 .intro p { max-width: 32ch; margin-top: 22px; }
 .archive > nav { display: none; }
 
-.chapters { list-style: none; margin: 0; padding: 0; }
+.chapters { position: relative; overflow: clip; list-style: none; margin: 0; padding: 0; }
+.chapters::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: calc(var(--dot-size) / 2);
+  width: 1px;
+  transform: translateX(-50%);
+  background: #b9bab4;
+  pointer-events: none;
+}
 .chapter {
   display: grid;
   grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
   align-items: start;
   column-gap: clamp(32px, 4.4vw, 90px);
+  padding-left: var(--marker-gutter);
 }
 .chapter + .chapter { margin-top: clamp(40px, 5vw, 80px); }
 .caption {
   display: grid;
   grid-template-columns: var(--year-column) minmax(0, 1fr);
-  align-items: baseline;
+  align-items: start;
   column-gap: var(--rail-gap);
   font-size: clamp(44px, 4vw, 80px);
 }
 .year {
+  position: relative;
   font-weight: 700;
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: -.06em;
   line-height: .95;
 }
-.story {
-  position: relative;
-  padding-left: var(--rail-gap);
-  border-left: 1px solid #c5c7c1;
-  font-size: 1rem;
-}
-.story::before {
+.year::before {
   content: '';
   position: absolute;
-  left: -4px;
-  top: .55em;
-  width: 7px;
-  height: 7px;
+  z-index: 1;
+  left: calc(0px - var(--marker-gutter));
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--dot-size);
+  height: var(--dot-size);
   border-radius: 50%;
   background: var(--accent, #e2001a);
 }
+/* Trim the shared line at the moving first and last dots. */
+.chapter:first-child .year::after, .chapter:last-child .year::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--dot-size) / 2 - var(--marker-gutter));
+  transform: translateX(-50%);
+  width: 3px;
+  height: 150vmax;
+  background: var(--paper);
+  pointer-events: none;
+}
+.chapter:first-child .year::after { bottom: 50%; }
+.chapter:last-child .year::after { top: 50%; }
+.story { font-size: 1rem; }
 .story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; }
 .story p { max-width: 42ch; margin: 14px 0 0; }
 .story :global(.arrow-link) { margin-top: 18px; }
@@ -71,7 +95,7 @@
   .caption { grid-template-columns: 1fr; gap: 20px; }
 }
 @media (max-width: 760px) {
-  .archive { padding-block: 52px; }
+  .archive { --dot-size: 12px; --rail-gap: 10px; padding-block: 52px; }
   .opening { padding-bottom: 20px; }
   .intro h2 { max-width: none; }
   .intro p { margin-top: 16px; }
@@ -116,7 +140,7 @@
   }
   .chapter { grid-template-columns: 1fr; gap: 20px; scroll-margin-top: 50px; }
   .photo { grid-row: 1; }
-  .caption { --rail-gap: 12px; font-size: clamp(27px, 7.5vw, 40px); }
+  .caption { font-size: clamp(27px, 7.5vw, 40px); }
   .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
 }
 @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
