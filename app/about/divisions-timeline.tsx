@@ -13,12 +13,12 @@ const divisions = [
   {
     year: '2021', label: 'Chauffeur', name: 'Luxury Chauffeur Services',
     story: 'Two years later, the group took the wheel. A dedicated chauffeur team began driving executives, visiting artists and diplomatic guests across the UAE.',
-    alt: 'A chauffeur beside two black Rolls-Royces with the Dubai skyline behind him',
+    alt: 'A chauffeur between a black SUV and saloon, with the Burj Khalifa in the distance',
     href: 'https://luxurychauffeurdubai.com', link: 'Chauffeur services',
   },
   {
     year: '2022', label: 'Sourcing', name: 'Source Luxury Cars',
-    story: 'For collectors seeking a particular car, the search often led overseas. Source Luxury Cars began sourcing and importing rare supercars and limited-production models, primarily from Europe.',
+    story: 'When a collector’s search led overseas, Source Luxury Cars found and imported the car. The team focused on rare supercars and limited-production models, primarily from Europe.',
     alt: 'A black supercar outside a yellow DHL cargo building',
     href: 'https://sourceluxurycars.com', link: 'Explore sourcing',
   },
