@@ -31,7 +31,6 @@
   display: grid;
   align-content: center;
   justify-items: center;
-  gap: 16px;
   min-height: clamp(260px, 26vw, 400px);
   margin: 0 calc(-1 * var(--gutter)) clamp(28px, 3vw, 48px);
   padding: 32px var(--gutter);
@@ -49,12 +48,6 @@
 }
 .intro h2 { font-size: clamp(60px, 10.8vw, 172px); line-height: .87; }
 .intro h2 span { font-family: 'Divisions Barlow Condensed', var(--font-sans); font-weight: 800; letter-spacing: -.025em; }
-.intro p {
-  max-width: 50ch;
-  font-size: clamp(15px, 1.25vw, 19px);
-  line-height: 1.45;
-  text-wrap: balance;
-}
 .archive > nav { display: none; }
 
 .track { position: relative; isolation: isolate; }
@@ -139,7 +132,7 @@
     --intro-top: var(--clear-top);
     padding-bottom: 52px;
   }
-  .intro { min-height: clamp(205px, 45vw, 255px); gap: 12px; margin-bottom: 8px; }
+  .intro { min-height: clamp(205px, 45vw, 255px); margin-bottom: 8px; }
   .intro h2 { font-size: clamp(48px, 12vw, 82px); }
   .archive > nav {
     position: sticky;

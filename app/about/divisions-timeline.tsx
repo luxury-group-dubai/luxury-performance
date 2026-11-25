@@ -59,7 +59,6 @@ export function DivisionsTimeline() {
       <header className={styles.intro}>
         <Image className={styles.introPhoto} src="/images/divisions/group-forecourt.webp" alt="" fill sizes="100vw" />
         <h2 id="divisions-title"><span>Our divisions.</span></h2>
-        <p>It started with supercar rentals in Dubai. Here’s how the group grew into six divisions.</p>
       </header>
       <ChapterNav label="Divisions timeline" chapters={chapters} activeAt="var(--pin-top)" />
       <div className={styles.track}>
