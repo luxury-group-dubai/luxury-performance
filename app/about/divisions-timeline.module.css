@@ -3,8 +3,8 @@
   --year-size: clamp(44px, 4vw, 80px);
   --year-column: calc(3 * var(--year-size));
   --year-center: calc(.475 * var(--year-size));
-  --landing-inset: var(--archive-inset);
-  --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--archive-inset));
+  /* Keep the timeline anchored while the site header slides in and out. */
+  --pin-top: calc(var(--site-header-height) + var(--archive-inset));
   --rail-gap: clamp(16px, 1.65vw, 32px);
   --dot-size: 16px;
   --chapter-gap: clamp(40px, 5vw, 80px);
@@ -53,7 +53,7 @@
   grid-template-columns: var(--year-column) minmax(0, 1fr) 51%;
   align-items: start;
   column-gap: calc(2 * var(--rail-gap));
-  scroll-margin-top: calc(var(--landing-inset) - var(--site-header-height) - 16px);
+  scroll-margin-top: calc(var(--pin-top) - var(--site-header-height) - 16px);
 }
 .chapterContent { display: contents; }
 .chapter:not(:last-child) .photo { margin-bottom: var(--chapter-gap); }
@@ -93,8 +93,7 @@
     --year-size: clamp(23px, 6vw, 34px);
     --rail-gap: 11px;
     --dot-size: 12px;
-    --landing-inset: 58px;
-    --pin-top: calc(var(--divisions-header-offset, var(--site-header-height)) + var(--landing-inset));
+    --pin-top: calc(var(--site-header-height) + 58px);
     padding-block: 52px;
   }
   .opening { padding-bottom: 20px; }
