@@ -7,8 +7,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowUpRight, ArrowDownWideNarrow, Search, X, RotateCcw } from 'lucide-react';
 import { BrandArtwork } from '@/components/brand-artwork';
+import { BrandPartnerLink } from '@/components/shop/brand-partner-link';
 import { ManufacturerLogo } from '@/components/shop/manufacturer-logo';
 import { CatalogChoice } from '@/components/shop/catalog-choice';
+import { TechartGenerationLinks, TechartModelRange } from '@/components/shop/techart-model-overview';
 import { TechartStepPicker, techartStepHeading } from '@/components/shop/techart-step-picker';
 import { filterBodyProducts, techartSelection, vehicleBodyMatch, vehicleImage, vehicleName, vehicleOptions } from '@/lib/shop/techart-fitment';
 import { cayenneImage, cayenneName, cayenneOptions } from '@/lib/shop/techart-cayenne';
@@ -60,6 +62,7 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
     cayenne: cayenneOptions(filterProducts(products, { brand, make: 'porsche', model: 'cayenne' })),
   } : undefined, [techart, brand, products]);
   const porscheModel = techart && (selected?.model === '911' || selected?.model === 'cayenne') ? selected.model : undefined;
+  const modelLanding = !!porscheModel && !porscheGeneration && params.get('view') !== 'accessories';
   const selection = techartSelection({ brand, model: porscheModel, fit, body });
   const porscheTrim = porscheModel ? porscheOptions?.[porscheModel].flatMap(generation => generation.bodies.filter(style => body === 'targa' ? style.key === 'targa' : style.key !== 'targa').flatMap(style => style.choices)).find(choice => choice.fit === fit)?.name : undefined;
   const validPorsche = porscheModel && porscheOptions?.[porscheModel].some(generation => generation.bodies.some(style => style.key === body && style.choices.some(choice => choice.fit === fit)));
@@ -100,13 +103,14 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
   const collectionResults = search.trim() ? collections.filter(item => matches(`${item.car.marque} ${item.car.name} ${item.name}`, search)).slice(0, 5) : [];
   const partResults = search.trim() ? products.filter(product => matches(product.title, search)).slice(0, 4) : [];
   const porscheProfile = active && selection?.body ? selection.model === '911' ? vehicleImage(selection.fit, selection.body) : cayenneImage(selection.fit, selection.body) : undefined;
+  const landingProfile = modelLanding ? porscheModel === '911' ? vehicleImage('992_2_carrera', 'coupe') : cayenneImage('e3_2_cayenne', 'suv') : undefined;
   const profile = porscheProfile ?? (active ? novitecShopProfile(active.model, body) : undefined);
   const cover = active && !techart ? novitecModelCover(body ? `${active.model}_${body}` : active.model) : undefined;
 
   return <div className={`${styles.page} ${own.page}`}>
     <header className={`${styles.hero}${browsing ? ` ${styles.heroWithToolbar}` : ''}`}>
       <div className={styles.topline}>
-        <BrandArtwork brand={brand} className={own.wordmark} sizes="180px" />
+        <BrandPartnerLink brand={brand}><BrandArtwork brand={brand} className={own.wordmark} sizes="180px" /></BrandPartnerLink>
         <div className={styles.searchWrap} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setSearchOpen(false); }}>
           <div className={styles.searchField}><Search size={18} aria-hidden="true" /><input aria-label={`Search ${supplier.name} cars, collections and parts`} placeholder="Search a car, collection or part…" value={search} onChange={event => { setSearch(event.target.value); setSearchOpen(true); }} onFocus={() => setSearchOpen(true)} onKeyDown={event => { if (event.key === 'Escape') setSearchOpen(false); }} aria-controls="brand-preview-search" />{search && <button aria-label="Clear search" onClick={() => setSearch('')}><X size={17} /></button>}</div>
           {searchOpen && search.trim() && <div className={styles.suggestions} id="brand-preview-search">
@@ -124,7 +128,10 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
         {fit && <><span aria-hidden="true">/</span>{!body || body === 'targa' ? <span aria-current="page">{porscheTrim || activeName}</span> : <Link href={shopBrandHref(brand, { make: 'porsche', model: porscheModel, generation: porscheGeneration, fit })}>{porscheTrim || activeName}</Link>}</>}
         {body && body !== 'targa' && <><span aria-hidden="true">/</span><span aria-current="page">{body === 'coupe' ? 'Coupé' : body === 'suv' ? 'SUV' : 'Cabriolet'}</span></>}
       </nav> : <nav className={styles.breadcrumbs} aria-label="Vehicle selection"><Link href="/shop">SHOP</Link><span aria-hidden="true">/</span><button onClick={() => go({})}>{supplier.name}</button>{!accessories && make && <><span aria-hidden="true">/</span><button onClick={() => go({ make: make.key, choose: '1' })}>{make.name}</button></>}{porscheModel && !accessories && <><span aria-hidden="true">/</span><Link href={shopBrandHref(brand, { make: 'porsche', model: porscheModel })}>{selected?.name}</Link></>}{active && !accessories && <><span aria-hidden="true">/</span><span aria-current="page">{activeName}</span></>}{accessories && <><span aria-hidden="true">/</span><span aria-current="page">Accessories & controls</span></>}</nav>}
-      <div className={styles.heroContent}><div><h1>{accessories ? 'Accessories & controls.' : active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{activeName}</span></> : techart ? techartStepHeading({ model: porscheModel, generation: porscheGeneration, body, fit }) : make ? `Choose your ${make.name}.` : 'Start with your car.'}</h1>{!browsing && <p>{techart ? porscheModel ? 'Select the next step to find parts for your exact Porsche.' : 'Start with your Porsche model.' : 'Find the parts and possibilities for your model.'}</p>}</div>
+      <div className={styles.heroContent}><div><h1>{accessories ? 'Accessories & controls.' : active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{activeName}</span></> : modelLanding ? <><span className={styles.vehicleMarque}>Porsche</span><span>{porscheModel === '911' ? '911' : 'Cayenne'}</span></> : techart ? techartStepHeading({ model: porscheModel, generation: porscheGeneration, body, fit }) : make ? `Choose your ${make.name}.` : 'Start with your car.'}</h1>{!browsing && <p>{modelLanding ? `TECHART carbon fibre parts, body kits, wheels and exhausts for your Porsche ${porscheModel === '911' ? '911' : 'Cayenne'}. Choose your generation to find parts for your exact variant.` : techart ? porscheModel ? 'Select the next step to find parts for your exact Porsche.' : 'Start with your Porsche model.' : 'Find the parts and possibilities for your model.'}</p>}{modelLanding && porscheModel && porscheOptions && <TechartGenerationLinks model={porscheModel} options={porscheOptions[porscheModel]}/>}</div>
+        {landingProfile && <div className={`${styles.selectedCar} ${own.modelLandingCar}`}>
+          <div className={styles.selectedArtwork} data-tall={porscheModel === 'cayenne' ? 'true' : undefined}><Image className={styles.selectedImage} src={landingProfile.src} alt={`Porsche ${porscheModel === '911' ? '911 Coupé' : 'Cayenne SUV'} model illustration`} width={landingProfile.width} height={landingProfile.height} sizes="(max-width:700px) 85vw, (max-width:1100px) 40vw, 495px" loading="eager" /></div>
+        </div>}
         {active && !accessories && <div className={profile ? styles.selectedCar : own.changeOnly}>
           {profile && <div className={styles.selectedArtwork} data-tall={['urus', 'cullinan', 'purosangue', 'cayenne'].includes(active.model) ? 'true' : undefined}>{cover && <Image className={`${styles.selectedImage} ${styles.selectedShadow}`} src={cover} alt="" aria-hidden="true" width={1116} height={598} sizes="(max-width:700px) 85vw, 40vw" />}<Image className={styles.selectedImage} src={profile.src} alt={`${active.marque} ${activeName}`} width={porscheProfile?.width ?? 1116} height={porscheProfile?.height ?? 598} sizes="(max-width:700px) 85vw, 40vw" /></div>}
           <button className={styles.change} onClick={() => go(techart ? { make: active.make, model: active.model } : { make: active.make, choose: '1' })}><RotateCcw size={15} />Change car</button>
@@ -152,7 +159,7 @@ export function BrandShopPreview({ brand, products }: { brand: string; products:
       <VehicleVersionPicker versions={fitmentOptions} brand={supplier.name} generation={vehicleGeneration} fit={fit}
         onChange={(generation, fit) => go({ make: active.make, model: active.model, generation, fit, sort })} />
     </section>}
-    {!browsing ? <section className={`${styles.picker}${!porscheModel && !techart ? ` ${own.manufacturerPicker}` : ''}`} aria-label="Choose your car"><div className={styles.pickerTitle}><span>{techart ? 'Select an option' : make ? 'Select a model' : 'Select a manufacturer'}</span>{!!unassigned.length && <button onClick={() => go({ view: 'accessories' })}>Accessories & controls</button>}</div>
+    {modelLanding && porscheModel ? <TechartModelRange model={porscheModel} products={products}/> : !browsing ? <section className={`${styles.picker}${!porscheModel && !techart ? ` ${own.manufacturerPicker}` : ''}`} aria-label="Choose your car"><div className={styles.pickerTitle}><span>{modelLanding ? 'Choose your generation' : techart ? 'Select an option' : make ? 'Select a model' : 'Select a manufacturer'}</span>{!!unassigned.length && <button onClick={() => go({ view: 'accessories' })}>Accessories & controls</button>}</div>
       {techart && porscheOptions ? <TechartStepPicker options={porscheOptions} model={porscheModel} generation={porscheGeneration} body={body} fit={fit} /> : !make ? <div className={`${own.makeGrid}${brand === 'gintani' ? ` ${own.twoColumnMakes}` : ''}`}>{makes.map(item => {
         return <button key={item.key} className={own.makeCard} data-make={item.key} aria-label={`Choose ${item.name}`} onClick={() => chooseMake(item.key)}>
           <ManufacturerLogo make={item.key} name={item.name} /><ArrowUpRight size={17} />

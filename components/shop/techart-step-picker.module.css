@@ -39,3 +39,7 @@
 @media(prefers-reduced-motion:reduce) {
   .model::details-content, .model summary .caption svg { transition:none; }
 }
+
+.introduced { display:block; font-size:10px; color:#62625d; margin-top:7px; }
+.generation:hover .introduced { color:inherit; }
+.generationNote { margin-top:10px; font-size:10px; color:#62625d; }

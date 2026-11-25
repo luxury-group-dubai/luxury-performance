@@ -13,3 +13,5 @@
 
 .shop-product-navigation { align-items:flex-start; flex-direction:column; gap:14px; }
 .shop-product-back { display:inline-flex; align-items:center; gap:9px; min-height:28px; font-size:11px; color:#272727; }
+
+.shop-product-options{display:grid;gap:16px;margin:25px 0}.shop-product-options .shop-option{margin:0;min-width:0}.shop-product-options select{width:100%;max-width:100%}
