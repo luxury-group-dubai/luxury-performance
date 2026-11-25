@@ -130,7 +130,6 @@
 .mark {
   --brand-paper: #000;
   --brand-ink: #fff;
-  --mark-duration: 4.8s;
   position: relative;
   display: grid;
   place-items: center;
@@ -155,24 +154,39 @@
 .photo + .mark { position: absolute; bottom: 0; right: 0; width: 27%; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .mark[data-played] { animation: markPaper var(--mark-duration) steps(1, end) both; }
-  .mark[data-played] .lettering { animation: markLettering var(--mark-duration) ease-out both; }
-  .mark[data-played] .wings { animation: unfoldWings var(--mark-duration) ease-in-out both; }
+  .mark { animation-name: markPaper; animation-timing-function: steps(1, end); }
+  .lettering { animation-name: markLettering; animation-timing-function: ease-out; }
+  .wings { animation-name: unfoldWings; animation-timing-function: ease-in-out; }
+  @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
+    .mark { view-timeline-name: --division-logo; view-timeline-inset: 0; }
+    .mark, .lettering, .wings {
+      animation-timeline: --division-logo;
+      animation-duration: auto;
+      animation-fill-mode: both;
+    }
+  }
+  .archive[data-scrub-marks] :is(.mark, .lettering, .wings) {
+    animation-duration: 1s;
+    animation-delay: var(--mark-seek);
+    animation-play-state: paused;
+    animation-fill-mode: both;
+  }
 }
+/* The tile enters at 0%. Reach gold while it is still comfortably in view. */
 @keyframes markPaper {
   0% { background-color: var(--brand-paper); color: var(--brand-ink); }
-  32% { background-color: #fff; color: #111; }
-  51%, 100% { background-color: #080808; color: #fff; }
+  23% { background-color: #fff; color: #111; }
+  33%, 100% { background-color: #080808; color: #fff; }
 }
 @keyframes markLettering {
-  0% { clip-path: inset(0 100% 0 0); }
-  14%, 62% { clip-path: inset(0); opacity: 1; }
-  70%, 100% { clip-path: inset(0); opacity: 0; }
+  0%, 4% { clip-path: inset(0 100% 0 0); }
+  12%, 39% { clip-path: inset(0); opacity: 1; }
+  44%, 100% { clip-path: inset(0); opacity: 0; }
 }
 @keyframes unfoldWings {
-  0%, 66% { clip-path: inset(0 50%); opacity: 0; filter: brightness(0) invert(1); }
-  77%, 86% { clip-path: inset(0); opacity: 1; filter: brightness(0) invert(1); }
-  100% { clip-path: inset(0); opacity: 1; filter: brightness(1) invert(0); }
+  0%, 41% { clip-path: inset(0 50%); opacity: 0; filter: brightness(0) invert(1); }
+  49%, 54% { clip-path: inset(0); opacity: 1; filter: brightness(0) invert(1); }
+  62%, 100% { clip-path: inset(0); opacity: 1; filter: brightness(1) invert(0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .mark { background: #080808; }

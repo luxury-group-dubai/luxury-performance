@@ -8,17 +8,39 @@ export function DivisionsSection({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const section = ref.current;
-    if (!section || !window.IntersectionObserver) return;
+    if (!section || CSS.supports('(animation-timeline: --division-logo) and (view-timeline-name: --division-logo)')) return;
 
-    const observer = new IntersectionObserver(entries => {
-      for (const entry of entries) {
-        if (entry.intersectionRatio < 0.35) continue;
-        entry.target.setAttribute('data-played', '');
-        observer.unobserve(entry.target);
-      }
-    }, { threshold: 0.35 });
-    section.querySelectorAll('[data-division-mark]').forEach(tile => observer.observe(tile));
-    return () => observer.disconnect();
+    // Mirror the native view timeline in browsers without scroll-driven CSS animations.
+    const tiles = Array.from(section.querySelectorAll<HTMLElement>('[data-division-mark]'));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const height = document.documentElement.clientHeight;
+      const bounds = tiles.map(tile => tile.getBoundingClientRect());
+      bounds.forEach(({ top, height: tileHeight }, index) => {
+        const progress = Math.max(0, Math.min(1, (height - top) / (height + tileHeight)));
+        const delay = `${-progress}s`;
+        if (tiles[index].style.getPropertyValue('--mark-seek') !== delay) {
+          tiles[index].style.setProperty('--mark-seek', delay);
+        }
+      });
+    };
+    const schedule = () => {
+      if (!frame && !reducedMotion.matches) frame = requestAnimationFrame(update);
+    };
+    section.dataset.scrubMarks = '';
+    schedule();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    reducedMotion.addEventListener('change', schedule);
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      reducedMotion.removeEventListener('change', schedule);
+      cancelAnimationFrame(frame);
+      delete section.dataset.scrubMarks;
+    };
   }, []);
 
   useEffect(() => {
