@@ -1,11 +1,10 @@
 .archive {
-  --archive-paper: #f7f7f4;
   --archive-inset: clamp(60px, 7vw, 110px);
   display: grid;
   grid-template-columns: minmax(230px, .78fr) minmax(0, 1.6fr);
   gap: clamp(42px, 7vw, 120px);
   padding: var(--archive-inset) var(--gutter);
-  background: var(--archive-paper);
+  background: var(--paper);
   color: var(--ink);
   border-block: 1px solid var(--line);
 }
@@ -100,7 +99,7 @@
     z-index: 2;
     display: flex;
     margin: 20px 0 12px;
-    background: var(--archive-paper);
+    background: var(--paper);
   }
   .index nav a {
     flex: 1;
