@@ -16,6 +16,35 @@ type DivisionPhoto = {
 const stripedFerrariStill = '/images/divisions/rental-fleet-striped-ferrari.webp';
 const convoyStill = '/images/divisions/rental-fleet-convoy.webp';
 
+// Centerlines follow the left half of the shared wing artwork in its original viewBox.
+const wingTraces = [
+  { className: styles.crestTrace, width: 82, d: 'M527 641 C469 624 418 606 410 548 C399 480 438 431 497 424 Q516 422 535 422' },
+  { className: styles.topFeather, width: 62, d: 'M435 451 Q402 447 369 435 L165 379 Q115 360 70 323' },
+  { className: styles.middleFeather, width: 56, d: 'M406 558 Q399 508 363 488 L216 445 Q178 432 147 401' },
+  { className: styles.lowerFeather, width: 62, d: 'M376 568 Q359 535 325 521 L258 502 Q222 489 192 468' },
+  { className: styles.bottomFeather, width: 56, d: 'M391 610 Q362 583 337 577 L312 570 Q275 559 251 539' },
+];
+
+function DivisionWings({ mark, src }: { mark: string; src: string }) {
+  const maskId = `division-wing-reveal-${mark}`;
+  return (
+    <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
+      <defs>
+        <mask id={maskId} className={styles.wingMask} maskUnits="userSpaceOnUse" x="60" y="310" width="934" height="364">
+          {[undefined, 'translate(1054 0) scale(-1 1)'].map(transform => (
+            <g key={transform ?? 'left'} transform={transform} fill="none" stroke="white" strokeLinecap="round" strokeLinejoin="round">
+              {wingTraces.map(({ className, width, d }) => (
+                <path key={className} className={className} d={d} strokeWidth={width} pathLength="1" strokeDasharray="1 2" />
+              ))}
+            </g>
+          ))}
+        </mask>
+      </defs>
+      <use href={src + '#wings'} mask={`url(#${maskId})`} />
+    </svg>
+  );
+}
+
 const divisions = [
   {
     period: '2019', name: 'Luxury Supercar Rentals',
@@ -164,9 +193,7 @@ export function DivisionsTimeline() {
                   <div className={styles.logoFrame} data-division={mark} aria-hidden="true">
                     {wingedLogo ? (
                       <div className={styles.closingEmblem}>
-                        <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
-                          <use href={wingedLogo + '#wings'} />
-                        </svg>
+                        <DivisionWings mark={mark} src={wingedLogo} />
                         <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
                           <use href={wingedLogo + '#lettering'} />
                         </svg>
