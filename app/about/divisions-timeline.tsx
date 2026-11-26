@@ -157,6 +157,12 @@ export function DivisionsTimeline() {
                       </div>
                     ))}
                   </div>
+                  <div className={styles.logoFrame} aria-hidden="true">
+                    <Image className={styles.closingLettering} src={`/images/divisions/marks/${mark}.svg`}
+                      width={600} height={600} alt="" />
+                    <Image className={styles.closingEmblem} src={`/images/divisions/marks/${mark}-winged-gold.svg`}
+                      width={934} height={364} alt="" />
+                  </div>
                   {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>
               </div>

@@ -169,6 +169,47 @@
   pointer-events: none;
 }
 
+.logoFrame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 2.2;
+  background: #121212;
+}
+.closingLettering, .closingEmblem { position: absolute; height: auto; }
+.closingLettering { width: min(42%, 210px); filter: brightness(0) invert(1); opacity: 0; }
+.closingEmblem { width: min(68%, 355px); }
+
+@keyframes settleLettering {
+  0%, 16% { opacity: 1; transform: none; }
+  32%, 100% { opacity: 0; transform: translateY(5%) scale(.55); }
+}
+@keyframes revealEmblem {
+  0%, 22% { opacity: 0; clip-path: inset(0 39%); }
+  32% { opacity: 1; clip-path: inset(0 37%); }
+  52%, 100% { opacity: 1; clip-path: inset(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .closingLettering { animation-name: settleLettering; }
+  .closingEmblem { animation-name: revealEmblem; }
+  .closingLettering, .closingEmblem { animation-timing-function: ease-in-out; }
+  @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
+    .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
+    .closingLettering, .closingEmblem {
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timeline: --division-logo;
+    }
+  }
+  .archive[data-scrub-logos] :is(.closingLettering, .closingEmblem) {
+    animation-duration: 1s;
+    animation-delay: var(--logo-seek, 0s);
+    animation-fill-mode: both;
+    animation-play-state: paused;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1100px) {
   .archive { --year-size: clamp(31px, 3.7vw, 42px); }
 }
