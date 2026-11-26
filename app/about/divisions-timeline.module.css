@@ -316,7 +316,10 @@
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {
-  .archive { --year-size: clamp(31px, 3.7vw, 42px); }
+  .archive { --year-size: clamp(31px, 3.7vw, 42px); --title-size: clamp(21px, 2.8vw, 24px); }
+}
+@media (min-width: 768px) and (max-width: 900px) {
+  .chapter { grid-template-columns: var(--year-column) minmax(0, 1fr) 48%; }
 }
 @media (max-width: 767px) {
   .archive {
