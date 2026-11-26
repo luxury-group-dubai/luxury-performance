@@ -205,6 +205,7 @@
 }
 .logoFrame:is([data-division="slc"], [data-division="lcg"]) .divisionName { font-weight: 700; }
 .logoFrame[data-division="slc"] > * { grid-area: 1 / 1; }
+.logoFrame[data-division="slc"] .standaloneMark { width: clamp(140px, 52%, 275px); max-width: 100%; }
 /* The domain crosses the lower loop of the S in the original SLC logo. */
 .logoFrame[data-division="slc"] .divisionName {
   position: relative;
