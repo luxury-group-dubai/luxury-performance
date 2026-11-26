@@ -349,6 +349,7 @@
   }
   .intro h2 { font-size: clamp(30px, 10vw, 52px); }
   .rail { --marker-top: clamp(110px, 34svh, 290px); left: 8px; bottom: 0; }
+  .chapters { row-gap: clamp(48px, 10vw, 64px); }
   /* Only the marker pins. Each year, story and gallery scroll as one column. */
   .chapter {
     display: block;
