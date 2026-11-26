@@ -126,7 +126,7 @@ export function DivisionsTimeline() {
           alt=""
           fill
           quality={90}
-          sizes="(max-aspect-ratio: 4/3) 133.34svh, 100vw"
+          sizes="(max-width: 767px) max(100vw, min(146.67vw, 96svh)), (max-aspect-ratio: 4/3) 133.34svh, 100vw"
         />
         <h2 id="divisions-title">Our divisions.</h2>
       </header>

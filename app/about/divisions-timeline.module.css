@@ -180,7 +180,18 @@
     --chapter-gap: clamp(48px, 8vw, 64px);
     padding-bottom: 52px;
   }
-  .intro { margin-bottom: clamp(40px, 9vw, 64px); }
+  .intro {
+    min-height: 0;
+    height: min(110vw, 72svh);
+    align-content: start;
+    padding-block-start: min(14vw, 9svh);
+    margin-bottom: clamp(40px, 9vw, 64px);
+  }
+  .introPhoto { object-position: 60% 52%; }
+  .intro::before {
+    background: linear-gradient(180deg, rgb(12 12 12 / .60), rgb(12 12 12 / .42) 25%, rgb(12 12 12 / .08) 62%);
+  }
+  .intro h2 { font-size: clamp(30px, 10vw, 52px); }
   .rail { left: 8px; bottom: 0; }
   /* Only the marker pins. Each year, story and gallery scroll as one column. */
   .chapter {
