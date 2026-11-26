@@ -59,6 +59,10 @@ const divisions = [
     mark: 'slc',
     gallery: [
       { src: '/images/divisions/sourcing-purosangue-transporter.webp', alt: 'Black Ferrari Purosangue secured inside a curtain-sided transporter' },
+      { src: '/images/divisions/sourcing-black-porsche.webp', alt: 'Black Porsche 911 beside a transporter outside a lit showroom at night', paired: true, aspectRatio: 4 / 3 },
+      { src: '/images/divisions/sourcing-gt3-rs-flatbed.webp', alt: 'White Porsche 911 GT3 RS strapped to a flatbed at night', paired: true, aspectRatio: 4 / 3 },
+      { src: '/images/divisions/sourcing-ferrari-unloading.webp', alt: 'Black Ferrari on the loading ramp of an enclosed transporter', paired: true, aspectRatio: 4 / 3 },
+      { src: '/images/divisions/sourcing-airfreight.webp', alt: 'Classic silver coupé on a cargo pallet beside an Emirates SkyCargo aircraft', paired: true, aspectRatio: 4 / 3 },
       { src: '/images/divisions/sourcing-ferrari-enclosed.webp', alt: 'Red Ferrari inside an illuminated enclosed transporter at night' },
     ],
     story: 'When a collector’s search led overseas, Source Luxury Cars found and imported the car. The team focused on rare supercars and limited-production models, primarily from Europe.',
