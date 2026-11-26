@@ -183,6 +183,7 @@
 .logoFrame[data-division="lxp"] { --opening-ink: black; --closing-ink: black; background: white; }
 .standaloneMark { position: absolute; width: min(52%, 275px); height: auto; }
 .closingEmblem { position: relative; width: min(68%, 355px); aspect-ratio: 934 / 364; }
+.wingCircle { position: absolute; inset: 0; }
 .closingWings, .closingLettering { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
 .closingLettering {
   --division-lettering-fill: currentColor;
@@ -195,11 +196,16 @@
   32% { width: 100%; left: 0; top: 0; color: var(--opening-ink); }
   40%, 100% { width: 100%; left: 0; top: 0; color: var(--closing-ink); }
 }
-/* The two sides of the expanding triangle stay parallel to the lines through the feather tips. */
+/* The SVG has a 95-unit circular opening centered at (527, 529) in its 934 × 364 viewBox. */
+@keyframes revealWingCircle {
+  0%, 32% { clip-path: ellipse(9.9% 25.4% at 50% 60.165%); }
+  38%, 39% { clip-path: ellipse(11.56% 29.67% at 50% 60.165%); }
+  49%, 100% { clip-path: ellipse(54% 138.5% at 50% 60.165%); }
+}
+/* The diagonal edges start tangent to the revealed ring and finish parallel to the feather tips. */
 @keyframes revealWings {
-  0%, 32% { opacity: 0; clip-path: polygon(22.2% 0, 77.8% 0, 50% 85%); }
-  39% { opacity: 1; }
-  52%, 100% { opacity: 1; clip-path: polygon(-2.3% 0, 102.3% 0, 50% 160%); }
+  0%, 39% { clip-path: polygon(15.4% 0, 84.6% 0, 50% 106%); }
+  54%, 100% { clip-path: polygon(-2.3% 0, 102.3% 0, 50% 160%); }
 }
 @keyframes drawFirstStroke {
   0%, 10% { stroke-dashoffset: 1.01; }
@@ -215,21 +221,22 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
+  .wingCircle { animation-name: revealWingCircle; }
   .closingWings { animation-name: revealWings; }
   .inkStroke { stroke-dasharray: 1 2; animation-timing-function: linear; }
   .inkStroke:nth-child(1) { animation-name: drawFirstStroke; }
   .inkStroke:nth-child(2) { animation-name: drawSecondStroke; }
   .inkStroke:nth-child(3) { animation-name: drawThirdStroke; }
-  .closingLettering, .closingWings { animation-timing-function: ease-in-out; }
+  .closingLettering, .wingCircle, .closingWings { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
     .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
-    .closingLettering, .closingWings, .inkStroke {
+    .closingLettering, .wingCircle, .closingWings, .inkStroke {
       animation-duration: auto;
       animation-fill-mode: both;
       animation-timeline: --division-logo;
     }
   }
-  .archive[data-scrub-logos] :is(.closingLettering, .closingWings, .inkStroke) {
+  .archive[data-scrub-logos] :is(.closingLettering, .wingCircle, .closingWings, .inkStroke) {
     animation-duration: 1s;
     animation-delay: var(--logo-seek, 0s);
     animation-fill-mode: both;

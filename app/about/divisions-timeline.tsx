@@ -165,9 +165,11 @@ export function DivisionsTimeline() {
                   <div id={`division-${mark}-logo`} className={styles.logoFrame} data-division={mark} aria-hidden="true">
                     {wingedLogo ? (
                       <div className={styles.closingEmblem}>
-                        <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
-                          <use href={wingedLogo + '#wings'} />
-                        </svg>
+                        <div className={styles.wingCircle}>
+                          <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
+                            <use href={wingedLogo + '#wings'} />
+                          </svg>
+                        </div>
                         <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
                           <use href={wingedLogo + '#lettering'} />
                         </svg>
