@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { ArrowLink } from '@/components/ui';
+import Link from 'next/link';
+import { ActionArrow } from '@/components/action-arrow';
 import { partnerCardImages } from '@/lib/brand-hero-images';
 import { DivisionMonogram } from './division-monogram';
 import { DivisionsSection } from './divisions-section';
@@ -165,27 +166,34 @@ export function DivisionsTimeline() {
                       </div>
                     ))}
                   </div>
-                  <div id={`division-${mark}-logo`} className={styles.logoFrame} data-division={mark} aria-hidden="true">
-                    {wingedLogo ? (
-                      <div className={styles.closingEmblem}>
-                        <div className={styles.wingCircle}>
-                          <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
-                            <use href={wingedLogo + '#wings'} />
+                  <div id={`division-${mark}-logo`} className={styles.logoFrame} data-division={mark}>
+                    <div className={styles.logoArtwork} aria-hidden="true">
+                      {wingedLogo ? (
+                        <div className={styles.closingEmblem}>
+                          <div className={styles.wingCircle}>
+                            <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
+                              <use href={wingedLogo + '#wings'} />
+                            </svg>
+                          </div>
+                          <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
+                            <use href={wingedLogo + '#lettering'} />
                           </svg>
                         </div>
-                        <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
-                          <use href={wingedLogo + '#lettering'} />
-                        </svg>
-                      </div>
-                    ) : mark === 'slc' || mark === 'lcg' ? (
-                      <DivisionMonogram mark={mark} />
-                    ) : (
-                      <Image className={styles.standaloneMark} src={`/images/divisions/marks/${mark}.svg`}
-                        width={600} height={600} alt="" />
+                      ) : mark === 'slc' || mark === 'lcg' ? (
+                        <DivisionMonogram mark={mark} />
+                      ) : (
+                        <Image className={styles.standaloneMark} src={`/images/divisions/marks/${mark}.svg`}
+                          width={600} height={600} alt="" />
+                      )}
+                      <span className={styles.divisionName}><span>{logoCaption ?? name}</span></span>
+                    </div>
+                    {href && (
+                      <Link href={href} className={styles.galleryLink}
+                        {...(href.startsWith('https://') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                        {link}<ActionArrow size={18} strokeWidth={1.6} />
+                      </Link>
                     )}
-                    <span className={styles.divisionName}><span>{logoCaption ?? name}</span></span>
                   </div>
-                  {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>
               </div>
             </li>

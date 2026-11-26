@@ -3,11 +3,10 @@
   --year-size: clamp(44px, 4vw, 80px);
   --year-column: calc(3 * var(--year-size));
   --year-center: calc(.475 * var(--year-size));
-  --intro-top: calc(var(--site-header-height) + var(--archive-inset));
-  --clear-top: calc(var(--site-header-height) + 12px);
-  /* One anchor for the whole timeline, with room for the tallest story above it. */
-  --marker-top: max(calc(var(--intro-top) + var(--year-center)), calc(var(--clear-top) + var(--tallest-midpoint, 0px)));
-  --pin-top: calc(var(--marker-top) - var(--year-center));
+  --title-size: clamp(24px, 2.2vw, 38px);
+  --title-line: calc(1.04 * var(--title-size));
+  --pin-top: calc(var(--site-header-height) + var(--archive-inset));
+  --marker-top: calc(var(--pin-top) + var(--year-center));
   --dot-size: 16px;
   --dot-clearance: clamp(22px, 2.2vw, 38px);
   --rail-gap: calc(var(--dot-size) / 2 + var(--dot-clearance));
@@ -83,11 +82,10 @@
 
 .chapters { list-style: none; margin: 0; padding: 0; }
 .chapter {
-  --story-top: calc(var(--marker-top) - var(--story-midpoint, var(--year-center)));
   display: grid;
   grid-template-columns: var(--year-column) minmax(0, 1fr) 51%;
   align-items: start;
-  scroll-margin-top: calc(var(--story-top) - var(--site-header-height) - 16px);
+  scroll-margin-top: calc(var(--pin-top) - var(--site-header-height) - 16px);
 }
 .chapterContent { display: contents; }
 .chapter:not(:last-child) .mediaColumn { margin-bottom: var(--chapter-gap); }
@@ -106,11 +104,13 @@
   line-height: .95;
 }
 .story {
-  top: var(--story-top);
+  /* The dot meets the year and the first line of the title at the same scroll position. */
+  top: calc(var(--marker-top) - var(--title-line) / 2);
+  margin-top: calc(var(--year-center) - var(--title-line) / 2);
   margin-inline: calc(2 * var(--rail-gap)) clamp(24px, 3vw, 56px);
   font-size: 1rem;
 }
-.story h3 { font-size: clamp(24px, 2.2vw, 38px); font-weight: 700; line-height: 1.04; letter-spacing: -.035em; text-transform: uppercase; }
+.story h3 { width: min-content; font-size: var(--title-size); font-weight: 700; line-height: var(--title-line); letter-spacing: -.035em; text-transform: uppercase; }
 .story p { max-width: 42ch; margin: 14px 0 0; color: #51534f; font-size: 14px; line-height: 1.65; }
 .mediaColumn {
   display: grid;
@@ -119,9 +119,17 @@
 }
 .galleryLink {
   justify-self: end;
-  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   min-height: 44px;
+  margin: 0 clamp(12px, 3cqi, 24px) 4px;
+  color: var(--closing-ink);
+  font-size: 12px;
+  font-weight: 700;
 }
+.galleryLink:is(:hover, :focus-visible) { text-decoration: underline; text-underline-offset: .22em; }
+.galleryLink:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -178,12 +186,15 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  align-content: center;
-  place-items: center;
-  row-gap: clamp(5px, .8vw, 12px);
-  overflow: hidden;
-  aspect-ratio: 2.2;
   background: #121212;
+}
+.logoArtwork {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  justify-items: center;
+  row-gap: clamp(5px, .8vw, 12px);
+  aspect-ratio: 2.2;
 }
 .logoFrame[data-division="lxp"] {
   --opening-ink: black;
@@ -213,7 +224,7 @@
   /* All winged captions share the LXP scale: its 13.8em name covers 90% of the visible wings. */
   font-size: calc(var(--winged-width) * .9 * 894 / 934 / 13.8);
 }
-.logoFrame[data-division="slc"] > * { grid-area: 1 / 1; }
+.logoFrame[data-division="slc"] .logoArtwork > * { grid-area: 1 / 1; }
 .logoFrame[data-division="slc"] .standaloneMark { width: clamp(140px, 52%, 275px); max-width: 100%; }
 /* The domain crosses the lower loop of the S in the original SLC logo. */
 .logoFrame[data-division="slc"] .divisionName {
@@ -340,7 +351,7 @@
   .chapter:not(:last-child) .year,
   .chapter:not(:last-child) .story { padding-bottom: 0; }
   .story { margin: 20px 0 26px; }
-  .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
+  .story h3 { width: auto; font-size: clamp(21px, 5.5vw, 28px); line-height: 1.04; }
   .story p { max-width: 32ch; margin-top: 10px; font-size: 15px; line-height: 1.55; }
   .chapter:not(:last-child) .mediaColumn { margin-bottom: 0; }
   .gallery { gap: 8px; }
