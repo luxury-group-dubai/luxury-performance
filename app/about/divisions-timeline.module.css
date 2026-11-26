@@ -188,13 +188,20 @@
 .logoFrame[data-division="lcg"] { --closing-ink: white; }
 .standaloneMark { width: min(52%, 275px); height: auto; }
 .divisionName {
+  width: 100%;
+  overflow: hidden;
   color: var(--closing-ink);
   font-size: clamp(11px, 1vw, 15px);
   font-weight: 700;
   letter-spacing: .08em;
   line-height: 1.25;
+  text-align: center;
   text-transform: uppercase;
-  white-space: pre;
+  white-space: nowrap;
+}
+.divisionName > span {
+  display: block;
+  transform-origin: center bottom;
 }
 .closingEmblem { position: relative; width: min(68%, 355px); aspect-ratio: 934 / 364; }
 .wingCircle { position: absolute; inset: 0; }
@@ -238,9 +245,15 @@
   0%, 45% { stroke-dashoffset: 1.01; }
   54%, 100% { stroke-dashoffset: 0; }
 }
-@keyframes typeLetter {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes liftDivisionName {
+  0%, 56% {
+    transform: perspective(380px) translateY(110%) rotateX(-28deg);
+    letter-spacing: .18em;
+  }
+  70%, 100% {
+    transform: none;
+    letter-spacing: .08em;
+  }
 }
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
@@ -250,7 +263,7 @@
   .inkStroke:nth-child(1) { animation-name: drawFirstStroke; }
   .inkStroke:nth-child(2) { animation-name: drawSecondStroke; }
   .inkStroke:nth-child(3) { animation-name: drawThirdStroke; }
-  .divisionName > span { animation-name: typeLetter; animation-timing-function: step-end; }
+  .divisionName > span { animation-name: liftDivisionName; animation-timing-function: cubic-bezier(.22, .75, .25, 1); }
   .closingLettering, .wingCircle { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
     .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
@@ -259,7 +272,6 @@
       animation-fill-mode: both;
       animation-timeline: --division-logo;
     }
-    .divisionName > span { animation-range-end: calc(var(--type-at) * 100%); }
   }
   .archive[data-scrub-logos] :is(.closingLettering, .wingCircle, .closingWings, .inkStroke, .divisionName > span) {
     animation-duration: 1s;
@@ -267,7 +279,6 @@
     animation-fill-mode: both;
     animation-play-state: paused;
   }
-  .archive[data-scrub-logos] .divisionName > span { animation-duration: calc(var(--type-at) * 1s); }
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {

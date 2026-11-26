@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import type { CSSProperties } from 'react';
 import { ArrowLink } from '@/components/ui';
 import { partnerCardImages } from '@/lib/brand-hero-images';
 import { DivisionMonogram } from './division-monogram';
@@ -181,11 +180,7 @@ export function DivisionsTimeline() {
                       <Image className={styles.standaloneMark} src={`/images/divisions/marks/${mark}.svg`}
                         width={600} height={600} alt="" />
                     )}
-                    <span className={styles.divisionName}>
-                      {Array.from(name, (letter, index) => (
-                        <span key={index} style={{ '--type-at': .56 + .18 * (index + 1) / name.length } as CSSProperties}>{letter}</span>
-                      ))}
-                    </span>
+                    <span className={styles.divisionName}><span>{name}</span></span>
                   </div>
                   {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>
