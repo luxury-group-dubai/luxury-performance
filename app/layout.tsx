@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#101010' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable} ${michroma.variable} ${michromaFull.variable}`}>
+  return <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning className={`${montserratUi.variable} ${montserratFull.variable} ${michroma.variable} ${michromaFull.variable}`}>
     <head>
       <script async fetchPriority="low" src="https://www.googletagmanager.com/gtm.js?id=GTM-PQPMSFG2" />
       <script dangerouslySetInnerHTML={{ __html: `

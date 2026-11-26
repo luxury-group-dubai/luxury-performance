@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><rect width="600" height="600" fill="#FFCD00"/><g color="#25282B" transform="translate(300 300) scale(0.8064516129032258) translate(-382 -180)"><g fill="currentColor" transform="matrix(1 0 -.14 1 39.2 0)">
+<path d="M95 80 H141.2 V216 C141.2 225.83 149.17 233.8 159 233.8 H251.1 L228 280 H159 C123.65 280 95 251.35 95 216 Z"/>
+<defs>
+<clipPath id="lac-left-crossing"><rect x="150" y="140" width="230" height="80"/></clipPath>
+<mask id="lac-shaft-behind-left" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="360" style="mask-type:luminance"><rect width="800" height="360" fill="white"/><path d="M206 280 L302.96 88 Q307 80 315 80 H336 V126.2 H334 Q330 126.2 326.4774 133.2 L254.8 280 Z" fill="black" stroke="black" stroke-width="31.8" stroke-linejoin="round" clip-path="url(#lac-left-crossing)"/></mask>
+<mask id="lac-a-behind-right" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="360" style="mask-type:luminance"><rect width="800" height="360" fill="white"/><rect x="336" y="142.1" width="150" height="75.8" fill="black"/></mask>
+</defs>
+<path d="M206 280 L302.96 88 Q307 80 315 80 H357 Q365 80 369.04 88 L466 280 H417.2 L345.5226 133.2 Q342 126.2 338 126.2 H334 Q330 126.2 326.4774 133.2 L254.8 280 Z" mask="url(#lac-a-behind-right)"/>
+<path d="M420 158 C443 158 451 154 460 136 C478 100 503 80 542 80 C583 80 615 94 638 121 Q641 126 635 126 H551 C526 126 507 145 507 169 V191 C507 215 526 234 551 234 H635 Q641 234 638 239 C615 266 583 280 542 280 C503 280 478 260 460 224 C451 206 443 202 420 202 H190.8 C180.97 202 173 194.03 173 184.2 V158 H420 Z" mask="url(#lac-shaft-behind-left)"/>
+</g></g></svg>

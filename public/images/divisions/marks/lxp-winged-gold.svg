@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2802" height="1092" viewBox="60 310 934 364">  <defs><linearGradient id="lxp-lcs-metal" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="974" y2="0"><stop offset="0" stop-color="#d6b45f"/><stop offset="0.17" stop-color="#fff8d9"/><stop offset="0.30" stop-color="#f8eab7"/><stop offset="0.50" stop-color="#d6b45f"/><stop offset="0.70" stop-color="#f8eab7"/><stop offset="0.83" stop-color="#fff8d9"/><stop offset="1" stop-color="#d6b45f"/></linearGradient>
+    <path id="lxp-lower-feather" d="M203.65 475.422 C227.067 483.731 257.915 490.713 285.378 497.808 C312.586 504.578 337.236 512.733 343.524 518.619 C349.687 526.246 356.794 542.667 363.218 562 L271 541 C240 532 220 503 203.65 475.422 Z"/>
+    <path id="lxp-bottom-feather" d="M261 546 L350 567 C368 571 376 589 381 607 L321 597 C294 592 277 569 261 546 Z"/>
+  </defs>
+  <g id="wings" fill="url(#lxp-lcs-metal)">
+    <path fill-rule="evenodd" d="M80 330 L413 428 C450 438 491 417 527 413 C563 417 604 438 641 428 L974 330 C945 362 928 386 898 397 L679 458 C657 464 655 478 653 504 L649 553 L657 545 L661 493 C663 474 668 469 686 464 L900 407 C880 438 870 461 847 469 C802 485 724 497 704 514 C690 531 680 562 670 591 C665 606 664 611 654 613 C610 620 565 632 527 654 C489 632 444 620 400 613 C390 611 389 606 384 591 C374 562 364 531 350 514 C330 497 252 485 207 469 C184 461 174 438 154 407 L368 464 C386 469 391 474 393 493 L397 545 L405 553 L401 504 C399 478 397 464 375 458 L156 397 C126 386 109 362 80 330 Z M622 529 A95 95 0 1 1 432 529 A95 95 0 1 1 622 529 Z"/>
+    <use href="#lxp-lower-feather"/>
+    <use href="#lxp-bottom-feather"/>
+    <use href="#lxp-lower-feather" transform="translate(1054 0) scale(-1 1)"/>
+    <use href="#lxp-bottom-feather" transform="translate(1054 0) scale(-1 1)"/>
+  </g>
+<g id="lettering" transform="translate(527 529) scale(0.13970588235294118) translate(-552 -150)"><defs><mask id="lxp-center-mark" maskUnits="userSpaceOnUse" x="8" y="10" width="1088" height="280" style="mask-type:luminance"><g color="#FFFFFF" fill="#FFFFFF">
+  <title id="lxp-title">LXP lettering — sharp terminals and radiused bends</title>
+  <desc id="lxp-desc">Connected LXP mark. X is a single shape with four equal 58-unit, 45-degree arms turning into a joined chevron-style centre. Opposite arms are offset rather than forming straight crossing bands. All four inner corners have 12-unit radii. Outer terminals are square. L bend uses concentric radii of 50 inner and 108 outer, preserving a 58-unit stroke. P unchanged.</desc>
+  <g fill="#FFFFFF">
+    <path id="lxp-letter-l" d="M8 10 H66 V182 A50 50 0 0 0 116 232 H312 V290 H116 A108 108 0 0 1 8 182 Z"/>
+    <path id="lxp-letter-x" d="M331.0000 10.0000 L413.0244 10.0000 L515.5147 112.4903 A12 12 0 0 0 532.4853 112.4903 L634.9756 10.0000 L717.0000 10.0000 L585.4853 141.5147 A12 12 0 0 0 585.4853 158.4853 L717.0000 290.0000 L634.9756 290.0000 L532.4853 187.5097 A12 12 0 0 0 515.5147 187.5097 L413.0244 290.0000 L331.0000 290.0000 L462.5147 158.4853 A12 12 0 0 0 462.5147 141.5147 Z"/>
+    <path id="lxp-letter-p" d="M740 10 H1000 A96 96 0 0 1 1000 202 H798 V290 H740 V144 H1000 A38 38 0 0 0 1000 68 H740 Z"/>
+  </g>
+</g></mask></defs><rect x="8" y="10" width="1088" height="280" fill="var(--division-lettering-fill, #F8E6AC)" mask="url(#lxp-center-mark)"/></g></svg>

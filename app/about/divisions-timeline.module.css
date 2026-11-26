@@ -1,0 +1,369 @@
+.archive {
+  --archive-inset: clamp(60px, 7vw, 110px);
+  --year-size: clamp(44px, 4vw, 80px);
+  --year-column: calc(3 * var(--year-size));
+  --title-size: clamp(24px, 2.2vw, 38px);
+  --title-line: calc(1.04 * var(--title-size));
+  --pin-top: calc(var(--site-header-height) + var(--archive-inset));
+  --dot-size: 16px;
+  --dot-clearance: clamp(22px, 2.2vw, 38px);
+  --rail-gap: calc(var(--dot-size) / 2 + var(--dot-clearance));
+  --chapter-gap: clamp(40px, 5vw, 80px);
+  padding: 0 var(--gutter) var(--archive-inset);
+  background: var(--paper);
+  color: var(--ink);
+  border-block: 1px solid var(--line);
+}
+
+.intro {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: 100svh;
+  margin: 0 calc(-1 * var(--gutter)) clamp(64px, 7vw, 112px);
+  padding: 32px var(--gutter);
+  background: #242522;
+  color: white;
+  text-align: center;
+}
+.introPhoto { z-index: -2; object-fit: cover; object-position: center 52%; }
+.intro::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(12 12 12 / .35), rgb(12 12 12 / .54) 62%, rgb(12 12 12 / .66));
+}
+.intro h2 { font-size: clamp(30px, 10vw, 164px); line-height: 1; }
+
+.track { position: relative; isolation: isolate; }
+.rail {
+  --year-center: calc(.475 * var(--year-size));
+  --marker-top: calc(var(--pin-top) + var(--year-center));
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--year-column) + var(--rail-gap) - .5px);
+  top: var(--year-center);
+  bottom: var(--year-center);
+  width: 1px;
+  background: #b9bab4;
+  color: var(--accent, #e2001a);
+  /* Clip the progress line to the timeline while keeping the full dot visible at each end. */
+  clip-path: inset(calc(var(--dot-size) / -2));
+  pointer-events: none;
+}
+.marker {
+  position: sticky;
+  display: block;
+  top: var(--marker-top);
+  height: 0;
+}
+.marker::before {
+  content: '';
+  display: block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: currentColor;
+  transform: translate(calc(.5px - 50%), -50%);
+}
+.marker::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  height: 100lvh;
+  transform: translateX(-50%);
+  background: currentColor;
+}
+
+.chapters { list-style: none; margin: 0; padding: 0; }
+.chapter {
+  display: grid;
+  grid-template-columns: var(--year-column) minmax(0, 1fr) 51%;
+  align-items: start;
+  scroll-margin-top: calc(var(--pin-top) - var(--site-header-height) - 16px);
+}
+.chapterContent { display: contents; }
+.chapter:not(:last-child) .mediaColumn { margin-bottom: var(--chapter-gap); }
+/* Each item releases at its own full height, including its reading gap. */
+.year, .story { position: sticky; top: var(--pin-top); }
+.chapter:not(:last-child) .year { padding-bottom: 8px; }
+.chapter:not(:last-child) .story { padding-bottom: 24px; }
+.year {
+  justify-self: end;
+  text-align: end;
+  font-size: var(--year-size);
+  font-weight: 700;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -.06em;
+  line-height: .95;
+}
+.story {
+  margin-inline: calc(2 * var(--rail-gap)) clamp(24px, 3vw, 56px);
+  font-size: 1rem;
+}
+.story h3 { width: min-content; font-size: var(--title-size); font-weight: 700; line-height: var(--title-line); letter-spacing: -.035em; text-transform: uppercase; }
+.story p { max-width: 42ch; margin: 14px 0 0; color: #51534f; font-size: 14px; line-height: 1.65; }
+.mediaColumn {
+  display: grid;
+  min-width: 0;
+  gap: clamp(8px, .9vw, 14px);
+}
+.galleryLink {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin: 0 clamp(12px, 3cqi, 24px) 4px;
+  color: var(--link-ink, var(--closing-ink));
+  font-size: 12px;
+  font-weight: 700;
+}
+.galleryLink:is(:hover, :focus-visible) { text-decoration: underline; text-underline-offset: .22em; }
+.galleryLink:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(5px, .65vw, 12px);
+}
+.photo {
+  grid-column: 1 / -1;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.48;
+  background: #292a28;
+}
+.photo:last-child { aspect-ratio: 1.85; }
+.photo.paired { grid-column: span 1; aspect-ratio: 4 / 5; }
+.photoImage { object-fit: cover; }
+.photo[data-division] { isolation: isolate; }
+.photo[data-division="lsr"] { background-color: #f26822; }
+.photo[data-division="lcs"] { background-color: #38214c; }
+:is(.photo, .logoFrame)[data-division="slc"] { background-color: #07afba; }
+.photo[data-division="lac"] { background-color: #ffcd00; --photo-opacity: .40; }
+:is(.photo, .logoFrame)[data-division="lcg"] { background-color: #000; }
+.photo[data-division="lcg"] { --photo-opacity: .48; }
+.photo[data-division="lxp"] { background-color: #d71920; }
+.photo[data-division] .photoImage {
+  filter: grayscale(1);
+  mix-blend-mode: luminosity;
+  opacity: var(--photo-opacity, .58);
+}
+.photo[data-division="lxp"] .photoImage {
+  /* The N-LARGO studio photograph already carries the red lighting. */
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .92;
+}
+.photo[data-division="lcg"] .photoImage {
+  /* Frame the Valhalla beneath the wordmark printed into the source photograph. */
+  transform: scale(1.32);
+  transform-origin: center bottom;
+}
+.coverLogo {
+  position: absolute;
+  inset: 0;
+  width: min(56%, 350px);
+  height: auto;
+  margin: auto;
+  pointer-events: none;
+}
+
+.logoFrame {
+  --opening-ink: white;
+  --closing-ink: #f8e6ac;
+  --winged-width: min(68cqi, 355px);
+  container-type: inline-size;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background-color: #121212;
+  background-image: linear-gradient(118deg, rgb(0 0 0 / .035), rgb(255 255 255 / .06) 42%, transparent 72%, rgb(0 0 0 / .025));
+}
+.logoArtwork {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  place-items: center;
+  row-gap: clamp(5px, .8vw, 12px);
+  aspect-ratio: 2.2;
+}
+.logoFrame:is([data-division="lsr"], [data-division="lcs"], [data-division="slc"], [data-division="lac"]) { --link-ink: white; }
+.logoFrame[data-division="lxp"] {
+  --opening-ink: black;
+  --closing-ink: black;
+  background-color: white;
+}
+.logoFrame[data-division="slc"] {
+  --closing-ink: #101010;
+  --caption-tracking: 0em;
+}
+.logoFrame[data-division="slc"] .galleryLink {
+  filter: drop-shadow(0 1px 1px #02464b);
+}
+.logoFrame[data-division="lcg"] { --closing-ink: white; }
+.standaloneMark { width: min(52%, 275px); height: auto; }
+.divisionName {
+  width: 100%;
+  overflow: hidden;
+  color: var(--closing-ink);
+  font-size: clamp(11px, 1vw, 15px);
+  font-weight: 400;
+  letter-spacing: var(--caption-tracking, .08em);
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: pre;
+}
+.logoFrame:is([data-division="slc"], [data-division="lcg"]) .divisionName { font-weight: 700; }
+.closingEmblem + .divisionName {
+  /* All winged captions share the LXP scale: its 13.8em name covers 90% of the visible wings. */
+  font-size: calc(var(--winged-width) * .9 * 894 / 934 / 13.8);
+}
+.logoFrame[data-division="slc"] .logoArtwork > * { grid-area: 1 / 1; }
+.logoFrame[data-division="slc"] .standaloneMark { width: clamp(140px, 52%, 275px); max-width: 100%; }
+/* The domain crosses the lower loop of the S in the original SLC logo. */
+.logoFrame[data-division="slc"] .divisionName {
+  position: relative;
+  top: 34%;
+  z-index: 1;
+  font-size: clamp(11px, 4.1cqi, 21.7px);
+}
+.divisionName > span {
+  display: block;
+  transform-origin: center bottom;
+}
+.closingEmblem { position: relative; width: var(--winged-width); aspect-ratio: 934 / 364; }
+.wingCircle { position: absolute; inset: 0; }
+.closingWings, .closingLettering { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
+.closingLettering {
+  --division-lettering-fill: currentColor;
+  color: var(--closing-ink);
+}
+
+/* Center the enlarged lettering. Its anchor is 219 units from the top of the 364-unit viewBox. */
+@keyframes settleLettering {
+  0%, 16% { width: 270%; left: -85%; top: calc(50% - 270% * 219 / 364); color: var(--opening-ink); }
+  32% { width: 100%; left: 0; top: 0; color: var(--opening-ink); }
+  40%, 100% { width: 100%; left: 0; top: 0; color: var(--closing-ink); }
+}
+/* The SVG has a 95-unit circular opening centered at (527, 529) in its 934 × 364 viewBox. */
+@keyframes revealWingCircle {
+  0%, 32% { clip-path: ellipse(9.9% 25.4% at 50% 60.165%); }
+  38%, 39% { clip-path: ellipse(11.56% 29.67% at 50% 60.165%); }
+  49%, 100% { clip-path: ellipse(54% 138.5% at 50% 60.165%); }
+}
+/* Mirrored edges follow the SVG's inner slot (5° from vertical), middle notch (24°), then tips (40°). */
+@keyframes revealWings {
+  0%, 39% {
+    clip-path: polygon(36.46% 0, 63.54% 0, 60.36% 100%, 39.64% 100%);
+    animation-timing-function: ease-in;
+  }
+  42% { clip-path: polygon(34.81% 0, 65.19% 0, 62% 100%, 38% 100%); }
+  46% { clip-path: polygon(20.22% 0, 79.78% 0, 62.09% 100%, 37.91% 100%); }
+  54%, 100% { clip-path: polygon(-2.3% 0, 102.3% 0, 69.61% 100%, 30.39% 100%); }
+}
+@keyframes drawFirstStroke {
+  0%, 10% { stroke-dashoffset: 1.01; }
+  34%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes drawSecondStroke {
+  0%, 34% { stroke-dashoffset: 1.01; }
+  45%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes drawThirdStroke {
+  0%, 45% { stroke-dashoffset: 1.01; }
+  54%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes liftDivisionName {
+  0%, 56% {
+    transform: perspective(380px) translateY(110%) rotateX(-28deg);
+    letter-spacing: .18em;
+  }
+  70%, 100% {
+    transform: none;
+    letter-spacing: var(--caption-tracking, .08em);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .closingLettering { animation-name: settleLettering; }
+  .wingCircle { animation-name: revealWingCircle; }
+  .closingWings { animation-name: revealWings; animation-timing-function: linear; }
+  .inkStroke { stroke-dasharray: 1 2; animation-timing-function: linear; }
+  .inkStroke:nth-child(1) { animation-name: drawFirstStroke; }
+  .inkStroke:nth-child(2) { animation-name: drawSecondStroke; }
+  .inkStroke:nth-child(3) { animation-name: drawThirdStroke; }
+  .divisionName > span { animation-name: liftDivisionName; animation-timing-function: cubic-bezier(.22, .75, .25, 1); }
+  .closingLettering, .wingCircle { animation-timing-function: ease-in-out; }
+  @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
+    .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
+    .closingLettering, .wingCircle, .closingWings, .inkStroke, .divisionName > span {
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timeline: --division-logo;
+    }
+  }
+  .archive[data-scrub-logos] :is(.closingLettering, .wingCircle, .closingWings, .inkStroke, .divisionName > span) {
+    animation-duration: 1s;
+    animation-delay: var(--logo-seek, 0s);
+    animation-fill-mode: both;
+    animation-play-state: paused;
+  }
+}
+
+@media (min-width: 768px) {
+  @supports (text-box: trim-start cap alphabetic) {
+    .year, .story h3 { text-box: trim-start cap alphabetic; }
+    /* Keep the dot halfway down the visible numerals. */
+    .rail { font-size: var(--year-size); --year-center: .5cap; }
+  }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .archive { --year-size: clamp(31px, 3.7vw, 42px); --title-size: clamp(21px, 2.8vw, 24px); }
+}
+@media (min-width: 768px) and (max-width: 900px) {
+  .chapter { grid-template-columns: var(--year-column) minmax(0, 1fr) 48%; }
+}
+@media (max-width: 767px) {
+  .archive {
+    --year-size: clamp(52px, 17vw, 72px);
+    --dot-size: 18px;
+    --chapter-gap: clamp(48px, 8vw, 64px);
+    padding-bottom: 52px;
+  }
+  .intro {
+    min-height: 0;
+    height: min(110vw, 72svh);
+    align-content: start;
+    padding-block-start: min(14vw, 9svh);
+    margin-bottom: clamp(40px, 9vw, 64px);
+  }
+  .introPhoto { object-position: 60% 52%; }
+  .intro::before {
+    background: linear-gradient(180deg, rgb(12 12 12 / .60), rgb(12 12 12 / .42) 25%, rgb(12 12 12 / .08) 62%);
+  }
+  .intro h2 { font-size: clamp(30px, 10vw, 52px); }
+  .rail { --marker-top: clamp(110px, 34svh, 290px); left: 8px; bottom: 0; }
+  /* Only the marker pins. Each year, story and gallery scroll as one column. */
+  .chapter {
+    display: block;
+    padding-inline-start: 36px;
+    scroll-margin-top: 0;
+  }
+  .chapter + .chapter { padding-top: var(--chapter-gap); }
+  .year, .story { position: static; }
+  .year { justify-self: stretch; text-align: start; }
+  .chapter:not(:last-child) .year,
+  .chapter:not(:last-child) .story { padding-bottom: 0; }
+  .story { margin: 20px 0 26px; }
+  .story h3 { width: auto; font-size: clamp(21px, 5.5vw, 28px); line-height: 1.04; }
+  .story p { max-width: 32ch; margin-top: 10px; font-size: 15px; line-height: 1.55; }
+  .chapter:not(:last-child) .mediaColumn { margin-bottom: 0; }
+  .gallery { gap: 8px; }
+}

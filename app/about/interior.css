@@ -1,4 +1,75 @@
-.interior-hero{height:560px;position:relative;overflow:hidden}.interior-hero>img{object-fit:cover}.image-bottom-label{position:absolute;bottom:30px;left:var(--gutter);font-size:9px;letter-spacing:.15em;color:#fff;text-transform:uppercase;text-shadow:0 1px 5px #000}
-@media(max-width:900px){.interior-hero{height:450px}}
-@media(max-width:700px){.interior-hero{height:390px}}
-.interior-hero img{transition:transform 1.4s var(--ease-out)}
+.about-opening {
+  isolation: isolate;
+}
+.interior-hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #252b30;
+}
+.interior-hero picture {
+  position: absolute;
+  inset: 0;
+}
+.interior-hero img {
+  object-fit: cover;
+  object-position: center 54%;
+}
+.interior-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgb(8 10 12 / 76%), rgb(8 10 12 / 72%) 48%, rgb(8 10 12 / 62%));
+  pointer-events: none;
+}
+.about-hero-title {
+  position: absolute;
+  inset-inline: var(--gutter);
+  /* Position the title within the area below the overlaid navigation. */
+  --title-center: calc(35svh + .65 * var(--site-header-height));
+  top: var(--title-center);
+  transform: translateY(-50%);
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  margin: 0;
+  color: white;
+  font-size: min(10.5vw, 12svh, 142px);
+  line-height: .97;
+}
+.about-hero-title span {
+  white-space: nowrap;
+}
+.about-hero-title span:last-child {
+  justify-self: end;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .interior-hero {
+    position: sticky;
+    top: 0;
+  }
+  @supports (animation-timeline: scroll()) {
+    .about-hero-title,
+    .about-hero-title span {
+      animation: about-hero-drift auto linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px calc(100svh - var(--site-header-height));
+    }
+    .about-hero-title {
+      animation-name: about-hero-rise;
+      animation-range: 0px 100svh;
+    }
+    .about-hero-title span { --drift-x: min(8vw, 140px); }
+    .about-hero-title span:last-child {
+      --drift-x: max(-5vw, -100px);
+    }
+    @keyframes about-hero-rise {
+      from { translate: 0 0; }
+      to { translate: 0 calc(0px - var(--title-center) - 50%); }
+    }
+    @keyframes about-hero-drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(var(--drift-x)); }
+    }
+  }
+}

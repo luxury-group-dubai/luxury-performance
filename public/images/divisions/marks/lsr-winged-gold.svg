@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2802" height="1092" viewBox="60 310 934 364">  <defs><linearGradient id="lsr-lcs-metal" gradientUnits="userSpaceOnUse" x1="80" y1="0" x2="974" y2="0"><stop offset="0" stop-color="#d6b45f"/><stop offset="0.17" stop-color="#fff8d9"/><stop offset="0.30" stop-color="#f8eab7"/><stop offset="0.50" stop-color="#d6b45f"/><stop offset="0.70" stop-color="#f8eab7"/><stop offset="0.83" stop-color="#fff8d9"/><stop offset="1" stop-color="#d6b45f"/></linearGradient>
+    <path id="lsr-lower-feather" d="M203.65 475.422 C227.067 483.731 257.915 490.713 285.378 497.808 C312.586 504.578 337.236 512.733 343.524 518.619 C349.687 526.246 356.794 542.667 363.218 562 L271 541 C240 532 220 503 203.65 475.422 Z"/>
+    <path id="lsr-bottom-feather" d="M261 546 L350 567 C368 571 376 589 381 607 L321 597 C294 592 277 569 261 546 Z"/>
+  </defs>
+  <g id="wings" fill="url(#lsr-lcs-metal)">
+    <path fill-rule="evenodd" d="M80 330 L413 428 C450 438 491 417 527 413 C563 417 604 438 641 428 L974 330 C945 362 928 386 898 397 L679 458 C657 464 655 478 653 504 L649 553 L657 545 L661 493 C663 474 668 469 686 464 L900 407 C880 438 870 461 847 469 C802 485 724 497 704 514 C690 531 680 562 670 591 C665 606 664 611 654 613 C610 620 565 632 527 654 C489 632 444 620 400 613 C390 611 389 606 384 591 C374 562 364 531 350 514 C330 497 252 485 207 469 C184 461 174 438 154 407 L368 464 C386 469 391 474 393 493 L397 545 L405 553 L401 504 C399 478 397 464 375 458 L156 397 C126 386 109 362 80 330 Z M622 529 A95 95 0 1 1 432 529 A95 95 0 1 1 622 529 Z"/>
+    <use href="#lsr-lower-feather"/>
+    <use href="#lsr-bottom-feather"/>
+    <use href="#lsr-lower-feather" transform="translate(1054 0) scale(-1 1)"/>
+    <use href="#lsr-bottom-feather" transform="translate(1054 0) scale(-1 1)"/>
+  </g>
+<g id="lettering" transform="translate(527 529) scale(0.23206106870229007) translate(-407.5 -90)"><defs><mask id="lsr-center-mark" maskUnits="userSpaceOnUse" x="48" y="-18" width="800" height="216" style="mask-type:luminance"><g color="#FFFFFF" fill="#FFFFFF"><defs><clipPath id="lsr-stem-cap"><path d="M0 72 H900 V180 H0 Z"/></clipPath><clipPath id="lsr-cap"><path d="M0 0 H900 V180 H0 Z"/></clipPath></defs><g clip-path="url(#lsr-cap)" fill="none" stroke="#FFFFFF" stroke-width="36" stroke-linecap="butt" stroke-linejoin="miter">
+ <path d="M144 18 H198 L111.6 162 H286.834293"/>
+ <path d="M558 18 H365.931415 A148.299424 148.299424 0 0 0 238.765707 90 H414 A148.299424 148.299424 0 0 1 286.834293 162 H111.6"/>
+ <path d="M541.165707 18 H703.165707 A148.299424 148.299424 0 0 1 576 90 H497.965707"/>
+ <path clip-path="url(#lsr-stem-cap)" d="M541.165707 18 L433.165707 198"/>
+ <path d="M497.965707 90 H638 A36 36 0 0 1 668.869745 107.478153 L723.182854 198"/></g><path fill="#FFFFFF" d="M90 0 L101.113108 18.521847 A36 36 0 0 0 131.982854 36 H145 V0 Z"/></g></mask></defs><rect x="48" y="-18" width="800" height="216" fill="var(--division-lettering-fill, #F8E6AC)" mask="url(#lsr-center-mark)"/></g></svg>
