@@ -4,7 +4,7 @@ import { partnerCardImages } from '@/lib/brand-hero-images';
 import { DivisionsSection } from './divisions-section';
 import styles from './divisions-timeline.module.css';
 
-type DivisionPhoto = { src: string; alt: string; aspectRatio?: number; paired?: boolean };
+type DivisionPhoto = { src: string; alt: string; aspectRatio?: number; paired?: boolean; filter?: string };
 
 const divisions = [
   {
@@ -14,7 +14,12 @@ const divisions = [
       { src: '/images/divisions/rental-lamborghini-road.webp', alt: 'Red Lamborghini from the rental fleet facing the camera on a palm-lined road' },
       { src: '/images/divisions/rental-fleet-striped-ferrari.webp', alt: 'A turquoise McLaren on the highway, a grey Ferrari with yellow stripes, and a wide view of the rental convoy', paired: true, aspectRatio: 9 / 16 },
       { src: '/images/divisions/rental-fleet-convoy.webp', alt: 'Three views of the rental convoy on a Dubai highway, including a teal SUV and a red Lamborghini', paired: true, aspectRatio: 9 / 16 },
-      { src: '/images/divisions/rental-showroom-sign-wide.webp', alt: 'Illuminated Luxury Supercar Rentals wing emblems on the corner of the glass showroom at night', aspectRatio: 4 / 3 },
+      {
+        src: '/images/divisions/rental-showroom-sign-wide.webp',
+        alt: 'Illuminated Luxury Supercar Rentals wing emblems on the corner of the glass showroom at night',
+        aspectRatio: 4 / 3,
+        filter: 'saturate(.86) brightness(.86) contrast(1.04)',
+      },
     ],
     story: 'The group began with a fleet of supercars for hire in Dubai. Drivers could get behind the wheel of a Ferrari, Lamborghini or McLaren for the day.',
     alt: 'Three supercars lined up in the desert beneath a sunset sky',
@@ -122,7 +127,7 @@ export function DivisionsTimeline() {
                     {photos.map((photo, index) => (
                       <div key={photo.src} className={photo.paired ? `${styles.photo} ${styles.paired}` : styles.photo} style={{ aspectRatio: photo.aspectRatio }}
                         data-division={index === 0 ? mark : undefined}>
-                        <Image className={styles.photoImage} src={photo.src} alt={photo.alt} fill
+                        <Image className={styles.photoImage} src={photo.src} alt={photo.alt} fill style={{ filter: photo.filter }}
                           sizes={photo.paired
                             ? '(max-width: 650px) calc(50vw - 46px), (max-width: 767px) calc(45vw - 22px), (max-width: 1000px) 23.5vw, (max-width: 1686px) 22vw, 370px'
                             : '(max-width: 650px) calc(100vw - 84px), (max-width: 767px) calc(90vw - 36px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px'} />
