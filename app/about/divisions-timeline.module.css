@@ -175,13 +175,27 @@
   --closing-ink: #f8e6ac;
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
   place-items: center;
+  row-gap: clamp(5px, .8vw, 12px);
   overflow: hidden;
   aspect-ratio: 2.2;
   background: #121212;
 }
 .logoFrame[data-division="lxp"] { --opening-ink: black; --closing-ink: black; background: white; }
-.standaloneMark { position: absolute; width: min(52%, 275px); height: auto; }
+.logoFrame[data-division="slc"] { --closing-ink: #101010; }
+.logoFrame[data-division="lcg"] { --closing-ink: white; }
+.standaloneMark { width: min(52%, 275px); height: auto; }
+.divisionName {
+  color: var(--closing-ink);
+  font-size: clamp(11px, 1vw, 15px);
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  white-space: pre;
+}
 .closingEmblem { position: relative; width: min(68%, 355px); aspect-ratio: 934 / 364; }
 .wingCircle { position: absolute; inset: 0; }
 .closingWings, .closingLettering { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
@@ -224,6 +238,10 @@
   0%, 45% { stroke-dashoffset: 1.01; }
   54%, 100% { stroke-dashoffset: 0; }
 }
+@keyframes typeLetter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
   .wingCircle { animation-name: revealWingCircle; }
@@ -232,21 +250,24 @@
   .inkStroke:nth-child(1) { animation-name: drawFirstStroke; }
   .inkStroke:nth-child(2) { animation-name: drawSecondStroke; }
   .inkStroke:nth-child(3) { animation-name: drawThirdStroke; }
+  .divisionName > span { animation-name: typeLetter; animation-timing-function: step-end; }
   .closingLettering, .wingCircle { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
     .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
-    .closingLettering, .wingCircle, .closingWings, .inkStroke {
+    .closingLettering, .wingCircle, .closingWings, .inkStroke, .divisionName > span {
       animation-duration: auto;
       animation-fill-mode: both;
       animation-timeline: --division-logo;
     }
+    .divisionName > span { animation-range-end: calc(var(--type-at) * 100%); }
   }
-  .archive[data-scrub-logos] :is(.closingLettering, .wingCircle, .closingWings, .inkStroke) {
+  .archive[data-scrub-logos] :is(.closingLettering, .wingCircle, .closingWings, .inkStroke, .divisionName > span) {
     animation-duration: 1s;
     animation-delay: var(--logo-seek, 0s);
     animation-fill-mode: both;
     animation-play-state: paused;
   }
+  .archive[data-scrub-logos] .divisionName > span { animation-duration: calc(var(--type-at) * 1s); }
 }
 
 @media (min-width: 768px) and (max-width: 1100px) {

@@ -29,7 +29,7 @@ const lcgStrokes = [
 export function DivisionMonogram({ mark }: { mark: 'slc' | 'lcg' }) {
   if (mark === 'slc') {
     return (
-      <svg className={styles.standaloneMark} viewBox="126.25 -152.25 925 925" focusable="false">
+      <svg className={styles.standaloneMark} viewBox="126.25 68 925 484" focusable="false">
         <g fill="none" stroke="white" strokeWidth="19" strokeLinecap="round" strokeLinejoin="round">
           {slcLetters.map((d) => <path key={d} className={styles.inkStroke} d={d} pathLength="1" />)}
         </g>
@@ -38,7 +38,7 @@ export function DivisionMonogram({ mark }: { mark: 'slc' | 'lcg' }) {
   }
 
   return (
-    <svg className={styles.standaloneMark} viewBox="44.66284 29.29664 62.14033 62.14033" focusable="false">
+    <svg className={styles.standaloneMark} viewBox="44.66284 44.5 62.14033 31.7" focusable="false">
       <defs>
         {lcgStrokes.map(({ id, outline }) => (
           <clipPath key={id} id={`division-lcg-${id}`}><path d={outline} /></clipPath>
