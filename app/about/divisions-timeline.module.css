@@ -195,17 +195,11 @@
   32% { width: 100%; left: 0; top: 0; color: var(--opening-ink); }
   40%, 100% { width: 100%; left: 0; top: 0; color: var(--closing-ink); }
 }
-@keyframes revealCrest {
-  0%, 36% { opacity: 0; }
-  45%, 100% { opacity: 1; }
-}
-@keyframes drawUpperFeathers {
-  0%, 32% { stroke-dashoffset: 1.002; }
-  45%, 100% { stroke-dashoffset: 0; }
-}
-@keyframes drawLowerFeathers {
-  0%, 45% { stroke-dashoffset: 1.002; }
-  57%, 100% { stroke-dashoffset: 0; }
+/* The two sides of the expanding triangle stay parallel to the lines through the feather tips. */
+@keyframes revealWings {
+  0%, 32% { opacity: 0; clip-path: polygon(22.2% 0, 77.8% 0, 50% 85%); }
+  39% { opacity: 1; }
+  52%, 100% { opacity: 1; clip-path: polygon(-2.3% 0, 102.3% 0, 50% 160%); }
 }
 @keyframes revealStandaloneMark {
   0%, 12% { clip-path: inset(0 76% 0 0); }
@@ -213,20 +207,18 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
-  .crestTrace { animation-name: revealCrest; }
-  .upperFeather { animation-name: drawUpperFeathers; }
-  .lowerFeather { animation-name: drawLowerFeathers; }
+  .closingWings { animation-name: revealWings; }
   .standaloneMark { animation-name: revealStandaloneMark; }
-  .closingLettering, .wingMask path, .standaloneMark { animation-timing-function: ease-in-out; }
+  .closingLettering, .closingWings, .standaloneMark { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
     .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
-    .closingLettering, .wingMask path, .standaloneMark {
+    .closingLettering, .closingWings, .standaloneMark {
       animation-duration: auto;
       animation-fill-mode: both;
       animation-timeline: --division-logo;
     }
   }
-  .archive[data-scrub-logos] :is(.closingLettering, .wingMask path, .standaloneMark) {
+  .archive[data-scrub-logos] :is(.closingLettering, .closingWings, .standaloneMark) {
     animation-duration: 1s;
     animation-delay: var(--logo-seek, 0s);
     animation-fill-mode: both;
