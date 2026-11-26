@@ -182,7 +182,9 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  background: #121212;
+  background-color: #121212;
+  background-image: url('/images/concrete-grain.svg#print-grain');
+  background-size: 144px 144px;
 }
 .logoArtwork {
   overflow: hidden;
@@ -197,7 +199,7 @@
 .logoFrame[data-division="lxp"] {
   --opening-ink: black;
   --closing-ink: black;
-  background: white;
+  background-color: white;
 }
 .logoFrame[data-division="slc"] {
   --closing-ink: #101010;
