@@ -2,11 +2,9 @@
   --archive-inset: clamp(60px, 7vw, 110px);
   --year-size: clamp(44px, 4vw, 80px);
   --year-column: calc(3 * var(--year-size));
-  --year-center: calc(.475 * var(--year-size));
   --title-size: clamp(24px, 2.2vw, 38px);
   --title-line: calc(1.04 * var(--title-size));
   --pin-top: calc(var(--site-header-height) + var(--archive-inset));
-  --marker-top: calc(var(--pin-top) + var(--year-center));
   --dot-size: 16px;
   --dot-clearance: clamp(22px, 2.2vw, 38px);
   --rail-gap: calc(var(--dot-size) / 2 + var(--dot-clearance));
@@ -42,6 +40,8 @@
 
 .track { position: relative; isolation: isolate; }
 .rail {
+  --year-center: calc(.475 * var(--year-size));
+  --marker-top: calc(var(--pin-top) + var(--year-center));
   position: absolute;
   z-index: 2;
   left: calc(var(--year-column) + var(--rail-gap) - .5px);
@@ -90,11 +90,10 @@
 .chapterContent { display: contents; }
 .chapter:not(:last-child) .mediaColumn { margin-bottom: var(--chapter-gap); }
 /* Each item releases at its own full height, including its reading gap. */
-.year, .story { position: sticky; }
+.year, .story { position: sticky; top: var(--pin-top); }
 .chapter:not(:last-child) .year { padding-bottom: 8px; }
 .chapter:not(:last-child) .story { padding-bottom: 24px; }
 .year {
-  top: var(--pin-top);
   justify-self: end;
   text-align: end;
   font-size: var(--year-size);
@@ -104,9 +103,6 @@
   line-height: .95;
 }
 .story {
-  /* The dot meets the year and the first line of the title at the same scroll position. */
-  top: calc(var(--marker-top) - var(--title-line) / 2);
-  margin-top: calc(var(--year-center) - var(--title-line) / 2);
   margin-inline: calc(2 * var(--rail-gap)) clamp(24px, 3vw, 56px);
   font-size: 1rem;
 }
@@ -320,6 +316,13 @@
   }
 }
 
+@media (min-width: 768px) {
+  @supports (text-box: trim-start cap alphabetic) {
+    .year, .story h3 { text-box: trim-start cap alphabetic; }
+    /* Keep the dot halfway down the visible numerals. */
+    .rail { font-size: var(--year-size); --year-center: .5cap; }
+  }
+}
 @media (min-width: 768px) and (max-width: 1100px) {
   .archive { --year-size: clamp(31px, 3.7vw, 42px); --title-size: clamp(21px, 2.8vw, 24px); }
 }
@@ -330,7 +333,6 @@
   .archive {
     --year-size: clamp(52px, 17vw, 72px);
     --dot-size: 18px;
-    --marker-top: clamp(110px, 34svh, 290px);
     --chapter-gap: clamp(48px, 8vw, 64px);
     padding-bottom: 52px;
   }
@@ -346,7 +348,7 @@
     background: linear-gradient(180deg, rgb(12 12 12 / .60), rgb(12 12 12 / .42) 25%, rgb(12 12 12 / .08) 62%);
   }
   .intro h2 { font-size: clamp(30px, 10vw, 52px); }
-  .rail { left: 8px; bottom: 0; }
+  .rail { --marker-top: clamp(110px, 34svh, 290px); left: 8px; bottom: 0; }
   /* Only the marker pins. Each year, story and gallery scroll as one column. */
   .chapter {
     display: block;

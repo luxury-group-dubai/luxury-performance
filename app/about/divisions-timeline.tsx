@@ -61,7 +61,7 @@ const divisions = [
     href: 'https://luxurychauffeurdubai.com', link: 'Chauffeur services',
   },
   {
-    period: '2022', name: 'Source Luxury Cars',
+    period: '2022', name: 'Source Luxury\u00a0Cars',
     mark: 'slc',
     logoCaption: 'SOURCELUXURYCARS.COM',
     gallery: [
@@ -77,7 +77,7 @@ const divisions = [
     href: 'https://sourceluxurycars.com', link: 'Explore sourcing',
   },
   {
-    period: '2025', name: 'Luxury Auto Care',
+    period: '2025', name: 'Luxury Auto\u00a0Care',
     mark: 'lac',
     wingedLogo: '/images/divisions/marks/lac-winged-gold.svg',
     gallery: [
@@ -91,7 +91,7 @@ const divisions = [
     href: 'https://luxuryautocaredubai.com/', link: 'Explore the workshop',
   },
   {
-    period: '2026', name: 'Luxury Car Gallery',
+    period: '2026', name: 'Luxury Car\u00a0Gallery',
     mark: 'lcg',
     gallery: [
       { src: '/images/divisions/gallery-revuelto-rear.webp', alt: 'Rear view of the gallery’s matte-black Lamborghini Revuelto against a white backdrop' },
