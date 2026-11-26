@@ -173,6 +173,8 @@
 .logoFrame {
   --opening-ink: white;
   --closing-ink: #f8e6ac;
+  --winged-width: min(68cqi, 355px);
+  container-type: inline-size;
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -186,14 +188,11 @@
 .logoFrame[data-division="lxp"] {
   --opening-ink: black;
   --closing-ink: black;
-  --winged-width: min(68cqi, 355px);
   background: white;
-  container-type: inline-size;
 }
 .logoFrame[data-division="slc"] {
   --closing-ink: #101010;
   --caption-tracking: 0em;
-  container-type: inline-size;
 }
 .logoFrame[data-division="lcg"] { --closing-ink: white; }
 .standaloneMark { width: min(52%, 275px); height: auto; }
@@ -207,11 +206,11 @@
   line-height: 1.25;
   text-align: center;
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: pre;
 }
 .logoFrame:is([data-division="slc"], [data-division="lcg"]) .divisionName { font-weight: 700; }
-.logoFrame[data-division="lxp"] .divisionName {
-  /* The visible wings span 894 of 934 SVG units. The settled caption spans 13.8em in Montserrat. */
+.closingEmblem + .divisionName {
+  /* All winged captions share the LXP scale: its 13.8em name covers 90% of the visible wings. */
   font-size: calc(var(--winged-width) * .9 * 894 / 934 / 13.8);
 }
 .logoFrame[data-division="slc"] > * { grid-area: 1 / 1; }
@@ -227,7 +226,7 @@
   display: block;
   transform-origin: center bottom;
 }
-.closingEmblem { position: relative; width: var(--winged-width, min(68%, 355px)); aspect-ratio: 934 / 364; }
+.closingEmblem { position: relative; width: var(--winged-width); aspect-ratio: 934 / 364; }
 .wingCircle { position: absolute; inset: 0; }
 .closingWings, .closingLettering { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
 .closingLettering {

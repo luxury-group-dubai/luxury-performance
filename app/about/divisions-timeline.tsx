@@ -20,6 +20,7 @@ const convoyStill = '/images/divisions/rental-fleet-convoy.webp';
 const divisions = [
   {
     period: '2019', name: 'Luxury Supercar Rentals',
+    logoCaption: 'Luxury Supercar\nRentals',
     mark: 'lsr',
     wingedLogo: '/images/divisions/marks/lsr-winged-gold.svg',
     gallery: [
@@ -45,6 +46,7 @@ const divisions = [
   },
   {
     period: '2021', name: 'Luxury Chauffeur Services',
+    logoCaption: 'Luxury Chauffeur\nServices',
     mark: 'lcs',
     wingedLogo: '/images/divisions/marks/lcs-winged-gold.svg',
     gallery: [
