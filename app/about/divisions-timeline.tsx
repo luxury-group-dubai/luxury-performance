@@ -135,7 +135,7 @@ export function DivisionsTimeline() {
           src="/images/divisions/forecourt-sunset-enhanced.webp"
           alt=""
           fill
-          quality={90}
+          quality={75}
           sizes="(max-width: 767px) max(100vw, min(146.67vw, 96svh)), (max-aspect-ratio: 4/3) 133.34svh, 100vw"
         />
         <h2 id="divisions-title">Our divisions.</h2>

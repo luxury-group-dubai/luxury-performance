@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function About() {
   const { props: portrait } = getImageProps({
     src: showroomPortrait,
-    sizes: 'max(100vw, 81.25svh)', quality: 90, alt: '',
+    sizes: 'max(100vw, 81.25svh)', quality: 75, alt: '',
   });
   return <><div className="about-story">
   <div className="about-opening">
@@ -30,7 +30,7 @@ export default function About() {
     <picture>
       <source media="(max-width: 900px) and (max-aspect-ratio: 4/5)" srcSet={portrait.srcSet} sizes={portrait.sizes} />
       <Image src={showroomPhoto} alt="Supercars lined up outside The Luxury Group showroom in Al Quoz, Dubai"
-        fill quality={90} loading="eager" fetchPriority="high" sizes="max(100vw, 150svh)" />
+        fill quality={75} loading="eager" fetchPriority="high" sizes="max(100vw, 150svh)" />
     </picture>
     <h1 className="about-hero-title">
       <span>Luxury</span>{' '}
