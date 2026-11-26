@@ -124,7 +124,7 @@
   gap: 8px;
   min-height: 44px;
   margin: 0 clamp(12px, 3cqi, 24px) 4px;
-  color: var(--closing-ink);
+  color: var(--link-ink, var(--closing-ink));
   font-size: 12px;
   font-weight: 700;
 }
@@ -189,6 +189,7 @@
   background: #121212;
 }
 .logoArtwork {
+  overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: center;
@@ -196,6 +197,7 @@
   row-gap: clamp(5px, .8vw, 12px);
   aspect-ratio: 2.2;
 }
+.logoFrame:is([data-division="lsr"], [data-division="lcs"], [data-division="slc"], [data-division="lac"]) { --link-ink: white; }
 .logoFrame[data-division="lxp"] {
   --opening-ink: black;
   --closing-ink: black;
@@ -204,6 +206,9 @@
 .logoFrame[data-division="slc"] {
   --closing-ink: #101010;
   --caption-tracking: 0em;
+}
+.logoFrame[data-division="slc"] .galleryLink {
+  filter: drop-shadow(0 1px 1px #02464b);
 }
 .logoFrame[data-division="lcg"] { --closing-ink: white; }
 .standaloneMark { width: min(52%, 275px); height: auto; }
