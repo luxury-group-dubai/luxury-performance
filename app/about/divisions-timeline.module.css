@@ -177,32 +177,37 @@
   aspect-ratio: 2.2;
   background: #121212;
 }
-.closingLettering, .closingEmblem { position: absolute; height: auto; }
-.closingLettering { width: min(42%, 210px); filter: brightness(0) invert(1); opacity: 0; }
-.closingEmblem { width: min(68%, 355px); }
+.closingEmblem { display: block; width: min(68%, 355px); height: auto; overflow: visible; }
+.closingLettering {
+  /* The crest center (527, 529) sits 37 units below the center of the 934 × 364 viewBox. */
+  --crest-offset: calc(37 / 364 * 100%);
+  transform-box: view-box;
+  transform-origin: 50% calc(50% + var(--crest-offset));
+}
 
 @keyframes settleLettering {
-  0%, 16% { opacity: 1; transform: none; }
-  32%, 100% { opacity: 0; transform: translateY(5%) scale(.55); }
+  0%, 16% { transform: translateY(calc(-1 * var(--crest-offset))) scale(2.7); filter: brightness(2) saturate(0); }
+  32% { transform: none; filter: brightness(2) saturate(0); }
+  40%, 100% { transform: none; filter: none; }
 }
-@keyframes revealEmblem {
-  0%, 22% { opacity: 0; clip-path: inset(0 39%); }
-  32% { opacity: 1; clip-path: inset(0 37%); }
+@keyframes revealWings {
+  0%, 32% { opacity: 0; clip-path: inset(0 39%); }
+  39% { opacity: 1; clip-path: inset(0 34%); }
   52%, 100% { opacity: 1; clip-path: inset(0); }
 }
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
-  .closingEmblem { animation-name: revealEmblem; }
-  .closingLettering, .closingEmblem { animation-timing-function: ease-in-out; }
+  .closingWings { animation-name: revealWings; }
+  .closingLettering, .closingWings { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
     .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
-    .closingLettering, .closingEmblem {
+    .closingLettering, .closingWings {
       animation-duration: auto;
       animation-fill-mode: both;
       animation-timeline: --division-logo;
     }
   }
-  .archive[data-scrub-logos] :is(.closingLettering, .closingEmblem) {
+  .archive[data-scrub-logos] :is(.closingLettering, .closingWings) {
     animation-duration: 1s;
     animation-delay: var(--logo-seek, 0s);
     animation-fill-mode: both;
