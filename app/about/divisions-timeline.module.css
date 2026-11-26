@@ -192,7 +192,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: center;
-  justify-items: center;
+  place-items: center;
   row-gap: clamp(5px, .8vw, 12px);
   aspect-ratio: 2.2;
 }
