@@ -19,9 +19,9 @@ const mobileHero = {
 const heroSlides = [
   {
     slug: 'nlargo', name: 'N-LARGO', logo: '/brand/novitec.svg', logoWidth: 228, logoHeight: 45,
-    image: '/images/nlargo/hero-front-red.webp',
-    mobile: { src: '/images/nlargo/hero-front-red.webp', width: 2400, height: 1600 },
-    alt: 'Official front-view release photograph of the Ferrari 12Cilindri N-LARGO in red light',
+    image: '/images/nlargo/hero-front-quarter-red.webp',
+    mobile: { src: '/images/nlargo/hero-front-quarter-red.webp', width: 3200, height: 2133 },
+    alt: 'Red Ferrari 12Cilindri N-LARGO by NOVITEC, front three-quarter view',
     title: <>Ferrari 12Cilindri<br />N-LARGO</>,
     description: nlargoAvailable
       ? 'One exclusive allocation available. The first reveal vehicle is secured for Dubai, with one additional NOVITEC conversion allocation for a private client.'
@@ -70,9 +70,8 @@ export function HomeHero() {
           <picture key={String(printed)} className={printed ? `${heroStyles.picture} ${heroStyles.printLayer} ${newsprint.photo} ${slide.slug === 'techart' ? newsprint.preserveYellow : ''}` : heroStyles.picture} aria-hidden={printed || undefined}>
             {mobile && <source media="(max-width: 700px)" type={slide.slug === 'novitec' ? 'image/webp' : undefined} srcSet={mobile.srcSet} sizes="100vw" />}
             <Image src={slide.image} alt={printed ? '' : slide.alt} {...(slide.slug === 'nlargo' ? { width: 3200, height: 2133 } : { fill: true })} style={slide.slug === 'nlargo' ? {
-              position: 'absolute', maxWidth: 'none', inset: 'auto', left: '50%', top: 'var(--nlargo-image-top)',
-              width: 'max(146.465cqw,82.429cqh)', height: 'max(97.643cqw,54.953cqh)',
-              transform: 'translateX(-50%)',
+              position: 'absolute', inset: 0, width: '135%', maxWidth: 'none', height: '100%',
+              objectFit: 'cover', objectPosition: '55% 62%',
             } : undefined} quality={slide.slug === 'nlargo' ? 95 : 75} sizes={slide.slug === 'nlargo' ? '(max-width: 700px) 147vw, 84vw' : '100vw'} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={!printed && index === 0 ? 'high' : 'auto'} />
           </picture>
         ))}
