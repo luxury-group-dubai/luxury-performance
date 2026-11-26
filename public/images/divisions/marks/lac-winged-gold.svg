@@ -18,4 +18,4 @@
 </defs>
 <path d="M206 280 L302.96 88 Q307 80 315 80 H357 Q365 80 369.04 88 L466 280 H417.2 L345.5226 133.2 Q342 126.2 338 126.2 H334 Q330 126.2 326.4774 133.2 L254.8 280 Z" mask="url(#lac-a-behind-right)"/>
 <path d="M420 158 C443 158 451 154 460 136 C478 100 503 80 542 80 C583 80 615 94 638 121 Q641 126 635 126 H551 C526 126 507 145 507 169 V191 C507 215 526 234 551 234 H635 Q641 234 638 239 C615 266 583 280 542 280 C503 280 478 260 460 224 C451 206 443 202 420 202 H190.8 C180.97 202 173 194.03 173 184.2 V158 H420 Z" mask="url(#lac-shaft-behind-left)"/>
-</g></g></mask></defs><rect x="70" y="60" width="605" height="240" fill="#F8E6AC" mask="url(#lac-center-mark)"/></g></svg>
+</g></g></mask></defs><rect x="70" y="60" width="605" height="240" fill="var(--division-lettering-fill, #F8E6AC)" mask="url(#lac-center-mark)"/></g></svg>

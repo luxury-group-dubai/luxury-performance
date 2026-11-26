@@ -179,16 +179,15 @@
 }
 .closingEmblem { display: block; width: min(68%, 355px); height: auto; overflow: visible; }
 .closingLettering {
-  /* The crest center (527, 529) sits 37 units below the center of the 934 × 364 viewBox. */
-  --crest-offset: calc(37 / 364 * 100%);
-  transform-box: view-box;
-  transform-origin: 50% calc(50% + var(--crest-offset));
+  --division-lettering-fill: currentColor;
+  color: #f8e6ac;
 }
 
+/* Scale the vector viewport around its crest anchor, from the frame center (y=492) to the original y=529. */
 @keyframes settleLettering {
-  0%, 16% { transform: translateY(calc(-1 * var(--crest-offset))) scale(2.7); filter: brightness(2) saturate(0); }
-  32% { transform: none; filter: brightness(2) saturate(0); }
-  40%, 100% { transform: none; filter: none; }
+  0%, 16% { y: 492px; width: 270%; height: 270%; color: white; }
+  32% { y: 529px; width: 100%; height: 100%; color: white; }
+  40%, 100% { y: 529px; width: 100%; height: 100%; color: #f8e6ac; }
 }
 @keyframes revealWings {
   0%, 32% { opacity: 0; clip-path: inset(0 39%); }
