@@ -40,7 +40,6 @@
   background: linear-gradient(180deg, rgb(12 12 12 / .35), rgb(12 12 12 / .54) 62%, rgb(12 12 12 / .66));
 }
 .intro h2 { font-size: clamp(30px, 10vw, 164px); line-height: 1; }
-.archive > nav { display: none; }
 
 .track { position: relative; isolation: isolate; }
 .rail {
@@ -170,68 +169,33 @@
   pointer-events: none;
 }
 
-@media (min-width: 761px) and (max-width: 1100px) {
+@media (min-width: 768px) and (max-width: 1100px) {
   .archive { --year-size: clamp(31px, 3.7vw, 42px); }
 }
-@media (max-width: 760px) {
+@media (max-width: 767px) {
   .archive {
-    --year-size: clamp(23px, 6vw, 34px);
-    --dot-size: 12px;
-    --dot-clearance: clamp(18px, 5vw, 24px);
-    --clear-top: calc(var(--site-header-height) + 58px);
-    --intro-top: var(--clear-top);
+    --year-size: clamp(52px, 17vw, 72px);
+    --dot-size: 18px;
+    --marker-top: clamp(110px, 34svh, 290px);
+    --chapter-gap: clamp(48px, 8vw, 64px);
     padding-bottom: 52px;
   }
-  .intro { margin-bottom: 16px; }
-  .archive > nav {
-    position: sticky;
-    z-index: 2;
-    top: var(--divisions-header-offset, var(--site-header-height));
-    display: flex;
-    margin-bottom: clamp(32px, 7vw, 48px);
-    background: var(--paper);
-  }
-  .archive > nav a {
-    position: relative;
-    flex: 1;
-    display: grid;
-    place-items: center;
-    min-height: 46px;
-    border-bottom: 1px solid #cbcec9;
-    color: #5b5e59;
-    font-size: 14px;
-    font-variant-numeric: tabular-nums;
-    font-weight: 650;
-  }
-  .archive > nav a[aria-current] { color: var(--ink); }
-  .archive > nav a::before {
-    content: '';
-    position: absolute;
-    inset: auto 0 0;
-    height: 3px;
-    background: var(--accent, #e2001a);
-    transform: scaleX(0);
-    transform-origin: left;
-  }
-  .archive > nav a[aria-current]::before { transform: scaleX(1); }
-  .archive > nav a:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
-  .archive > nav a span:last-child {
-    position: absolute;
-    clip-path: inset(50%);
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }
+  .intro { margin-bottom: clamp(40px, 9vw, 64px); }
+  .rail { left: 8px; bottom: 0; }
+  /* Only the marker pins. Each year, story and gallery scroll as one column. */
   .chapter {
-    grid-template-columns: var(--year-column) minmax(0, 1fr);
-    column-gap: calc(2 * var(--rail-gap));
+    display: block;
+    padding-inline-start: 36px;
+    scroll-margin-top: 0;
   }
-  .chapterContent { display: flow-root; }
-  .story { margin-inline: 0; z-index: 1; background: var(--paper); }
-  .chapter:last-child .mediaColumn { margin-top: 14px; }
+  .chapter + .chapter { padding-top: var(--chapter-gap); }
+  .year, .story { position: static; }
+  .year { text-align: start; }
+  .chapter:not(:last-child) .year,
+  .chapter:not(:last-child) .story { padding-bottom: 0; }
+  .story { margin: 20px 0 26px; }
   .story h3 { font-size: clamp(21px, 5.5vw, 28px); }
-}
-@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
-  .archive > nav { transition: top .22s ease-out; }
-  .archive > nav a::before { transition: transform .2s ease; }
+  .story p { max-width: 32ch; margin-top: 10px; font-size: 15px; line-height: 1.55; }
+  .chapter:not(:last-child) .mediaColumn { margin-bottom: 0; }
+  .gallery { gap: 8px; }
 }

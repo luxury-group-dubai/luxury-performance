@@ -22,7 +22,6 @@
 
 .site-header[data-divisions-header="hidden"]:not(.menu-is-open):not(:has(:focus-visible, [aria-expanded="true"])) {
   top: calc(0px - var(--site-header-height));
-  & ~ main { --divisions-header-offset: 0px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .site-header[data-divisions-header] {

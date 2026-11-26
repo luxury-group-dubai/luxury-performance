@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { ChapterNav } from '@/components/chapter-nav';
 import { ArrowLink } from '@/components/ui';
 import { partnerCardImages } from '@/lib/brand-hero-images';
 import { DivisionsSection } from './divisions-section';
@@ -9,7 +8,7 @@ type DivisionPhoto = { src: string; alt: string; aspectRatio?: number; paired?: 
 
 const divisions = [
   {
-    period: '2019', label: 'Rentals', name: 'Luxury Supercar Rentals',
+    period: '2019', name: 'Luxury Supercar Rentals',
     mark: 'lsr',
     gallery: [
       { src: '/images/divisions/rental-lamborghini-road.webp', alt: 'Red Lamborghini from the rental fleet facing the camera on a palm-lined road' },
@@ -22,7 +21,7 @@ const divisions = [
     href: 'https://luxurysupercarsdubai.com', link: 'Explore rentals',
   },
   {
-    period: '2021', label: 'Chauffeur', name: 'Luxury Chauffeur Services',
+    period: '2021', name: 'Luxury Chauffeur Services',
     mark: 'lcs',
     gallery: [
       { src: '/images/divisions/chauffeur-at-the-wheel.webp', alt: 'View from the rear seat of a chauffeur driving a Rolls-Royce with tan leather seats' },
@@ -35,7 +34,7 @@ const divisions = [
     href: 'https://luxurychauffeurdubai.com', link: 'Chauffeur services',
   },
   {
-    period: '2022', label: 'Sourcing', name: 'Source Luxury Cars',
+    period: '2022', name: 'Source Luxury Cars',
     mark: 'slc',
     gallery: [
       { src: '/images/divisions/sourcing-purosangue-transporter.webp', alt: 'Black Ferrari Purosangue secured inside a curtain-sided transporter' },
@@ -46,7 +45,7 @@ const divisions = [
     href: 'https://sourceluxurycars.com', link: 'Explore sourcing',
   },
   {
-    period: '2025', label: 'Auto care', name: 'Luxury Auto Care',
+    period: '2025', name: 'Luxury Auto Care',
     mark: 'lac',
     gallery: [
       { src: '/images/divisions/auto-care-workshop-bays.webp', alt: 'Turquoise, red and yellow supercars in adjacent service bays at Luxury Auto Care', aspectRatio: 4 / 3 },
@@ -58,7 +57,7 @@ const divisions = [
     alt: 'A red supercar with its engine cover raised beside an orange sports car inside the workshop',
   },
   {
-    period: '2026', label: 'Gallery', name: 'Luxury Car Gallery',
+    period: '2026', name: 'Luxury Car Gallery',
     mark: 'lcg',
     gallery: [
       { src: '/images/divisions/gallery-revuelto-rear.webp', alt: 'Rear view of the gallery’s matte-black Lamborghini Revuelto against a white backdrop' },
@@ -72,7 +71,7 @@ const divisions = [
     href: 'https://www.dubicars.com/dealers/dubai-luxury-car-gallery-auto-trading-3413', link: 'Browse the gallery',
   },
   {
-    period: 'TODAY', label: 'Performance', name: 'Luxury Performance',
+    period: 'TODAY', name: 'Luxury Performance',
     mark: 'lxp',
     gallery: [{ src: '/images/home/techart-gtstreet-r-wheel.webp', alt: 'Red TECHART wheel and yellow brake caliper on a silver GTstreet R', aspectRatio: 1.85 }],
     partnerPhotos: [{ slug: 'valvetronic', paired: true }, { slug: 'capristo', paired: true }, { slug: 'gintani', paired: false }],
@@ -91,10 +90,6 @@ const divisions = [
   return { ...division, slug, photos };
 });
 
-const chapters = divisions.map(({ period, slug, label }) => ({
-  id: 'division-' + slug, title: period, detail: label,
-}));
-
 export function DivisionsTimeline() {
   return (
     <DivisionsSection>
@@ -109,7 +104,6 @@ export function DivisionsTimeline() {
         />
         <h2 id="divisions-title">Our divisions.</h2>
       </header>
-      <ChapterNav label="Divisions timeline" chapters={chapters} activeAt="var(--pin-top)" />
       <div className={styles.track}>
         <div aria-hidden="true" className={styles.rail}><span className={styles.marker} /></div>
         <ol className={styles.chapters}>
@@ -130,8 +124,8 @@ export function DivisionsTimeline() {
                         data-division={index === 0 ? mark : undefined}>
                         <Image className={styles.photoImage} src={photo.src} alt={photo.alt} fill
                           sizes={photo.paired
-                            ? '(max-width: 650px) calc((100vw - 75px - clamp(69px, 18vw, 102px)) / 2), (max-width: 760px) calc(45vw - 65px), (max-width: 1000px) 23.5vw, (max-width: 1686px) 22vw, 370px'
-                            : '(max-width: 650px) calc(100vw - 70px - clamp(69px, 18vw, 102px)), (max-width: 760px) calc(90vw - 124px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px'} />
+                            ? '(max-width: 650px) calc(50vw - 46px), (max-width: 767px) calc(45vw - 22px), (max-width: 1000px) 23.5vw, (max-width: 1686px) 22vw, 370px'
+                            : '(max-width: 650px) calc(100vw - 84px), (max-width: 767px) calc(90vw - 36px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px'} />
                         {index === 0 && <Image className={styles.coverLogo} src={`/images/divisions/marks/${mark}.svg`}
                           width={600} height={600} alt="" />}
                       </div>
