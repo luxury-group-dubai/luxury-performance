@@ -36,13 +36,16 @@
   font-size: clamp(40px, 5vw, 80px);
   line-height: 1;
 }
-.about-why-copy > p {
+.about-why-copy > p,
+.about-why-copy > ul {
   max-width: 48ch;
   margin-top: 1em;
   color: #e2e1dd;
   font-size: clamp(14px, 1.1vw, 17px);
   line-height: 1.65;
 }
+.about-why-copy > ul { margin-bottom: 0; padding-inline-start: 1.3em; list-style: disc; }
+.about-why-copy li + li { margin-top: .4em; }
 .about-why-copy > h2 + p { margin-top: clamp(20px, 2vw, 32px); }
 .about-why-copy > .arrow-link { margin-top: 24px; }
 .about-visit {

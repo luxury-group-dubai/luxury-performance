@@ -42,9 +42,16 @@ export default function About() {
   <DivisionsTimeline /></div>
   <section className="about-why" id="why-lxp" aria-labelledby="about-why-title">
     <div className="about-why-copy">
-      <h2 id="about-why-title">Why LXP.</h2>
-      <p>Bring us your build sheet or a photo of the look you’re after. Our Al Quoz team checks each part against your car’s generation, trim and existing upgrades.</p>
-      <p>If you’re pairing new wheels with lowering springs, we look at wheel offset and ride height together. Before you order, we confirm what’s included, what’s in stock and which parts need to come from the manufacturer.</p>
+      <h2 id="about-why-title">Why LXP?</h2>
+      <p>What sets us apart is not just the products we sell but how we support our clients before, during, and after the purchase.</p>
+      <ul>
+        <li>Authorized access to leading performance brands</li>
+        <li>Expert product knowledge and fitment support</li>
+        <li>Transparent pricing and professional service</li>
+        <li>Worldwide shipping with export experience</li>
+        <li>Installation support through trusted partners in the UAE</li>
+      </ul>
+      <p>We do not believe in guesswork, shortcuts, or compromises. Only precision and results.</p>
       <ArrowLink href="/contact" light>Discuss your build</ArrowLink>
       <div className="about-visit" id="dubai">
         <a href={contact.maps} target="_blank" rel="noopener noreferrer">{contact.address}</a>
