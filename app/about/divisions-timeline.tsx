@@ -4,7 +4,17 @@ import { partnerCardImages } from '@/lib/brand-hero-images';
 import { DivisionsSection } from './divisions-section';
 import styles from './divisions-timeline.module.css';
 
-type DivisionPhoto = { src: string; alt: string; aspectRatio?: number; paired?: boolean; filter?: string };
+type DivisionPhoto = {
+  src: string;
+  alt: string;
+  aspectRatio?: number;
+  paired?: boolean;
+  filter?: string;
+  objectPosition?: string;
+};
+
+const stripedFerrariStill = '/images/divisions/rental-fleet-striped-ferrari.webp';
+const convoyStill = '/images/divisions/rental-fleet-convoy.webp';
 
 const divisions = [
   {
@@ -12,12 +22,18 @@ const divisions = [
     mark: 'lsr',
     gallery: [
       { src: '/images/divisions/rental-lamborghini-road.webp', alt: 'Red Lamborghini from the rental fleet facing the camera on a palm-lined road' },
-      { src: '/images/divisions/rental-fleet-striped-ferrari.webp', alt: 'A turquoise McLaren on the highway, a grey Ferrari with yellow stripes, and a wide view of the rental convoy', paired: true, aspectRatio: 9 / 16 },
-      { src: '/images/divisions/rental-fleet-convoy.webp', alt: 'Three views of the rental convoy on a Dubai highway, including a teal SUV and a red Lamborghini', paired: true, aspectRatio: 9 / 16 },
+      // Each row crops the matching shot from the two three-panel reel stills.
+      { src: stripedFerrariStill, alt: 'Turquoise McLaren on the Dubai highway', paired: true, aspectRatio: 1.82, objectPosition: 'center 1.5%' },
+      { src: convoyStill, alt: 'A red Lamborghini, teal SUV and striped Ferrari driving abreast on the highway', paired: true, aspectRatio: 1.82, objectPosition: 'center 1.5%' },
+      { src: stripedFerrariStill, alt: 'Yellow racing stripes on the bonnet of a grey Ferrari', paired: true, aspectRatio: 1.82, objectPosition: 'center 51.5%' },
+      { src: convoyStill, alt: 'Driver at the open window of a teal SUV', paired: true, aspectRatio: 1.82, objectPosition: 'center 51.5%' },
+      { src: stripedFerrariStill, alt: 'Front view of the rental convoy across several highway lanes', paired: true, aspectRatio: 1.82, objectPosition: 'center bottom' },
+      { src: convoyStill, alt: 'Close-up of a red Lamborghini in the convoy', paired: true, aspectRatio: 1.82, objectPosition: 'center bottom' },
       {
         src: '/images/divisions/rental-showroom-sign-wide.webp',
         alt: 'Illuminated Luxury Supercar Rentals wing emblems on the corner of the glass showroom at night',
-        aspectRatio: 4 / 3,
+        aspectRatio: 16 / 9,
+        objectPosition: 'center top',
         filter: 'saturate(.86) brightness(.86) contrast(1.04)',
       },
     ],
@@ -125,9 +141,9 @@ export function DivisionsTimeline() {
                 <div className={styles.mediaColumn}>
                   <div className={styles.gallery}>
                     {photos.map((photo, index) => (
-                      <div key={photo.src} className={photo.paired ? `${styles.photo} ${styles.paired}` : styles.photo} style={{ aspectRatio: photo.aspectRatio }}
+                      <div key={`${photo.src}-${photo.objectPosition ?? 'center'}`} className={photo.paired ? `${styles.photo} ${styles.paired}` : styles.photo} style={{ aspectRatio: photo.aspectRatio }}
                         data-division={index === 0 ? mark : undefined}>
-                        <Image className={styles.photoImage} src={photo.src} alt={photo.alt} fill style={{ filter: photo.filter }}
+                        <Image className={styles.photoImage} src={photo.src} alt={photo.alt} fill style={{ filter: photo.filter, objectPosition: photo.objectPosition }}
                           sizes={photo.paired
                             ? '(max-width: 650px) calc(50vw - 46px), (max-width: 767px) calc(45vw - 22px), (max-width: 1000px) 23.5vw, (max-width: 1686px) 22vw, 370px'
                             : '(max-width: 650px) calc(100vw - 84px), (max-width: 767px) calc(90vw - 36px), (max-width: 1000px) 47vw, (max-width: 1686px) 44vw, 745px'} />
