@@ -184,7 +184,11 @@
   background: #121212;
 }
 .logoFrame[data-division="lxp"] { --opening-ink: black; --closing-ink: black; background: white; }
-.logoFrame[data-division="slc"] { --closing-ink: #101010; }
+.logoFrame[data-division="slc"] {
+  --closing-ink: #101010;
+  --caption-tracking: 0em;
+  container-type: inline-size;
+}
 .logoFrame[data-division="lcg"] { --closing-ink: white; }
 .standaloneMark { width: min(52%, 275px); height: auto; }
 .divisionName {
@@ -193,14 +197,21 @@
   color: var(--closing-ink);
   font-size: clamp(11px, 1vw, 15px);
   font-weight: 400;
-  letter-spacing: .08em;
+  letter-spacing: var(--caption-tracking, .08em);
   line-height: 1.25;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
 }
 .logoFrame:is([data-division="slc"], [data-division="lcg"]) .divisionName { font-weight: 700; }
-.logoFrame[data-division="slc"] .divisionName { order: -1; }
+.logoFrame[data-division="slc"] > * { grid-area: 1 / 1; }
+/* The domain crosses the lower loop of the S in the original SLC logo. */
+.logoFrame[data-division="slc"] .divisionName {
+  position: relative;
+  top: 34%;
+  z-index: 1;
+  font-size: clamp(11px, 4.1cqi, 21.7px);
+}
 .divisionName > span {
   display: block;
   transform-origin: center bottom;
@@ -254,7 +265,7 @@
   }
   70%, 100% {
     transform: none;
-    letter-spacing: .08em;
+    letter-spacing: var(--caption-tracking, .08em);
   }
 }
 @media (prefers-reduced-motion: no-preference) {
