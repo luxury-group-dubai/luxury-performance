@@ -192,13 +192,15 @@
   overflow: hidden;
   color: var(--closing-ink);
   font-size: clamp(11px, 1vw, 15px);
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: .08em;
   line-height: 1.25;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
 }
+.logoFrame:is([data-division="slc"], [data-division="lcg"]) .divisionName { font-weight: 700; }
+.logoFrame[data-division="slc"] .divisionName { order: -1; }
 .divisionName > span {
   display: block;
   transform-origin: center bottom;

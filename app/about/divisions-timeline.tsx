@@ -60,6 +60,7 @@ const divisions = [
   {
     period: '2022', name: 'Source Luxury Cars',
     mark: 'slc',
+    logoCaption: 'SOURCELUXURYCARS.COM',
     gallery: [
       { src: '/images/divisions/sourcing-purosangue-transporter.webp', alt: 'Black Ferrari Purosangue secured inside a curtain-sided transporter' },
       { src: '/images/divisions/sourcing-black-porsche.webp', alt: 'Black Porsche 911 beside a transporter outside a lit showroom at night', paired: true, aspectRatio: 4 / 3 },
@@ -138,7 +139,7 @@ export function DivisionsTimeline() {
       <div className={styles.track}>
         <div aria-hidden="true" className={styles.rail}><span className={styles.marker} /></div>
         <ol className={styles.chapters}>
-          {divisions.map(({ period, slug, photos, mark, wingedLogo, name, story, href, link }) => (
+          {divisions.map(({ period, slug, photos, mark, wingedLogo, name, logoCaption, story, href, link }) => (
             <li id={'division-' + slug} key={slug} className={styles.chapter}>
               <div className={styles.year}>
                 {slug === 'today' ? period : <time dateTime={period}>{period}</time>}
@@ -180,7 +181,7 @@ export function DivisionsTimeline() {
                       <Image className={styles.standaloneMark} src={`/images/divisions/marks/${mark}.svg`}
                         width={600} height={600} alt="" />
                     )}
-                    <span className={styles.divisionName}><span>{name}</span></span>
+                    <span className={styles.divisionName}><span>{logoCaption ?? name}</span></span>
                   </div>
                   {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>
