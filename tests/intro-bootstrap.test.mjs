@@ -55,8 +55,9 @@ test('homepage visibility context exists before hero markup and is released by t
   home.timers[0].callback();
   assert.equal(home.dataset.lxpIntroHome, undefined);
   const about = page({ pathname: '/about' });
-  assert.equal(about.dataset.lxpIntro, 'tracing');
+  assert.equal(about.dataset.lxpIntro, undefined);
   assert.equal(about.dataset.lxpIntroHome, undefined);
+  assert.equal(about.storage.size, 0);
 });
 
 test('later full navigations and reloads skip intro and retain native scroll and anchors', () => {
