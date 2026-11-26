@@ -158,12 +158,14 @@ export function DivisionsTimeline() {
                     ))}
                   </div>
                   <div className={styles.logoFrame} aria-hidden="true">
-                    <svg className={styles.closingEmblem} viewBox="60 310 934 364" width="934" height="364" focusable="false">
-                      <use className={styles.closingWings} href={`/images/divisions/marks/${mark}-winged-gold.svg#wings`} />
-                      <svg className={styles.closingLettering} x="527" y="529" width="934" height="364" viewBox="527 529 934 364" overflow="visible">
+                    <div className={styles.closingEmblem}>
+                      <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
+                        <use href={`/images/divisions/marks/${mark}-winged-gold.svg#wings`} />
+                      </svg>
+                      <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
                         <use href={`/images/divisions/marks/${mark}-winged-gold.svg#lettering`} />
                       </svg>
-                    </svg>
+                    </div>
                   </div>
                   {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>

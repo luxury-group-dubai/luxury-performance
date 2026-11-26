@@ -177,17 +177,18 @@
   aspect-ratio: 2.2;
   background: #121212;
 }
-.closingEmblem { display: block; width: min(68%, 355px); height: auto; overflow: visible; }
+.closingEmblem { position: relative; width: min(68%, 355px); aspect-ratio: 934 / 364; }
+.closingWings, .closingLettering { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
 .closingLettering {
   --division-lettering-fill: currentColor;
   color: #f8e6ac;
 }
 
-/* Scale the vector viewport around its crest anchor, from the frame center (y=492) to the original y=529. */
+/* Center the enlarged lettering. Its anchor is 219 units from the top of the 364-unit viewBox. */
 @keyframes settleLettering {
-  0%, 16% { y: 492px; width: 270%; height: 270%; color: white; }
-  32% { y: 529px; width: 100%; height: 100%; color: white; }
-  40%, 100% { y: 529px; width: 100%; height: 100%; color: #f8e6ac; }
+  0%, 16% { width: 270%; left: -85%; top: calc(50% - 270% * 219 / 364); color: white; }
+  32% { width: 100%; left: 0; top: 0; color: white; }
+  40%, 100% { width: 100%; left: 0; top: 0; color: #f8e6ac; }
 }
 @keyframes revealWings {
   0%, 32% { opacity: 0; clip-path: inset(0 39%); }
