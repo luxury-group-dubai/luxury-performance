@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ActionArrow } from '@/components/action-arrow';
 import { partnerCardImages } from '@/lib/brand-hero-images';
 import { DivisionMonogram } from './division-monogram';
+import { divisionWingArtwork } from './division-wing-artwork';
 import { DivisionsSection } from './divisions-section';
 import styles from './divisions-timeline.module.css';
 
@@ -170,13 +171,18 @@ export function DivisionsTimeline() {
                     <div className={styles.logoArtwork} aria-hidden="true">
                       {wingedLogo ? (
                         <div className={styles.closingEmblem}>
+                          {divisionWingArtwork[mark] && (
+                            <svg width="0" height="0" aria-hidden="true" focusable="false">
+                              <defs dangerouslySetInnerHTML={{ __html: divisionWingArtwork[mark] }} />
+                            </svg>
+                          )}
                           <div className={styles.wingCircle}>
                             <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
-                              <use href={wingedLogo + '#wings'} />
+                              <use href={divisionWingArtwork[mark] ? `#${mark}-wings` : wingedLogo + '#wings'} />
                             </svg>
                           </div>
                           <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
-                            <use href={wingedLogo + '#lettering'} />
+                            <use href={divisionWingArtwork[mark] ? `#${mark}-lettering` : wingedLogo + '#lettering'} />
                           </svg>
                         </div>
                       ) : mark === 'slc' || mark === 'lcg' ? (
