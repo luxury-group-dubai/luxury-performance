@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { ArrowLink } from '@/components/ui';
 import { partnerCardImages } from '@/lib/brand-hero-images';
+import { DivisionMonogram } from './division-monogram';
 import { DivisionsSection } from './divisions-section';
 import styles from './divisions-timeline.module.css';
 
@@ -171,6 +172,8 @@ export function DivisionsTimeline() {
                           <use href={wingedLogo + '#lettering'} />
                         </svg>
                       </div>
+                    ) : mark === 'slc' || mark === 'lcg' ? (
+                      <DivisionMonogram mark={mark} />
                     ) : (
                       <Image className={styles.standaloneMark} src={`/images/divisions/marks/${mark}.svg`}
                         width={600} height={600} alt="" />

@@ -201,24 +201,35 @@
   39% { opacity: 1; }
   52%, 100% { opacity: 1; clip-path: polygon(-2.3% 0, 102.3% 0, 50% 160%); }
 }
-@keyframes revealStandaloneMark {
-  0%, 12% { clip-path: inset(0 76% 0 0); }
-  44%, 100% { clip-path: inset(0); }
+@keyframes drawFirstStroke {
+  0%, 10% { stroke-dashoffset: 1.01; }
+  34%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes drawSecondStroke {
+  0%, 34% { stroke-dashoffset: 1.01; }
+  45%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes drawThirdStroke {
+  0%, 45% { stroke-dashoffset: 1.01; }
+  54%, 100% { stroke-dashoffset: 0; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
   .closingWings { animation-name: revealWings; }
-  .standaloneMark { animation-name: revealStandaloneMark; }
-  .closingLettering, .closingWings, .standaloneMark { animation-timing-function: ease-in-out; }
+  .inkStroke { stroke-dasharray: 1 2; animation-timing-function: linear; }
+  .inkStroke:nth-child(1) { animation-name: drawFirstStroke; }
+  .inkStroke:nth-child(2) { animation-name: drawSecondStroke; }
+  .inkStroke:nth-child(3) { animation-name: drawThirdStroke; }
+  .closingLettering, .closingWings { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
     .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
-    .closingLettering, .closingWings, .standaloneMark {
+    .closingLettering, .closingWings, .inkStroke {
       animation-duration: auto;
       animation-fill-mode: both;
       animation-timeline: --division-logo;
     }
   }
-  .archive[data-scrub-logos] :is(.closingLettering, .closingWings, .standaloneMark) {
+  .archive[data-scrub-logos] :is(.closingLettering, .closingWings, .inkStroke) {
     animation-duration: 1s;
     animation-delay: var(--logo-seek, 0s);
     animation-fill-mode: both;
