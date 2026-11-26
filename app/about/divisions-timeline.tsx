@@ -49,7 +49,9 @@ const divisions = [
     period: '2025', label: 'Auto care', name: 'Luxury Auto Care',
     mark: 'lac',
     gallery: [
-      { src: '/images/divisions/auto-care-technicians.webp', alt: 'Two Luxury Auto Care technicians working under an open bonnet in the Al Quoz workshop' },
+      { src: '/images/divisions/auto-care-workshop-bays.webp', alt: 'Turquoise, red and yellow supercars in adjacent service bays at Luxury Auto Care', aspectRatio: 4 / 3 },
+      { src: '/images/divisions/auto-care-technicians.webp', alt: 'Two Luxury Auto Care technicians working under an open bonnet in the Al Quoz workshop', paired: true, aspectRatio: 4 / 3 },
+      { src: '/images/divisions/auto-care-brake-inspection.webp', alt: 'Technician shining a light on an exposed brake disc beside a yellow caliper', paired: true, aspectRatio: 4 / 3 },
       { src: '/images/home/ferrari-sf90-workshop-aligned-v1.webp', alt: 'Technician working on a red Ferrari SF90 in the workshop', aspectRatio: 4 / 3 },
     ],
     story: 'The group opened its own workshop in Al Quoz. Paintwork, upholstery, protective film and mechanical work came together under one roof, alongside performance parts installation.',
