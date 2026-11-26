@@ -20,6 +20,7 @@ const divisions = [
   {
     period: '2019', name: 'Luxury Supercar Rentals',
     mark: 'lsr',
+    wingedLogo: '/images/divisions/marks/lsr-winged-gold.svg',
     gallery: [
       { src: '/images/divisions/rental-lamborghini-road.webp', alt: 'Red Lamborghini from the rental fleet facing the camera on a palm-lined road' },
       // Each row crops the matching shot from the two three-panel reel stills.
@@ -44,6 +45,7 @@ const divisions = [
   {
     period: '2021', name: 'Luxury Chauffeur Services',
     mark: 'lcs',
+    wingedLogo: '/images/divisions/marks/lcs-winged-gold.svg',
     gallery: [
       { src: '/images/divisions/chauffeur-at-the-wheel.webp', alt: 'View from the rear seat of a chauffeur driving a Rolls-Royce with tan leather seats' },
       { src: '/images/divisions/chauffeur-rolls-royce-arrival.webp', alt: 'Black Rolls-Royce waiting at an entrance with its rear door held open', paired: true },
@@ -72,6 +74,7 @@ const divisions = [
   {
     period: '2025', name: 'Luxury Auto Care',
     mark: 'lac',
+    wingedLogo: '/images/divisions/marks/lac-winged-gold.svg',
     gallery: [
       { src: '/images/divisions/auto-care-workshop-bays.webp', alt: 'Turquoise, red and yellow supercars in adjacent service bays at Luxury Auto Care', aspectRatio: 4 / 3 },
       { src: '/images/divisions/auto-care-technicians.webp', alt: 'Two Luxury Auto Care technicians working under an open bonnet in the Al Quoz workshop', paired: true, aspectRatio: 4 / 3 },
@@ -99,6 +102,7 @@ const divisions = [
   {
     period: 'TODAY', name: 'Luxury Performance',
     mark: 'lxp',
+    wingedLogo: '/brand/lxp-winged-black.svg',
     gallery: [{ src: '/images/home/techart-gtstreet-r-wheel.webp', alt: 'Red TECHART wheel and yellow brake caliper on a silver GTstreet R', aspectRatio: 1.85 }],
     partnerPhotos: [{ slug: 'valvetronic', paired: true }, { slug: 'capristo', paired: true }, { slug: 'gintani', paired: false }],
     image: '/images/nlargo/hero-front-red.webp',
@@ -133,7 +137,7 @@ export function DivisionsTimeline() {
       <div className={styles.track}>
         <div aria-hidden="true" className={styles.rail}><span className={styles.marker} /></div>
         <ol className={styles.chapters}>
-          {divisions.map(({ period, slug, photos, mark, name, story, href, link }) => (
+          {divisions.map(({ period, slug, photos, mark, wingedLogo, name, story, href, link }) => (
             <li id={'division-' + slug} key={slug} className={styles.chapter}>
               <div className={styles.year}>
                 {slug === 'today' ? period : <time dateTime={period}>{period}</time>}
@@ -157,15 +161,20 @@ export function DivisionsTimeline() {
                       </div>
                     ))}
                   </div>
-                  <div className={styles.logoFrame} aria-hidden="true">
-                    <div className={styles.closingEmblem}>
-                      <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
-                        <use href={`/images/divisions/marks/${mark}-winged-gold.svg#wings`} />
-                      </svg>
-                      <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
-                        <use href={`/images/divisions/marks/${mark}-winged-gold.svg#lettering`} />
-                      </svg>
-                    </div>
+                  <div className={styles.logoFrame} data-division={mark} aria-hidden="true">
+                    {wingedLogo ? (
+                      <div className={styles.closingEmblem}>
+                        <svg className={styles.closingWings} viewBox="60 310 934 364" focusable="false">
+                          <use href={wingedLogo + '#wings'} />
+                        </svg>
+                        <svg className={styles.closingLettering} viewBox="60 310 934 364" focusable="false">
+                          <use href={wingedLogo + '#lettering'} />
+                        </svg>
+                      </div>
+                    ) : (
+                      <Image className={styles.standaloneMark} src={`/images/divisions/marks/${mark}.svg`}
+                        width={600} height={600} alt="" />
+                    )}
                   </div>
                   {href && <ArrowLink className={styles.galleryLink} href={href} external={href.startsWith('https://')}>{link}</ArrowLink>}
                 </div>

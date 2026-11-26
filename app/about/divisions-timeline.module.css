@@ -140,9 +140,10 @@
 .photo[data-division] { isolation: isolate; }
 .photo[data-division="lsr"] { background-color: #f26822; }
 .photo[data-division="lcs"] { background-color: #38214c; }
-.photo[data-division="slc"] { background-color: #07afba; }
+:is(.photo, .logoFrame)[data-division="slc"] { background-color: #07afba; }
 .photo[data-division="lac"] { background-color: #ffcd00; --photo-opacity: .40; }
-.photo[data-division="lcg"] { background-color: #000; --photo-opacity: .48; }
+:is(.photo, .logoFrame)[data-division="lcg"] { background-color: #000; }
+.photo[data-division="lcg"] { --photo-opacity: .48; }
 .photo[data-division="lxp"] { background-color: #d71920; }
 .photo[data-division] .photoImage {
   filter: grayscale(1);
@@ -170,6 +171,8 @@
 }
 
 .logoFrame {
+  --opening-ink: white;
+  --closing-ink: #f8e6ac;
   position: relative;
   display: grid;
   place-items: center;
@@ -177,37 +180,44 @@
   aspect-ratio: 2.2;
   background: #121212;
 }
+.logoFrame[data-division="lxp"] { --opening-ink: black; --closing-ink: black; background: white; }
+.standaloneMark { position: absolute; width: min(52%, 275px); height: auto; }
 .closingEmblem { position: relative; width: min(68%, 355px); aspect-ratio: 934 / 364; }
 .closingWings, .closingLettering { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
 .closingLettering {
   --division-lettering-fill: currentColor;
-  color: #f8e6ac;
+  color: var(--closing-ink);
 }
 
 /* Center the enlarged lettering. Its anchor is 219 units from the top of the 364-unit viewBox. */
 @keyframes settleLettering {
-  0%, 16% { width: 270%; left: -85%; top: calc(50% - 270% * 219 / 364); color: white; }
-  32% { width: 100%; left: 0; top: 0; color: white; }
-  40%, 100% { width: 100%; left: 0; top: 0; color: #f8e6ac; }
+  0%, 16% { width: 270%; left: -85%; top: calc(50% - 270% * 219 / 364); color: var(--opening-ink); }
+  32% { width: 100%; left: 0; top: 0; color: var(--opening-ink); }
+  40%, 100% { width: 100%; left: 0; top: 0; color: var(--closing-ink); }
 }
 @keyframes revealWings {
   0%, 32% { opacity: 0; clip-path: inset(0 39%); }
   39% { opacity: 1; clip-path: inset(0 34%); }
   52%, 100% { opacity: 1; clip-path: inset(0); }
 }
+@keyframes revealStandaloneMark {
+  0%, 12% { clip-path: inset(0 76% 0 0); }
+  44%, 100% { clip-path: inset(0); }
+}
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
   .closingWings { animation-name: revealWings; }
-  .closingLettering, .closingWings { animation-timing-function: ease-in-out; }
+  .standaloneMark { animation-name: revealStandaloneMark; }
+  .closingLettering, .closingWings, .standaloneMark { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
     .logoFrame { view-timeline: --division-logo block; view-timeline-inset: 0; }
-    .closingLettering, .closingWings {
+    .closingLettering, .closingWings, .standaloneMark {
       animation-duration: auto;
       animation-fill-mode: both;
       animation-timeline: --division-logo;
     }
   }
-  .archive[data-scrub-logos] :is(.closingLettering, .closingWings) {
+  .archive[data-scrub-logos] :is(.closingLettering, .closingWings, .standaloneMark) {
     animation-duration: 1s;
     animation-delay: var(--logo-seek, 0s);
     animation-fill-mode: both;
