@@ -14,7 +14,7 @@ const divisions = [
       { src: '/images/divisions/rental-lamborghini-road.webp', alt: 'Red Lamborghini from the rental fleet facing the camera on a palm-lined road' },
       { src: '/images/divisions/rental-fleet-striped-ferrari.webp', alt: 'A turquoise McLaren on the highway, a grey Ferrari with yellow stripes, and a wide view of the rental convoy', paired: true, aspectRatio: 9 / 16 },
       { src: '/images/divisions/rental-fleet-convoy.webp', alt: 'Three views of the rental convoy on a Dubai highway, including a teal SUV and a red Lamborghini', paired: true, aspectRatio: 9 / 16 },
-      { src: '/images/divisions/rental-showroom-sign-landscape.webp', alt: 'Illuminated Luxury Supercar Rentals wing emblem on the showroom façade at night', aspectRatio: 4 / 3 },
+      { src: '/images/divisions/rental-showroom-sign-wide.webp', alt: 'Illuminated Luxury Supercar Rentals wing emblems on the corner of the glass showroom at night', aspectRatio: 4 / 3 },
     ],
     story: 'The group began with a fleet of supercars for hire in Dubai. Drivers could get behind the wheel of a Ferrari, Lamborghini or McLaren for the day.',
     alt: 'Three supercars lined up in the desert beneath a sunset sky',
