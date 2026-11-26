@@ -190,7 +190,7 @@
   }
   .chapter + .chapter { padding-top: var(--chapter-gap); }
   .year, .story { position: static; }
-  .year { text-align: start; }
+  .year { justify-self: stretch; text-align: start; }
   .chapter:not(:last-child) .year,
   .chapter:not(:last-child) .story { padding-bottom: 0; }
   .story { margin: 20px 0 26px; }
