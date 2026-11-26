@@ -13,6 +13,8 @@ const divisions = [
     mark: 'lsr',
     gallery: [
       { src: '/images/divisions/rental-lamborghini-road.webp', alt: 'Red Lamborghini from the rental fleet facing the camera on a palm-lined road' },
+      { src: '/images/divisions/rental-mclaren-750s.webp', alt: 'Close-up of the headlight and turquoise nose of a McLaren 750S', paired: true },
+      { src: '/images/divisions/rental-ferraris-showroom.webp', alt: 'Two red Ferraris outside the illuminated Luxury Supercar Rentals showroom at night', paired: true },
       { src: '/images/divisions/rental-revuelto.webp', alt: 'Red Revuelto from the rental fleet with its doors raised in the desert' },
     ],
     story: 'The group began with a fleet of supercars for hire in Dubai. Drivers could get behind the wheel of a Ferrari, Lamborghini or McLaren for the day.',
