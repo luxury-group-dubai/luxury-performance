@@ -195,26 +195,17 @@
   32% { width: 100%; left: 0; top: 0; color: var(--opening-ink); }
   40%, 100% { width: 100%; left: 0; top: 0; color: var(--closing-ink); }
 }
-@keyframes drawCrest {
-  0%, 32% { stroke-dashoffset: 1.04; opacity: 0; }
-  35% { opacity: 1; }
-  41%, 100% { stroke-dashoffset: 0; opacity: 1; }
+@keyframes revealCrest {
+  0%, 36% { opacity: 0; }
+  45%, 100% { opacity: 1; }
 }
-@keyframes drawTopFeather {
-  0%, 37% { stroke-dashoffset: 1.04; }
+@keyframes drawUpperFeathers {
+  0%, 32% { stroke-dashoffset: 1.002; }
+  45%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes drawLowerFeathers {
+  0%, 45% { stroke-dashoffset: 1.002; }
   57%, 100% { stroke-dashoffset: 0; }
-}
-@keyframes drawMiddleFeather {
-  0%, 38% { stroke-dashoffset: 1.04; }
-  55%, 100% { stroke-dashoffset: 0; }
-}
-@keyframes drawLowerFeather {
-  0%, 40% { stroke-dashoffset: 1.04; }
-  54%, 100% { stroke-dashoffset: 0; }
-}
-@keyframes drawBottomFeather {
-  0%, 42% { stroke-dashoffset: 1.04; }
-  53%, 100% { stroke-dashoffset: 0; }
 }
 @keyframes revealStandaloneMark {
   0%, 12% { clip-path: inset(0 76% 0 0); }
@@ -222,11 +213,9 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .closingLettering { animation-name: settleLettering; }
-  .crestTrace { animation-name: drawCrest; }
-  .topFeather { animation-name: drawTopFeather; }
-  .middleFeather { animation-name: drawMiddleFeather; }
-  .lowerFeather { animation-name: drawLowerFeather; }
-  .bottomFeather { animation-name: drawBottomFeather; }
+  .crestTrace { animation-name: revealCrest; }
+  .upperFeather { animation-name: drawUpperFeathers; }
+  .lowerFeather { animation-name: drawLowerFeathers; }
   .standaloneMark { animation-name: revealStandaloneMark; }
   .closingLettering, .wingMask path, .standaloneMark { animation-timing-function: ease-in-out; }
   @supports (animation-timeline: --division-logo) and (view-timeline-name: --division-logo) {
