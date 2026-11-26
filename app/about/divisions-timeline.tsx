@@ -80,6 +80,7 @@ const divisions = [
     ],
     story: 'The group opened its own workshop in Al Quoz. Paintwork, upholstery, protective film and mechanical work came together under one roof, alongside performance parts installation.',
     alt: 'A red supercar with its engine cover raised beside an orange sports car inside the workshop',
+    href: 'https://luxuryautocaredubai.com/', link: 'Explore the workshop',
   },
   {
     period: '2026', name: 'Luxury Car Gallery',
