@@ -183,8 +183,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   background-color: #121212;
-  background-image: url('/images/concrete-grain.svg#print-grain');
-  background-size: 144px 144px;
+  background-image: linear-gradient(118deg, rgb(0 0 0 / .035), rgb(255 255 255 / .06) 42%, transparent 72%, rgb(0 0 0 / .025));
 }
 .logoArtwork {
   overflow: hidden;
