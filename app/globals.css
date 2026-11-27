@@ -4,7 +4,7 @@
 @keyframes hero-settle{from{transform:scale(1.04)}to{transform:scale(1)}}@keyframes photo-in{from{opacity:.3;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 @media(max-width:1000px){:root{--gutter:5vw}}
 @media(max-width:650px){:root{--gutter:24px}}
-@media(max-width:900px){.desktop-nav,.header-contact{display:none}.menu-toggle{display:flex}.site-header{height:76px}.mobile-menu{top:76px}.section-pad{padding-top:75px;padding-bottom:75px}}
+@media(max-width:900px){.desktop-nav,.header-contact{display:none}.menu-toggle{display:flex}.section-pad{padding-top:75px;padding-bottom:75px}}
 @media(max-width:700px){h2{font-size:38px}.section-pad{padding-top:62px;padding-bottom:62px}.brand img{width:74px}.brand{gap:16px}.brand-wordmark{font-size:8px;padding-left:16px}.eyebrow{font-size:8px;margin-bottom:28px}.page-intro{padding-top:45px;padding-bottom:42px}.page-intro .eyebrow{margin-bottom:35px}.page-intro h1{font-size:14vw}.page-intro-bottom{display:block;margin-top:30px}.page-intro-bottom p{font-size:11px}.page-intro-bottom .tiny-label{margin-top:25px;display:block}}
 @media(max-width:370px){.brand-wordmark{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal-pending{opacity:1;transform:none}}
@@ -13,14 +13,14 @@
 .arrow-link{font-size:12px}
 .page-intro-bottom p{font-size:13px;line-height:1.85}
 @media(max-width:700px){.page-intro-bottom p{font-size:12px}}
-:root{--site-header-height:64px}
+:root{--site-header-height:100px}
 .site-header{height:var(--site-header-height);position:sticky;top:0}
 .company-logo{display:flex;flex-direction:column;align-items:center;gap:9px;width:180px;flex-shrink:0}
 .brand .company-emblem,.footer-brand .company-emblem{display:block;width:100%;height:auto;object-fit:contain;filter:none;mix-blend-mode:normal}
 .company-logo .company-wordmark{display:block;width:90%;height:auto;overflow:visible;fill:currentColor;font-family:var(--font-sans);font-size:64px;font-weight:400}
 .footer-brand .company-logo{gap:9px}
-@media(max-width:900px){html{scroll-padding-top:118px}:root{--site-header-height:102px}.mobile-menu{top:102px}.company-logo{width:160px;gap:8px}.company-logo .company-wordmark{font-size:7px}}
-@media(max-width:700px){html{scroll-padding-top:116px}:root{--site-header-height:100px}.mobile-menu{top:100px}.company-logo{width:160px}}
+@media(max-width:900px){html{scroll-padding-top:118px}.company-logo{width:160px;gap:8px}.company-logo .company-wordmark{font-size:7px}}
+@media(max-width:700px){html{scroll-padding-top:116px}}
 .site-header{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:24px}
 .site-header .desktop-nav{grid-column:1;grid-row:1;justify-self:start;gap:clamp(16px,2vw,32px);white-space:nowrap}
 .site-header .brand{grid-column:2;grid-row:1;justify-self:center}
@@ -71,8 +71,8 @@ html[data-lxp-intro="wings"] .site-header .company-emblem{animation:intro-wings 
 .site-header{background:transparent;isolation:isolate;border-bottom:0;transition:box-shadow .45s}
 .site-header:before{content:'';position:absolute;inset:0;z-index:-1;background:rgb(16 16 16 / calc(1 - var(--glass-progress,0) * .16));-webkit-backdrop-filter:blur(calc(var(--glass-progress,0) * 20px)) brightness(calc(1 - var(--glass-progress,0) * .25));backdrop-filter:blur(calc(var(--glass-progress,0) * 20px)) brightness(calc(1 - var(--glass-progress,0) * .25))}
 .site-header.is-scrolled{border-bottom:0;box-shadow:0 12px 36px #0000000c}
-.site-header .company-logo{transition:transform .55s var(--ease-out)}
-.site-header.is-scrolled .company-logo{transform:scale(.87)}
+.site-header .company-logo{--compact-logo-scale:.87;transition:transform .55s var(--ease-out)}
+.site-header.is-scrolled .company-logo{transform:scale(var(--compact-logo-scale))}
 .site-header.menu-is-open:before{background:rgba(16,16,16,.84);-webkit-backdrop-filter:blur(24px) saturate(1.15);backdrop-filter:blur(24px) saturate(1.15)}
 .reading-progress{position:fixed;left:0;right:0;top:0;height:2px;background:var(--accent);z-index:80;transform:scaleX(var(--reading-progress,0));transform-origin:left;pointer-events:none}
 html[data-lxp-intro] .reading-progress{opacity:0}
@@ -91,8 +91,7 @@ html[data-lxp-intro] .reading-progress{opacity:0}
 .mobile-menu nav a{animation:detail-arrive .45s var(--ease-out) both}
 .mobile-menu nav a:nth-child(2){animation-delay:.04s}.mobile-menu nav a:nth-child(3){animation-delay:.08s}.mobile-menu nav a:nth-child(4){animation-delay:.12s}.mobile-menu nav a:nth-child(5){animation-delay:.16s}
 @keyframes menu-arrive{from{opacity:0;clip-path:inset(0 0 100%)}to{opacity:1;clip-path:inset(0)}}
-@media(max-width:700px){.site-header.is-scrolled .company-logo{transform:scale(.92)}
-}
+@media(max-width:700px){.site-header .company-logo{--compact-logo-scale:.92}}
 @media(prefers-reduced-motion:reduce){
   .page-arrival,.mobile-menu,.mobile-menu nav a{animation:none!important}
   .reveal-pending .eyebrow{opacity:1;transform:none}.reading-progress{display:none}
@@ -167,7 +166,8 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
 .site-header .header-logo-art {
   --compact-lettering-width:675px;
   --compact-lettering-left:calc(50% - var(--compact-lettering-width) / 2);
-  --compact-lettering-top:calc(50% - var(--compact-lettering-width) * 219 / 934);
+  /* Account for the top-anchored scale and the lettering's center in the SVG. */
+  --compact-lettering-top:calc(50% / var(--compact-logo-scale) - var(--compact-lettering-width) * 219 / 934);
   position:relative;
   display:block;
   aspect-ratio:934 / 364;
@@ -198,25 +198,19 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
   @keyframes headerWingsOut { 0%,42% { clip-path:polygon(36.46% 0,63.54% 0,60.36% 100%,39.64% 100%); animation-timing-function:ease-in; } 47% { clip-path:polygon(34.81% 0,65.19% 0,62% 100%,38% 100%); } 57% { clip-path:polygon(20.22% 0,79.78% 0,62.09% 100%,37.91% 100%); } 75%,100% { clip-path:polygon(-2.3% 0,102.3% 0,69.61% 100%,30.39% 100%); } }
 }
 
-.site-header .header-logo-name { position:absolute; top:100%; left:50%; transform:translateX(-50%); width:90%; height:auto; overflow:visible; fill:#fff; font-family:var(--font-sans); font-size:64px; font-weight:400; opacity:1; transition:opacity .18s ease .35s; }
-.site-header.is-scrolled .header-logo-name { opacity:0; transition-delay:0s; }
-/* Keep the caption out of the menu backdrop once the compact logo is active. */
-.site-header.is-scrolled.menu-is-open .header-logo-name { opacity:0; visibility:hidden; transition:none; }
-@media (prefers-reduced-motion:reduce) { .site-header .header-logo-name { transition:none; } }
-
 /* Keep the outer logo scale in step with the same reversible sequence. */
 @media (prefers-reduced-motion:no-preference) {
   .site-header[data-logo-motion="wings"] .header-logo-art { animation:headerLogoScaleIn .9s ease-in-out both; }
   .site-header[data-logo-motion="lettering"] .header-logo-art { animation:headerLogoScaleOut .9s ease-in-out reverse both; }
-  @keyframes headerLogoScaleIn { 0%,16% { transform:scale(.87); } 32%,100% { transform:scale(1.2); } }
-  @keyframes headerLogoScaleOut { 0%,16% { transform:scale(.87); } 32%,100% { transform:scale(1.2); } }
+  @keyframes headerLogoScaleIn { 0%,16% { transform:scale(var(--compact-logo-scale)); } 32%,100% { transform:scale(1.2); } }
+  @keyframes headerLogoScaleOut { 0%,16% { transform:scale(var(--compact-logo-scale)); } 32%,100% { transform:scale(1.2); } }
   @media(max-width:700px) {
-    @keyframes headerLogoScaleIn { 0%,16% { transform:scale(.92); } 32%,100% { transform:scale(1.08); } }
-    @keyframes headerLogoScaleOut { 0%,16% { transform:scale(.92); } 32%,100% { transform:scale(1.08); } }
+    @keyframes headerLogoScaleIn { 0%,16% { transform:scale(var(--compact-logo-scale)); } 32%,100% { transform:scale(1.08); } }
+    @keyframes headerLogoScaleOut { 0%,16% { transform:scale(var(--compact-logo-scale)); } 32%,100% { transform:scale(1.08); } }
   }
 }
 
-/* Slide the header surface in after the logo caption has faded out. */
+/* Slide the header surface in once the compact logo has settled. */
 .site-header:is(.hero-header:not(.is-past-hero), .contact-header):not(.menu-is-open)::before {
   background:var(--scroll-header-background,var(--nav-glass-background));
   -webkit-backdrop-filter:var(--scroll-header-filter,blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturation)));
@@ -280,9 +274,6 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
   backdrop-filter:blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturation));
   transition:none;
 }
-.site-header.is-scrolled .header-logo-name { visibility:hidden; }
-.site-header:not(.is-scrolled) .header-logo-name { visibility:visible; }
-
 /* Animate the solid menu plane with a compositor-friendly transform. */
 .navigation-full-glass { top:var(--site-header-height); transform-origin:top; }
 .site-header.site-header.full-menu-is-open::before,
