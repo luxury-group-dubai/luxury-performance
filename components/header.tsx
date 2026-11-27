@@ -284,8 +284,6 @@ export function Header() {
     <a href="#main" className="skip-link">Skip to content</a>
     <header ref={header} onAnimationEnd={event => {
       if (event.animationName === 'headerLogoScaleOut' && event.currentTarget.classList.contains('is-scrolled')) event.currentTarget.dataset.glassReady = 'true';
-    }} onTransitionEnd={event => {
-      if (event.propertyName === 'opacity' && event.target instanceof Element && event.target.classList.contains('header-logo-name') && event.currentTarget.classList.contains('is-scrolled')) event.currentTarget.dataset.glassReady = 'true';
     }} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${isContact ? 'contact-header' : ''} ${styles.header} ${solidSurface ? `solid-header ${styles.previewHeader}` : ''} ${open || menuClosing || shopMenu ? 'menu-is-open' : ''} ${open || menuClosing ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''} ${menuClosing ? 'full-menu-is-closing' : ''} ${glassHandoff ? 'glass-handoff' : ''}`}>
       <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => { if (open) dismissMenu(); else { setMenuClosing(false); setOpen(true); } setShopMenu(null); setShopClosing(false); cancelHoverClose(); shopPinned.current = false; setMobileSection('brands'); }}><span aria-hidden="true"><i/><i/></span></button>
       <nav aria-label="Main navigation" inert={open || menuClosing} className={`desktop-nav ${styles.desktop}`}>
@@ -319,7 +317,18 @@ export function Header() {
         <Link href="/partners" onClick={close} aria-current={pathname === '/partners' ? 'page' : undefined}>PARTNERS</Link>
         <Link href="/about" onClick={close} aria-current={pathname === '/about' ? 'page' : undefined}>ABOUT</Link>
       </nav>
-      <HomeLink inert={open} className="brand" onClick={close} aria-label="Luxury Performance home"><span className="company-logo header-logo-art" aria-hidden="true"><span className="header-wing-circle"><svg className="company-emblem header-wings" viewBox="60 310 934 364" focusable="false"><use href="/brand/lxp-winged-black.svg#wings" /></svg></span><svg className="header-lettering" viewBox="60 310 934 364" focusable="false"><use href="/brand/lxp-winged-black.svg#lettering" /></svg><svg className="header-logo-name" viewBox="0 0 900 65" aria-hidden="true" focusable="false"><text x="0" y="55" textLength="900" lengthAdjust="spacingAndGlyphs">LUXURY PERFORMANCE</text></svg></span></HomeLink>
+      <HomeLink inert={open} className="brand" onClick={close} aria-label="Luxury Performance home">
+        <span className="company-logo header-logo-art" aria-hidden="true">
+          <span className="header-wing-circle">
+            <svg className="company-emblem header-wings" viewBox="60 310 934 364" focusable="false">
+              <use href="/brand/lxp-winged-black.svg#wings" />
+            </svg>
+          </span>
+          <svg className="header-lettering" viewBox="60 310 934 364" focusable="false">
+            <use href="/brand/lxp-winged-black.svg#lettering" />
+          </svg>
+        </span>
+      </HomeLink>
       <div inert={open || menuClosing} className={`header-shop-actions ${styles.actions}`}>
         <div className={styles.utilityActions}>
           <HeaderSearch onOpen={close} preview={previewNavigation}/>
