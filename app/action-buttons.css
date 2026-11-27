@@ -27,8 +27,8 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-arrow > svg {
-    transition: transform .3s ease-in-out;
+  .action-arrow > svg {
+    transition: transform .24s cubic-bezier(.4, 0, .2, 1);
   }
 
   :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-arrow > svg:first-child {
@@ -38,4 +38,18 @@
   :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-arrow > svg:last-child {
     transform: translate(0, 0);
   }
+}
+
+.action-label {
+  display: inline-grid;
+  overflow: hidden;
+  padding: .08em 0;
+  margin: -.08em 0;
+}
+.action-label > span { grid-area: 1 / 1; }
+.action-label > span:last-child { transform: translateY(120%); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .action-label > span { transition: transform .24s cubic-bezier(.4, 0, .2, 1); }
+  :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-label > span:first-child { transform: translateY(-120%); }
+  :is(a, button):is(:hover, :focus-visible):not(:disabled) .action-label > span:last-child { transform: translateY(0); }
 }

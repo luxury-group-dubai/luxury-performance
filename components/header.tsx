@@ -1,4 +1,5 @@
 "use client";
+import { ActionLabel } from '@/components/action-label';
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { ActionArrow } from '@/components/action-arrow';
 import Link from 'next/link';
@@ -273,7 +274,7 @@ export function Header() {
           <HeaderSearch onOpen={close} preview={previewNavigation}/>
           <span onClick={close}><CartButton/></span>
         </div>
-        <Link className="header-contact" href="/contact" onClick={close}>CONTACT <ActionArrow/></Link>
+        <Link className="header-contact" href="/contact" onClick={close}><ActionLabel>CONTACT</ActionLabel> <ActionArrow/></Link>
       </div>
     </header>
     {shopMenu && <div ref={shopGlass} className={`navigation-glass-surface navigation-shop-glass ${styles.shopGlass}`} aria-hidden="true" />}

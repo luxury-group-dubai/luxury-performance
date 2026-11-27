@@ -1,4 +1,5 @@
 'use client';
+import { ActionLabel } from '@/components/action-label';
 
 import { useRef, useState, type FormEvent } from 'react';
 import { ActionArrow } from '@/components/action-arrow';
@@ -34,11 +35,11 @@ export function AllocationForm({ available }: { available: boolean }) {
       <label className={styles.full}>What are you interested in? <span>*</span><select suppressHydrationWarning name="interest" required defaultValue=""><option value="" disabled>Select your interest</option>{interestOptions.map(value => <option key={value}>{value}</option>)}</select></label>
       <label className={styles.full}>Additional message<textarea suppressHydrationWarning name="message" rows={4} maxLength={3000} placeholder="Tell us about your vehicle or your preferred N-LARGO specification." /></label>
       <label className={styles.consent}><input suppressHydrationWarning type="checkbox" name="consent" required /><span>I agree to Luxury Performance contacting me by phone, WhatsApp or email about this enquiry.</span></label>
-      <button className={styles.button} type="submit">Prepare private enquiry<ActionArrow size={18} /></button>
+      <button className={styles.button} type="submit"><ActionLabel>Prepare private enquiry</ActionLabel><ActionArrow size={18} /></button>
     </fieldset>
     <p className={styles.formNote}>We prepare a message for our sales team. You review and send it in WhatsApp. This website does not submit or store your details. An enquiry does not reserve an allocation.</p>
     <div ref={result} tabIndex={-1} role={state === 'error' ? 'alert' : 'status'} className={message ? styles.feedback : undefined}>
-      {state === 'ready' ? <><h3>Your private enquiry is ready.</h3><p>Your details have not been sent yet. Review your message below, then send it to our sales team in WhatsApp.</p><pre className={styles.messagePreview}>{message}</pre><a className={styles.button} href={whatsapp} target="_blank" rel="noopener noreferrer">Continue on WhatsApp <ActionArrow size={16} /></a></> : message}
+      {state === 'ready' ? <><h3>Your private enquiry is ready.</h3><p>Your details have not been sent yet. Review your message below, then send it to our sales team in WhatsApp.</p><pre className={styles.messagePreview}>{message}</pre><a className={styles.button} href={whatsapp} target="_blank" rel="noopener noreferrer"><ActionLabel>Continue on WhatsApp</ActionLabel> <ActionArrow size={16} /></a></> : message}
     </div>
   </form>;
 }

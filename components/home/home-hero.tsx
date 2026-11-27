@@ -1,3 +1,4 @@
+import { ActionLabel } from '@/components/action-label';
 import { ActionArrow } from '@/components/action-arrow';
 import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
@@ -81,7 +82,7 @@ export function HomeHero() {
           <Image className={heroStyles.logo} src={slide.logo} alt={slide.name} width={slide.logoWidth} height={slide.logoHeight} sizes={slide.slug === 'valvetronic' ? '(max-width: 700px) 160px, 210px' : '(max-width: 700px) 170px, 225px'} unoptimized={slide.logo.endsWith('.svg')} />
           <h2>{slide.title}</h2>
           <p>{slide.description}</p>
-          <Link className={heroStyles.cta} href={slide.href}>{slide.cta}<ActionArrow size={18} strokeWidth={1.4} /></Link>
+          <Link className={heroStyles.cta} href={slide.href}><ActionLabel>{slide.cta}</ActionLabel><ActionArrow size={18} strokeWidth={1.4} /></Link>
         </div>
       </article>;
     })}

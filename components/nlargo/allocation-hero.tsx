@@ -1,3 +1,4 @@
+import { ActionLabel } from '@/components/action-label';
 import type { CSSProperties, ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,7 +29,7 @@ export function AllocationHero({ image = nlargoHeroImages[0], enquiryHref = '#pr
         <h1 id="nlargo-title">N-LARGO</h1>
         <p className={styles.heroStatement}>{nlargoAvailable ? <>One exclusive<br />allocation available.</> : <>An exceptional chapter.<br />Fully allocated.</>}</p>
         <p className={styles.heroIntro}>{nlargoAvailable ? 'Luxury Performance has secured the first N-LARGO reveal vehicle and one additional conversion allocation, available for a private client.' : 'Luxury Performance’s additional N-LARGO conversion allocation has been secured. Discover the project and speak with us about future opportunities.'}</p>
-        <a className={styles.button} href={enquiryHref}>{nlargoCta}<ActionArrow size={18} /></a>
+        <a className={styles.button} href={enquiryHref}><ActionLabel>{nlargoCta}</ActionLabel><ActionArrow size={18} /></a>
         <p className={styles.packageNote}>An N-LARGO conversion for your Ferrari 12Cilindri Coupé, or the opportunity to purchase a complete N-LARGO vehicle.</p>
       </div>
       <div className={styles.heroFoot}><span>Luxury Performance / Dubai</span><span>Official NOVITEC release</span></div>

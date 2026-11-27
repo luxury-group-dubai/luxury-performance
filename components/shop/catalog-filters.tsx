@@ -1,4 +1,5 @@
 "use client";
+import { ActionLabel } from '@/components/action-label';
 
 import { ActionArrow } from '@/components/action-arrow';
 import { useOptimistic, useTransition } from 'react';
@@ -96,7 +97,7 @@ export function CatalogFilters({ filters, basePath, makes, models, fits, categor
         onChange={category => apply({ category })} />
     )}
     <button className="shop-filter-reset" type="button" onClick={reset}>Reset</button>
-    {onDone && <footer className="shop-sheet-footer"><button className="shop-button" type="button" disabled={pending} onClick={onDone}>{pending ? 'Updating parts…' : 'View ' + resultCount + (resultCount === 1 ? ' part' : ' parts')} <ActionArrow direction="right" size={16} /></button></footer>}
+    {onDone && <footer className="shop-sheet-footer"><button className="shop-button" type="button" disabled={pending} onClick={onDone}><ActionLabel>{pending ? 'Updating parts…' : 'View ' + resultCount + (resultCount === 1 ? ' part' : ' parts')}</ActionLabel> <ActionArrow direction="right" size={16} /></button></footer>}
   </form>;
 }
 
