@@ -307,8 +307,6 @@ export function PurosangueFilm() {
 
   return <section ref={root} className={styles.film} id="purosangue" aria-labelledby={titleId}>
     <div ref={stage} className={`${styles.stage} ${comparing ? styles.comparing : ''}`} data-chapter="0">
-      <div className={styles.topline} aria-hidden="true" />
-
       <div ref={composition} className={styles.composition}>
         <div className={styles.word} aria-hidden="true">PUROSANGUE</div>
         <div className={styles.copy} key={chapter}>

@@ -14,6 +14,7 @@ import { StockPanel } from './stock-panel';
 import { vehicleChoiceHref, vehicleStepHref, type VehicleChoices } from './vehicle-navigation';
 import { stockBrowseHref, vehicleBrowseHref } from '@/lib/shop/routes';
 import { ShopSearchField } from './search-field';
+import logoSelection from '@/components/shop/logo-selection.module.css';
 import styles from './shop-entry.module.css';
 
 const makeKey = (item: { key: string }) => item.key;
@@ -46,12 +47,12 @@ export function ShopEntryPreview({ models, stockProducts, usedStockProducts, sto
       </div>
     </header>
     <section className={styles.browse} id="entry-panel-brands" role="tabpanel" aria-labelledby="entry-tab-brands" hidden={view !== 'brands'}>
-      <div className={styles.brandGrid}>{brandMenu.map(item => <Link key={item.name} href={item.href} className={styles.brandCard} aria-label={`${item.note ? 'Enquire about' : 'Shop'} ${item.name}`} prefetch={false}><MenuLogo reveal item={item} />{item.note && <small className={styles.enquiryNote}>{item.note}</small>}<ArrowUpRight className={styles.cardArrow} size={17} aria-hidden="true" /></Link>)}</div>
+      <div className={`${styles.brandGrid} ${logoSelection.grid}`}>{brandMenu.map(item => <Link key={item.name} href={item.href} className={`${styles.brandCard} ${logoSelection.item}`} aria-label={`${item.note ? 'Enquire about' : 'Shop'} ${item.name}`} prefetch={false}><MenuLogo reveal item={item} />{item.note && <small className={styles.enquiryNote}>{item.note}</small>}</Link>)}</div>
     </section>
     <section className={styles.browse} id="entry-panel-vehicles" role="tabpanel" aria-labelledby="entry-tab-vehicles" hidden={view !== 'vehicles'}>
-      {!selected ? <div className={styles.vehicleGrid}>{manufacturers.map(item => <Link href={vehicleStepHref(makeKey(item))} scroll={false} key={item.name} className={styles.brandCard} aria-label={`Choose ${item.name} model`}><ManufacturerLogo make={item.key} name={item.name} /><ArrowUpRight className={styles.cardArrow} size={17} aria-hidden="true" /></Link>)}</div> : <>
+      {!selected ? <div className={`${styles.vehicleGrid} ${logoSelection.grid}`}>{manufacturers.map(item => <Link href={vehicleStepHref(makeKey(item))} scroll={false} key={item.name} className={`${styles.brandCard} ${logoSelection.item}`} aria-label={`Choose ${item.name} model`}><ManufacturerLogo make={item.key} name={item.name} /></Link>)}</div> : <>
         <div className={styles.modelHeading}><div><Link className={styles.back} href={model ? vehicleStepHref(makeKey(selected), car?.body ? model.slug : undefined) : '/shop/vehicles'} scroll={false}><ArrowLeft size={14} />{car?.body ? 'Change version' : model ? 'Change car' : 'All vehicles'}</Link><h2>{car ? `${selected.name} ${car.name}.` : model ? `Choose your ${model.name}.` : `Choose your ${selected.name}.`}</h2>{car && <p className={styles.selectionPrompt}>Choose a brand for your car.</p>}</div></div>
-        {car ? <div className={styles.brandGrid}>{car.brands.map(brand => <Link key={brand.slug} href={brand.href} className={styles.brandCard} aria-label={`Shop ${brand.name} for ${selected.name} ${car.name}`} prefetch={false}>{brand.artwork ? <MenuLogo reveal item={brand} /> : <span className={styles.brandName}>{brand.name}</span>}<ArrowUpRight className={styles.cardArrow} size={17} aria-hidden="true" /></Link>)}</div> : <div className={styles.modelGrid}>{(model?.variants ?? models[makeKey(selected)] ?? []).map(choice => <Link key={choice.body ?? choice.slug} href={vehicleChoiceHref(makeKey(selected), choice)} scroll={false} prefetch={false}>{choice.name}<ArrowUpRight size={16} /></Link>)}</div>}
+        {car ? <div className={`${styles.brandGrid} ${logoSelection.grid}`}>{car.brands.map(brand => <Link key={brand.slug} href={brand.href} className={`${styles.brandCard} ${logoSelection.item}`} aria-label={`Shop ${brand.name} for ${selected.name} ${car.name}`} prefetch={false}>{brand.artwork ? <MenuLogo reveal item={brand} /> : <span className={styles.brandName}>{brand.name}</span>}</Link>)}</div> : <div className={styles.modelGrid}>{(model?.variants ?? models[makeKey(selected)] ?? []).map(choice => <Link key={choice.body ?? choice.slug} href={vehicleChoiceHref(makeKey(selected), choice)} scroll={false} prefetch={false}>{choice.name}<ArrowUpRight size={16} /></Link>)}</div>}
         {!models[makeKey(selected)]?.length && <p className={styles.note}><Link href="/contact">Ask our team about your model</Link>.</p>}
       </>}
     </section>
