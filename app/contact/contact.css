@@ -15,3 +15,23 @@
 
 .contact-layout{padding-top:48px}
 @media(max-width:700px){.contact-layout{padding-top:32px}}
+
+/* Keep the page introduction beside the enquiry form on larger screens. */
+.contact-layout{padding-top:48px;align-items:start;row-gap:0;grid-template-areas:"intro form" "details form";grid-template-rows:auto 1fr}
+.contact-intro{grid-area:intro}
+.contact-layout .enquiry-form{grid-area:form}
+.contact-details{grid-area:details}
+.contact-intro h1{margin:0 0 24px;font-size:clamp(48px,6vw,88px);line-height:1;letter-spacing:-.055em}
+.contact-intro p{max-width:390px;color:#62625d;font-size:13px;line-height:1.8;margin:0 0 18px}
+.contact-intro a{text-decoration:underline;text-underline-offset:.18em}
+.contact-details{margin-top:38px;padding-top:30px;border-top:1px solid var(--line)}
+.contact-details .arrow-link{margin:17px 0 55px}
+@media(max-width:700px){
+  .contact-layout{padding-top:30px;gap:32px;grid-template-areas:"intro" "form" "details";grid-template-rows:auto}
+  .contact-intro{order:0}
+  .contact-intro h1{font-size:44px;margin-bottom:18px}
+  .contact-intro p{font-size:12px;max-width:none;margin-bottom:12px}
+  .contact-layout .enquiry-form{order:1}
+  .contact-details{order:2;margin-top:0}
+  .contact-details .arrow-link{margin-bottom:35px}
+}
