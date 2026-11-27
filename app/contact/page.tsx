@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { defaultSocialImage } from '@/lib/social-images';
 import { ArrowLink } from '@/components/ui';
 import { EnquiryForm } from '@/components/enquiry-form';
-import { contact, expertise } from '@/lib/content';
+import { contact } from '@/lib/content';
+import { resolveEnquiryInterests } from '@/lib/enquiry-interests';
 const title = 'Contact Luxury Performance | Dubai';
 const description = 'Contact Luxury Performance in Al Quoz, Dubai for auto parts, vehicle fitment, stock and installation enquiries. Call, email, WhatsApp or get directions.';
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 };
 export default async function Contact({ searchParams }: { searchParams: Promise<{ interest?: string; vehicle?: string; programme?: string }> }) {
   const query = await searchParams;
-  const interest = [...expertise.map(item => item.title), 'A complete programme', 'Help me decide'].some(title => title === query.interest) ? query.interest : '';
+  const interest = typeof query.interest === 'string' && resolveEnquiryInterests(query.interest).length ? query.interest : '';
   return <section className="contact-layout" aria-label="Contact Luxury Performance">
     <header className="contact-intro">
         <h1>Contact.</h1>
