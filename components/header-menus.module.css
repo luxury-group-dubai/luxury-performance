@@ -183,7 +183,7 @@
 }
 
 .header .actions :global(.header-contact:hover) {
-  background: #941321;
+  background: var(--accent-hover, #c90017);
 }
 
 .shopAll {

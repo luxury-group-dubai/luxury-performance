@@ -1,7 +1,7 @@
 export const contact = {
   phone: '+971 56 515 5886', telephone: '+971565155886', whatsapp: 'https://wa.me/971565155886',
   email: 'info@luxuryperformance.com', address: '4th Street, Al Quoz Industrial 3, Dubai, UAE',
-  maps: 'https://maps.app.goo.gl/pbjT7EEoidhdy1cv8',
+  maps: 'https://www.google.com/maps/place/Luxury+Performance+Auto+Spare+Parts+Trading+LLC/data=!4m7!3m6!1s0x3e5f6bdca72407eb:0xff0852a1d8d016a8!8m2!3d25.1226885!4d55.2082025!16s%2Fg%2F11p33nk6pr!19sChIJ6wckp9xrXz4RqBbQ2KFSCP8',
 };
 export const socialLinks = [
   { name: 'Instagram', href: 'https://instagram.com/lxp.official', icon: 'instagram' },

@@ -1,4 +1,5 @@
 'use client';
+import { ActionLabel } from '@/components/action-label';
 
 import { useState, useRef } from 'react';
 import { X } from 'lucide-react';
@@ -37,7 +38,7 @@ export function EnquiryForm({ initialInterest = '', initialVehicle = '', program
       <div className="interest-options">{enquiryInterests.map(interest => <label key={interest}><input type="checkbox" name="interest" value={interest} defaultChecked={initialInterests.includes(interest)} /><span>{interest}</span></label>)}</div>
     </fieldset>
     <label className="field"><span>Tell us more</span><textarea defaultValue={initialDetails} name="details" rows={3} maxLength={initialDetails ? 12000 : 1500} placeholder="Tell us which parts or upgrades you’re interested in." /></label>
-    <button className="form-submit" type="submit">Review my enquiry<ActionArrow size={19} /></button>
+    <button className="form-submit" type="submit"><ActionLabel>Review my enquiry</ActionLabel><ActionArrow size={19} /></button>
     <p className="form-disclaimer">Review your enquiry before sending it on WhatsApp. Your details are not submitted or stored by this website.</p>
     <dialog className="enquiry-modal" ref={confirmation} aria-labelledby="enquiry-modal-title" onClick={event => { if (event.target === confirmation.current) confirmation.current?.close(); }}>
       <div className="enquiry-modal-content">

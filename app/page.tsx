@@ -1,3 +1,4 @@
+import { ActionLabel } from '@/components/action-label';
 import './home-intro.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -91,7 +92,7 @@ export default function Home() {
               </div>
               <div className="intro-brand">
                 <Image className="intro-lettering" src="/brand/lxp-white.svg" alt="" aria-hidden="true" width={1088} height={280} />
-                <Link className="intro-story" href="/about">Our story <ActionArrow /></Link>
+                <Link className="intro-story" href="/about"><ActionLabel>Our story</ActionLabel> <ActionArrow /></Link>
               </div>
             </div>
           </Reveal>
