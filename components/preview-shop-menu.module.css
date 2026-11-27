@@ -23,15 +23,20 @@
 .menu .stockLink { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:150px; font-size:22px; white-space:normal; }
 .stockLink small { display:block; margin-top:10px; font-size:12px; color:#aaa; line-height:1.6; }
 .stockLink > svg { flex:none; }
+.fullMenu .shopHeading { display:flex; align-items:center; justify-content:space-between; }
 .fullMenu .shopHome { justify-content:space-between; font-size:clamp(22px,2.4vw,36px); font-weight:700; letter-spacing:-.035em; }
-.fullMenu a.shopHome { display:flex; align-items:center; padding:15px 0; border:0; animation:none; }
+.fullMenu a.shopHome { display:flex; flex:1; align-items:center; padding:15px 0; border:0; animation:none; }
+.fullMenu .shopToggle { display:none; }
 .fullMenu .toolbar { margin-top:12px; }
 .fullMenu .brandGrid, .fullMenu .vehicleGrid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 16px; }
 .fullMenu .brandGrid a.logoLink, .fullMenu .vehicleGrid a.logoLink { min-width:0; padding-inline:8px; }
 .fullMenu .stockGrid { grid-template-columns:1fr; gap:0; }
 .fullMenu .stockLink { min-height:100px; }
 @media(max-width:1100px) {
-  .fullMenu .shopHome { font-size:25px; }
+  .fullMenu .shopHome svg, .fullMenu .shopOptions[data-expanded="false"] { display:none; }
+  .fullMenu .shopToggle { display:grid; place-items:center; flex:0 0 44px; min-height:44px; padding:0; background:none; color:inherit; border:0; }
+  .fullMenu .shopToggle svg { margin:0; transition:transform .25s ease; }
+  .shopToggle[aria-expanded="true"] svg { transform:rotate(180deg); }
   .fullMenu .tabs { gap:24px; }
   .fullMenu .tabs button { font-size:11px; white-space:nowrap; }
   .fullMenu .brandGrid, .fullMenu .vehicleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; }
@@ -49,14 +54,14 @@
 
 .menu a.browseAll { display:flex; width:fit-content; min-height:54px; align-items:center; justify-content:space-between; gap:16px; padding:16px 18px; border:1px solid #fff; background:transparent; color:#fff; font-weight:700; transition:background-color .2s,color .2s; }
 .menu a.browseAll:is(:hover,:focus-visible) { background:#fff; color:#111; }
-@media (prefers-reduced-motion:reduce) { .menu a.browseAll { transition:none; } }
+@media (prefers-reduced-motion:reduce) { .menu a.browseAll, .shopToggle svg { transition:none; } }
 
 @media (prefers-reduced-motion: no-preference) {
-  .menu.fullMenu a.shopHome,
+  .fullMenu .shopHeading,
   .fullMenu .toolbar {
     animation: menu-logo-in .48s cubic-bezier(.22, 1, .36, 1) backwards;
   }
-  .menu.fullMenu a.shopHome { animation-delay: .08s; }
+  .fullMenu .shopHeading { animation-delay: .08s; }
   .fullMenu .toolbar { animation-delay: .14s; }
 
   /* Let hover and focus take over opacity once the entrance finishes. */
