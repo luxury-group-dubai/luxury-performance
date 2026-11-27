@@ -1,7 +1,7 @@
 'use client';
 import { useShopParams as useSearchParams } from '@/components/shop/use-shop-params';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BrandPartnerLink } from '@/components/shop/brand-partner-link';
@@ -27,6 +27,26 @@ import selectorStyles from '../brand-shop/shop-preview.module.css';
 
 
 type Car = { make: string; marque: string; model: string; body?: string; name: string; image?: string; cover?: string; count: number };
+// Last row of the photographed ground shadow in each 1116×598 source image.
+// The transparent profiles are aligned to a common wheel baseline at y=435.
+const shadowBottom: Record<string, number> = {
+  '12cilindri': 442, '12cilindri-coupe-side': 442, '12cilindri-spider-side': 444,
+  '750s': 455, '812-gts': 443, '812-superfast': 443,
+  'cullinan': 447, 'cullinan-series-ii': 472,
+  'f8': 443, 'f8-spider': 443, 'f8-tributo': 443,
+  'purosangue': 447, 'revuelto': 439, 'senna': 442,
+  'sf90': 445, 'sf90-spider': 445, 'spectre': 447,
+  'urus': 432, 'urus-performante': 439, 'urus-s': 443,
+};
+function groundShadowStyle(cover: string): CSSProperties {
+  const slug = cover.split('/').pop()?.replace(/\.[^.]+$/, '') ?? '';
+  const bottom = shadowBottom[slug] ?? 445;
+  return {
+    '--shadow-crop': `${(bottom - 20) / 598 * 100}%`,
+    '--shadow-shift': `${(437 - bottom) / 598 * 100}%`,
+  } as CSSProperties;
+}
+
 const scope = (car: Car): Filters => ({ brand: 'novitec', make: car.make, model: car.model, body: car.body });
 const matchesText = (text: string, query: string) => query.toLowerCase().trim().split(/\s+/).every(word => text.toLowerCase().includes(word));
 
@@ -98,7 +118,7 @@ export function NovitecShopPreview({ products }: { products: CatalogProduct[] })
       </nav>
       <div className={styles.heroContent}><div><h1>{modelCopy ? <><span className={styles.vehicleMarque}>{modelCopy.marque}</span><span>{active?.name || modelCopy.name}</span></> : active ? <><span className={styles.vehicleMarque}>{active.marque}</span><span>{active.name}</span></> : heading}</h1>{modelCopy ? <p>{modelCopy.introduction}</p> : !active && <p>Find the parts and possibilities for your exact model.</p>}
       </div>{active && <div className={styles.selectedCar}>
-        {active.image && <div className={styles.selectedArtwork} data-tall={active.model === 'urus' || active.model === 'cullinan' || active.model === 'purosangue' ? 'true' : undefined}>{active.cover && <Image className={`${styles.selectedImage} ${styles.selectedShadow}`} src={active.cover} alt="" aria-hidden="true" width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" />}<Image className={styles.selectedImage} src={active.image} alt={active.name} width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" /></div>}
+        {active.image && <div className={styles.selectedArtwork} data-model={active.model} data-body={active.body} data-tall={active.model === 'urus' || active.model === 'cullinan' || active.model === 'purosangue' ? 'true' : undefined}>{active.cover && <Image className={`${styles.selectedImage} ${styles.selectedShadow}`} style={groundShadowStyle(active.cover)} src={active.cover} alt="" aria-hidden="true" width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" />}<Image className={styles.selectedImage} src={active.image} alt={active.name} width={1116} height={598} sizes="(max-width: 700px) 85vw, 40vw" /></div>}
         <button className={styles.change} onClick={() => go({ ...scope(active), choose: '1' })}><RotateCcw size={15} /> Change car</button>
       </div>}</div>
 

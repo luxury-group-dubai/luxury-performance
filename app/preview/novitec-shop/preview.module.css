@@ -19,6 +19,7 @@
 .selectedImage { position:absolute; top:50%; left:0; width:100%; height:auto; transform:translateY(-50%); }
 /* Keep the photographed ground shadow from the selector artwork. */
 .selectedShadow { mix-blend-mode:multiply; clip-path:inset(70% 0 0); pointer-events:none; }
+.selectedShadow[style] { clip-path:inset(var(--shadow-crop) 0 0); transform:translateY(calc(-50% + var(--shadow-shift))); -webkit-mask-image:linear-gradient(to bottom, transparent var(--shadow-crop), #000 calc(var(--shadow-crop) + 2%), #000); mask-image:linear-gradient(to bottom, transparent var(--shadow-crop), #000 calc(var(--shadow-crop) + 2%), #000); }
 .change { position:absolute; right:0; bottom:0; display:inline-flex; align-items:center; gap:7px; background:none; border:0; color:#bbb; padding:10px 0 10px 12px; font-size:11px; }
 .searchWrap { position:relative; z-index:3; width:440px; max-width:100%; min-width:0; }
 .searchField { display:flex; height:44px; align-items:center; gap:14px; border:1px solid transparent; padding:0 18px; background:#202122; }
