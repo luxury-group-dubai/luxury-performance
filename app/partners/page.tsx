@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: 'Our Partners', description: 'Discove
 export default function Partners() {
   return <div className={styles.directory}>
     <header className={styles.intro}>
-      <h1>Partners.</h1>
+      <h1>Partners</h1>
       <p>Specialists in performance, sound and design.</p>
     </header>
     <section className={styles.grid} aria-label="Our partner brands">

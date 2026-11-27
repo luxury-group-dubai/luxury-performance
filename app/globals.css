@@ -19,7 +19,7 @@
 .brand .company-emblem,.footer-brand .company-emblem{display:block;width:100%;height:auto;object-fit:contain;filter:none;mix-blend-mode:normal}
 .company-logo .company-wordmark{display:block;width:90%;height:auto;overflow:visible;fill:currentColor;font-family:var(--font-sans);font-size:64px;font-weight:400}
 .footer-brand .company-logo{gap:9px}
-@media(max-width:900px){html{scroll-padding-top:118px}.company-logo{width:160px;gap:8px}.company-logo .company-wordmark{font-size:7px}}
+@media(max-width:900px){html{scroll-padding-top:118px}.company-logo{width:160px;gap:8px}}
 @media(max-width:700px){html{scroll-padding-top:116px}:root{--page-heading-gap:20px}}
 .site-header{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:24px}
 .site-header .desktop-nav{grid-column:1;grid-row:1;justify-self:start;gap:clamp(16px,2vw,32px);white-space:nowrap}
@@ -175,6 +175,10 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
 }
 @media(max-width:1150px) {
   .site-header .header-logo-art { --compact-lettering-width:clamp(475px,75vw,650px); }
+}
+@media(max-width:700px) {
+  /* The compact SVG canvas extends beyond the visible lettering. */
+  .site-header .header-logo-art { overflow:clip; }
 }
 .site-header .header-wing-circle { position:absolute; inset:0; clip-path:ellipse(54% 138.5% at 50% 60.165%); }
 .site-header .header-wings,.site-header .header-lettering { position:absolute; top:0; left:0; width:100%; height:auto; filter:invert(1); }

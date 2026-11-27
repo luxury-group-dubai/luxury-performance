@@ -34,7 +34,7 @@ export function ShopEntryPreview({ models, stockProducts, usedStockProducts, sto
 
   return <div className={styles.page}>
     <header className={styles.intro}>
-      <div className={styles.headline}><h1>Shop.</h1><p>Find your brand, your car, or what’s in stock.</p>
+      <div className={styles.headline}><h1 className={styles.overviewTitle}>Shop</h1><p>Find your brand, your car, or what’s in stock.</p>
         <ShopSearchField models={models} />
       </div>
       <div className={styles.browseBar}>
