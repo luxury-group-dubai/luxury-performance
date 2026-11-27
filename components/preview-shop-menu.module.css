@@ -34,7 +34,7 @@
 .fullMenu .stockLink { min-height:100px; }
 @media(max-width:1100px) {
   .fullMenu .shopHome svg, .fullMenu .shopOptions[data-expanded="false"] { display:none; }
-  .fullMenu .shopToggle { display:grid; place-items:center; flex:0 0 44px; min-height:44px; padding:0; background:none; color:inherit; border:0; }
+  .fullMenu .shopToggle { display:grid; place-items:center end; flex:0 0 44px; min-height:44px; padding:0; background:none; color:inherit; border:0; }
   .fullMenu .shopToggle svg { margin:0; transition:transform .25s ease; }
   .shopToggle[aria-expanded="true"] svg { transform:rotate(180deg); }
   .fullMenu .tabs { gap:24px; }
