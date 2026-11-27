@@ -231,9 +231,9 @@
 .header .desktop .previewShopTrigger > a::after { display:none; }
 
 /* Full menu navigation and contact details. */
-.mobile:global(.mobile-menu) { --menu-link-size:clamp(38px,4.7vw,72px); display:flex; flex-direction:column; }
+.mobile:global(.mobile-menu) { --menu-link-size:clamp(38px,4.7vw,72px); --menu-link-padding-block:12px; display:flex; flex-direction:column; }
 .mobile:global(.mobile-menu)>nav { width:100%; flex:1 0 auto; }
-.mobile nav .mobileLinks>a { border:0; font-size:var(--menu-link-size); padding:12px 0; transition:color .2s ease; }
+.mobile nav .mobileLinks>a { border:0; font-size:var(--menu-link-size); padding:var(--menu-link-padding-block) 0; transition:color .2s ease; }
 .mobileLinks:has(> a:is(:hover,:focus-visible)) > a { color:#777b79; }
 .mobileLinks > a:is(:hover,:focus-visible) { color:#fff; }
 .menuDetails { width:100%; max-width:1440px; margin:48px auto 0; display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
@@ -248,14 +248,14 @@
 @media(prefers-reduced-motion:reduce) { .mobile nav .mobileLinks>a { transition:none; } }
 
 /* Treat SHOP and the other main links as one hover group. */
-.mobile nav [data-full-menu-shop] { font-size:var(--menu-link-size); padding:12px 0; border:0; transition:color .2s ease; }
+.mobile nav [data-full-menu-shop] { font-size:var(--menu-link-size); padding:var(--menu-link-padding-block) 0; border:0; transition:color .2s ease; }
 .mobile nav:has(:is(.mobileLinks > a, [data-full-menu-shop]):is(:hover,:focus-visible)) :is(.mobileLinks > a, [data-full-menu-shop]) { color:#777b79; }
 .mobile nav:has(:is(.mobileLinks > a, [data-full-menu-shop]):is(:hover,:focus-visible)) :is(.mobileLinks > a, [data-full-menu-shop]):is(:hover,:focus-visible) { color:#fff; }
 @media(prefers-reduced-motion:reduce) { .mobile nav [data-full-menu-shop] { transition:none; } }
 
 /* A single solid panel is revealed with the menu, without a second backdrop. */
 .mobile.previewMobile:global(.mobile-menu) { background:#101112; }
-.mobile.previewMobile:global(.mobile-menu) { top:var(--site-header-height); }
+.mobile.previewMobile:global(.mobile-menu) { top:var(--site-header-height); padding-block-start:calc(var(--page-heading-gap) - var(--menu-link-padding-block)); }
 .mobile.previewMobile:global(.mobile-menu) { background:var(--nav-glass-background); -webkit-backdrop-filter:blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturation)); backdrop-filter:blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturation)); }
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) { .mobile.previewMobile:global(.mobile-menu) { background:#101010; } }
 

@@ -13,14 +13,14 @@
 .arrow-link{font-size:12px}
 .page-intro-bottom p{font-size:13px;line-height:1.85}
 @media(max-width:700px){.page-intro-bottom p{font-size:12px}}
-:root{--site-header-height:100px}
+:root{--site-header-height:100px;--page-heading-gap:30px}
 .site-header{height:var(--site-header-height);position:sticky;top:0}
 .company-logo{display:flex;flex-direction:column;align-items:center;gap:9px;width:180px;flex-shrink:0}
 .brand .company-emblem,.footer-brand .company-emblem{display:block;width:100%;height:auto;object-fit:contain;filter:none;mix-blend-mode:normal}
 .company-logo .company-wordmark{display:block;width:90%;height:auto;overflow:visible;fill:currentColor;font-family:var(--font-sans);font-size:64px;font-weight:400}
 .footer-brand .company-logo{gap:9px}
 @media(max-width:900px){html{scroll-padding-top:118px}.company-logo{width:160px;gap:8px}.company-logo .company-wordmark{font-size:7px}}
-@media(max-width:700px){html{scroll-padding-top:116px}}
+@media(max-width:700px){html{scroll-padding-top:116px}:root{--page-heading-gap:20px}}
 .site-header{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:24px}
 .site-header .desktop-nav{grid-column:1;grid-row:1;justify-self:start;gap:clamp(16px,2vw,32px);white-space:nowrap}
 .site-header .brand{grid-column:2;grid-row:1;justify-self:center}
