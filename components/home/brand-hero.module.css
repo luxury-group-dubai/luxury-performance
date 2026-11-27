@@ -126,7 +126,7 @@
 }
 .copy p { grid-row: 5; max-width: 47ch; min-block-size: 0; margin: 0; color: #e0e0dc; font-size: 15px; line-height: 1.8; text-wrap: pretty; }
 .cta { grid-row: 7; justify-self: start; display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 56px; padding: 16px 24px; margin: 0; background: var(--accent); color: #fff; font-size: 11px; font-weight: 600; line-height: 18px; letter-spacing: .06em; text-transform: uppercase; border: 1px solid transparent; transition: background 180ms; }
-.cta:hover { background: var(--accent-hover, #c90017); }
+.cta:hover { background: #fff; color: #111; }
 .cta svg { flex-shrink: 0; }
 .controls { position: absolute; z-index: 3; bottom: 28px; left: var(--gutter); right: max(var(--gutter), calc(92px + env(safe-area-inset-right, 0px))); display: flex; align-items: center; gap: 32px; }
 .brandNav { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); flex: 1; max-width: 1050px; gap: 32px; }

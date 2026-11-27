@@ -1,11 +1,10 @@
 "use client";
 import { ActionLabel } from '@/components/action-label';
-import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { ActionArrow } from '@/components/action-arrow';
 import Link from 'next/link';
 import { HeaderSearch } from './header-search';
 import { CartButton } from './shop/cart-provider';
-import { BrandLogo } from './brand-logo';
 import { HomeLink } from './home-link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight, ChevronDown, X } from 'lucide-react';
@@ -20,10 +19,7 @@ import { hasPartnerHeroOverlay } from '@/lib/brand-hero-images';
 import { lockOverlayScroll } from '@/lib/overlay-scroll-lock';
 import type { PreviewShopTab } from '@/app/preview/shop/navigation';
 
-const PreviewShopMenu = dynamic(() => import('./preview-shop-menu').then(module => module.PreviewShopMenu), {
-  ssr: false,
-  loading: () => <p role="status">Loading shop navigation…</p>,
-});
+import { PreviewShopMenu } from './preview-shop-menu';
 
 const VehicleMenu = dynamic(() => import('./vehicle-menu').then(module => module.VehicleMenu), { loading: () => <p role="status">Loading vehicles…</p> });
 
@@ -72,7 +68,10 @@ function ShopContents({ selected, select, prefix, close, dismiss, label }: { sel
 }
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [menuClosing, setMenuClosing] = useState(false);
   const [shopMenu, setShopMenu] = useState<ShopMenu | null>(null);
+  const [shopClosing, setShopClosing] = useState(false);
+  const [glassHandoff, setGlassHandoff] = useState(false);
   const [mobileSection, setMobileSection] = useState<ShopMenu>('brands');
   const pathname = usePathname();
   const previewNavigation = true;
@@ -80,7 +79,8 @@ export function Header() {
   const isShop = isShopRoute || pathname === '/studio/capristo';
   const partnerSlug = /^\/partners\/([^/]+)$/.exec(pathname)?.[1];
   const overlaysHero = pathname === '/' || pathname === '/about' || pathname === '/novitec-12cilindri-n-largo' || Boolean(partnerSlug && hasPartnerHeroOverlay(partnerSlug));
-  const solidSurface = !overlaysHero;
+  const isContact = pathname === '/contact';
+  const solidSurface = !overlaysHero && !isContact;
   const header = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -88,6 +88,8 @@ export function Header() {
   const shopGlass = useRef<HTMLDivElement>(null);
   const shopTrigger = useRef<HTMLButtonElement>(null);
   const shopPinned = useRef(false);
+  const shopMenuRef = useRef(shopMenu);
+  useLayoutEffect(() => { shopMenuRef.current = shopMenu; }, [shopMenu]);
   const hoverClose = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cancelHoverClose = useCallback(() => {
     if (hoverClose.current === null) return;
@@ -97,13 +99,26 @@ export function Header() {
   const closeShop = useCallback(() => {
     cancelHoverClose();
     shopPinned.current = false;
-    setShopMenu(null);
+    if (!shopMenuRef.current) { setShopClosing(false); return; }
+    if (header.current?.classList.contains('is-scrolled')) { header.current.dataset.glassReady = 'true'; setGlassHandoff(true); }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setShopMenu(null);
+    else setShopClosing(true);
   }, [cancelHoverClose]);
-  const close = () => { setOpen(false); closeShop(); };
+  useEffect(() => { if (!shopClosing) return; const timer = window.setTimeout(() => { setShopMenu(null); setShopClosing(false); }, 440); return () => window.clearTimeout(timer); }, [shopClosing]);
+  const close = () => { setOpen(false); setMenuClosing(false); closeShop(); };
+  const dismissMenu = () => {
+    const nav = header.current;
+    if (nav?.classList.contains('is-scrolled')) { nav.dataset.glassReady = 'true'; setGlassHandoff(true); }
+    setOpen(false);
+    setMenuClosing(!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+  useEffect(() => { if (!glassHandoff || menuClosing || shopClosing) return; const timer = window.setTimeout(() => setGlassHandoff(false), 80); return () => window.clearTimeout(timer); }, [glassHandoff, menuClosing, shopClosing]);
+  useEffect(() => { if (!menuClosing) return; const timer = window.setTimeout(() => setMenuClosing(false), 440); return () => window.clearTimeout(timer); }, [menuClosing]);
 
   function openShopOnHover(event: ReactPointerEvent<HTMLElement>) {
     if (event.pointerType !== 'mouse' || open) return;
     cancelHoverClose();
+    setShopClosing(false);
     setShopMenu(current => current ?? 'brands');
   }
 
@@ -126,13 +141,23 @@ export function Header() {
     }
     cancelHoverClose();
     shopPinned.current = true;
+    setShopClosing(false);
     setShopMenu(current => current ?? 'brands');
   }
 
   useEffect(() => cancelHoverClose, [cancelHoverClose]);
-  useEffect(() => {
+  // React rewrites className when a menu changes; restore the scroll state before paint.
+  useLayoutEffect(() => {
+    const nav = header.current;
+    if (!nav) return;
+    if (nav.dataset.compact) nav.classList.toggle('is-scrolled', nav.dataset.compact === 'true');
+    if (nav.dataset.pastHero) nav.classList.toggle('is-past-hero', nav.dataset.pastHero === 'true');
+    if (nav.dataset.partnerBrowsing) nav.classList.toggle('is-over-partner-browsing', nav.dataset.partnerBrowsing === 'true');
+  });
+  useLayoutEffect(() => {
     let frame = 0;
     let directionAnchor = window.scrollY;
+    let logoGeometryReady = false;
     const nav = header.current;
     if (!nav) return;
     const update = () => {
@@ -144,28 +169,42 @@ export function Header() {
       const edge = hero?.getAttribute('data-header-hero') === 'end' ? 'top' : 'bottom';
       const heroBottom = hero?.getBoundingClientRect()[edge] ?? 0;
       const headerHeight = nav.offsetHeight;
-      const divisions = pathname === '/about'
-        ? document.getElementById('our-divisions')?.getBoundingClientRect()
-        : undefined;
       const partnerBrowsing = pathname === '/partners/capristo' || pathname === '/partners/gintani'
         ? document.querySelector('[data-partner-browsing]')?.getBoundingClientRect()
         : undefined;
       const heroFade = Math.min(1, Math.max(0, (heroBottom - headerHeight) / 180));
-      if (divisions) {
-        const inside = divisions.top <= headerHeight && divisions.bottom > headerHeight;
-        const distance = y - directionAnchor;
-        // Ignore small reversals from trackpads and touch scrolling.
-        if (!inside || Math.abs(distance) >= 10 || !nav.dataset.divisionsHeader) {
-          const state = inside && distance >= 10 ? 'hidden' : 'visible';
-          if (nav.dataset.divisionsHeader !== state) nav.dataset.divisionsHeader = state;
+      const hidden = nav.classList.contains('is-scroll-hidden');
+      if (y <= Math.max(headerHeight * 2, 160)) {
+        nav.classList.remove('is-scroll-hidden');
+        directionAnchor = y;
+      } else if (hidden) {
+        directionAnchor = Math.max(directionAnchor, y);
+        if (directionAnchor - y >= 24) {
+          nav.classList.remove('is-scroll-hidden');
+          directionAnchor = y;
+        }
+      } else {
+        directionAnchor = Math.min(directionAnchor, y);
+        if (y - directionAnchor >= 100) {
+          nav.classList.add('is-scroll-hidden');
           directionAnchor = y;
         }
       }
       nav.style.setProperty('--glass-progress', String(Math.min(1, Math.max(0, y / 160))));
-      nav.classList.toggle('is-scrolled', y > 32);
-      nav.classList.toggle('is-past-hero', !hero || heroBottom <= headerHeight);
-      nav.classList.toggle('is-over-partner-browsing', !!partnerBrowsing
-        && partnerBrowsing.top <= headerHeight && partnerBrowsing.bottom > headerHeight);
+      const scrolled = y > 32;
+      if (logoGeometryReady && nav.classList.contains('is-scrolled') !== scrolled) {
+        nav.dataset.logoMotion = scrolled ? 'lettering' : 'wings';
+        delete nav.dataset.glassReady;
+      }
+      nav.dataset.compact = String(scrolled);
+      nav.classList.toggle('is-scrolled', scrolled);
+      logoGeometryReady = true;
+      const pastHero = overlaysHero && y > 32 && hero !== null && heroBottom <= headerHeight;
+      const overPartnerBrowsing = !!partnerBrowsing && partnerBrowsing.top <= headerHeight && partnerBrowsing.bottom > headerHeight;
+      nav.dataset.pastHero = String(pastHero);
+      nav.dataset.partnerBrowsing = String(overPartnerBrowsing);
+      nav.classList.toggle('is-past-hero', pastHero);
+      nav.classList.toggle('is-over-partner-browsing', overPartnerBrowsing);
       nav.style.setProperty('--hero-fade-opacity', String(heroFade));
       nav.style.setProperty('--hero-glass-progress', String(1 - heroFade));
     };
@@ -177,17 +216,23 @@ export function Header() {
       header.current?.style.setProperty('--glass-progress', '0');
       header.current?.style.setProperty('--hero-fade-opacity', '1');
       header.current?.style.setProperty('--hero-glass-progress', '0');
-      header.current?.classList.remove('is-scrolled', 'is-past-hero', 'is-over-partner-browsing');
+      nav.dataset.compact = 'false';
+      nav.dataset.pastHero = 'false';
+      nav.dataset.partnerBrowsing = 'false';
+      nav.classList.remove('is-scrolled', 'is-past-hero', 'is-over-partner-browsing');
+      logoGeometryReady = true;
     }
     window.addEventListener('scroll', scroll, { passive: true }); window.addEventListener('resize', scroll);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', scroll);
       window.removeEventListener('resize', scroll);
-      delete nav.dataset.divisionsHeader;
+      nav.classList.remove('is-scroll-hidden');
+      delete nav.dataset.logoMotion;
+      delete nav.dataset.glassReady;
     };
   }, [pathname, overlaysHero]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const nav = header.current;
     const content = dropdown.current;
     if (!shopMenu || !nav || !content) return;
@@ -215,13 +260,15 @@ export function Header() {
   }, [closeShop]);
   useEffect(() => {
     if (!open) return;
+    // Closing an overlay must not restore a previously hidden header.
+    header.current?.classList.remove('is-scroll-hidden');
     const unlockScroll = lockOverlayScroll();
     const background = Array.from(document.querySelectorAll<HTMLElement>('#main, footer'));
     const previousInert = background.map(element => element.inert);
     background.forEach(element => { element.inert = true; });
     Array.from(panel.current?.querySelectorAll<HTMLElement>('a,button,summary') ?? []).find(element => element.getClientRects().length)?.focus({ preventScroll: true });
     function onKey(event: KeyboardEvent) {
-      if (event.key === 'Escape') { setOpen(false); toggle.current?.focus({ preventScroll: true }); }
+      if (event.key === 'Escape') { dismissMenu(); toggle.current?.focus({ preventScroll: true }); }
       if (event.key === 'Tab') {
         const controls = Array.from(panel.current?.querySelectorAll<HTMLElement>('a,button,summary') ?? []).filter(el => el.getClientRects().length);
         const elements = [toggle.current, ...controls].filter(Boolean) as HTMLElement[];
@@ -235,9 +282,13 @@ export function Header() {
   }, [open]);
   return <>
     <a href="#main" className="skip-link">Skip to content</a>
-    <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${styles.header} ${solidSurface ? styles.previewHeader : ''} ${open || shopMenu ? 'menu-is-open' : ''} ${open ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''}`}>
-      <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => { setOpen(!open); closeShop(); setMobileSection('brands'); }}><span aria-hidden="true"><i/><i/></span></button>
-      <nav aria-label="Main navigation" inert={open} className={`desktop-nav ${styles.desktop}`}>
+    <header ref={header} onAnimationEnd={event => {
+      if (event.animationName === 'headerLogoScaleOut' && event.currentTarget.classList.contains('is-scrolled')) event.currentTarget.dataset.glassReady = 'true';
+    }} onTransitionEnd={event => {
+      if (event.propertyName === 'opacity' && event.target instanceof Element && event.target.classList.contains('header-logo-name') && event.currentTarget.classList.contains('is-scrolled')) event.currentTarget.dataset.glassReady = 'true';
+    }} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${isContact ? 'contact-header' : ''} ${styles.header} ${solidSurface ? `solid-header ${styles.previewHeader}` : ''} ${open || menuClosing || shopMenu ? 'menu-is-open' : ''} ${open || menuClosing ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''} ${menuClosing ? 'full-menu-is-closing' : ''} ${glassHandoff ? 'glass-handoff' : ''}`}>
+      <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => { if (open) dismissMenu(); else { setMenuClosing(false); setOpen(true); } setShopMenu(null); setShopClosing(false); cancelHoverClose(); shopPinned.current = false; setMobileSection('brands'); }}><span aria-hidden="true"><i/><i/></span></button>
+      <nav aria-label="Main navigation" inert={open || menuClosing} className={`desktop-nav ${styles.desktop}`}>
         <div className={styles.menuGroup}>
           {previewNavigation ? <span className={styles.previewShopTrigger} onPointerEnter={openShopOnHover} onPointerLeave={scheduleShopClose}>
             <Link href="/shop" onClick={close} aria-current={isShopRoute ? 'page' : undefined}>SHOP</Link>
@@ -257,7 +308,7 @@ export function Header() {
               setShopMenu(current => current ?? 'brands');
               requestAnimationFrame(() => dropdown.current?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]')?.focus());
             }}>SHOP<ChevronDown size={12}/></button>}
-          {shopMenu && <div className={`${styles.dropdown} ${previewNavigation ? styles.previewDropdown : ''}`} id="shop-menu" ref={dropdown} onPointerEnter={cancelHoverClose} onPointerLeave={scheduleShopClose}>
+          {shopMenu && <div inert={shopClosing} aria-hidden={shopClosing || undefined} className={`${styles.dropdown} ${shopClosing ? "shop-dropdown-closing" : ""} ${previewNavigation ? styles.previewDropdown : ''}`} id="shop-menu" ref={dropdown} onPointerEnter={cancelHoverClose} onPointerLeave={scheduleShopClose}>
             {previewNavigation ? <PreviewShopMenu selected={shopMenu} select={setShopMenu} close={close} dismiss={() => { closeShop(); shopTrigger.current?.focus(); }} /> : <ShopContents selected={shopMenu === 'stock' ? 'brands' : shopMenu} select={setShopMenu} prefix="desktop-shop" close={close} dismiss={() => { closeShop(); shopTrigger.current?.focus(); }}/> }
             <div className={styles.menuFooter}>
               <Link className="action-secondary" href="/partners" onClick={close}>Explore all partners <ActionArrow size={15}/></Link>
@@ -268,8 +319,8 @@ export function Header() {
         <Link href="/partners" onClick={close} aria-current={pathname === '/partners' ? 'page' : undefined}>PARTNERS</Link>
         <Link href="/about" onClick={close} aria-current={pathname === '/about' ? 'page' : undefined}>ABOUT</Link>
       </nav>
-      <HomeLink inert={open} className="brand" onClick={close} aria-label="Luxury Performance home"><BrandLogo priority wordmark={false}/></HomeLink>
-      <div inert={open} className={`header-shop-actions ${styles.actions}`}>
+      <HomeLink inert={open} className="brand" onClick={close} aria-label="Luxury Performance home"><span className="company-logo header-logo-art" aria-hidden="true"><span className="header-wing-circle"><svg className="company-emblem header-wings" viewBox="60 310 934 364" focusable="false"><use href="/brand/lxp-winged-black.svg#wings" /></svg></span><svg className="header-lettering" viewBox="60 310 934 364" focusable="false"><use href="/brand/lxp-winged-black.svg#lettering" /></svg><svg className="header-logo-name" viewBox="0 0 900 65" aria-hidden="true" focusable="false"><text x="0" y="55" textLength="900" lengthAdjust="spacingAndGlyphs">LUXURY PERFORMANCE</text></svg></span></HomeLink>
+      <div inert={open || menuClosing} className={`header-shop-actions ${styles.actions}`}>
         <div className={styles.utilityActions}>
           <HeaderSearch onOpen={close} preview={previewNavigation}/>
           <span onClick={close}><CartButton/></span>
@@ -277,17 +328,16 @@ export function Header() {
         <Link className="header-contact" href="/contact" onClick={close}><ActionLabel>CONTACT</ActionLabel> <ActionArrow/></Link>
       </div>
     </header>
-    {shopMenu && <div ref={shopGlass} className={`navigation-glass-surface navigation-shop-glass ${styles.shopGlass}`} aria-hidden="true" />}
-    {open && <div className="navigation-glass-surface" aria-hidden="true" />}
-    {open && <div ref={panel} className={`mobile-menu ${styles.mobile} ${previewNavigation ? styles.previewMobile : ''}`} id="full-navigation"><nav aria-label="Full navigation"><div className={styles.fullShop}>
+    {shopMenu && <div ref={shopGlass} className={`navigation-glass-surface navigation-shop-glass ${shopClosing ? "shop-glass-closing" : ""} ${styles.shopGlass}`} aria-hidden="true" />}
+    {(open || menuClosing) && <div className={`navigation-glass-surface navigation-full-glass ${menuClosing ? "navigation-glass-closing" : ""}`} aria-hidden="true" />}
+    {(open || menuClosing) && <div inert={menuClosing} aria-hidden={menuClosing || undefined} ref={panel} className={`mobile-menu ${menuClosing ? "navigation-menu-closing" : ""} ${styles.mobile} ${previewNavigation ? styles.previewMobile : ''}`} id="full-navigation"><nav aria-label="Full navigation"><div className={styles.fullShop}>
       {previewNavigation ? <PreviewShopMenu selected={mobileSection} select={setMobileSection} close={close} fullNavigation /> : <ShopContents selected={mobileSection === 'stock' ? 'brands' : mobileSection} select={setMobileSection} prefix="full-shop" close={close} label="SHOP"/>}
       </div><div className={styles.mobileLinks}>{!previewNavigation && <span className={styles.sectionLabel}>Explore Luxury Performance</span>}{links.map(link => <Link key={link.name} href={link.href} onClick={close} aria-current={pathname === link.href ? 'page' : undefined}>{link.name}<ArrowUpRight size={20}/></Link>)}
-        <div className={styles.menuDetails}>
-          <p className={styles.menuMotto}>Beyond Ordinary.</p>
-          <a className={`${styles.menuAddress} action-secondary`} href={contact.maps} target="_blank" rel="noopener noreferrer">4th Street, Al Quoz Industrial 3<br/>Dubai, United Arab Emirates <ActionArrow size={12} /><span className="sr-only"> (opens in a new tab)</span></a>
-          <SocialLinks/>
-        </div>
       </div>
-    </nav></div>}
+    </nav><div className={styles.menuDetails}>
+      <p className={styles.menuMotto}>BEYOND ORDINARY.</p>
+      <a className={`${styles.menuAddress} action-secondary`} href={contact.maps} target="_blank" rel="noopener noreferrer">4th Street, Al Quoz Industrial 3<br/>Dubai, United Arab Emirates <ActionArrow size={12} /><span className="sr-only"> (opens in a new tab)</span></a>
+      <SocialLinks/>
+    </div></div>}
   </>;
 }

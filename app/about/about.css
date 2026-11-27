@@ -79,12 +79,3 @@
   .about-why, .about-news-grid { grid-template-columns: 1fr; gap: 32px; }
   .about-why-image { aspect-ratio: 1.48; }
 }
-
-.site-header[data-divisions-header="hidden"]:not(.menu-is-open):not(:has(:focus-visible, [aria-expanded="true"])) {
-  top: calc(0px - var(--site-header-height));
-}
-@media (prefers-reduced-motion: no-preference) {
-  .site-header[data-divisions-header] {
-    transition: top .22s ease-out, box-shadow .45s;
-  }
-}

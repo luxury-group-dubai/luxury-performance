@@ -22,7 +22,7 @@
 
 /* The three main partner pages share the homepage artwork and overlay navigation. */
 .hero { height: auto; min-height: max(430px, 68svh); }
-.fullBleedHero { --partner-header-height: 112px; min-height: clamp(440px, 46vw, 68svh); max-height: none; }
+.fullBleedHero { --partner-header-height: var(--site-header-height); min-height: clamp(440px, 46vw, 68svh); max-height: none; }
 .heroContent { height: auto; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr auto; column-gap: 24px; }
 .heroBody { grid-column: 1; grid-row: 2; padding: 24px 0 0; }
 .heroBody h1 { margin: 0; }

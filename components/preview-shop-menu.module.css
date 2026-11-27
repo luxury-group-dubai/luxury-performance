@@ -18,14 +18,13 @@
 .logoLink [data-brand-artwork="collectibles"] > img { width:192px; }
 .logoLink [data-selector-logo-artwork] > img[data-make] { max-width:230px; height:78px; }
 .logoLink small { position:absolute; bottom:10px; color:#aaa; font-size:10px; }
-.logoLink:hover, .logoLink:focus-visible { background:#ffffff06; }
 .menu .browseAll { display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-top:20px; font-size:12px; font-weight:400; text-transform:uppercase; }
 .stockGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:40px; }
 .menu .stockLink { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:150px; font-size:22px; white-space:normal; }
 .stockLink small { display:block; margin-top:10px; font-size:12px; color:#aaa; line-height:1.6; }
 .stockLink > svg { flex:none; }
 .fullMenu .shopHome { justify-content:space-between; font-size:clamp(22px,2.4vw,36px); font-weight:700; letter-spacing:-.035em; }
-.fullMenu a.shopHome { display:flex; align-items:center; padding:15px 0; border:0; border-bottom:1px solid #ffffff1f; animation:none; }
+.fullMenu a.shopHome { display:flex; align-items:center; padding:15px 0; border:0; animation:none; }
 .fullMenu .toolbar { margin-top:12px; }
 .fullMenu .brandGrid, .fullMenu .vehicleGrid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 16px; }
 .fullMenu .brandGrid a.logoLink, .fullMenu .vehicleGrid a.logoLink { min-width:0; padding-inline:8px; }
@@ -38,4 +37,37 @@
   .fullMenu .brandGrid, .fullMenu .vehicleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; }
   .fullMenu .brandGrid a.logoLink, .fullMenu .vehicleGrid a.logoLink { min-width:0; min-height:116px; padding:16px 8px 24px; }
   .fullMenu .logoLink > [data-selector-logo] { --selector-artwork-width:180px; }
+}
+
+.tabs button { border:0; }
+.tabs button::after { display:none; }
+/* The shared full-menu link styles otherwise add dividers to these tiles. */
+.fullMenu .brandGrid a.logoLink,
+.fullMenu .vehicleGrid a.logoLink,
+.fullMenu .stockGrid a.stockLink,
+.fullMenu a.shopHome { border-bottom:0; }
+
+.menu a.browseAll { display:flex; width:fit-content; min-height:54px; align-items:center; justify-content:space-between; gap:16px; padding:16px 18px; border:1px solid #fff; background:transparent; color:#fff; font-weight:700; transition:background-color .2s,color .2s; }
+.menu a.browseAll:is(:hover,:focus-visible) { background:#fff; color:#111; }
+@media (prefers-reduced-motion:reduce) { .menu a.browseAll { transition:none; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu.fullMenu a.shopHome,
+  .fullMenu .toolbar {
+    animation: menu-logo-in .48s cubic-bezier(.22, 1, .36, 1) backwards;
+  }
+  .menu.fullMenu a.shopHome { animation-delay: .08s; }
+  .fullMenu .toolbar { animation-delay: .14s; }
+
+  /* Let hover and focus take over opacity once the entrance finishes. */
+  .menu.fullMenu :is(.brandGrid, .vehicleGrid) a.logoLink {
+    animation: menu-logo-in .38s cubic-bezier(.22, 1, .36, 1) .20s backwards;
+  }
+  .menu.fullMenu :is(.brandGrid, .vehicleGrid) a.logoLink:nth-child(n + 4) { animation-delay: .26s; }
+  .menu.fullMenu :is(.brandGrid, .vehicleGrid) a.logoLink:nth-child(n + 7) { animation-delay: .32s; }
+
+  @keyframes menu-logo-in {
+    from { opacity: 0; transform: translateY(70%); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 }

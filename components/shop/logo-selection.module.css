@@ -1,0 +1,13 @@
+@media (hover: hover) {
+  .grid:has(.item:hover) .item:not(:hover, :focus-visible) {
+    opacity: .38;
+  }
+}
+
+.grid:has(.item:focus-visible) .item:not(:hover, :focus-visible) {
+  opacity: .38;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .item { transition: opacity .2s ease; }
+}
