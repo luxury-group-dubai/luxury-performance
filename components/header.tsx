@@ -73,6 +73,7 @@ export function Header() {
   const [shopClosing, setShopClosing] = useState(false);
   const [glassHandoff, setGlassHandoff] = useState(false);
   const [mobileSection, setMobileSection] = useState<ShopMenu>('brands');
+  const [mobileShopOpen, setMobileShopOpen] = useState(false);
   const pathname = usePathname();
   const previewNavigation = true;
   const isShopRoute = pathname === '/shop' || pathname.startsWith('/shop/');
@@ -100,15 +101,14 @@ export function Header() {
     cancelHoverClose();
     shopPinned.current = false;
     if (!shopMenuRef.current) { setShopClosing(false); return; }
-    if (header.current?.classList.contains('is-scrolled')) { header.current.dataset.glassReady = 'true'; setGlassHandoff(true); }
+    if (header.current?.classList.contains('is-scrolled')) setGlassHandoff(true);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setShopMenu(null);
     else setShopClosing(true);
   }, [cancelHoverClose]);
   useEffect(() => { if (!shopClosing) return; const timer = window.setTimeout(() => { setShopMenu(null); setShopClosing(false); }, 440); return () => window.clearTimeout(timer); }, [shopClosing]);
   const close = () => { setOpen(false); setMenuClosing(false); closeShop(); };
   const dismissMenu = () => {
-    const nav = header.current;
-    if (nav?.classList.contains('is-scrolled')) { nav.dataset.glassReady = 'true'; setGlassHandoff(true); }
+    if (header.current?.classList.contains('is-scrolled')) setGlassHandoff(true);
     setOpen(false);
     setMenuClosing(!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   };
@@ -194,7 +194,6 @@ export function Header() {
       const scrolled = y > 32;
       if (logoGeometryReady && nav.classList.contains('is-scrolled') !== scrolled) {
         nav.dataset.logoMotion = scrolled ? 'lettering' : 'wings';
-        delete nav.dataset.glassReady;
       }
       nav.dataset.compact = String(scrolled);
       nav.classList.toggle('is-scrolled', scrolled);
@@ -229,7 +228,6 @@ export function Header() {
       window.removeEventListener('resize', scroll);
       nav.classList.remove('is-scroll-hidden');
       delete nav.dataset.logoMotion;
-      delete nav.dataset.glassReady;
     };
   }, [pathname, overlaysHero]);
   useLayoutEffect(() => {
@@ -282,10 +280,20 @@ export function Header() {
   }, [open]);
   return <>
     <a href="#main" className="skip-link">Skip to content</a>
-    <header ref={header} onAnimationEnd={event => {
-      if (event.animationName === 'headerLogoScaleOut' && event.currentTarget.classList.contains('is-scrolled')) event.currentTarget.dataset.glassReady = 'true';
-    }} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${isContact ? 'contact-header' : ''} ${styles.header} ${solidSurface ? `solid-header ${styles.previewHeader}` : ''} ${open || menuClosing || shopMenu ? 'menu-is-open' : ''} ${open || menuClosing ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''} ${menuClosing ? 'full-menu-is-closing' : ''} ${glassHandoff ? 'glass-handoff' : ''}`}>
-      <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => { if (open) dismissMenu(); else { setMenuClosing(false); setOpen(true); } setShopMenu(null); setShopClosing(false); cancelHoverClose(); shopPinned.current = false; setMobileSection('brands'); }}><span aria-hidden="true"><i/><i/></span></button>
+    <header ref={header} className={`site-header ${isShop ? 'shop-site-header' : ''} ${overlaysHero ? 'hero-header' : ''} ${isContact ? 'contact-header' : ''} ${styles.header} ${solidSurface ? `solid-header ${styles.previewHeader}` : ''} ${open || menuClosing || shopMenu ? 'menu-is-open' : ''} ${open || menuClosing ? 'full-menu-is-open' : shopMenu ? 'shop-menu-is-open' : ''} ${menuClosing ? 'full-menu-is-closing' : ''} ${glassHandoff ? 'glass-handoff' : ''}`}>
+      <button ref={toggle} className={`menu-toggle ${styles.burger}`} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="full-navigation" onClick={() => {
+        if (open) dismissMenu();
+        else {
+          setMenuClosing(false);
+          setMobileShopOpen(false);
+          setOpen(true);
+        }
+        setShopMenu(null);
+        setShopClosing(false);
+        cancelHoverClose();
+        shopPinned.current = false;
+        setMobileSection('brands');
+      }}><span aria-hidden="true"><i/><i/></span></button>
       <nav aria-label="Main navigation" inert={open || menuClosing} className={`desktop-nav ${styles.desktop}`}>
         <div className={styles.menuGroup}>
           {previewNavigation ? <span className={styles.previewShopTrigger} onPointerEnter={openShopOnHover} onPointerLeave={scheduleShopClose}>
@@ -340,7 +348,7 @@ export function Header() {
     {shopMenu && <div ref={shopGlass} className={`navigation-glass-surface navigation-shop-glass ${shopClosing ? "shop-glass-closing" : ""} ${styles.shopGlass}`} aria-hidden="true" />}
     {(open || menuClosing) && <div className={`navigation-glass-surface navigation-full-glass ${menuClosing ? "navigation-glass-closing" : ""}`} aria-hidden="true" />}
     {(open || menuClosing) && <div inert={menuClosing} aria-hidden={menuClosing || undefined} ref={panel} className={`mobile-menu ${menuClosing ? "navigation-menu-closing" : ""} ${styles.mobile} ${previewNavigation ? styles.previewMobile : ''}`} id="full-navigation"><nav aria-label="Full navigation"><div className={styles.fullShop}>
-      {previewNavigation ? <PreviewShopMenu selected={mobileSection} select={setMobileSection} close={close} fullNavigation /> : <ShopContents selected={mobileSection === 'stock' ? 'brands' : mobileSection} select={setMobileSection} prefix="full-shop" close={close} label="SHOP"/>}
+      {previewNavigation ? <PreviewShopMenu selected={mobileSection} select={setMobileSection} close={close} fullNavigation={{ expanded: mobileShopOpen, onToggle: () => setMobileShopOpen(expanded => !expanded) }} /> : <ShopContents selected={mobileSection === 'stock' ? 'brands' : mobileSection} select={setMobileSection} prefix="full-shop" close={close} label="SHOP"/>}
       </div><div className={styles.mobileLinks}>{!previewNavigation && <span className={styles.sectionLabel}>Explore Luxury Performance</span>}{links.map(link => <Link key={link.name} href={link.href} onClick={close} aria-current={pathname === link.href ? 'page' : undefined}>{link.name}<ArrowUpRight size={20}/></Link>)}
       </div>
     </nav><div className={styles.menuDetails}>

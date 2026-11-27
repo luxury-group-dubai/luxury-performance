@@ -58,9 +58,12 @@ test('stock links open the correct stock groups', () => {
   const html = render({ selected: 'stock' });
   assert(html.includes('Used OEM parts')); assert(html.includes('URBAN kits'));
 });
-test('full navigation shows brands immediately with the same three tabs on all screen sizes', () => {
-  const html = render({ fullNavigation: true });
-  assert(!html.includes('<details'));
+test('full navigation has a direct Shop link and a separate mobile disclosure', () => {
+  const html = render({ fullNavigation: { expanded: false, onToggle() {} } });
+  assert(html.includes('aria-expanded="false" aria-controls="full-menu-shop-options"'));
+  assert(html.includes('id="full-menu-shop-options"'));
+  assert(html.includes('data-expanded="false"'));
+  assert(html.includes('aria-label="Shop options"'));
   assert(html.includes('href="/shop"'));
   assert(html.includes('role="tablist"'));
   assert(html.includes('aria-label="Shop NOVITEC"'));

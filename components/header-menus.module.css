@@ -239,6 +239,7 @@
 .menuDetails { width:100%; max-width:1440px; margin:48px auto 0; display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
 .mobile .menuAddress { display:block; width:fit-content; margin:0; padding:0; border:0; font-size:11px; line-height:1.9; color:#b7b9b5; }
 .mobile .menuAddress:hover { color:#fff; }
+@media(max-width:1100px) { .previewMobile:global(.mobile-menu)>nav { gap:0; } }
 @media(max-width:700px) {
   .mobile:global(.mobile-menu) { --menu-link-size:clamp(34px,9.5vw,48px); }
   .menuDetails { flex-wrap:wrap; align-items:flex-start; gap:20px; }

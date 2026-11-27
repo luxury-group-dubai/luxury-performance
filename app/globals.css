@@ -162,6 +162,7 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
 @media (prefers-reduced-motion:reduce) { .site-header { transition:none; } }
 
 /* Use the About timeline's lettering, circle and wing choreography. */
+.site-header { --header-logo-duration:.9s; }
 .site-header .brand { position:relative; }
 .site-header .header-logo-art {
   --compact-lettering-width:675px;
@@ -184,12 +185,12 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
 .site-header.is-scrolled .header-wing-circle { clip-path:ellipse(0% 0% at 50% 60.165%); }
 .site-header.is-scrolled .header-wings { clip-path:polygon(36.46% 0,63.54% 0,60.36% 100%,39.64% 100%); }
 @media (prefers-reduced-motion:no-preference) {
-  .site-header[data-logo-motion="wings"] .header-lettering { animation:headerLetteringIn .9s ease-in-out both; }
-  .site-header[data-logo-motion="wings"] .header-wing-circle { animation:headerCircleIn .9s ease-in-out both; }
-  .site-header[data-logo-motion="wings"] .header-wings { animation:headerWingsIn .9s linear both; }
-  .site-header[data-logo-motion="lettering"] .header-lettering { animation:headerLetteringOut .9s ease-in-out reverse both; }
-  .site-header[data-logo-motion="lettering"] .header-wing-circle { animation:headerCircleOut .9s ease-in-out reverse both; }
-  .site-header[data-logo-motion="lettering"] .header-wings { animation:headerWingsOut .9s linear reverse both; }
+  .site-header[data-logo-motion="wings"] .header-lettering { animation:headerLetteringIn var(--header-logo-duration) ease-in-out both; }
+  .site-header[data-logo-motion="wings"] .header-wing-circle { animation:headerCircleIn var(--header-logo-duration) ease-in-out both; }
+  .site-header[data-logo-motion="wings"] .header-wings { animation:headerWingsIn var(--header-logo-duration) linear both; }
+  .site-header[data-logo-motion="lettering"] .header-lettering { animation:headerLetteringOut var(--header-logo-duration) ease-in-out reverse both; }
+  .site-header[data-logo-motion="lettering"] .header-wing-circle { animation:headerCircleOut var(--header-logo-duration) ease-in-out reverse both; }
+  .site-header[data-logo-motion="lettering"] .header-wings { animation:headerWingsOut var(--header-logo-duration) linear reverse both; }
   @keyframes headerLetteringIn { 0%,8% { width:var(--compact-lettering-width); left:var(--compact-lettering-left); top:var(--compact-lettering-top); } 42%,100% { width:100%; left:0; top:0; } }
   @keyframes headerLetteringOut { 0%,16% { width:var(--compact-lettering-width); left:var(--compact-lettering-left); top:var(--compact-lettering-top); } 32%,100% { width:100%; left:0; top:0; } }
   @keyframes headerCircleIn { 0%,32% { clip-path:ellipse(0% 0% at 50% 60.165%); } 42% { clip-path:ellipse(11.56% 29.67% at 50% 60.165%); } 75%,100% { clip-path:ellipse(54% 138.5% at 50% 60.165%); } }
@@ -200,8 +201,8 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
 
 /* Keep the outer logo scale in step with the same reversible sequence. */
 @media (prefers-reduced-motion:no-preference) {
-  .site-header[data-logo-motion="wings"] .header-logo-art { animation:headerLogoScaleIn .9s ease-in-out both; }
-  .site-header[data-logo-motion="lettering"] .header-logo-art { animation:headerLogoScaleOut .9s ease-in-out reverse both; }
+  .site-header[data-logo-motion="wings"] .header-logo-art { animation:headerLogoScaleIn var(--header-logo-duration) ease-in-out both; }
+  .site-header[data-logo-motion="lettering"] .header-logo-art { animation:headerLogoScaleOut var(--header-logo-duration) ease-in-out reverse both; }
   @keyframes headerLogoScaleIn { 0%,16% { transform:scale(var(--compact-logo-scale)); } 32%,100% { transform:scale(1.2); } }
   @keyframes headerLogoScaleOut { 0%,16% { transform:scale(var(--compact-logo-scale)); } 32%,100% { transform:scale(1.2); } }
   @media(max-width:700px) {
@@ -210,23 +211,30 @@ html[data-lxp-scrollbar]::-webkit-scrollbar{display:none;width:0;height:0}
   }
 }
 
-/* Slide the header surface in once the compact logo has settled. */
+/* Keep the scroll position of the surface independent of the menu backdrop. */
+.site-header:is(.hero-header:not(.is-past-hero), .contact-header)::before {
+  translate:0 -100%;
+}
+.site-header:is(.hero-header:not(.is-past-hero), .contact-header).is-scrolled::before {
+  translate:0 0;
+}
 .site-header:is(.hero-header:not(.is-past-hero), .contact-header):not(.menu-is-open)::before {
   background:var(--scroll-header-background,var(--nav-glass-background));
   -webkit-backdrop-filter:var(--scroll-header-filter,blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturation)));
   backdrop-filter:var(--scroll-header-filter,blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturation)));
-  opacity:0;
-  transform:translateY(-100%);
-  transition:transform .28s ease,opacity .18s ease;
-}
-.site-header:is(.hero-header:not(.is-past-hero), .contact-header).is-scrolled:not([data-logo-motion="lettering"]):not(.menu-is-open)::before,
-.site-header:is(.hero-header:not(.is-past-hero), .contact-header).is-scrolled[data-glass-ready="true"]:not(.menu-is-open)::before {
   opacity:1;
-  transform:translateY(0);
+  transition:translate .28s ease;
+}
+@media (prefers-reduced-motion:no-preference) {
+  /* The circle begins at 32% going in and at the reversed 42% mark going out. */
+  .site-header[data-logo-motion="wings"] { --header-circle-delay:calc(var(--header-logo-duration) * .32); }
+  .site-header[data-logo-motion="lettering"] { --header-circle-delay:calc(var(--header-logo-duration) * .58); }
+  .site-header:is(.hero-header:not(.is-past-hero), .contact-header)[data-logo-motion]:not(.menu-is-open, .glass-handoff)::before {
+    transition-delay:var(--header-circle-delay);
+  }
 }
 @media (prefers-reduced-motion:reduce) {
   .site-header:is(.hero-header:not(.is-past-hero), .contact-header):not(.menu-is-open)::before { transition:none; }
-  .site-header:is(.hero-header:not(.is-past-hero), .contact-header).is-scrolled:not(.menu-is-open)::before { opacity:1; transform:none; }
 }
 
 /* Keep the same transition on both sides of the menu state change. */
