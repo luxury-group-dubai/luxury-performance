@@ -35,3 +35,32 @@
   .contact-details{order:2;margin-top:0}
   .contact-details .arrow-link{margin-bottom:35px}
 }
+
+.contact-layout .enquiry-form{background:#f8f8f7;border-top:0;padding:clamp(28px,3.4vw,52px)}
+@media(max-width:700px){.contact-layout .enquiry-form{padding:28px 24px}}
+
+/* A restrained type scale for the Contact page. */
+.contact-layout .form-heading{font-size:clamp(21px,1.6vw,24px);font-weight:700;line-height:1.3;letter-spacing:-.01em;margin-bottom:28px}
+.contact-layout .form-subheading{margin-top:-18px;margin-bottom:28px;color:#50545a;font-size:13px;line-height:1.6}
+.contact-layout .contact-method{font-size:clamp(18px,1.45vw,22px);letter-spacing:-.02em}
+.contact-layout .contact-intro p,.contact-layout .contact-address,.contact-layout .contact-address p,.contact-layout .form-disclaimer{font-size:13px;line-height:1.7;color:#50545a}
+.contact-layout .contact-address .tiny-label,.contact-layout .field>span,.contact-layout .form-label{font-size:11px;letter-spacing:.07em;font-weight:600;color:#50545a}
+.contact-layout .field input,.contact-layout .field textarea{color:#17191b}
+.contact-layout .field input::placeholder,.contact-layout .field textarea::placeholder{color:#696e73}
+.contact-layout .interest-options span{font-size:11px;color:#30343a}
+.contact-layout .interest-options input:checked+span{color:#fff}
+@media(max-width:700px){
+  .contact-layout .form-heading{font-size:21px}
+  .contact-layout .contact-method{font-size:20px}
+  .contact-layout .field input,.contact-layout .field textarea{font-size:16px}
+}
+
+.enquiry-modal{width:min(520px,calc(100% - 32px));max-height:calc(100dvh - 32px);margin:auto;padding:0;border:0;background:#fff;color:#171717;overflow-y:auto;overscroll-behavior:contain}
+.enquiry-modal::backdrop{background:rgba(0,0,0,.65)}
+.enquiry-modal-content{position:relative;padding:clamp(28px,5vw,44px)}
+.enquiry-modal-close{position:absolute;top:18px;right:18px;display:grid;place-items:center;width:44px;height:44px;background:none;border:0;color:inherit;cursor:pointer}
+.enquiry-modal h2{padding-right:38px;font-size:clamp(22px,2.2vw,29px);font-weight:700;letter-spacing:-.03em;line-height:1.2}
+.enquiry-modal p{margin-top:14px;font-size:13px;line-height:1.6;color:#5b5b5b}
+.enquiry-modal .message-preview{white-space:pre-wrap;overflow-wrap:anywhere;margin:26px 0;padding:22px;background:#f5f5f3;font-size:13px;line-height:1.7}
+.enquiry-modal .arrow-link{margin-top:0}
+.enquiry-modal-edit{display:block;margin-top:20px;padding:4px 0;border:0;background:none;color:#555;font-size:12px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
