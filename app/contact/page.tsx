@@ -18,7 +18,7 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
   const interest = typeof query.interest === 'string' && resolveEnquiryInterests(query.interest).length ? query.interest : '';
   return <section className="contact-layout" aria-label="Contact Luxury Performance">
     <header className="contact-intro">
-        <h1>Contact.</h1>
+        <h1>Contact</h1>
         <p>Need a part or planning an upgrade? Tell us about your car and we’ll help with fitment, availability and the next steps.</p>
         <p>You can also <Link href="/shop">browse the shop</Link> or <Link href="/partners">explore our partner brands</Link> before starting your enquiry.</p>
     </header>

@@ -28,7 +28,7 @@ export default function Loading() {
     <span className="sr-only" role="status">Loading shop content</span>
     <header className={entry.intro}>
       <div className={entry.headline}>
-        {overview || search ? <h1>{search ? 'Search.' : 'Shop.'}</h1> : <div className={`${styles.placeholder} ${styles.wordmark}`} aria-hidden="true" />}
+        {overview || search ? <h1 className={overview ? entry.overviewTitle : undefined}>{search ? 'Search.' : 'Shop'}</h1> : <div className={`${styles.placeholder} ${styles.wordmark}`} aria-hidden="true" />}
         {overview && <p>Find your brand, your car, or what’s in stock.</p>}
         <div className={entry.searchWrap} aria-hidden="true"><div className={entry.search}><Search size={18} /><span className={styles.searchText}>Search a car, collection or part…</span></div></div>
       </div>

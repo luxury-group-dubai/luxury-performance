@@ -4,6 +4,7 @@
 .intro { padding:var(--page-heading-gap) var(--gutter) 0; }
 .headline { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"title search" "description ."; align-items:center; gap:14px 40px; margin-bottom:32px; }
 .headline h1 { grid-area:title; align-self:start; font-size:clamp(38px,4.5vw,64px); line-height:1; letter-spacing:-.045em; }
+.headline h1.overviewTitle { font-size:var(--page-heading-size); }
 .headline p { grid-area:description; font-size:13px; color:#b0b0b0; margin-top:0; }
 .headline > .searchWrap { grid-area:search; }
 .searchWrap { position:relative; width:440px; max-width:100%; flex-shrink:0; z-index:5; }
