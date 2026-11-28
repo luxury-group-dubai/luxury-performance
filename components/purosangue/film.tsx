@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
 import { MoveHorizontal, Pause, Play, SkipForward } from 'lucide-react';
-import { clamp, completeAt, detailChapters, filmChapters, filmFrame, filmTiming, type FilmGeometry } from './motion';
+import { clamp, completeAt, filmChapters, filmFrame, filmTiming, type FilmGeometry } from './motion';
 import { FilmChapters } from './film-chapters';
 import styles from './film.module.css';
 
@@ -129,7 +129,6 @@ export function PurosangueFilm() {
       property('--scan-opacity', f.reveal > .01 && f.reveal < .99 ? '.65' : '0');
       property('--light-x', `${-120 + f.light * 290}%`);
       property('--car-light', String(simple ? 1 : f.brightness));
-      property('--word-opacity', String(simple ? .20 : f.word * .20));
       const detailsStart = filmTiming.widebodyZoom[0];
       property('--film-buffer-progress', String(clamp(progress / detailsStart)));
       property('--film-progress', String(progress));
@@ -319,7 +318,6 @@ export function PurosangueFilm() {
   return <section ref={root} className={styles.film} id="purosangue" aria-labelledby={titleId}>
     <div ref={stage} className={`${styles.stage} ${comparing ? styles.comparing : ''}`} data-film-stage data-chapter="0">
       <div ref={composition} className={styles.composition}>
-        <div className={styles.word} aria-hidden="true">PUROSANGUE</div>
         <div className={styles.copy} key={chapter}>
           <p className={styles.kicker}>{comparing ? 'Two expressions. One extraordinary car.' : current.kicker}</p>
           <h2 id={titleId}>{comparing ? <>See the<br />difference.</> : current.title.split('\n').map((line, i) => <span key={line} className={i === 1 ? styles.muted : ''}>{line}</span>)}</h2>
@@ -349,9 +347,6 @@ export function PurosangueFilm() {
           <span className={styles.pin} />
           <span className={styles.callout}>{current.detail}</span>
         </div>
-        {chapter > 0 && chapter <= detailChapters.length && (
-          <div className={styles.sceneIndex} aria-hidden="true"><span>0{chapter}</span><i>/ 0{detailChapters.length}</i></div>
-        )}
       </div>
 
       <div className={styles.controls} data-film-controls>
