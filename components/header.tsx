@@ -158,6 +158,8 @@ export function Header() {
     let frame = 0;
     let directionAnchor = window.scrollY;
     let logoGeometryReady = false;
+    let film: HTMLElement | null = null;
+    let filmStage: HTMLElement | null = null;
     const nav = header.current;
     if (!nav) return;
     const update = () => {
@@ -172,9 +174,18 @@ export function Header() {
       const partnerBrowsing = pathname === '/partners/capristo' || pathname === '/partners/gintani'
         ? document.querySelector('[data-partner-browsing]')?.getBoundingClientRect()
         : undefined;
+      if (pathname === '/' && !film?.isConnected) {
+        film = document.getElementById('purosangue');
+        filmStage = film?.querySelector('[data-film-stage]') ?? null;
+        filmObserver?.disconnect();
+        if (film) filmObserver?.observe(film, { attributes: true, attributeFilter: ['data-motion'] });
+      }
+      const filmBounds = film?.dataset.motion === 'full' ? film.getBoundingClientRect() : null;
+      const filmPinned = filmBounds && filmStage && filmBounds.top <= headerHeight
+        && filmBounds.bottom >= headerHeight + filmStage.offsetHeight;
       const heroFade = Math.min(1, Math.max(0, (heroBottom - headerHeight) / 180));
       const hidden = nav.classList.contains('is-scroll-hidden');
-      if (y <= Math.max(headerHeight * 2, 160)) {
+      if (filmPinned || y <= Math.max(headerHeight * 2, 160)) {
         nav.classList.remove('is-scroll-hidden');
         directionAnchor = y;
       } else if (hidden) {
@@ -208,6 +219,7 @@ export function Header() {
       nav.style.setProperty('--hero-glass-progress', String(1 - heroFade));
     };
     const scroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const filmObserver = pathname === '/' ? new MutationObserver(scroll) : null;
     // The homepage CSS already describes the unscrolled header. Restored positions
     // and other routes still need their current geometry applied immediately.
     if (pathname !== '/' || window.scrollY > 0) update();
@@ -224,6 +236,7 @@ export function Header() {
     window.addEventListener('scroll', scroll, { passive: true }); window.addEventListener('resize', scroll);
     return () => {
       cancelAnimationFrame(frame);
+      filmObserver?.disconnect();
       window.removeEventListener('scroll', scroll);
       window.removeEventListener('resize', scroll);
       nav.classList.remove('is-scroll-hidden');

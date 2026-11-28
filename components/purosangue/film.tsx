@@ -4,12 +4,12 @@ import { ActionArrow } from '@/components/action-arrow';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
-import { MoveHorizontal } from 'lucide-react';
-import { clamp, completeAt, filmChapters, filmFrame, filmTiming, type FilmGeometry } from './motion';
+import { MoveHorizontal, Pause, Play, SkipForward } from 'lucide-react';
+import { clamp, completeAt, detailChapters, filmChapters, filmFrame, filmTiming, type FilmGeometry } from './motion';
+import { FilmChapters } from './film-chapters';
 import styles from './film.module.css';
 
-type FilmControl = { seek: (value: number) => void; play: () => void; stop: () => void; compare: (value: boolean) => void };
-const detailChapters = filmChapters.slice(1, -1);
+type FilmControl = { seek: (value: number) => void; play: () => void; next: () => void; stop: () => void; compare: (value: boolean) => void };
 
 export function PurosangueFilm() {
   const root = useRef<HTMLElement>(null);
@@ -134,9 +134,8 @@ export function PurosangueFilm() {
       property('--car-light', String(simple ? 1 : f.brightness));
       property('--word-opacity', String(simple ? .20 : f.word * .20));
       const detailsStart = filmTiming.widebodyZoom[0];
-      const lastDetail = filmChapters[filmChapters.length - 2].at;
       property('--film-buffer-progress', String(clamp(progress / detailsStart)));
-      property('--film-detail-progress', String(clamp((progress - detailsStart) / (lastDetail - detailsStart))));
+      property('--film-progress', String(progress));
       data('chapter', String(f.chapter));
       data('instant', String(instant || preference.matches));
       if (selected !== f.chapter) { selected = f.chapter; setChapter(f.chapter); }
@@ -175,6 +174,7 @@ export function PurosangueFilm() {
     }
 
     function onResize() {
+      if (!mobile.matches && playRaf) stop();
       if (stableViewport() && Math.abs(window.innerWidth - viewportWidth) < 2) return;
       captureViewport();
       measure();
@@ -245,7 +245,7 @@ export function PurosangueFilm() {
       if (seeking) stop();
       if (preference.matches) return;
       isComparing = false; setComparing(false);
-      const from = progress >= .90 ? 0 : progress;
+      const from = progress >= 1 - .0006 ? 0 : progress;
       const started = performance.now();
       const duration = (1 - from) * 32000;
       setPlaying(true);
@@ -259,6 +259,16 @@ export function PurosangueFilm() {
         else { playRaf = 0; setPlaying(false); }
       };
       playRaf = requestAnimationFrame(tick);
+    }
+
+    function next() {
+      if (!seeking && selected + 1 < filmChapters.length) seek(filmChapters[selected + 1].at);
+    }
+
+    function onTouchStart(event: TouchEvent) {
+      // Transport taps handle playback themselves after touchstart.
+      if (event.target instanceof Element && event.target.closest('[data-film-playback] button')) return;
+      stop();
     }
 
     function compare(value: boolean) {
@@ -280,7 +290,7 @@ export function PurosangueFilm() {
       if (!interactive && ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) stop();
       if (event.key === 'Escape' && isComparing) compare(false);
     }
-    control.current = { seek, play, stop, compare };
+    control.current = { seek, play, next, stop, compare };
     onPreference();
     const resize = new ResizeObserver(measure);
     resize.observe(section); resize.observe(frameEl);
@@ -289,7 +299,7 @@ export function PurosangueFilm() {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
     window.addEventListener('wheel', stop, { passive: true });
-    window.addEventListener('touchstart', stop, { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
     document.addEventListener('keydown', onKey);
     const onVisibility = () => { if (document.hidden) stop(); };
     document.addEventListener('visibilitychange', onVisibility);
@@ -297,7 +307,7 @@ export function PurosangueFilm() {
     return () => {
       disposed = true; cancelAnimationFrame(raf); cancelAnimationFrame(playRaf); cancelAnimationFrame(seekRaf); resize.disconnect();
       window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize);
-      window.removeEventListener('wheel', stop); window.removeEventListener('touchstart', stop);
+      window.removeEventListener('wheel', stop); window.removeEventListener('touchstart', onTouchStart);
       document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVisibility);
       preference.removeEventListener('change', onPreference); control.current = null;
     };
@@ -306,7 +316,7 @@ export function PurosangueFilm() {
   const seek = (index: number) => control.current?.seek(filmChapters[index].at);
 
   return <section ref={root} className={styles.film} id="purosangue" aria-labelledby={titleId}>
-    <div ref={stage} className={`${styles.stage} ${comparing ? styles.comparing : ''}`} data-chapter="0">
+    <div ref={stage} className={`${styles.stage} ${comparing ? styles.comparing : ''}`} data-film-stage data-chapter="0">
       <div ref={composition} className={styles.composition}>
         <div className={styles.word} aria-hidden="true">PUROSANGUE</div>
         <div className={styles.copy} key={chapter}>
@@ -344,13 +354,19 @@ export function PurosangueFilm() {
       </div>
 
       <div className={styles.controls} data-film-controls>
-        <div className={styles.controlTop}>
+        <div className={styles.explore}>
           <Link className={styles.enquire} href="/shop/novitec/ferrari/purosangue">Explore NOVITEC Purosangue <ActionArrow size={17} /></Link>
         </div>
-        <div className={styles.filmProgress} aria-hidden="true"><span /></div>
-        <nav className={styles.chapters} aria-label="Transformation chapters">
-          {detailChapters.map((item, index) => <button type="button" key={item.name} aria-current={chapter === index + 1 ? 'step' : undefined} onClick={() => seek(index + 1)}><span className={styles.chapterNumber}>0{index + 1}</span><span>{item.name}</span><span className={styles.chapterDot} /></button>)}
-        </nav>
+        <FilmChapters chapter={chapter} onSeek={seek} />
+        <div className={styles.mobilePlayback} data-film-playback onPointerCancel={() => control.current?.stop()}>
+          <button className={styles.playbackToggle} type="button" aria-label={playing ? 'Pause Purosangue film' : 'Play Purosangue film'} onClick={() => control.current?.play()}>
+            {playing ? <Pause size={14} fill="currentColor" aria-hidden="true" /> : <Play size={14} fill="currentColor" aria-hidden="true" />}
+          </button>
+          <button type="button" aria-label="Next Purosangue chapter" disabled={chapter >= filmChapters.length - 1} onClick={() => control.current?.next()}>
+            <SkipForward size={14} fill="currentColor" aria-hidden="true" />
+          </button>
+          <span>{current.name}</span>
+        </div>
       </div>
     </div>
   </section>;

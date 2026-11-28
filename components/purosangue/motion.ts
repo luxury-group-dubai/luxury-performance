@@ -17,7 +17,13 @@ export const filmChapters: readonly Chapter[] = [
 ];
 // Finish the full-car reveal, hold it, then move into the first detail.
 export const filmTiming = { reveal: [.105, .18], widebodyZoom: [.22, .29] } as const;
+export const detailChapters = filmChapters.slice(1, -1);
 export const completeAt = filmChapters[filmChapters.length - 1].at;
+export function filmChapterStart(index: number) {
+  if (index === 0) return 0;
+  if (index === 1) return filmTiming.widebodyZoom[0];
+  return (filmChapters[index - 1].at + filmChapters[index].at) / 2;
+}
 export const clamp = (v: number, low = 0, high = 1) => Math.max(low, Math.min(high, v));
 export function ease(from: number, to: number, p: number) {
   const t = clamp((p - from) / (to - from));
@@ -49,8 +55,7 @@ function cameraFor(index: number, g: FilmGeometry) {
 export function filmFrame(p: number, g: FilmGeometry, overview = false) {
   let chapter = 0;
   for (let i = 1; i < filmChapters.length; i++) {
-    const begins = i === 1 ? filmTiming.widebodyZoom[0] : (filmChapters[i - 1].at + filmChapters[i].at) / 2;
-    if (p >= begins) chapter = i;
+    if (p >= filmChapterStart(i)) chapter = i;
   }
   let camera = cameraFor(0, g);
   for (let i = 1; i < filmChapters.length; i++) {
