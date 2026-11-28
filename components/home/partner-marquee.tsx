@@ -3,6 +3,7 @@
 import { BrandArtwork } from '../brand-artwork';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import logoSelection from '../shop/logo-selection.module.css';
 import styles from './partner-marquee.module.css';
 
 type PartnerLogo = { name: string; slug: string; href?: string; label?: string };
@@ -62,7 +63,7 @@ export function PartnerMarquee() {
         <p>Authorised partners</p>
       </div>
       <div className={styles.viewport} id="partner-logos">
-        <div className={styles.track} ref={trackRef}>
+        <div className={`${styles.track} ${logoSelection.grid}`} ref={trackRef}>
           {[false, true].map(duplicate => (
             <div key={String(duplicate)} ref={duplicate ? undefined : groupRef} className={styles.group} aria-hidden={duplicate || undefined}>
               {partners.map(partner => (
@@ -72,7 +73,7 @@ export function PartnerMarquee() {
                   prefetch={false}
                   tabIndex={duplicate ? -1 : undefined}
                   aria-label={duplicate ? undefined : partner.label ?? `Explore ${partner.name}`}
-                  className={styles.logo}
+                  className={`${styles.logo} ${logoSelection.item}`}
                   data-brand={partner.slug}
                 >
                   <span className="sr-only">{partner.label ?? `Explore ${partner.name}`}</span>

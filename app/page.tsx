@@ -14,7 +14,6 @@ import { NovitecFeatureFilm } from '@/components/home/novitec-feature-film';
 import { ValvetronicVehicles } from '@/components/home/valvetronic-vehicles';
 import { HomeApproach } from '@/components/home/approach';
 import { Reveal } from '@/components/reveal';
-import { StickyIntro } from '@/components/home/sticky-intro';
 import { Closing } from '@/components/closing';
 import { defaultSocialImage } from '@/lib/social-images';
 import { contact, socialLinks } from '@/lib/content';
@@ -74,34 +73,28 @@ export default function Home() {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema).replace(/</g, '\\u003c') }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema).replace(/</g, '\\u003c') }} />
     <HomeHero />
-    <div className="home-intro-stack">
-      <StickyIntro>
-        <PartnerMarquee />
-        <section className="intro intro-dark section-pad" aria-labelledby="home-welcome-title">
-          <Reveal className="intro-reveal" itemSelector=".eyebrow, #home-welcome-title, .intro-body p, .intro-story">
+    <PartnerMarquee />
+    <section className="intro intro-dark section-pad" aria-labelledby="home-welcome-title">
+      <Reveal className="intro-reveal" itemSelector=".eyebrow, #home-welcome-title, .intro-body p, .intro-emblem, .intro-story">
+        <div className="intro-grid">
+          <div>
             <Eyebrow dark>Luxury Performance / Dubai</Eyebrow>
-            <div className="intro-grid">
-              <div>
-                <h2 id="home-welcome-title">Built around<br /><span className="text-muted">your car.</span></h2>
-                <div className="intro-copy">
-                  <div className="intro-body">
-                    <p>Genuine auto parts and upgrades for supercars and luxury vehicles. Shop carbon-fibre body kits, exhausts, forged wheels and suspension from NOVITEC, TECHART, Valvetronic Designs and more, with fitment and installation guidance from our Dubai team.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="intro-brand">
-                <Image className="intro-lettering" src="/brand/lxp-white.svg" alt="" aria-hidden="true" width={1088} height={280} />
-                <Link className="intro-story" href="/about"><ActionLabel>Our story</ActionLabel> <ActionArrow /></Link>
+            <h2 id="home-welcome-title">Built around<br /><span className="text-muted">your car.</span></h2>
+            <div className="intro-copy">
+              <div className="intro-body">
+                <p>Genuine auto parts and upgrades for supercars and luxury vehicles. Shop carbon-fibre body kits, exhausts, forged wheels and suspension from NOVITEC, TECHART, Valvetronic Designs and more, with fitment and installation guidance from our Dubai team.</p>
               </div>
             </div>
-          </Reveal>
-        </section>
-      </StickyIntro>
-      <div className="home-intro-cover">
-        <NovitecModels />
-        <PurosangueFilm />
-      </div>
-    </div>
+          </div>
+          <div className="intro-brand">
+            <Image className="intro-emblem" src="/brand/lxp-winged-white.svg" alt="" aria-hidden="true" width={1868} height={728} />
+            <Link className="intro-story" href="/about"><ActionLabel>Our story</ActionLabel> <ActionArrow /></Link>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+    <NovitecModels />
+    <PurosangueFilm />
     <NovitecFeatureFilm />
     <ValvetronicVehicles />
     <HomeApproach />
