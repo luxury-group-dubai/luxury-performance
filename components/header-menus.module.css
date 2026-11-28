@@ -291,7 +291,17 @@
 
 .mobile.previewMobile:global(.mobile-menu) { background:transparent; -webkit-backdrop-filter:none; backdrop-filter:none; }
 
-@media (prefers-reduced-motion:no-preference) { .header .dropdown { animation-duration:.42s; animation-timing-function:cubic-bezier(.22,1,.36,1); } }
+@media (prefers-reduced-motion:no-preference) {
+  .header .dropdown { animation-duration:.42s; animation-timing-function:cubic-bezier(.22,1,.36,1); }
+  .header:global(.hero-header):not(:global(.is-past-hero)) .dropdown:not(:global(.shop-dropdown-closing)) {
+    animation-name:shopRevealOverHero;
+    animation-fill-mode:backwards;
+  }
+  @keyframes shopRevealOverHero {
+    from { clip-path:inset(0 0 100% 0); opacity:0; }
+    to { clip-path:inset(0); opacity:1; }
+  }
+}
 /* Keep the full-menu header focused on the logo and close control. */
 
 

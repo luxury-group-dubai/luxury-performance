@@ -23,6 +23,11 @@
   .hero[data-transitioned="true"] .layer[data-active="true"] .picture {
     animation: hero-image-glitch 480ms steps(1,end) both;
   }
+  /* Keep the image slices from showing through the shop glass without restarting the animation. */
+  :global(.site-header.shop-menu-is-open) ~ :global(#main) .hero .picture {
+    translate: none !important;
+    clip-path: none !important;
+  }
 }
 @keyframes hero-image-glitch {
   0% {
