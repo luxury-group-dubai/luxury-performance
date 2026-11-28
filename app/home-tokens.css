@@ -46,6 +46,8 @@
   .intro-dark .intro-copy { grid-template-columns: 1fr; gap: 28px; }
 }
 @media (max-width: 700px) {
+  /* Keep the browser's inset name global so CSS Modules do not rename it. */
+  [data-home-hero] { --hero-safe-bottom: env(safe-area-max-inset-bottom, 0px); }
   .intro-dark .intro-copy { margin-top: 28px; }
   .intro-dark .intro-body p { font-size: 14px; }
 }
