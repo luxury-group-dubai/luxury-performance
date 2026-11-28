@@ -8,11 +8,22 @@ export function StickyIntro({ children }: { children: ReactNode }) {
   useEffect(() => {
     const element = panel.current;
     if (!element || !('ResizeObserver' in window)) return;
-    const measure = () => element.style.setProperty('--intro-panel-height', `${element.offsetHeight}px`);
+    const mobile = window.matchMedia('(max-width: 700px)');
+    const measure = () => {
+      const height = element.offsetHeight;
+      // The minimum height is the small viewport minus the header, even while browser chrome moves.
+      const available = mobile.matches ? parseFloat(getComputedStyle(element).minHeight) : NaN;
+      element.style.setProperty('--intro-panel-height', `${height}px`);
+      element.toggleAttribute('data-intro-overflow', height > available + 1);
+    };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(element);
-    return () => observer.disconnect();
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
   }, []);
 
   return <div className="home-intro-pin" ref={panel}>{children}</div>;

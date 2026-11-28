@@ -60,8 +60,8 @@
 }
 @keyframes drift { to { transform: translateX(-50%); } }
 @media (max-width: 700px) {
-  .section { padding-block: 24px 20px; }
-  .heading { margin-bottom: 20px; }
+  .section { padding-block: 16px 12px; }
+  .heading { margin-bottom: 12px; }
   .group { gap: 40px; padding-inline: 20px; }
   .logo { flex-basis: 180px; width: 180px; height: 60px; }
 }
