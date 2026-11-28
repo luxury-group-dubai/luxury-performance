@@ -1,9 +1,12 @@
 'use client';
 
+import { Pause, Play, SkipForward } from 'lucide-react';
 import { Children, type ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './brand-hero.module.css';
 
 type Brand = { slug: string; name: string };
+const slideDuration = 8000;
+const activeProgressSelector = 'button[aria-pressed="true"] [data-slide-progress]';
 
 function afterImageReady(image: HTMLImageElement, onReady: (loaded: boolean) => void) {
   let cancelled = false;
@@ -29,11 +32,14 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
   const root = useRef<HTMLElement>(null);
   const context = useRef<HTMLDivElement>(null);
   const touch = useRef<{ x: number; y: number } | null>(null);
+  const playbackButton = useRef<HTMLButtonElement>(null);
+  const pausedProgress = useRef<{ slide: number; elapsed: number } | null>(null);
   const [active, setActive] = useState(0);
   const [transitioned, setTransitioned] = useState(false);
   const [requested, setRequested] = useState<number | null>(null);
   const [mounted, setMounted] = useState([0]);
   const [focusHeld, setFocusHeld] = useState(false);
+  const [paused, setPaused] = useState(false);
   const [soundPlaying, setSoundPlaying] = useState(false);
   const [announcement, setAnnouncement] = useState('');
 
@@ -121,22 +127,36 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     let cancelImage: (() => void) | undefined;
     let progress: Animation | undefined;
     let inView = false;
+    if (pausedProgress.current?.slide !== active) pausedProgress.current = null;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const eligible = () => !(focusHeld || soundPlaying || reduced.matches || document.hidden || !inView || document.documentElement.dataset.lxpIntro);
-    const schedule = () => {
+    const clearPlayback = () => {
       clearTimeout(timer);
       cancelImage?.();
+      const saved = pausedProgress.current;
+      const time = progress?.currentTime;
+      if (saved?.slide === active && typeof time === 'number') saved.elapsed = Math.min(slideDuration, time);
       progress?.cancel();
-      if (!eligible()) return;
-      const indicator = root.current?.querySelector<HTMLElement>('button[aria-pressed="true"] [data-slide-progress]');
-      progress = indicator?.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 8000, easing: 'linear', fill: 'forwards' });
+      progress = undefined;
+    };
+    const schedule = () => {
+      clearPlayback();
+      if (reduced.matches || (!paused && !eligible())) return;
+      const elapsed = pausedProgress.current?.elapsed ?? 0;
+      const indicator = root.current?.querySelector<HTMLElement>(activeProgressSelector);
+      progress = indicator?.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: slideDuration, easing: 'linear', fill: 'forwards' });
+      if (progress) {
+        if (paused) progress.pause();
+        progress.currentTime = elapsed;
+      }
+      if (paused) return;
       timer = setTimeout(() => {
         const next = (active + 1) % brands.length;
         const image = root.current?.querySelector<HTMLImageElement>(`[data-hero-slide="${next}"] picture img`);
         if (!image) return;
         image.loading = 'eager';
         cancelImage = afterImageReady(image, loaded => { if (loaded && eligible()) { setTransitioned(true); setActive(next); } });
-      }, 8000);
+      }, slideDuration - elapsed);
     };
     const visibility = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; schedule(); }, { threshold: .2 });
     if (root.current) visibility.observe(root.current);
@@ -145,15 +165,13 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     document.addEventListener('visibilitychange', schedule);
     reduced.addEventListener('change', schedule);
     return () => {
-      clearTimeout(timer);
-      cancelImage?.();
-      progress?.cancel();
+      clearPlayback();
       visibility.disconnect();
       intro.disconnect();
       document.removeEventListener('visibilitychange', schedule);
       reduced.removeEventListener('change', schedule);
     };
-  }, [active, focusHeld, soundPlaying, brands.length, mounted.length]);
+  }, [active, focusHeld, paused, soundPlaying, brands.length, mounted.length]);
 
   function select(index: number) {
     setMounted(indices => indices.includes(index) ? indices : [...indices, index]);
@@ -161,12 +179,26 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     setAnnouncement(`${brands[index].name}, slide ${index + 1} of ${brands.length}`);
   }
 
+  function togglePlayback() {
+    if (paused || focusHeld) {
+      setPaused(false);
+      setFocusHeld(false);
+      return;
+    }
+    const animation = root.current?.querySelector(activeProgressSelector)?.getAnimations()[0];
+    const time = animation?.currentTime;
+    pausedProgress.current = { slide: active, elapsed: typeof time === 'number' ? Math.min(slideDuration, time) : 0 };
+    setPaused(true);
+  }
+
+  const playbackStopped = paused || focusHeld || soundPlaying;
+
   return <section ref={root} className={styles.hero} data-home-hero data-transitioned={transitioned} aria-roledescription="carousel" aria-label="Featured performance brands"
     onPlayCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(true); }}
     onPauseCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(false); }}
     onEndedCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(false); }}
     onErrorCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(false); }}
-    onFocusCapture={event => { if (event.target instanceof HTMLElement && event.target.matches(':focus-visible')) setFocusHeld(true); }}
+    onFocusCapture={event => { if (event.target instanceof HTMLElement && event.target !== playbackButton.current && event.target.matches(':focus-visible')) setFocusHeld(true); }}
     onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocusHeld(false); }}
     onTouchStart={event => { const point = event.touches[0]; touch.current = event.touches.length === 1 ? { x: point.clientX, y: point.clientY } : null; }}
     onTouchEnd={event => {
@@ -186,8 +218,16 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     <div className={styles.controls}>
       <nav className={styles.brandNav} aria-label="Choose a featured brand">
         {brands.map((brand, index) => <button key={brand.slug} type="button" aria-pressed={active === index} aria-label={`Show ${brand.name}`} onClick={() => select(index)}><span className={styles.progress} data-slide-progress aria-hidden="true" /><span>{brand.name}</span></button>)}
-        <span className={styles.currentBrand} aria-hidden="true">{brands[active].name}</span>
       </nav>
+      <div className={styles.mobilePlayback}>
+        <button ref={playbackButton} className={styles.playbackToggle} type="button" aria-label={playbackStopped ? 'Play hero slideshow' : 'Pause hero slideshow'} disabled={soundPlaying} onClick={togglePlayback}>
+          {playbackStopped ? <Play size={14} fill="currentColor" aria-hidden="true" /> : <Pause size={14} fill="currentColor" aria-hidden="true" />}
+        </button>
+        <button type="button" aria-label="Next featured brand" onClick={() => select(((requested ?? active) + 1) % brands.length)}>
+          <SkipForward size={14} fill="currentColor" aria-hidden="true" />
+        </button>
+        <span aria-hidden="true">{brands[active].name}</span>
+      </div>
     </div>
     <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
   </section>;
