@@ -22,11 +22,13 @@
   overflow: hidden;
   mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
+.mobile { display: none; }
 .track {
   display: flex;
   width: max-content;
   animation: drift var(--partner-duration, 42s) linear infinite;
 }
+.reverse .track { animation-direction: reverse; }
 .group {
   display: flex;
   flex: 0 0 auto;
@@ -49,15 +51,18 @@
 .noscriptLogo { position: absolute; inset: 0; margin: auto; }
 .logo:focus-visible { opacity: 1; outline: 2px solid #b9a77f; outline-offset: -2px; }
 /* All partner links remain visible and reachable when navigating by keyboard. */
-.viewport:has(.logo:focus-visible) { mask-image: none; }
-.viewport:has(.logo:focus-visible) .track { animation: none; width: 100%; }
-.viewport:has(.logo:focus-visible) .group { flex-wrap: wrap; flex-basis: 100%; min-width: 0; gap: 16px 40px; justify-content: center; }
-.viewport:has(.logo:focus-visible) .group[aria-hidden="true"] { display: none; }
+.ribbons:has(.logo:focus-visible) .viewport { mask-image: none; }
+.ribbons:has(.logo:focus-visible) .track { animation: none; width: 100%; }
+.ribbons:has(.logo:focus-visible) .group { flex-wrap: wrap; flex-basis: 100%; min-width: 0; gap: 16px 40px; justify-content: center; }
+.ribbons:has(.logo:focus-visible) .group[aria-hidden="true"] { display: none; }
 @media (hover: hover) {
   .logo:hover { opacity: 1; }
 }
 @keyframes drift { to { transform: translateX(-50%); } }
 @media (max-width: 700px) {
+  .ribbons { display: flex; flex-direction: column; gap: 8px; }
+  .desktop { display: none; }
+  .mobile { display: block; }
   .heading { margin-bottom: 12px; }
   .group { gap: 40px; padding-inline: 20px; }
   .logo { flex-basis: 180px; width: 180px; height: 60px; }
@@ -69,8 +74,8 @@
   .group[aria-hidden="true"] { display: none; }
 }
 @media (max-width: 700px) {
-  .viewport:has(.logo:focus-visible) .group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }
-  .viewport:has(.logo:focus-visible) .logo { width: 100%; }
+  .ribbons:has(.logo:focus-visible) .group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }
+  .ribbons:has(.logo:focus-visible) .logo { width: 100%; }
 }
 @media (max-width: 700px) and (prefers-reduced-motion: reduce) {
   .group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }
