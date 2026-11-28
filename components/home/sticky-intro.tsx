@@ -11,7 +11,7 @@ export function StickyIntro({ children }: { children: ReactNode }) {
     const mobile = window.matchMedia('(max-width: 700px)');
     const measure = () => {
       const height = element.offsetHeight;
-      // The minimum height is the small viewport minus the header, even while browser chrome moves.
+      // The CSS minimum is the available height for pinning the intro on mobile.
       const available = mobile.matches ? parseFloat(getComputedStyle(element).minHeight) : NaN;
       element.style.setProperty('--intro-panel-height', `${height}px`);
       element.toggleAttribute('data-intro-overflow', height > available + 1);
