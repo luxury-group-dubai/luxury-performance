@@ -76,14 +76,11 @@ export function PurosangueFilm() {
     let target = 0, progress = 0, selected = -1, start = 0, distance = 1;
     let headerHeight = 112;
     let viewportWidth = window.innerWidth;
-    // Keep Safari's expanding browser controls out of the scroll timeline geometry.
-    function captureViewport() {
+    function updateViewportMode() {
       viewportWidth = window.innerWidth;
       section!.dataset.stableViewport = String(stableViewport());
-      section!.style.setProperty('--film-viewport-height', `${window.innerHeight}px`);
-      section!.dataset.compact = String(mobile.matches && window.innerHeight <= 690);
     }
-    captureViewport();
+    updateViewportMode();
     let geometry: FilmGeometry = { width: 1, height: 1, rigWidth: 1, rigHeight: 1, rigX: 0, rigY: 0, small: false };
 
     const painted = new Map<string, string>();
@@ -159,8 +156,12 @@ export function PurosangueFilm() {
     function measure() {
       headerHeight = document.querySelector<HTMLElement>('.site-header')?.getBoundingClientRect().height ?? 112;
       section!.style.setProperty('--film-header', `${headerHeight}px`);
+      const stageHeight = frameEl!.offsetHeight;
+      const viewportHeight = preference.matches ? window.innerHeight : stageHeight + headerHeight;
+      const compact = String(mobile.matches && viewportHeight <= 690);
+      if (section!.dataset.compact !== compact) section!.dataset.compact = compact;
       start = section!.getBoundingClientRect().top + window.scrollY - headerHeight;
-      distance = Math.max(1, section!.offsetHeight - frameEl!.offsetHeight);
+      distance = Math.max(1, section!.offsetHeight - stageHeight);
       const area = composition.current;
       const car = rig.current;
       if (area && car) geometry = { width: area.clientWidth, height: area.clientHeight, rigWidth: car.offsetWidth, rigHeight: car.offsetHeight, rigX: car.offsetLeft, rigY: car.offsetTop, small: mobile.matches };
@@ -176,7 +177,7 @@ export function PurosangueFilm() {
     function onResize() {
       if (!mobile.matches && playRaf) stop();
       if (stableViewport() && Math.abs(window.innerWidth - viewportWidth) < 2) return;
-      captureViewport();
+      updateViewportMode();
       measure();
     }
 

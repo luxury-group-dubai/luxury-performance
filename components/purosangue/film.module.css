@@ -1,12 +1,12 @@
-.film{--film-header:var(--site-header-height);--film-accent:#e2001a;position:relative;background:#0b0c0d;color:#f0f0ec;scroll-margin-top:var(--film-header);isolation:isolate;overflow-anchor:none}
+.film{--film-viewport-height:100svh;--film-scroll-screens:5.5;--film-header:var(--site-header-height);--film-accent:#e2001a;position:relative;background:#0b0c0d;color:#f0f0ec;scroll-margin-top:var(--film-header);isolation:isolate;overflow-anchor:none}
 /* Let the NOVITEC cards clear the viewport before the film reaches its sticky inset. */
 @media(prefers-reduced-motion:no-preference){
+ .film{height:calc(var(--film-viewport-height) * var(--film-scroll-screens))}
+ .film .stage{position:sticky;top:var(--film-header);min-height:0;max-height:none}
  :global(#novitec) + .film{margin-block-start:var(--film-header)}
  :global(#novitec) + .film::before{content:'';position:absolute;inset-inline:0;inset-block-end:100%;block-size:var(--film-header);background:inherit}
 }
-.film[data-motion=full]{height:550svh}
-.stage{--camera-scale:1;--camera-x:0%;--camera-y:0%;--upgrade-cut:100%;--reveal-position:0%;--scan-opacity:0;--car-light:1;--word-opacity:.20;position:relative;min-height:650px;height:calc(100svh - var(--film-header));max-height:1000px;overflow:clip;display:grid;grid-template-rows:minmax(0,1fr) auto;padding:20px var(--gutter,5vw) 32px;background:radial-gradient(ellipse at 70% 51%,#2a2b2d 0%,#161718 35%,#0b0c0d 72%);border-bottom:1px solid #ffffff12}
-.film[data-motion=full] .stage{position:sticky;top:var(--film-header);min-height:0;max-height:none}
+.stage{--camera-scale:1;--camera-x:0%;--camera-y:0%;--upgrade-cut:100%;--reveal-position:0%;--scan-opacity:0;--car-light:1;--word-opacity:.20;position:relative;min-height:650px;height:calc(var(--film-viewport-height) - var(--film-header));max-height:1000px;overflow:clip;display:grid;grid-template-rows:minmax(0,1fr) auto;padding:20px var(--gutter,5vw) 32px;background:radial-gradient(ellipse at 70% 51%,#2a2b2d 0%,#161718 35%,#0b0c0d 72%);border-bottom:1px solid #ffffff12}
 .edition{display:flex;align-items:center;gap:9px;color:#bfc0b9;white-space:nowrap}
 .edition>span{width:5px;height:5px;border-radius:50%;background:#c9b594;box-shadow:0 0 10px #c9b59466}
 .edition i{font-style:normal;color:#6f726e;margin-left:10px}
@@ -126,8 +126,8 @@
   margin-left:max(0px,calc(env(safe-area-inset-left,0px) - var(--film-side-padding)));
   margin-right:max(0px,calc(env(safe-area-inset-right,0px) - var(--film-side-padding)));
  }
- .film{--film-header:100px}.film[data-motion=full]{height:calc(var(--film-viewport-height,100svh) * 4.9)}
- .stage{--film-side-padding:20px;height:calc(var(--film-viewport-height,100svh) - var(--film-header));padding:16px var(--film-side-padding) calc(24px + env(safe-area-inset-bottom,0px));min-height:650px}
+ .film{--film-header:100px;--film-scroll-screens:4.9}
+ .stage{--film-side-padding:20px;padding:16px var(--film-side-padding) calc(24px + env(safe-area-inset-bottom,0px));min-height:650px}
  .edition{gap:7px}.edition i{display:none}.compareButton{font-size:8px;gap:6px;padding-left:0}
  .stage[data-detail=true] .composition:after{background:linear-gradient(180deg,#0b0c0def, #0b0c0db0 23%, transparent 53%),linear-gradient(90deg,#0b0c0d55,transparent);inset:0 calc(-1 * var(--gutter))}
  .copy{top:2%;max-width:280px}.kicker{font-size:7px;margin-bottom:13px}.copy h2{font-size:38px}.description{font-size:12px;max-width:245px;line-height:1.7;margin-top:13px}
@@ -180,11 +180,23 @@
    The existing explicit stage height reserves space; active sticky details stay uncontained. */
 .film:not([data-motion]) .stage{content-visibility:auto;contain-intrinsic-size:auto 650px}
 
-/* Touch Safari changes its visual viewport as browser controls move. Keep the
-   captured stage/runway dimensions and compositor layer stable during that scroll. */
-.film[data-stable-viewport=true][data-motion=full]{height:calc(var(--film-viewport-height,100svh) * 5.5);overflow:visible}
-.film[data-stable-viewport=true][data-motion=full] .stage{height:calc(var(--film-viewport-height,100svh) - var(--film-header));overflow:visible;clip-path:none;transform:translateZ(0);backface-visibility:hidden}
+/* Keep the sticky stage and scroll distance independent of the browser toolbar.
+   Reserve room under the artwork and move just the controls as the toolbar moves. */
+@media(max-width:700px), (hover:none) and (pointer:coarse){
+ .film{
+  --film-viewport-height:100lvh;
+  --film-small-viewport-height:100svh;
+  --film-visible-viewport-height:100dvh;
+  --film-toolbar-room:max(0px,calc(var(--film-viewport-height) - var(--film-small-viewport-height)));
+  --film-toolbar-inset:clamp(0px,calc(var(--film-viewport-height) - var(--film-visible-viewport-height)),var(--film-toolbar-room));
+ }
+ @media(prefers-reduced-motion:no-preference){
+  .composition{margin-block-end:var(--film-toolbar-room)}
+  .controls{transform:translateY(calc(-1 * var(--film-toolbar-inset)))}
+ }
+}
+.film[data-stable-viewport=true][data-motion=full]{overflow:visible}
+.film[data-stable-viewport=true][data-motion=full] .stage{overflow:visible;clip-path:none;transform:translateZ(0);backface-visibility:hidden}
 .film[data-stable-viewport=true] .composition{overflow:hidden;clip-path:none}
 .film[data-stable-viewport=true] .camera{filter:none;backface-visibility:hidden}
 .film[data-stable-viewport=true] .floor,.film[data-stable-viewport=true] .lightMask{display:none}
-@media(max-width:700px){.film[data-stable-viewport=true][data-motion=full]{height:calc(var(--film-viewport-height,100svh) * 4.9)}}
