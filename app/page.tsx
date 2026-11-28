@@ -85,8 +85,7 @@ export default function Home() {
                 <h2 id="home-welcome-title">Built around<br /><span className="text-muted">your car.</span></h2>
                 <div className="intro-copy">
                   <div className="intro-body">
-                    <p>Discover genuine auto parts and upgrades for supercars and luxury vehicles, from NOVITEC, TECHART, Valvetronic Designs and other leading brands.</p>
-                    <p>From carbon-fibre body kits and aerodynamics to exhaust systems, forged wheels and suspension, Luxury Performance helps you find the right parts for your car, with guidance on fitment and installation.</p>
+                    <p>Genuine auto parts and upgrades for supercars and luxury vehicles. Shop carbon-fibre body kits, exhausts, forged wheels and suspension from NOVITEC, TECHART, Valvetronic Designs and more, with fitment and installation guidance from our Dubai team.</p>
                   </div>
                 </div>
               </div>

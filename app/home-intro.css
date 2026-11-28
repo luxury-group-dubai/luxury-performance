@@ -12,6 +12,7 @@
   gap: clamp(40px, 7vw, 120px);
 }
 .intro-dark .intro-grid > div { max-width: 760px; }
+.intro-dark .eyebrow-dot { display: none; }
 .intro-dark .intro-copy { display: block; }
 .intro-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 36px; }
 .intro-brand .intro-story { align-self: center; }
@@ -42,7 +43,6 @@
   .home-intro-pin .intro-dark .eyebrow { margin-bottom: 16px; }
   .home-intro-pin .intro-dark .intro-copy { margin-top: 18px; }
   .home-intro-pin .intro-dark .intro-body p { font-size: 13px; line-height: 1.6; }
-  .home-intro-pin .intro-dark .intro-body p + p { margin-top: 10px; }
   .home-intro-pin .intro-brand { margin-top: 20px; }
 }
 
@@ -69,12 +69,16 @@
   }
 
   @media (max-width: 700px) {
-    .home-intro-pin { top: var(--site-header-height); }
+    .home-intro-pin {
+      top: var(--site-header-height);
+      min-height: min(35rem, calc(100svh - var(--site-header-height)));
+    }
+
+    .home-intro-cover { margin-top: 0; }
 
     /* Keep the strip visible while the rest of an oversized intro can scroll. */
     .home-intro-pin[data-intro-overflow] { position: relative; top: auto; z-index: 0; }
     .home-intro-pin[data-intro-overflow] > #brands { position: sticky; top: var(--site-header-height); z-index: 1; }
-    .home-intro-pin[data-intro-overflow] + .home-intro-cover { margin-top: 0; }
   }
 
   @media (min-width: 901px) {
