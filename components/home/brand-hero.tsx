@@ -186,6 +186,7 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     <div className={styles.controls}>
       <nav className={styles.brandNav} aria-label="Choose a featured brand">
         {brands.map((brand, index) => <button key={brand.slug} type="button" aria-pressed={active === index} aria-label={`Show ${brand.name}`} onClick={() => select(index)}><span className={styles.progress} data-slide-progress aria-hidden="true" /><span>{brand.name}</span></button>)}
+        <span className={styles.currentBrand} aria-hidden="true">{brands[active].name}</span>
       </nav>
     </div>
     <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
