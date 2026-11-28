@@ -211,3 +211,19 @@
 .film[data-stable-viewport=true] .composition{overflow:hidden;clip-path:none}
 .film[data-stable-viewport=true] .camera{filter:none;backface-visibility:hidden}
 .film[data-stable-viewport=true] .floor,.film[data-stable-viewport=true] .lightMask{display:none}
+
+@media(max-width:700px){
+ /* Let close-ups reach behind the controls while keeping the mobile width clipped. */
+ .film[data-motion=full] .stage[data-detail=true] .composition{overflow-x:clip;overflow-y:visible}
+ .film[data-motion=full] .controls::before{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  inset:16px calc(-1 * var(--film-side-padding)) calc(-24px - env(safe-area-inset-bottom,0px));
+  pointer-events:none;
+  background:linear-gradient(transparent,#0b0c0dd9 65%,#0b0c0d);
+  opacity:0;
+  transition:opacity .35s;
+ }
+ .film[data-motion=full] .stage[data-detail=true] .controls::before{opacity:1}
+}
