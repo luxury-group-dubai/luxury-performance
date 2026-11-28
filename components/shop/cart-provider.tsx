@@ -5,9 +5,10 @@ import { ActionArrow } from '@/components/action-arrow';
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { Minus, Plus, ShoppingBag, X } from 'lucide-react';
-import { money, type Cart, type CartReply, type OrderPlan } from '@/lib/shop/types';
+import { money, type Cart, type CartLine, type CartReply, type OrderPlan } from '@/lib/shop/types';
 import { installationFor } from '@/lib/shop/installation';
 import { isSpecial } from '@/lib/shop/order-policy';
+import styles from './cart-drawer.module.css';
 type AddRequest={handle:string;variantId:string;quantity:number;title:string;variantTitle:string;confirmSpecial?:number;installation?:boolean;parentLineId?:string};
 type Context={add:(request:AddRequest)=>Promise<void>;open:()=>void;busy:boolean;count:number};
 const CartContext=createContext<Context|null>(null);
@@ -57,6 +58,62 @@ export function CartButton() {
     </button>
   );
 }
+
+function CartItem({ line, busy, onClose, onUpdate, onIncrease, onInstallation }: {
+  line: CartLine;
+  busy: boolean;
+  onClose: () => void;
+  onUpdate: (lineId: string, quantity: number) => void;
+  onIncrease: (request: AddRequest) => void;
+  onInstallation: (lineId: string, enabled: boolean) => void;
+}) {
+  const { merchandise, installation } = line;
+  const { product } = merchandise;
+  const image = merchandise.image ?? product.featuredImage;
+  const serviceLine = installationFor(line);
+  const specialOrder = isSpecial(line.attributes);
+
+  return (
+    <li className={styles.item}>
+      <div className={styles.thumbnail}>
+        {image && <img src={image.url} alt="" loading="lazy" />}
+      </div>
+      <div className={styles.itemDetails}>
+        <h3><Link href={`/products/${product.handle}`} onClick={onClose}>{product.title}</Link></h3>
+        {merchandise.title !== 'Default Title' && <p className={styles.variant}>{merchandise.title}</p>}
+        <span className={`shop-stock${specialOrder ? ' special' : ''} ${styles.stock}`}>
+          {serviceLine ? 'Installation' : specialOrder ? 'Special order' : 'In stock'}
+        </span>
+        <div className={styles.itemPurchase}>
+          {serviceLine ? (
+            <p className={styles.variant}>Quantity {line.quantity} · Matches your exhaust</p>
+          ) : (
+            <div className={styles.quantity} role="group" aria-label={`Quantity for ${product.title}`}>
+              <button type="button" disabled={busy} aria-label={`Decrease ${product.title}`} onClick={() => onUpdate(line.id, line.quantity - 1)}><Minus size={15} aria-hidden="true" /></button>
+              <span>{line.quantity}</span>
+              <button type="button" disabled={busy} aria-label={`Increase ${product.title}`} onClick={() => onIncrease({
+                handle: product.handle, variantId: merchandise.id, quantity: 1, title: product.title,
+                variantTitle: merchandise.title, parentLineId: line.id,
+              })}><Plus size={15} aria-hidden="true" /></button>
+            </div>
+          )}
+          <span className={styles.price}>{money(line.cost.totalAmount)}</span>
+        </div>
+        {serviceLine && <p className={styles.variant}>{line.attributes.find(attribute => attribute.key === 'Installation for')?.value}</p>}
+        <button type="button" className={styles.textAction} disabled={busy} aria-label={`Remove ${product.title}`} onClick={() => onUpdate(line.id, 0)}>Remove</button>
+        {installation && (
+          <div className={styles.installation}>
+            <p>{installation.title}</p>
+            <button type="button" className={styles.textAction} disabled={busy} onClick={() => onInstallation(line.id, !installation.included)}>
+              {installation.included ? 'Remove installation' : `Add installation${installation.quantity > 1 ? ` for ${installation.quantity} units` : ''} + ${money({ ...installation.price, amount: String(Number(installation.price.amount) * installation.quantity) })}`}
+            </button>
+          </div>
+        )}
+      </div>
+    </li>
+  );
+}
+
 export function CartProvider({children}:{children:ReactNode}){
  const [cart,setCart]=useState<Cart|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState<{request:AddRequest;plan:OrderPlan}|null>(null);
  const drawer=useRef<HTMLDialogElement>(null),prompt=useRef<HTMLDialogElement>(null),active=useRef(false);
@@ -84,23 +141,65 @@ export function CartProvider({children}:{children:ReactNode}){
    setNotice(null);
    show(drawer.current);
   } catch (error) {
-   setError(error instanceof Error ? error.message : 'Could not update your bag.');
+   setError(error instanceof Error ? error.message : 'Could not update your cart.');
    if (!prompt.current?.open) show(drawer.current);
   } finally {
    active.current = false;
    setBusy(false);
   }
  }
- async function update(lineId:string,quantity:number){if(active.current)return;active.current=true;setBusy(true);setError('');try{await call({action:'update',lineId,quantity});}catch(e){setError(e instanceof Error?e.message:'Could not update your bag.');}finally{active.current=false;setBusy(false);}}
+ async function update(lineId:string,quantity:number){if(active.current)return;active.current=true;setBusy(true);setError('');try{await call({action:'update',lineId,quantity});}catch(e){setError(e instanceof Error?e.message:'Could not update your cart.');}finally{active.current=false;setBusy(false);}}
  async function setInstallation(lineId:string,enabled:boolean){if(active.current)return;active.current=true;setBusy(true);setError('');try{await call({action:'installation',lineId,enabled});}catch(e){setError(e instanceof Error?e.message:'Could not update installation.');}finally{active.current=false;setBusy(false);}}
- async function checkout(){if(active.current)return;active.current=true;setBusy(true);setError('');try{const d=await call({action:'checkout'});if(d.cart?.checkoutUrl&&d.cart.totalQuantity)location.assign(d.cart.checkoutUrl);else throw new Error('Your bag is empty.');}catch(e){setError(e instanceof Error?e.message:'Could not open checkout.');active.current=false;setBusy(false);}}
- return <CartContext.Provider value={{add,open:()=>show(drawer.current),busy,count:cart?.totalQuantity||0}}>{children}
-  <dialog ref={drawer} className="shop-drawer" aria-labelledby="shop-bag-title" onCancel={e=>{e.preventDefault();close(drawer.current);}} onClose={unlockScroll} onClick={e=>{if(e.target===drawer.current){const b=drawer.current!.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)close(drawer.current);}}}>
-   <header><div><span className="tiny-label">Luxury Performance</span><h2 id="shop-bag-title">Your bag <small>({cart?.totalQuantity||0})</small></h2></div><button className="shop-close" aria-label="Close bag" onClick={()=>close(drawer.current)}><X/></button></header>
-   {error&&<p className="shop-error" role="alert">{error}</p>}
-   <div className="shop-cart-lines">{cart?.lines.nodes.length?cart.lines.nodes.map(line=><article className="shop-cart-line" key={line.id}><div className="shop-cart-thumb">{(line.merchandise.image||line.merchandise.product.featuredImage)&&<img src={(line.merchandise.image||line.merchandise.product.featuredImage)!.url} alt=""/>}</div><div><Link href={`/products/${line.merchandise.product.handle}`} onClick={()=>close(drawer.current)}>{line.merchandise.product.title}</Link>{line.merchandise.title!=='Default Title'&&<p>{line.merchandise.title}</p>}<span className={`shop-stock ${isSpecial(line.attributes)?'special':''}`}>{installationFor(line)?'Installation':isSpecial(line.attributes)?'Special Order':'In stock'}</span><div className="shop-cart-line-bottom">{installationFor(line)?<span>Quantity: {line.quantity} · Matches your exhaust</span>:<div className="shop-quantity"><button disabled={busy} aria-label={`Decrease ${line.merchandise.product.title}`} onClick={()=>update(line.id,line.quantity-1)}><Minus size={14}/></button><span>{line.quantity}</span><button disabled={busy} aria-label={`Increase ${line.merchandise.product.title}`} onClick={()=>add({handle:line.merchandise.product.handle,variantId:line.merchandise.id,quantity:1,title:line.merchandise.product.title,variantTitle:line.merchandise.title,parentLineId:line.id})}><Plus size={14}/></button></div>}<span>{money(line.cost.totalAmount)}</span></div>{installationFor(line)&&<p>{line.attributes.find(a=>a.key==='Installation for')?.value}</p>}<button className="shop-remove" disabled={busy} onClick={()=>update(line.id,0)}>Remove</button>{line.installation&&<div className="shop-cart-installation"><p>{line.installation.title}</p><button disabled={busy} onClick={()=>setInstallation(line.id,!line.installation!.included)}>{line.installation.included?'Remove installation':`Add installation${line.installation.quantity>1?` for ${line.installation.quantity} units`:''} + ${money({...line.installation.price,amount:String(Number(line.installation.price.amount)*line.installation.quantity)})}`}</button></div>}</div></article>):<div className="shop-empty"><ShoppingBag size={32}/><h3>Make room for something exceptional.</h3><p>Your bag is waiting.</p><button className="shop-button" onClick={()=>close(drawer.current)}><ActionLabel>Keep exploring</ActionLabel> <ActionArrow direction="right" size={16} /></button></div>}</div>
-   {!!cart?.totalQuantity&&<footer><div><span>Subtotal</span><strong>{money(cart.cost.subtotalAmount)}</strong></div><p>Shipping and applicable taxes calculated at checkout.</p><button className="shop-button" disabled={busy} onClick={checkout}><ActionLabel>{busy?'Updating…':'Continue to checkout'}</ActionLabel><ActionArrow direction="right" size={18} /></button><span className="shop-checkout-note">Secure checkout with Shopify</span></footer>}
+ async function checkout(){if(active.current)return;active.current=true;setBusy(true);setError('');try{const d=await call({action:'checkout'});if(d.cart?.checkoutUrl&&d.cart.totalQuantity)location.assign(d.cart.checkoutUrl);else throw new Error('Your cart is empty.');}catch(e){setError(e instanceof Error?e.message:'Could not open checkout.');active.current=false;setBusy(false);}}
+ const count = cart?.totalQuantity ?? 0;
+ const closeCart = () => close(drawer.current);
+ return <CartContext.Provider value={{add,open:()=>show(drawer.current),busy,count}}>{children}
+  <dialog
+   ref={drawer}
+   className={`shop-drawer ${styles.drawer}`}
+   aria-labelledby="shop-cart-title"
+   onCancel={event => { event.preventDefault(); closeCart(); }}
+   onClose={unlockScroll}
+   onClick={event => {
+    if (event.target !== event.currentTarget) return;
+    const { left, top, right, bottom } = event.currentTarget.getBoundingClientRect();
+    if (event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom) closeCart();
+   }}
+  >
+   <header className={styles.header}>
+    <div className={styles.heading}>
+     <h2 id="shop-cart-title">Cart</h2>
+     {count > 0 && <span className={styles.itemCount} aria-live="polite">{count} {count === 1 ? 'item' : 'items'}</span>}
+    </div>
+    <button type="button" className={styles.close} aria-label="Close cart" onClick={closeCart}><X size={21} aria-hidden="true" /></button>
+   </header>
+   <div className={styles.contents} aria-busy={busy}>
+    {error && <p className={styles.error} role="alert">{error}</p>}
+    {cart?.lines.nodes.length ? (
+     <ul className={styles.items} role="list">
+      {cart.lines.nodes.map(line => (
+       <CartItem key={line.id} line={line} busy={busy} onClose={closeCart} onUpdate={update} onIncrease={add} onInstallation={setInstallation} />
+      ))}
+     </ul>
+    ) : (
+     <div className={styles.empty}>
+      <h3>Your cart is empty.</h3>
+      <button type="button" className={`shop-button ${styles.primary}`} onClick={closeCart}>
+       <ActionLabel>Continue browsing</ActionLabel><ActionArrow direction="right" size={18} />
+      </button>
+     </div>
+    )}
+   </div>
+   {cart && count > 0 && (
+    <footer className={styles.summary}>
+     <div className={styles.subtotal}><span>Subtotal</span><strong>{money(cart.cost.subtotalAmount)}</strong></div>
+     <p>Shipping and applicable taxes calculated at checkout.</p>
+     <button type="button" className={`shop-button ${styles.primary}`} disabled={busy} onClick={checkout}>
+      <ActionLabel>{busy ? 'Updating…' : 'Continue to checkout'}</ActionLabel><ActionArrow direction="right" size={18} />
+     </button>
+    </footer>
+   )}
   </dialog>
-  <dialog ref={prompt} className="shop-order-dialog" aria-labelledby="order-title" onCancel={e=>{e.preventDefault();close(prompt.current);}} onClose={unlockScroll}><header><span className="tiny-label">Before you add it</span><button className="shop-close" aria-label="Close special order notice" onClick={()=>close(prompt.current)}><X/></button></header><h2 id="order-title">A little more<br/>worth waiting for.</h2>{notice&&<><span className="shop-stock special">Special Order</span><h3>{notice.request.title}</h3><p>{notice.request.variantTitle==='Default Title'?'':notice.request.variantTitle}</p><p className="shop-order-explanation">{notice.plan.stock>0?`Only ${notice.plan.stock} ${notice.plan.stock===1?'unit is':'units are'} in stock.${notice.plan.inCart?` ${notice.plan.inCart} already in your bag.`:''} ${notice.plan.special} additional ${notice.plan.special===1?'unit will':'units will'} be ordered from our supplier.`:'This item is ordered from our supplier and takes longer to arrive.'}</p><p>We’ll contact you with the estimated delivery time after your order.</p>{error&&<p className="shop-error" role="alert">{error}</p>}<button disabled={busy} className="shop-button" onClick={()=>add({...notice.request,confirmSpecial:notice.plan.special})}><ActionLabel>{busy?'Adding…':`Add ${notice.plan.special} as Special Order${notice.plan.stocked?` + ${notice.plan.stocked} from stock`:''}`}</ActionLabel><ActionArrow direction="right" size={16} /></button><button className="shop-text-button action-secondary" disabled={busy} onClick={()=>close(prompt.current)}>Keep browsing</button></>}</dialog>
+  <dialog ref={prompt} className="shop-order-dialog" aria-labelledby="order-title" onCancel={e=>{e.preventDefault();close(prompt.current);}} onClose={unlockScroll}><header><span className="tiny-label">Before you add it</span><button className="shop-close" aria-label="Close special order notice" onClick={()=>close(prompt.current)}><X/></button></header><h2 id="order-title">A little more<br/>worth waiting for.</h2>{notice&&<><span className="shop-stock special">Special Order</span><h3>{notice.request.title}</h3><p>{notice.request.variantTitle==='Default Title'?'':notice.request.variantTitle}</p><p className="shop-order-explanation">{notice.plan.stock>0?`Only ${notice.plan.stock} ${notice.plan.stock===1?'unit is':'units are'} in stock.${notice.plan.inCart?` ${notice.plan.inCart} already in your cart.`:''} ${notice.plan.special} additional ${notice.plan.special===1?'unit will':'units will'} be ordered from our supplier.`:'This item is ordered from our supplier and takes longer to arrive.'}</p><p>We’ll contact you with the estimated delivery time after your order.</p>{error&&<p className="shop-error" role="alert">{error}</p>}<button disabled={busy} className="shop-button" onClick={()=>add({...notice.request,confirmSpecial:notice.plan.special})}><ActionLabel>{busy?'Adding…':`Add ${notice.plan.special} as Special Order${notice.plan.stocked?` + ${notice.plan.stocked} from stock`:''}`}</ActionLabel><ActionArrow direction="right" size={16} /></button><button className="shop-text-button action-secondary" disabled={busy} onClick={()=>close(prompt.current)}>Keep browsing</button></>}</dialog>
  </CartContext.Provider>;
 }
