@@ -1,10 +1,11 @@
 'use client';
 
 import { Pause, Play, SkipForward } from 'lucide-react';
+import Image from 'next/image';
 import { Children, type ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './brand-hero.module.css';
 
-type Brand = { slug: string; name: string };
+type Brand = { slug: string; name: string; image: string };
 const slideDuration = 8000;
 const activeProgressSelector = 'button[aria-pressed="true"] [data-slide-progress]';
 
@@ -42,6 +43,8 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
   const [paused, setPaused] = useState(false);
   const [soundPlaying, setSoundPlaying] = useState(false);
   const [announcement, setAnnouncement] = useState('');
+  const [hoveredChapter, setHoveredChapter] = useState<number | null>(null);
+  const [focusedChapter, setFocusedChapter] = useState<number | null>(null);
 
   // Let NOVITEC finish before hidden photographs compete for the connection.
   useEffect(() => {
@@ -191,7 +194,17 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
     setPaused(true);
   }
 
+  function positionChapterPreview(nav: HTMLElement, navLeft: number, x: number, input: 'pointer' | 'focus') {
+    const bounds = root.current?.getBoundingClientRect();
+    if (!bounds) return;
+    nav.style.setProperty('--chapter-preview-start', `${Math.max(0, bounds.left) - navLeft}px`);
+    nav.style.setProperty('--chapter-preview-end', `${Math.min(document.documentElement.clientWidth, bounds.right) - navLeft}px`);
+    nav.style.setProperty(`--chapter-preview-${input}-x`, `${x}px`);
+  }
+
   const playbackStopped = paused || focusHeld || soundPlaying;
+  const previewIndex = hoveredChapter ?? focusedChapter;
+  const previewBrand = previewIndex === null ? null : brands[previewIndex];
 
   return <section ref={root} className={styles.hero} data-home-hero data-transitioned={transitioned} aria-roledescription="carousel" aria-label="Featured performance brands"
     onPlayCapture={event => { if (event.target instanceof HTMLAudioElement) setSoundPlaying(true); }}
@@ -216,8 +229,42 @@ export function BrandHero({ brands, children }: { brands: Brand[]; children: Rea
       {slides.map((slide, index) => <div key={brands[index].slug} className={styles.layer} data-hero-slide={index} data-active={active === index} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${brands.length}: ${brands[index].name}`} aria-hidden={active !== index} inert={active !== index}>{mounted.includes(index) ? slide : null}</div>)}
     </div>
     <div className={styles.controls}>
-      <nav className={styles.brandNav} aria-label="Choose a featured brand">
-        {brands.map((brand, index) => <button key={brand.slug} type="button" aria-pressed={active === index} aria-label={`Show ${brand.name}`} onClick={() => select(index)}><span className={styles.progress} data-slide-progress aria-hidden="true" /><span>{brand.name}</span></button>)}
+      <nav className={styles.brandNav} aria-label="Choose a featured brand"
+        onPointerMove={event => {
+          if (event.pointerType !== 'mouse') return;
+          const nav = event.currentTarget;
+          const { left, width } = nav.getBoundingClientRect();
+          const x = event.clientX - left;
+          positionChapterPreview(nav, left, x, 'pointer');
+          const index = Math.max(0, Math.min(brands.length - 1, Math.floor(x / width * brands.length)));
+          const chapterLeft = nav.children[index].getBoundingClientRect().left;
+          nav.style.setProperty('--chapter-hover-fill', `${event.clientX - chapterLeft}px`);
+          if (index !== hoveredChapter) setHoveredChapter(index);
+        }}
+        onPointerLeave={() => setHoveredChapter(null)}
+        onKeyDown={event => {
+          if (event.key === 'Escape') {
+            setHoveredChapter(null);
+            setFocusedChapter(null);
+          }
+        }}>
+        {brands.map((brand, index) => <button key={brand.slug} type="button" aria-pressed={active === index} aria-label={`Show ${brand.name}`}
+          data-chapter-hovered={hoveredChapter === index || undefined} onClick={() => select(index)}
+          onFocus={event => {
+            const button = event.currentTarget;
+            const nav = button.parentElement;
+            if (!nav || !button.matches(':focus-visible')) return;
+            const { left, width } = button.getBoundingClientRect();
+            const navLeft = nav.getBoundingClientRect().left;
+            positionChapterPreview(nav, navLeft, left - navLeft + width / 2, 'focus');
+            setFocusedChapter(index);
+          }}
+          onBlur={() => setFocusedChapter(null)}>
+          <span className={styles.progress} data-slide-progress aria-hidden="true" />
+          <span>{brand.name}</span>
+        </button>)}
+        {previewBrand && <Image key={previewBrand.slug} className={styles.chapterPreview} src={previewBrand.image} alt="" width={208} height={117} quality={60} loading="eager" fetchPriority="low"
+          data-pointer-preview={hoveredChapter !== null || undefined} onLoad={event => { event.currentTarget.dataset.ready = 'true'; }} />}
       </nav>
       <div className={styles.mobilePlayback}>
         <button ref={playbackButton} className={styles.playbackToggle} type="button" aria-label={playbackStopped ? 'Play hero slideshow' : 'Pause hero slideshow'} disabled={soundPlaying} onClick={togglePlayback}>

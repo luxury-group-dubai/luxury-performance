@@ -62,7 +62,7 @@ export function HomeHero() {
   return <>
     <HeroNewsprintFilter />
     <HeroNewsprintFilter id="hero-newsprint-yellow" preserveYellow />
-    <BrandHero brands={heroSlides.map(({ slug, name }) => ({ slug, name }))}>
+    <BrandHero brands={heroSlides.map(({ slug, name, image }) => ({ slug, name, image }))}>
     {heroSlides.map((slide, index) => {
       const mobile = slide.slug === 'nlargo' ? null : slide.slug === 'novitec' ? mobileHero : slide.mobile ? getImageProps({ ...slide.mobile, alt: '', sizes: '100vw', quality: 75 }).props : null;
       return <article key={slide.slug} className={heroStyles.slide} data-brand={slide.slug}>
