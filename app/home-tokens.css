@@ -39,7 +39,7 @@
 
 .intro-dark .intro-copy { grid-template-columns: minmax(0, 1fr) auto; gap: 40px; margin-top: 36px; }
 .intro-dark .intro-body { max-width: 520px; }
-.intro-dark .intro-body p { font-size: 14px; line-height: 1.85; max-width: none; }
+.intro-dark .intro-body p { line-height: 1.85; max-width: none; }
 .intro-dark .intro-body p + p { margin-top: 16px; }
 .intro-dark h2 { text-wrap: balance; }
 @media (max-width: 1000px) {
@@ -49,7 +49,6 @@
   /* Keep the browser's inset name global so CSS Modules do not rename it. */
   [data-home-hero] { --hero-safe-bottom: env(safe-area-max-inset-bottom, 0px); }
   .intro-dark .intro-copy { margin-top: 28px; }
-  .intro-dark .intro-body p { font-size: 14px; }
 }
 
 /* Keep the introduction focused on its heading and description. */
