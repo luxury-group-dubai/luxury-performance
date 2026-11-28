@@ -1,5 +1,6 @@
 .hero { --hero-title-size: clamp(40px,4vw,64px); --hero-title-line: calc(var(--hero-title-size) * 1.25); position: relative; isolation: isolate; height: 100svh; min-height: 740px; max-height: 1100px; overflow: clip; background: #151617; color: #fff; }
-.context { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: 145px; font-family: var(--font-michroma), var(--font-sans); font-size: 11px; line-height: 1.7; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; }
+.context { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: 145px; line-height: 1.7; }
+.context, .cta, .brandNav button, .mobilePlayback { font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
 .context h1 { display: inline; margin: 0; font: inherit; letter-spacing: inherit; }
 .context span { margin-inline: 10px; color: #ffffff80; }
 /* Keep the photograph painted; reveal copy as soon as the logo departs. */
@@ -125,13 +126,13 @@
   49.25%, 99.25% { opacity: .35; }
 }
 .copy p { grid-row: 5; max-width: 47ch; min-block-size: 0; margin: 0; color: #e0e0dc; font-size: 15px; line-height: 1.8; text-wrap: pretty; }
-.cta { grid-row: 7; justify-self: start; display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 56px; padding: 16px 24px; margin: 0; background: var(--accent); color: #fff; font-size: 11px; font-weight: 600; line-height: 18px; letter-spacing: .06em; text-transform: uppercase; border: 1px solid transparent; transition: background 180ms; }
+.cta { grid-row: 7; justify-self: start; display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 56px; padding: 16px 24px; margin: 0; background: var(--accent); color: #fff; line-height: 18px; border: 1px solid transparent; transition: background 180ms; }
 .cta:hover { background: #fff; color: #111; }
 .cta svg { flex-shrink: 0; }
 .controls { position: absolute; z-index: 3; bottom: 28px; left: var(--gutter); right: max(var(--gutter), calc(92px + env(safe-area-inset-right, 0px))); display: flex; align-items: center; gap: 32px; }
 .brandNav { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); flex: 1; max-width: 1050px; gap: 32px; }
-.currentBrand { display: none; }
-.brandNav button { display: flex; align-items: center; gap: 15px; position: relative; min-height: 62px; padding: 19px 0; background: transparent; color: #c3c3bd; border-top: 1px solid #ffffff40; font-size: 13px; text-align: left; transition: color 180ms; }
+.mobilePlayback { display: none; }
+.brandNav button { display: flex; align-items: center; gap: 15px; position: relative; min-height: 62px; padding: 19px 0; background: transparent; color: #c3c3bd; border-top: 1px solid #ffffff40; text-align: left; transition: color 180ms; }
 .brandNav button[aria-pressed="true"]::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 2px; background: #e4e5df; }
 .progress { position: absolute; top: -1px; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
 .brandNav button[aria-pressed="true"] { color: #fff; }
@@ -146,8 +147,8 @@
   .brandNav { gap: 22px; }
 }
 @media (max-width: 700px) {
-  .hero { --hero-title-size: clamp(26px,7.1vw,40px); height: 100vh; height: 100svh; min-height: 0; max-height: none; }
-  .context { top: 115px; font-size: 9px; letter-spacing: .08em; }
+  .hero { --hero-title-size: clamp(24px,6.7vw,38px); height: 100vh; height: 100svh; min-height: 0; max-height: none; }
+  .context { top: 115px; }
   .context span { margin-inline: 5px; }
   .imageFrame { display: block; position: absolute; inset: 140px 0 auto; height: 350px; isolation: isolate; }
   .slide[data-brand="novitec"] .imageFrame {
@@ -196,30 +197,34 @@
   .logo { width: 145px; height: 40px; }
   .slide[data-brand="valvetronic"] .logo { width: 160px; }
   .slide[data-brand="techart"] .logo { width: 170px; }
-  .slide[data-brand="techart"] .copy h2 { font-size: clamp(25px,6.9vw,38px); }
   .copy p { font-size: 13px; line-height: 1.7; max-width: 40ch; }
   .cta { min-height: 50px; padding: 14px 20px; gap: 20px; }
-  .controls { bottom: max(18px, env(safe-area-inset-bottom, 0px)); right: max(var(--gutter), calc(80px + env(safe-area-inset-right, 0px))); gap: 14px; align-items: start; }
-  .brandNav { position: relative; gap: 12px; }
-  .brandNav button { min-height: 65px; padding-block: 14px; font-size: 10px; line-height: 1.6; gap: 0; align-items: start; }
+  .controls { bottom: max(18px, env(safe-area-inset-bottom, 0px)); right: max(var(--gutter), calc(80px + env(safe-area-inset-right, 0px))); flex-direction: column; align-items: start; gap: 0; }
+  .brandNav { align-self: stretch; flex: none; gap: 12px; }
+  .brandNav button { min-height: 44px; padding: 0; border-top: 0; }
+  .brandNav button::before { content: ''; position: absolute; inset-inline: 0; top: 50%; height: 1px; background: #ffffff40; }
+  .brandNav button[aria-pressed="true"]::before, .brandNav .progress { top: calc(50% - 1px); }
   .brandNav button > span:not(.progress) { display: none; }
-  .currentBrand { display: block; position: absolute; inset-block-start: 15px; inset-inline-start: 0; font-size: 10px; line-height: 1.6; pointer-events: none; }
+  .mobilePlayback { display: flex; align-items: center; margin-inline-start: -15px; color: #fff; line-height: 1.6; }
+  .mobilePlayback button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; background: none; }
+  .mobilePlayback button:disabled { opacity: .45; cursor: default; }
 }
 @media (max-width: 360px) {
   .copy { --hero-description-row: 110.5px; }
-  .context { font-size: 8px; }
-  .hero { --hero-title-size: 25px; }
   .brandNav { gap: 8px; }
-  .controls { gap: 10px; }
+}
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+  .mobilePlayback .playbackToggle + button svg { justify-self: start; margin-inline-start: 7px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .mobilePlayback .playbackToggle { display: none; }
   .layer, .progress, .cta { transition: none; }
   .layer[data-active="true"] .glitchWord, .layer[data-active="true"] .glitchWord::before, .layer[data-active="true"] .glitchWord::after { animation: none; }
 }
 
 /* Keep the controls inside the opening screen when browser toolbars are expanded. */
 @media (max-width: 700px) and (max-height: 740px) {
-  .copy { bottom: calc(100px + env(safe-area-inset-bottom, 0px)); grid-template-rows: 32px 12px var(--hero-title-row) 12px var(--hero-description-row) 12px 50px; }
+  .copy { grid-template-rows: 32px 12px var(--hero-title-row) 12px var(--hero-description-row) 12px 50px; }
   .logo { height: 32px; }
   .imageFrame { top: 125px; height: 260px; }
   .slide[data-brand="novitec"] .imageFrame { top: 125px; }
@@ -234,8 +239,9 @@
   mask-image: none;
 }
 .slide[data-brand="nlargo"] .shade { background: linear-gradient(90deg,#151617 28%,#151617e8 43%,#15161722 75%,transparent),linear-gradient(0deg,#151617cc,transparent 35%); }
-.slide[data-brand="nlargo"] .copy { --hero-title-size: clamp(32px,3.4vw,54px); max-width: 650px; }
+.slide[data-brand="nlargo"] .copy { max-width: 650px; }
 @media(min-width:701px) {
+  .slide[data-brand="nlargo"] .copy { --hero-title-size: clamp(32px,3.4vw,54px); }
   .slide[data-brand="nlargo"] .picture { mask-image: none; }
   .slide[data-brand="nlargo"] .shade { background: linear-gradient(90deg,#151617e6,#151617c4 28%,#15161799 43%,#15161722 75%,transparent),linear-gradient(0deg,#151617cc,transparent 35%); }
 }
@@ -244,8 +250,5 @@
   .slide[data-brand="nlargo"] .imageFrame { top: 0; height: 460px; -webkit-mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); mask-image: linear-gradient(to bottom,#000 65%,#000b 78%,#0003 91%,transparent 99%); }
   .slide[data-brand="nlargo"] .picture > img { width: 100% !important; }
   .slide[data-brand="nlargo"] .shade { background: linear-gradient(0deg,#151617 32%,#15161700 61%),linear-gradient(180deg,#15161799,transparent 25%); }
-  .slide[data-brand="nlargo"] .copy { --hero-title-size: clamp(24px,6.2vw,34px); }
-  .slide[data-brand="nlargo"] .copy p { font-size: 12px; line-height: 1.65; }
   .brandNav { gap: 10px; }
-  .brandNav button { font-size: 9px; }
 }
