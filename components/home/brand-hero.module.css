@@ -183,6 +183,7 @@
   .hero { --hero-title-size: 44px; min-height: 740px; }
   .context { top: 125px; }
   .copy { max-width: 550px; bottom: 150px; }
+  .brandNav button { padding-block: 15px; }
 }
 @media (max-width: 700px) {
   .hero { --hero-title-size: clamp(24px,6.7vw,38px); height: 100vh; height: 100svh; min-height: 0; max-height: none; }
