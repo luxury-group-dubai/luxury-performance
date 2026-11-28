@@ -1,7 +1,7 @@
 .section {
   background: var(--home-intro-bg, #101112);
   color: #f2f0eb;
-  padding-block: 32px 24px;
+  padding-block: clamp(56px, 5vw, 80px) 24px;
 }
 .heading {
   display: flex;
@@ -45,22 +45,19 @@
   width: 210px;
   height: 64px;
   opacity: .88;
-  transition: opacity .2s ease;
 }
 .noscriptLogo { position: absolute; inset: 0; margin: auto; }
-.logo:hover, .logo:focus-visible { opacity: 1; }
-.logo:focus-visible { outline: 2px solid #b9a77f; outline-offset: -2px; }
+.logo:focus-visible { opacity: 1; outline: 2px solid #b9a77f; outline-offset: -2px; }
 /* All partner links remain visible and reachable when navigating by keyboard. */
-.viewport:focus-within { mask-image: none; }
-.viewport:focus-within .track { animation: none; width: 100%; }
-.viewport:focus-within .group { flex-wrap: wrap; flex-basis: 100%; min-width: 0; gap: 16px 40px; justify-content: center; }
-.viewport:focus-within .group[aria-hidden="true"] { display: none; }
-@media (hover: hover) and (pointer: fine) {
-  .viewport:hover .track { animation-play-state: paused; }
+.viewport:has(.logo:focus-visible) { mask-image: none; }
+.viewport:has(.logo:focus-visible) .track { animation: none; width: 100%; }
+.viewport:has(.logo:focus-visible) .group { flex-wrap: wrap; flex-basis: 100%; min-width: 0; gap: 16px 40px; justify-content: center; }
+.viewport:has(.logo:focus-visible) .group[aria-hidden="true"] { display: none; }
+@media (hover: hover) {
+  .logo:hover { opacity: 1; }
 }
 @keyframes drift { to { transform: translateX(-50%); } }
 @media (max-width: 700px) {
-  .section { padding-block: 16px 12px; }
   .heading { margin-bottom: 12px; }
   .group { gap: 40px; padding-inline: 20px; }
   .logo { flex-basis: 180px; width: 180px; height: 60px; }
@@ -70,11 +67,10 @@
   .track { animation: none; width: 100%; }
   .group { flex-wrap: wrap; flex-basis: 100%; min-width: 0; gap: 12px 40px; justify-content: center; }
   .group[aria-hidden="true"] { display: none; }
-  .logo { transition: none; }
 }
 @media (max-width: 700px) {
-  .viewport:focus-within .group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }
-  .viewport:focus-within .logo { width: 100%; }
+  .viewport:has(.logo:focus-visible) .group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }
+  .viewport:has(.logo:focus-visible) .logo { width: 100%; }
 }
 @media (max-width: 700px) and (prefers-reduced-motion: reduce) {
   .group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }

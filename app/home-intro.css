@@ -19,11 +19,12 @@
 .intro-story { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 48px; padding: 16px 22px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
 .intro-story:hover { background: #fff; color: #111; }
 .intro-dark .intro-copy .arrow-link { margin: 30px 0 0; }
-.intro-dark .intro-lettering {
-  width: 100%;
+.intro-dark .intro-emblem {
+  align-self: center;
+  width: 84%;
   height: auto;
-  margin-top: 0;
-  opacity: .1;
+  /* Account for the transparent space above the wing tips in the SVG. */
+  margin-top: calc(3px - 1.8%);
   pointer-events: none;
 }
 #home-welcome-title {
@@ -34,60 +35,19 @@
   .intro-brand { margin-top: 30px; }
   .intro-brand .intro-story { align-self: flex-start; }
   .intro-dark .intro-grid { display: block; }
-  .intro-dark .intro-lettering { display: none; }
+  .intro-dark .intro-emblem { display: none; }
   #home-welcome-title { font-size: 5.3vw; }
 }
 @media(max-width:700px){.intro{padding-top:68px;padding-bottom:72px}
   #home-welcome-title { font-size: clamp(30px, 7.8vw, 50px); }
-  .home-intro-pin .intro-dark { padding-block: 20px; }
-  .home-intro-pin .intro-dark .eyebrow { margin-bottom: 16px; }
-  .home-intro-pin .intro-dark .intro-copy { margin-top: 18px; }
-  .home-intro-pin .intro-dark .intro-body p { font-size: 13px; line-height: 1.6; }
-  .home-intro-pin .intro-brand { margin-top: 20px; }
+  .intro.intro-dark .eyebrow { margin-bottom: 16px; }
+  .intro.intro-dark .intro-copy { margin-top: 18px; }
+  .intro.intro-dark .intro-body p { font-size: 13px; line-height: 1.6; }
+  .intro-dark .intro-brand { margin-top: 20px; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .home-intro-stack {
-    position: relative;
-    isolation: isolate;
-    background: var(--home-intro-bg);
-  }
-
-  .home-intro-pin {
-    position: sticky;
-    /* Let the bottom of a tall panel scroll into view before it pins. */
-    top: min(var(--site-header-height), calc(100svh - var(--intro-panel-height, 100svh)));
-    min-height: calc(100svh - var(--site-header-height));
-  }
-
-  .home-intro-cover {
-    position: relative;
-    z-index: 1;
-    margin-top: clamp(100px, 23svh, 240px);
-    background: var(--home-intro-bg);
-    box-shadow: 0 -16px 36px #0005;
-  }
-
-  @media (max-width: 700px) {
-    .home-intro-pin {
-      top: var(--site-header-height);
-      min-height: min(35rem, calc(100svh - var(--site-header-height)));
-    }
-
-    .home-intro-cover { margin-top: 0; }
-
-    /* Keep the strip visible while the rest of an oversized intro can scroll. */
-    .home-intro-pin[data-intro-overflow] { position: relative; top: auto; z-index: 0; }
-    .home-intro-pin[data-intro-overflow] > #brands { position: sticky; top: var(--site-header-height); z-index: 1; }
-  }
-
-  @media (min-width: 901px) {
-    .home-intro-pin .intro-dark {
-      padding-bottom: 64px;
-    }
-  }
-
-  .intro-reveal :is(.eyebrow, #home-welcome-title, .intro-body p, .intro-story) {
+  .intro-reveal :is(.eyebrow, #home-welcome-title, .intro-body p, .intro-emblem, .intro-story) {
     transition: opacity .65s ease, transform .85s var(--ease-out);
   }
 
@@ -99,23 +59,5 @@
 
   .intro-reveal .intro-story:focus-visible {
     transition: none;
-  }
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
-    /* Follow the scrolling stack so the lettering can keep rising after the intro pins. */
-    .home-intro-stack { view-timeline-name: --home-intro; }
-
-    .intro-dark .intro-brand {
-      animation: intro-lettering-rise auto linear both;
-      animation-timeline: --home-intro;
-      animation-range: entry 45% entry 135%;
-    }
-
-    @keyframes intro-lettering-rise {
-      from { opacity: 0; transform: translateY(clamp(65px, 9vw, 145px)); }
-      to { opacity: 1; transform: none; }
-    }
   }
 }
