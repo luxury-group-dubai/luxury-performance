@@ -41,12 +41,13 @@ function cameraFor(index: number, g: FilmGeometry) {
   // Keep the car's visible vertical extent inside the mobile composition while zoomed.
   const scale = g.small ? Math.min(detailScale, g.height * .78 / (g.rigHeight * 680 / 941)) : detailScale;
   const targetX = g.width * (g.small ? .52 : .69);
-  const targetY = g.height * (g.small ? .68 : .54);
+  const targetY = g.height * (g.small ? .76 : .54);
   const x = targetX - g.rigX - (focus.centre[0] / 1672 - .5) * g.rigWidth * scale;
   let y = targetY - g.rigY - (focus.centre[1] / 941 - .5) * g.rigHeight * scale;
   if (g.small) {
-    const carBottom = g.rigY + y + (835 / 941 - .5) * g.rigHeight * scale;
-    y -= Math.max(0, carBottom - g.height * .97);
+    // The artwork ends just above source row 810, including the mounted parts.
+    const carBottom = g.rigY + y + (810 / 941 - .5) * g.rigHeight * scale;
+    y -= Math.max(0, carBottom - (g.height - 10));
   }
   return { scale, x, y };
 }

@@ -129,11 +129,15 @@
  .film{--film-header:100px;--film-scroll-screens:4.9}
  .stage{--film-side-padding:20px;padding:16px var(--film-side-padding) calc(24px + env(safe-area-inset-bottom,0px));min-height:650px}
  .edition{gap:7px}.edition i{display:none}.compareButton{font-size:8px;gap:6px;padding-left:0}
- .stage[data-detail=true] .composition:after{background:linear-gradient(180deg,#0b0c0def, #0b0c0db0 23%, transparent 53%),linear-gradient(90deg,#0b0c0d55,transparent);inset:0 calc(-1 * var(--gutter))}
+ .stage[data-detail=true] .composition:after{
+  inset:0 0 auto;
+  height:min(290px,85%);
+  background:linear-gradient(180deg,#0b0c0def,#0b0c0db0 28%,transparent);
+ }
  .copy{top:2%;max-width:280px}.kicker{font-size:7px;margin-bottom:13px}.copy h2{font-size:38px}.description{font-size:12px;max-width:245px;line-height:1.7;margin-top:13px}
- .carRig{--rig-width:113%;--rig-top:68;left:50%}.word{left:50%;top:53%;font-size:13vw;letter-spacing:-.065em}
+ .carRig{left:50%}.word{left:50%;top:53%;font-size:13vw;letter-spacing:-.065em}
  .sceneIndex{top:7%;right:0}.sceneIndex>span{font-size:25px}.sceneIndex i{font-size:7px}
- .callout{font-size:9px;letter-spacing:0}.pin{width:5px;height:5px}
+ .callout{font-size:9px;letter-spacing:0;box-shadow:none}.pin{width:5px;height:5px}
  .sceneCaption{bottom:7%;font-size:8px}.floor{inset:54% -50% -15%}
  .explore{padding-bottom:32px}
  .mobilePlayback{
@@ -151,7 +155,7 @@
  .compareControl{width:220px;max-width:66%;gap:8px;font-size:7px}.compareLine>span{width:26px;height:26px}
 
 }
-@media(max-width:700px){.film[data-compact=true] .stage{padding-top:12px}.film[data-compact=true] .copy h2{font-size:29px}.film[data-compact=true] .copy{top:4%}.film[data-compact=true] .kicker{margin-bottom:8px}.film[data-compact=true] .description{font-size:8px;max-width:220px;margin-top:10px}.film[data-compact=true] .sceneIndex{top:5%}.film[data-compact=true] .carRig{--rig-width:94%;--rig-top:68}.film[data-compact=true] .word{font-size:13vw;top:55%}.film[data-compact=true] .callout{font-size:8px}.film[data-compact=true] .sceneCaption{bottom:2%}.film[data-compact=true] .footline{font-size:5.5px;padding-top:8px}}
+@media(max-width:700px){.film[data-compact=true] .stage{padding-top:12px}.film[data-compact=true] .copy h2{font-size:29px}.film[data-compact=true] .copy{top:4%}.film[data-compact=true] .kicker{margin-bottom:8px}.film[data-compact=true] .description{font-size:8px;max-width:220px;margin-top:10px}.film[data-compact=true] .sceneIndex{top:5%}.film[data-compact=true] .word{font-size:13vw;top:55%}.film[data-compact=true] .callout{font-size:8px}.film[data-compact=true] .sceneCaption{bottom:2%}.film[data-compact=true] .footline{font-size:5.5px;padding-top:8px}}
 @media(max-width:700px) and (prefers-reduced-motion:no-preference){.playbackToggle + button svg{justify-self:start;margin-inline-start:7px}}
 @media(prefers-reduced-motion:reduce){.film[data-motion]{height:auto}.film .stage{position:relative;top:auto;min-height:680px;height:calc(100svh - var(--film-header))}.copy{animation:none}.camera,.upgraded,.callout{transition:none;will-change:auto}.chapterPreview{transition:none}.lightMask{display:none}.word{opacity:.20}}
 @media(max-width:700px) and (prefers-reduced-motion:reduce){.mobilePlayback .playbackToggle{display:none}}
@@ -171,7 +175,14 @@
  .composition,.stage[data-detail=true] .composition{margin-inline:-20px;overflow:hidden;clip-path:none}
  .copy,.sceneCaption{left:20px}
  .sceneIndex{right:20px}
- .carRig,.film[data-compact=true] .carRig{--rig-width:100%}
+ /* Size the overview from the artwork area and give the tires room above the controls. */
+ .carRig{
+  --mobile-rig-width:min(100cqw,calc((32cqh - 24px) * 1672 / 340));
+  width:var(--mobile-rig-width);
+  top:min(76%,calc(100% - 10px - var(--mobile-rig-width) * 340 / 1672));
+ }
+ .carShadow{top:72%;height:15%;background:radial-gradient(ellipse closest-side,#000b,#0007 40%,transparent);filter:none}
+ .stage[data-detail=true] .carShadow{display:none}
  .camera{filter:none;backface-visibility:hidden}
  .floor,.lightMask{display:none}
 }
