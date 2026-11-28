@@ -19,11 +19,16 @@ const partners: PartnerLogo[] = [
   { name: 'Voltrix', slug: 'voltrix', href: '/contact?programme=Voltrix', label: 'Enquire about Voltrix' },
 ];
 
+const ribbons = [
+  { layout: styles.desktop, logos: partners },
+  { layout: styles.mobile, logos: partners.slice(0, 4) },
+  { layout: `${styles.mobile} ${styles.reverse}`, logos: partners.slice(4) },
+];
+
 export function PartnerMarquee() {
   const sectionRef = useRef<HTMLElement>(null);
   const [logosReady, setLogosReady] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const groupRef = useRef<HTMLDivElement>(null);
+  const ribbonsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -43,17 +48,19 @@ export function PartnerMarquee() {
   }, []);
 
   useEffect(() => {
-    const group = groupRef.current;
-    const track = trackRef.current;
-    if (!group || !track) return;
+    const tracks = ribbonsRef.current?.querySelectorAll(`.${styles.track}`);
+    if (!tracks || typeof ResizeObserver === 'undefined') return;
 
-    // Keep a calm, constant speed across phone, desktop and ultrawide layouts.
-    const updateSpeed = () => {
-      track.style.setProperty('--partner-duration', `${group.getBoundingClientRect().width / 28}s`);
-    };
-    updateSpeed();
-    const observer = new ResizeObserver(updateSpeed);
-    observer.observe(group);
+    // Each row travels its own width at the same speed.
+    const observer = new ResizeObserver(entries => {
+      for (const { target } of entries) {
+        const width = target.getBoundingClientRect().width;
+        if (width > 0) target.parentElement?.style.setProperty('--partner-duration', `${width / 28}s`);
+      }
+    });
+    tracks.forEach(track => {
+      if (track.firstElementChild) observer.observe(track.firstElementChild, { box: 'border-box' });
+    });
     return () => observer.disconnect();
   }, []);
 
@@ -62,27 +69,31 @@ export function PartnerMarquee() {
       <div className={styles.heading}>
         <p>Authorised partners</p>
       </div>
-      <div className={styles.viewport} id="partner-logos">
-        <div className={`${styles.track} ${logoSelection.grid}`} ref={trackRef}>
-          {[false, true].map(duplicate => (
-            <div key={String(duplicate)} ref={duplicate ? undefined : groupRef} className={styles.group} aria-hidden={duplicate || undefined}>
-              {partners.map(partner => (
-                <Link
-                  key={partner.slug}
-                  href={partner.href ?? `/partners/${partner.slug}`}
-                  prefetch={false}
-                  tabIndex={duplicate ? -1 : undefined}
-                  aria-label={duplicate ? undefined : partner.label ?? `Explore ${partner.name}`}
-                  className={`${styles.logo} ${logoSelection.item}`}
-                  data-brand={partner.slug}
-                >
-                  <span className="sr-only">{partner.label ?? `Explore ${partner.name}`}</span>
-                  {logosReady ? <BrandArtwork brand={partner.slug} labelled={!duplicate} /> : <noscript><BrandArtwork brand={partner.slug} labelled={!duplicate} className={styles.noscriptLogo} loading="lazy" /></noscript>}
-                </Link>
+      <div className={`${styles.ribbons} ${logoSelection.grid}`} id="partner-logos" ref={ribbonsRef}>
+        {ribbons.map(({ layout, logos }) => (
+          <div key={layout} className={`${styles.viewport} ${layout}`}>
+            <div className={styles.track}>
+              {[false, true].map(duplicate => (
+                <div key={String(duplicate)} className={styles.group} aria-hidden={duplicate || undefined}>
+                  {logos.map(partner => (
+                    <Link
+                      key={partner.slug}
+                      href={partner.href ?? `/partners/${partner.slug}`}
+                      prefetch={false}
+                      tabIndex={duplicate ? -1 : undefined}
+                      aria-label={duplicate ? undefined : partner.label ?? `Explore ${partner.name}`}
+                      className={`${styles.logo} ${logoSelection.item}`}
+                      data-brand={partner.slug}
+                    >
+                      <span className="sr-only">{partner.label ?? `Explore ${partner.name}`}</span>
+                      {logosReady ? <BrandArtwork brand={partner.slug} labelled={!duplicate} /> : <noscript><BrandArtwork brand={partner.slug} labelled={!duplicate} className={styles.noscriptLogo} loading="lazy" /></noscript>}
+                    </Link>
+                  ))}
+                </div>
               ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );
